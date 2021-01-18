@@ -1,0 +1,103 @@
+@media screen and (max-width: 1050px){
+  .functionButtonsWrapper h2,
+  .functionButtonsWrapper > div{
+    flex-grow: 1;
+  }
+}
+@media screen and (max-width: 940px){
+  .topNav .hamburger ~ div{
+    padding: 0;
+  }
+  .functionButtonsWrapper {
+    flex-direction: column;
+    align-items: start;
+  }
+  .functionButtonsWrapper h2{
+    padding: 2rem 0 ;
+  }
+  .functionButtonsWrapper > div{
+    width: 100%;
+    justify-content: flex-start;
+  }
+  .functionButtonsWrapper > div button{
+    width: 50%;
+  }
+  .functionButtonsWrapper > div form{
+    flex-basis: 80%;
+  }
+}
+@media screen and (max-width: 770px){
+  .sideNav {
+    left: -300px;
+    width: 300px;
+  }
+  main{
+    margin: 0;
+  }
+  .topNav{
+    padding: 2rem 5rem 2rem 2rem;
+    justify-content: space-between;
+  }
+  .topNav ~ div {
+    padding: 2rem;
+  }
+  .topNav ~ div h2{
+    margin: 0;
+    padding-top: 1rem;
+    font-size: 1.5rem;
+  }
+  .hamburger{
+    display: block;
+    font-size: 1.5rem;
+    padding-right: 1rem;
+  }
+  .functionButtonsWrapper > div{
+    width: 70%;
+  }
+  .functionButtonsWrapper h2{
+    padding-bottom: 0;
+  }
+}
+@media screen and (max-width: 620px){
+  .topNav{
+    padding: 2rem;
+  }
+  .functionButtonsWrapper > div{
+    width: 100%;
+  }
+}
+@media screen and (max-width: 500px){
+  .functionButtonsWrapper > div{
+    width: 100%;
+  }
+  .topNav form{
+    flex-basis: 50%;
+  }
+  .viewAll-btn svg{
+    display: none;
+  }
+  input.searchBar::placeholder{
+    font-size: 1rem;
+  }
+  img.profile{
+    width: 2.5rem;
+    height: 2.5rem;
+  }
+  .profile-wrapper p{
+    font-size: 1rem;
+  }
+  button.topNav-btn{
+    font-size: 1rem;
+  }
+  .chart{
+    width: 270px;
+    height: 180px;
+  }
+  .accordion .card .text-larger{
+    font-size: 1.2rem;
+  }
+  a.mailAddresses{
+    flex-grow: 1;
+    flex-basis: 40%;
+  }
+}
