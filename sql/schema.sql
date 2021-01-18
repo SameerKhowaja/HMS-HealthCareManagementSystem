@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Host: 127.0.0.1
--- Generation Time: Jan 18, 2021 at 04:58 PM
+-- Generation Time: Jan 18, 2021 at 05:08 PM
 -- Server version: 10.4.14-MariaDB
 -- PHP Version: 7.4.11
 
@@ -225,6 +225,182 @@ CREATE TABLE `types` (
   `type_id` int(15) NOT NULL,
   `type` int(100) NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
+
+--
+-- Indexes for dumped tables
+--
+
+--
+-- Indexes for table `admins`
+--
+ALTER TABLE `admins`
+  ADD PRIMARY KEY (`admin_id`);
+
+--
+-- Indexes for table `appointments`
+--
+ALTER TABLE `appointments`
+  ADD PRIMARY KEY (`appointment_id`);
+
+--
+-- Indexes for table `appointment_results`
+--
+ALTER TABLE `appointment_results`
+  ADD PRIMARY KEY (`result_id`);
+
+--
+-- Indexes for table `beds`
+--
+ALTER TABLE `beds`
+  ADD PRIMARY KEY (`bed_id`);
+
+--
+-- Indexes for table `doctors`
+--
+ALTER TABLE `doctors`
+  ADD PRIMARY KEY (`doctor_id`);
+
+--
+-- Indexes for table `hospital_datas`
+--
+ALTER TABLE `hospital_datas`
+  ADD PRIMARY KEY (`primary_id`);
+
+--
+-- Indexes for table `lab_technicians`
+--
+ALTER TABLE `lab_technicians`
+  ADD PRIMARY KEY (`technician_id`);
+
+--
+-- Indexes for table `lab_tests`
+--
+ALTER TABLE `lab_tests`
+  ADD PRIMARY KEY (`test_id`);
+
+--
+-- Indexes for table `lab_test_reports`
+--
+ALTER TABLE `lab_test_reports`
+  ADD PRIMARY KEY (`report_id`);
+
+--
+-- Indexes for table `patients`
+--
+ALTER TABLE `patients`
+  ADD PRIMARY KEY (`patient_id`);
+
+--
+-- Indexes for table `patient_addmissions`
+--
+ALTER TABLE `patient_addmissions`
+  ADD PRIMARY KEY (`addmission_id`);
+
+--
+-- Indexes for table `receptionists`
+--
+ALTER TABLE `receptionists`
+  ADD PRIMARY KEY (`receptionist_id`);
+
+--
+-- Indexes for table `rooms`
+--
+ALTER TABLE `rooms`
+  ADD PRIMARY KEY (`room_id`);
+
+--
+-- Indexes for table `types`
+--
+ALTER TABLE `types`
+  ADD PRIMARY KEY (`type_id`);
+
+--
+-- AUTO_INCREMENT for dumped tables
+--
+
+--
+-- AUTO_INCREMENT for table `admins`
+--
+ALTER TABLE `admins`
+  MODIFY `admin_id` int(15) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=2;
+
+--
+-- AUTO_INCREMENT for table `appointments`
+--
+ALTER TABLE `appointments`
+  MODIFY `appointment_id` int(15) NOT NULL AUTO_INCREMENT;
+
+--
+-- AUTO_INCREMENT for table `appointment_results`
+--
+ALTER TABLE `appointment_results`
+  MODIFY `result_id` int(15) NOT NULL AUTO_INCREMENT;
+
+--
+-- AUTO_INCREMENT for table `beds`
+--
+ALTER TABLE `beds`
+  MODIFY `bed_id` int(15) NOT NULL AUTO_INCREMENT;
+
+--
+-- AUTO_INCREMENT for table `doctors`
+--
+ALTER TABLE `doctors`
+  MODIFY `doctor_id` int(15) NOT NULL AUTO_INCREMENT;
+
+--
+-- AUTO_INCREMENT for table `hospital_datas`
+--
+ALTER TABLE `hospital_datas`
+  MODIFY `primary_id` int(15) NOT NULL AUTO_INCREMENT;
+
+--
+-- AUTO_INCREMENT for table `lab_technicians`
+--
+ALTER TABLE `lab_technicians`
+  MODIFY `technician_id` int(15) NOT NULL AUTO_INCREMENT;
+
+--
+-- AUTO_INCREMENT for table `lab_tests`
+--
+ALTER TABLE `lab_tests`
+  MODIFY `test_id` int(15) NOT NULL AUTO_INCREMENT;
+
+--
+-- AUTO_INCREMENT for table `lab_test_reports`
+--
+ALTER TABLE `lab_test_reports`
+  MODIFY `report_id` int(15) NOT NULL AUTO_INCREMENT;
+
+--
+-- AUTO_INCREMENT for table `patients`
+--
+ALTER TABLE `patients`
+  MODIFY `patient_id` int(15) NOT NULL AUTO_INCREMENT;
+
+--
+-- AUTO_INCREMENT for table `patient_addmissions`
+--
+ALTER TABLE `patient_addmissions`
+  MODIFY `addmission_id` int(15) NOT NULL AUTO_INCREMENT;
+
+--
+-- AUTO_INCREMENT for table `receptionists`
+--
+ALTER TABLE `receptionists`
+  MODIFY `receptionist_id` int(15) NOT NULL AUTO_INCREMENT;
+
+--
+-- AUTO_INCREMENT for table `rooms`
+--
+ALTER TABLE `rooms`
+  MODIFY `room_id` int(15) NOT NULL AUTO_INCREMENT;
+
+--
+-- AUTO_INCREMENT for table `types`
+--
+ALTER TABLE `types`
+  MODIFY `type_id` int(15) NOT NULL AUTO_INCREMENT;
 COMMIT;
 
 /*!40101 SET CHARACTER_SET_CLIENT=@OLD_CHARACTER_SET_CLIENT */;
