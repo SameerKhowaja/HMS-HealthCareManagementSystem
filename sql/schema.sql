@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Host: 127.0.0.1
--- Generation Time: Jan 18, 2021 at 05:08 PM
+-- Generation Time: Jan 18, 2021 at 06:05 PM
 -- Server version: 10.4.14-MariaDB
 -- PHP Version: 7.4.11
 
@@ -69,7 +69,7 @@ CREATE TABLE `appointments` (
 --
 
 CREATE TABLE `appointment_results` (
-  `result_id` int(15) NOT NULL,
+  `appointment_result_id` int(15) NOT NULL,
   `appointment_id` int(15) NOT NULL,
   `prescribe_medicine` varchar(500) NOT NULL,
   `prescribe_test` varchar(500) NOT NULL,
@@ -110,8 +110,8 @@ CREATE TABLE `doctors` (
 CREATE TABLE `hospital_datas` (
   `primary_id` int(15) NOT NULL,
   `type_id` int(15) NOT NULL,
-  `fname` int(100) NOT NULL,
-  `lname` int(100) NOT NULL,
+  `fname` varchar(100) NOT NULL,
+  `lname` varchar(100) NOT NULL,
   `cnic` varchar(100) NOT NULL,
   `email_id` varchar(200) NOT NULL,
   `gender` varchar(15) NOT NULL,
@@ -142,6 +142,7 @@ CREATE TABLE `lab_technicians` (
 --
 
 CREATE TABLE `lab_tests` (
+  `lab_test_id` int(15) NOT NULL,
   `test_id` int(15) NOT NULL,
   `patient_id` int(15) NOT NULL,
   `doctor_id` int(15) NOT NULL,
@@ -156,12 +157,23 @@ CREATE TABLE `lab_tests` (
 -- --------------------------------------------------------
 
 --
+-- Table structure for table `lab_test_names`
+--
+
+CREATE TABLE `lab_test_names` (
+  `test_id` int(15) NOT NULL,
+  `test_name` varchar(100) NOT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
+
+-- --------------------------------------------------------
+
+--
 -- Table structure for table `lab_test_reports`
 --
 
 CREATE TABLE `lab_test_reports` (
-  `report_id` int(15) NOT NULL,
-  `test_id` int(15) NOT NULL,
+  `lab_report_id` int(15) NOT NULL,
+  `lab_test_id` int(15) NOT NULL,
   `report_image` blob NOT NULL,
   `description` varchar(500) NOT NULL,
   `result_time` timestamp NULL DEFAULT NULL
@@ -185,7 +197,7 @@ CREATE TABLE `patients` (
 --
 
 CREATE TABLE `patient_addmissions` (
-  `addmission_id` int(15) NOT NULL,
+  `admission_id` int(15) NOT NULL,
   `patient_id` int(15) NOT NULL,
   `room_id` int(15) NOT NULL,
   `bed_id` int(15) NOT NULL,
@@ -223,7 +235,7 @@ CREATE TABLE `rooms` (
 
 CREATE TABLE `types` (
   `type_id` int(15) NOT NULL,
-  `type` int(100) NOT NULL
+  `type_name` varchar(100) NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
 
 --
@@ -246,7 +258,7 @@ ALTER TABLE `appointments`
 -- Indexes for table `appointment_results`
 --
 ALTER TABLE `appointment_results`
-  ADD PRIMARY KEY (`result_id`);
+  ADD PRIMARY KEY (`appointment_result_id`);
 
 --
 -- Indexes for table `beds`
@@ -276,13 +288,19 @@ ALTER TABLE `lab_technicians`
 -- Indexes for table `lab_tests`
 --
 ALTER TABLE `lab_tests`
+  ADD PRIMARY KEY (`lab_test_id`);
+
+--
+-- Indexes for table `lab_test_names`
+--
+ALTER TABLE `lab_test_names`
   ADD PRIMARY KEY (`test_id`);
 
 --
 -- Indexes for table `lab_test_reports`
 --
 ALTER TABLE `lab_test_reports`
-  ADD PRIMARY KEY (`report_id`);
+  ADD PRIMARY KEY (`lab_report_id`);
 
 --
 -- Indexes for table `patients`
@@ -294,7 +312,7 @@ ALTER TABLE `patients`
 -- Indexes for table `patient_addmissions`
 --
 ALTER TABLE `patient_addmissions`
-  ADD PRIMARY KEY (`addmission_id`);
+  ADD PRIMARY KEY (`admission_id`);
 
 --
 -- Indexes for table `receptionists`
@@ -334,7 +352,7 @@ ALTER TABLE `appointments`
 -- AUTO_INCREMENT for table `appointment_results`
 --
 ALTER TABLE `appointment_results`
-  MODIFY `result_id` int(15) NOT NULL AUTO_INCREMENT;
+  MODIFY `appointment_result_id` int(15) NOT NULL AUTO_INCREMENT;
 
 --
 -- AUTO_INCREMENT for table `beds`
@@ -364,13 +382,19 @@ ALTER TABLE `lab_technicians`
 -- AUTO_INCREMENT for table `lab_tests`
 --
 ALTER TABLE `lab_tests`
+  MODIFY `lab_test_id` int(15) NOT NULL AUTO_INCREMENT;
+
+--
+-- AUTO_INCREMENT for table `lab_test_names`
+--
+ALTER TABLE `lab_test_names`
   MODIFY `test_id` int(15) NOT NULL AUTO_INCREMENT;
 
 --
 -- AUTO_INCREMENT for table `lab_test_reports`
 --
 ALTER TABLE `lab_test_reports`
-  MODIFY `report_id` int(15) NOT NULL AUTO_INCREMENT;
+  MODIFY `lab_report_id` int(15) NOT NULL AUTO_INCREMENT;
 
 --
 -- AUTO_INCREMENT for table `patients`
@@ -382,7 +406,7 @@ ALTER TABLE `patients`
 -- AUTO_INCREMENT for table `patient_addmissions`
 --
 ALTER TABLE `patient_addmissions`
-  MODIFY `addmission_id` int(15) NOT NULL AUTO_INCREMENT;
+  MODIFY `admission_id` int(15) NOT NULL AUTO_INCREMENT;
 
 --
 -- AUTO_INCREMENT for table `receptionists`
