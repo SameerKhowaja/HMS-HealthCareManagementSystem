@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Host: 127.0.0.1
--- Generation Time: Jan 18, 2021 at 11:32 AM
+-- Generation Time: Jan 18, 2021 at 03:34 PM
 -- Server version: 10.4.14-MariaDB
 -- PHP Version: 7.4.11
 
@@ -109,7 +109,7 @@ CREATE TABLE `doctors` (
 
 CREATE TABLE `hospital_data` (
   `primary_id` int(15) NOT NULL,
-  `type` varchar(100) NOT NULL,
+  `type_id` int(15) NOT NULL,
   `fname` int(100) NOT NULL,
   `lname` int(100) NOT NULL,
   `cnic` varchar(100) NOT NULL,
@@ -214,6 +214,17 @@ CREATE TABLE `rooms` (
   `room_number` varchar(100) NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
 
+-- --------------------------------------------------------
+
+--
+-- Table structure for table `types`
+--
+
+CREATE TABLE `types` (
+  `type_id` int(15) NOT NULL,
+  `type` int(100) NOT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
+
 --
 -- Indexes for dumped tables
 --
@@ -297,6 +308,12 @@ ALTER TABLE `rooms`
   ADD PRIMARY KEY (`rid`);
 
 --
+-- Indexes for table `types`
+--
+ALTER TABLE `types`
+  ADD PRIMARY KEY (`type_id`);
+
+--
 -- AUTO_INCREMENT for dumped tables
 --
 
@@ -377,6 +394,12 @@ ALTER TABLE `receptionists`
 --
 ALTER TABLE `rooms`
   MODIFY `rid` int(15) NOT NULL AUTO_INCREMENT;
+
+--
+-- AUTO_INCREMENT for table `types`
+--
+ALTER TABLE `types`
+  MODIFY `type_id` int(15) NOT NULL AUTO_INCREMENT;
 COMMIT;
 
 /*!40101 SET CHARACTER_SET_CLIENT=@OLD_CHARACTER_SET_CLIENT */;
