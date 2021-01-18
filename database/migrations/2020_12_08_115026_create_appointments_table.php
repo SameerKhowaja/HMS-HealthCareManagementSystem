@@ -14,12 +14,14 @@ class CreateAppointmentsTable extends Migration
     public function up()
     {
         Schema::create('appointments', function (Blueprint $table) {
-            $table->increments('id');
-            $table->timestamps();
+            $table->increments('appointment_id');
+            $table->integer('patient_id');
             $table->integer('doctor_id');
-            $table->integer('appointment_id');
+            $table->integer('receptionist_id');
             $table->date('appointment_date');
-            $table->string('confirm');//Confirm or not
+            $table->time('appointment_time');
+            $table->string('confirm');  //Confirm yes/no
+            $table->timestamps('current_datetime');
         });
     }
 

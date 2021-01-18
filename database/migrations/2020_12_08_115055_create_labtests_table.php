@@ -14,16 +14,16 @@ class CreateLabTestsTable extends Migration
     public function up()
     {
         Schema::create('lab_tests', function (Blueprint $table) {
-            $table->increments('id');
-            $table->timestamps();
+            $table->increments('lab_test_id');
+            $table->integer('test_id');
             $table->integer('patient_id');
+            $table->integer('doctor_id');
+            $table->integer('technician_id');
             $table->date('test_date');
+            $table->time('test_time');
             $table->date('result_date');
-            $table->integer('tech_id');
-            $table->string('description');//Any
-            $table->string('test_type');
-            $table->string('test_result');
-            $table->integer('report_id');
+            $table->time('result_time');
+            $table->string('result_posted'); //Result arrived yes/no
         });
     }
 

@@ -14,17 +14,8 @@ class CreateReceptionistsTable extends Migration
     public function up()
     {
         Schema::create('receptionists', function (Blueprint $table) {
-            $table->increments('id');
-            $table->timestamps();
-            $table->string('receptionist_name');
-            $table->string('receptionist_password');
-            $table->string('last_name');
-            $table->date('DOB');
-            $table->string('gender');
-            $table->string('description'); //qualification or other details
-            $table->string('email');
-            $table->bigInteger('contact_no');
-            $table->bigInteger('CNIC');
+            $table->increments('receptionist_id');
+            $table->integer('primary_id');
         });
     }
 
