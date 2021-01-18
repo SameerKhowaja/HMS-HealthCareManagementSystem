@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Host: 127.0.0.1
--- Generation Time: Jan 18, 2021 at 03:34 PM
+-- Generation Time: Jan 18, 2021 at 04:58 PM
 -- Server version: 10.4.14-MariaDB
 -- PHP Version: 7.4.11
 
@@ -28,7 +28,7 @@ SET time_zone = "+00:00";
 --
 
 CREATE TABLE `admins` (
-  `id` int(10) UNSIGNED NOT NULL,
+  `admin_id` int(15) UNSIGNED NOT NULL,
   `fname` varchar(100) COLLATE utf8mb4_unicode_ci NOT NULL,
   `lname` varchar(100) COLLATE utf8mb4_unicode_ci NOT NULL,
   `email_id` varchar(200) COLLATE utf8mb4_unicode_ci NOT NULL,
@@ -42,8 +42,8 @@ CREATE TABLE `admins` (
 -- Dumping data for table `admins`
 --
 
-INSERT INTO `admins` (`id`, `fname`, `lname`, `email_id`, `password`, `image`, `created_at`, `updated_at`) VALUES
-(1, 'Sameer', 'Khowaja', 'sameerkhowaja@gmail.com', 'password', '', '2021-01-18 09:46:24', NULL);
+INSERT INTO `admins` (`admin_id`, `fname`, `lname`, `email_id`, `password`, `image`, `created_at`, `updated_at`) VALUES
+(1, 'Sameer', 'Khowaja', 'sameerkhowaja@gmail.com', 'password', '', '2021-01-18 04:46:24', NULL);
 
 -- --------------------------------------------------------
 
@@ -53,27 +53,27 @@ INSERT INTO `admins` (`id`, `fname`, `lname`, `email_id`, `password`, `image`, `
 
 CREATE TABLE `appointments` (
   `appointment_id` int(15) NOT NULL,
-  `pid` int(15) NOT NULL,
-  `did` int(15) NOT NULL,
+  `patient_id` int(15) NOT NULL,
+  `doctor_id` int(15) NOT NULL,
+  `receptionist_id` int(15) NOT NULL,
   `appointment_date` date NOT NULL,
   `appointment_time` time NOT NULL,
   `confrim` varchar(10) NOT NULL,
-  `confirm_by_rid` int(15) NOT NULL,
   `current_datetime` timestamp NULL DEFAULT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
 
 -- --------------------------------------------------------
 
 --
--- Table structure for table `appointment_result`
+-- Table structure for table `appointment_results`
 --
 
-CREATE TABLE `appointment_result` (
+CREATE TABLE `appointment_results` (
   `result_id` int(15) NOT NULL,
   `appointment_id` int(15) NOT NULL,
   `prescribe_medicine` varchar(500) NOT NULL,
   `prescribe_test` varchar(500) NOT NULL,
-  `description` int(11) NOT NULL,
+  `description` varchar(500) NOT NULL,
   `result_time` timestamp NULL DEFAULT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
 
@@ -84,9 +84,9 @@ CREATE TABLE `appointment_result` (
 --
 
 CREATE TABLE `beds` (
-  `bid` int(15) NOT NULL,
+  `bed_id` int(15) NOT NULL,
   `bed_number` varchar(100) NOT NULL,
-  `rid` int(15) NOT NULL
+  `room_id` int(15) NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
 
 -- --------------------------------------------------------
@@ -96,7 +96,7 @@ CREATE TABLE `beds` (
 --
 
 CREATE TABLE `doctors` (
-  `did` int(15) NOT NULL,
+  `doctor_id` int(15) NOT NULL,
   `primary_id` int(15) NOT NULL,
   `specialist` varchar(300) NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
@@ -104,10 +104,10 @@ CREATE TABLE `doctors` (
 -- --------------------------------------------------------
 
 --
--- Table structure for table `hospital_data`
+-- Table structure for table `hospital_datas`
 --
 
-CREATE TABLE `hospital_data` (
+CREATE TABLE `hospital_datas` (
   `primary_id` int(15) NOT NULL,
   `type_id` int(15) NOT NULL,
   `fname` int(100) NOT NULL,
@@ -131,37 +131,38 @@ CREATE TABLE `hospital_data` (
 --
 
 CREATE TABLE `lab_technicians` (
-  `tid` int(15) NOT NULL,
+  `technician_id` int(15) NOT NULL,
   `primary_id` int(15) NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
 
 -- --------------------------------------------------------
 
 --
--- Table structure for table `lab_test`
+-- Table structure for table `lab_tests`
 --
 
-CREATE TABLE `lab_test` (
+CREATE TABLE `lab_tests` (
   `test_id` int(15) NOT NULL,
-  `pid` int(15) NOT NULL,
-  `did` int(15) NOT NULL,
-  `tid` int(15) NOT NULL,
+  `patient_id` int(15) NOT NULL,
+  `doctor_id` int(15) NOT NULL,
+  `technician_id` int(15) NOT NULL,
   `test_date` date NOT NULL,
   `test_time` time NOT NULL,
   `result_date` date NOT NULL,
-  `result_time` time NOT NULL
+  `result_time` time NOT NULL,
+  `result_posted` varchar(10) NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
 
 -- --------------------------------------------------------
 
 --
--- Table structure for table `lab_test_report`
+-- Table structure for table `lab_test_reports`
 --
 
-CREATE TABLE `lab_test_report` (
+CREATE TABLE `lab_test_reports` (
   `report_id` int(15) NOT NULL,
   `test_id` int(15) NOT NULL,
-  `report` blob NOT NULL,
+  `report_image` blob NOT NULL,
   `description` varchar(500) NOT NULL,
   `result_time` timestamp NULL DEFAULT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
@@ -173,21 +174,21 @@ CREATE TABLE `lab_test_report` (
 --
 
 CREATE TABLE `patients` (
-  `pid` int(15) NOT NULL,
+  `patient_id` int(15) NOT NULL,
   `primary_id` int(15) NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
 
 -- --------------------------------------------------------
 
 --
--- Table structure for table `patient_addmission`
+-- Table structure for table `patient_addmissions`
 --
 
-CREATE TABLE `patient_addmission` (
+CREATE TABLE `patient_addmissions` (
   `addmission_id` int(15) NOT NULL,
-  `pid` int(15) NOT NULL,
-  `rid` int(15) NOT NULL,
-  `bid` int(15) NOT NULL,
+  `patient_id` int(15) NOT NULL,
+  `room_id` int(15) NOT NULL,
+  `bed_id` int(15) NOT NULL,
   `date_admitted` timestamp NULL DEFAULT NULL,
   `date_discharged` timestamp NULL DEFAULT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
@@ -199,7 +200,7 @@ CREATE TABLE `patient_addmission` (
 --
 
 CREATE TABLE `receptionists` (
-  `rid` int(15) NOT NULL,
+  `receptionist_id` int(15) NOT NULL,
   `primary_id` int(15) NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
 
@@ -210,7 +211,7 @@ CREATE TABLE `receptionists` (
 --
 
 CREATE TABLE `rooms` (
-  `rid` int(15) NOT NULL,
+  `room_id` int(15) NOT NULL,
   `room_number` varchar(100) NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
 
@@ -224,182 +225,6 @@ CREATE TABLE `types` (
   `type_id` int(15) NOT NULL,
   `type` int(100) NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
-
---
--- Indexes for dumped tables
---
-
---
--- Indexes for table `admins`
---
-ALTER TABLE `admins`
-  ADD PRIMARY KEY (`id`);
-
---
--- Indexes for table `appointments`
---
-ALTER TABLE `appointments`
-  ADD PRIMARY KEY (`appointment_id`);
-
---
--- Indexes for table `appointment_result`
---
-ALTER TABLE `appointment_result`
-  ADD PRIMARY KEY (`result_id`);
-
---
--- Indexes for table `beds`
---
-ALTER TABLE `beds`
-  ADD PRIMARY KEY (`bid`);
-
---
--- Indexes for table `doctors`
---
-ALTER TABLE `doctors`
-  ADD PRIMARY KEY (`did`);
-
---
--- Indexes for table `hospital_data`
---
-ALTER TABLE `hospital_data`
-  ADD PRIMARY KEY (`primary_id`);
-
---
--- Indexes for table `lab_technicians`
---
-ALTER TABLE `lab_technicians`
-  ADD PRIMARY KEY (`tid`);
-
---
--- Indexes for table `lab_test`
---
-ALTER TABLE `lab_test`
-  ADD PRIMARY KEY (`test_id`);
-
---
--- Indexes for table `lab_test_report`
---
-ALTER TABLE `lab_test_report`
-  ADD PRIMARY KEY (`report_id`);
-
---
--- Indexes for table `patients`
---
-ALTER TABLE `patients`
-  ADD PRIMARY KEY (`pid`);
-
---
--- Indexes for table `patient_addmission`
---
-ALTER TABLE `patient_addmission`
-  ADD PRIMARY KEY (`addmission_id`);
-
---
--- Indexes for table `receptionists`
---
-ALTER TABLE `receptionists`
-  ADD PRIMARY KEY (`rid`);
-
---
--- Indexes for table `rooms`
---
-ALTER TABLE `rooms`
-  ADD PRIMARY KEY (`rid`);
-
---
--- Indexes for table `types`
---
-ALTER TABLE `types`
-  ADD PRIMARY KEY (`type_id`);
-
---
--- AUTO_INCREMENT for dumped tables
---
-
---
--- AUTO_INCREMENT for table `admins`
---
-ALTER TABLE `admins`
-  MODIFY `id` int(10) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=3;
-
---
--- AUTO_INCREMENT for table `appointments`
---
-ALTER TABLE `appointments`
-  MODIFY `appointment_id` int(15) NOT NULL AUTO_INCREMENT;
-
---
--- AUTO_INCREMENT for table `appointment_result`
---
-ALTER TABLE `appointment_result`
-  MODIFY `result_id` int(15) NOT NULL AUTO_INCREMENT;
-
---
--- AUTO_INCREMENT for table `beds`
---
-ALTER TABLE `beds`
-  MODIFY `bid` int(15) NOT NULL AUTO_INCREMENT;
-
---
--- AUTO_INCREMENT for table `doctors`
---
-ALTER TABLE `doctors`
-  MODIFY `did` int(15) NOT NULL AUTO_INCREMENT;
-
---
--- AUTO_INCREMENT for table `hospital_data`
---
-ALTER TABLE `hospital_data`
-  MODIFY `primary_id` int(15) NOT NULL AUTO_INCREMENT;
-
---
--- AUTO_INCREMENT for table `lab_technicians`
---
-ALTER TABLE `lab_technicians`
-  MODIFY `tid` int(15) NOT NULL AUTO_INCREMENT;
-
---
--- AUTO_INCREMENT for table `lab_test`
---
-ALTER TABLE `lab_test`
-  MODIFY `test_id` int(15) NOT NULL AUTO_INCREMENT;
-
---
--- AUTO_INCREMENT for table `lab_test_report`
---
-ALTER TABLE `lab_test_report`
-  MODIFY `report_id` int(15) NOT NULL AUTO_INCREMENT;
-
---
--- AUTO_INCREMENT for table `patients`
---
-ALTER TABLE `patients`
-  MODIFY `pid` int(15) NOT NULL AUTO_INCREMENT;
-
---
--- AUTO_INCREMENT for table `patient_addmission`
---
-ALTER TABLE `patient_addmission`
-  MODIFY `addmission_id` int(15) NOT NULL AUTO_INCREMENT;
-
---
--- AUTO_INCREMENT for table `receptionists`
---
-ALTER TABLE `receptionists`
-  MODIFY `rid` int(15) NOT NULL AUTO_INCREMENT;
-
---
--- AUTO_INCREMENT for table `rooms`
---
-ALTER TABLE `rooms`
-  MODIFY `rid` int(15) NOT NULL AUTO_INCREMENT;
-
---
--- AUTO_INCREMENT for table `types`
---
-ALTER TABLE `types`
-  MODIFY `type_id` int(15) NOT NULL AUTO_INCREMENT;
 COMMIT;
 
 /*!40101 SET CHARACTER_SET_CLIENT=@OLD_CHARACTER_SET_CLIENT */;
