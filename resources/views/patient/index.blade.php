@@ -14,21 +14,21 @@
           <path d="M88.941 7.72271C86.8073 8.18448 85.4857 8.93287 83.8297 10.573C81.7915 12.6111 80.8998 14.7767 80.8839 17.6747C80.8839 20.0791 81.3457 21.6714 82.6036 23.5981C85.1991 27.5788 90.5652 29.1075 95.0077 27.1489C96.202 26.6235 97.428 25.8432 97.6191 25.477C97.7306 25.2541 97.4917 24.8082 96.4886 23.3433C95.788 22.3242 95.1351 21.4962 95.0555 21.4962C94.96 21.4962 94.6733 21.6395 94.4345 21.8147C92.046 23.5185 89.2117 23.3751 87.5079 21.4644C86.5048 20.3657 86.2341 19.5854 86.2341 17.7543C86.2341 16.3212 86.2818 16.0824 86.6799 15.2862C87.2213 14.2193 87.906 13.4869 88.8614 12.9296C89.5142 12.5474 89.7372 12.4997 91.1702 12.4997C92.7466 12.4997 92.7785 12.5156 94.0046 13.1684L95.2466 13.8531L96.4249 12.0379C97.0777 11.0506 97.6191 10.1271 97.6191 10.0156C97.6191 9.72903 95.9631 8.66218 94.7848 8.18448C93.081 7.49979 90.7881 7.30871 88.941 7.72271Z" fill="#0052E9"/>
           <path d="M107.491 7.7228C103.797 8.55081 100.629 11.6558 99.7847 15.2863C99.4662 16.6079 99.4662 19.0919 99.7687 20.3021C101.377 26.6554 108.319 29.84 114.147 26.9102C114.816 26.5599 115.612 26.0822 115.915 25.8274C116.392 25.4293 116.44 25.3497 116.265 25.0153C115.883 24.3147 113.829 21.4804 113.717 21.5282C113.67 21.56 112.985 21.8944 112.205 22.2925C110.931 22.9294 110.692 22.9931 109.657 22.9931C107.348 22.9931 105.692 21.6874 105.007 19.3308C104.227 16.6238 105.724 13.4551 108.16 12.643C108.733 12.452 109.307 12.4042 110.198 12.452C111.249 12.5157 111.584 12.6112 112.635 13.1685C113.733 13.7736 113.861 13.8054 114.068 13.5666C114.529 13.0093 116.249 10.2387 116.249 10.0157C116.249 9.58581 114.131 8.35973 112.587 7.89796C111.345 7.5158 108.781 7.43619 107.491 7.7228Z" fill="#0052E9"/>
           <path d="M126.44 7.72284C123.255 8.35976 120.66 10.3183 119.275 13.1367C118.447 14.8086 118.16 15.9869 118.16 17.7544C118.16 22.3243 121.042 26.1937 125.485 27.579C127.268 28.1363 129.863 28.0885 131.615 27.4834C134.306 26.5599 136.44 24.7447 137.586 22.404C138.51 20.4932 138.749 19.3786 138.653 17.3563C138.526 14.522 137.618 12.452 135.628 10.4775C133.271 8.13684 129.704 7.06999 126.44 7.72284ZM129.943 12.6749C131.105 13.0252 132.459 14.3628 132.937 15.6526C133.924 18.2799 132.921 21.2097 130.596 22.5791C129.943 22.9613 129.704 23.009 128.43 23.009C127.252 23.009 126.886 22.9453 126.329 22.6428C125.341 22.1173 124.545 21.2575 124.02 20.111C123.606 19.2512 123.542 18.9168 123.542 17.7703C123.542 16.0029 124.052 14.8245 125.278 13.694C126.599 12.4838 128.16 12.1495 129.943 12.6749Z" fill="#0052E9"/>
-        </svg>   
+        </svg>
         <svg class="hamburger" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" aria-hidden="true" focusable="false" width="1em" height="1em" style="-ms-transform: rotate(360deg); -webkit-transform: rotate(360deg); transform: rotate(360deg);" preserveAspectRatio="xMidYMid meet" viewBox="0 0 24 24">
           <g fill="none">
             <path d="M4 6h16M4 12h16m-7 6h7" stroke="#0052E9" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
           </g>
-        </svg>              
+        </svg>
       </div>
       <ul class="navLists">
         <a href="http://localhost/laravel/public/patient">
           <li class="active text-normal">
-              <svg xmlns="http://www.w3.org/2000/svg" 
-              xmlns:xlink="http://www.w3.org/1999/xlink" 
-              aria-hidden="true" focusable="false" 
-              width="1em" 
-              height="1em" 
+              <svg xmlns="http://www.w3.org/2000/svg"
+              xmlns:xlink="http://www.w3.org/1999/xlink"
+              aria-hidden="true" focusable="false"
+              width="1em"
+              height="1em"
               fill="#0052E9"
               style="-ms-transform: rotate(360deg); -webkit-transform: rotate(360deg); transform: rotate(360deg);" preserveAspectRatio="xMidYMid meet" viewBox="0 0 16 16">
               <g>
@@ -56,11 +56,11 @@
         </a>
         <a href="http://localhost/laravel/public/patient/patient">
           <li class="text-normal">
-            <svg xmlns="http://www.w3.org/2000/svg" 
-                  xmlns:xlink="http://www.w3.org/1999/xlink" 
-                  aria-hidden="true" focusable="false" 
-                  width="1em" 
-                  height="1em" 
+            <svg xmlns="http://www.w3.org/2000/svg"
+                  xmlns:xlink="http://www.w3.org/1999/xlink"
+                  aria-hidden="true" focusable="false"
+                  width="1em"
+                  height="1em"
                   fill="#0052E9"
                   style="-ms-transform: rotate(360deg); -webkit-transform: rotate(360deg); transform: rotate(360deg);" preserveAspectRatio="xMidYMid meet" viewBox="0 0 16 16">
               <g>
@@ -72,11 +72,11 @@
         </a>
         <!-- <a href="http://localhost/laravel/public/laboratorist">
           <li class="text-normal">
-            <svg xmlns="http://www.w3.org/2000/svg" 
-                  xmlns:xlink="http://www.w3.org/1999/xlink" 
-                  aria-hidden="true" focusable="false" 
-                  width="1em" 
-                  height="1em" 
+            <svg xmlns="http://www.w3.org/2000/svg"
+                  xmlns:xlink="http://www.w3.org/1999/xlink"
+                  aria-hidden="true" focusable="false"
+                  width="1em"
+                  height="1em"
                   fill="#0052E9"
                   style="-ms-transform: rotate(360deg); -webkit-transform: rotate(360deg); transform: rotate(360deg);" preserveAspectRatio="xMidYMid meet" viewBox="0 0 16 16">
               <g>
@@ -88,11 +88,11 @@
         </a> -->
         <a href="http://localhost/laravel/public/patient/receptionist">
           <li class="text-normal">
-            <svg xmlns="http://www.w3.org/2000/svg" 
-                  xmlns:xlink="http://www.w3.org/1999/xlink" 
-                  aria-hidden="true" focusable="false" 
-                  width="1em" 
-                  height="1em" 
+            <svg xmlns="http://www.w3.org/2000/svg"
+                  xmlns:xlink="http://www.w3.org/1999/xlink"
+                  aria-hidden="true" focusable="false"
+                  width="1em"
+                  height="1em"
                   fill="#0052E9"
                   style="-ms-transform: rotate(360deg); -webkit-transform: rotate(360deg); transform: rotate(360deg);" preserveAspectRatio="xMidYMid meet" viewBox="0 0 16 16">
               <g>
@@ -105,11 +105,11 @@
 
         <a href="http://localhost/laravel/public/patient/viewAppointment">
           <li class="text-normal">
-            <svg xmlns="http://www.w3.org/2000/svg" 
-                  xmlns:xlink="http://www.w3.org/1999/xlink" 
-                  aria-hidden="true" focusable="false" 
-                  width="1em" 
-                  height="1em" 
+            <svg xmlns="http://www.w3.org/2000/svg"
+                  xmlns:xlink="http://www.w3.org/1999/xlink"
+                  aria-hidden="true" focusable="false"
+                  width="1em"
+                  height="1em"
                   fill="#0052E9"
                   style="-ms-transform: rotate(360deg); -webkit-transform: rotate(360deg); transform: rotate(360deg);" preserveAspectRatio="xMidYMid meet" viewBox="0 0 16 16">
               <g>
@@ -119,9 +119,9 @@
             Profile
           </li>
         </a>
-        
+
       </ul>
-      
+
     </nav>
   </header>
 
@@ -137,11 +137,11 @@
         <div class="topNav-btnWrapper">     </div>
         <div class="profile-wrapper">
         <ul  class="navbar-nav" >
-                
+
                 <li class="nav-item dropdown" >
                   <a style='font-size: 15px;' class="nav-link dropdown-toggle" href="#" id="navbarDropdownMenuLink" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
                   <img src="http://localhost/laravel/resources/images/profile.png" width="35" height="40" class="rounded-circle">
-                  {{session('user')}} 
+                  {{session('username')}}
                 </a>
                   <div class="dropdown-menu" aria-labelledby="navbarDropdownMenuLink" >
                       <a class="dropdown-item" href="http://localhost/laravel/public/admin">Dashboard</a>
@@ -149,23 +149,23 @@
                       <a class="dropdown-item" href="http://localhost/laravel/public/">Log Out</a>
                   </div>
               </li>
-              <li class="nav-item"><li>   
+              <li class="nav-item"><li>
             </ul>
         </div>
       </div>
     </section>
     <div>
-      
+
       <section id="overview">
         <div style="display: flex; justify-content: space-between; align-items: center;">
           <h3 class="text-large text-grey">Admin / Dashboard</h3>
           <p class="text-normal text-grey">
             Filter
-            <svg xmlns="http://www.w3.org/2000/svg" 
-                  xmlns:xlink="http://www.w3.org/1999/xlink" 
-                  aria-hidden="true" focusable="false" 
-                  width="1em" 
-                  height="1em" 
+            <svg xmlns="http://www.w3.org/2000/svg"
+                  xmlns:xlink="http://www.w3.org/1999/xlink"
+                  aria-hidden="true" focusable="false"
+                  width="1em"
+                  height="1em"
                   style="-ms-transform: rotate(360deg); -webkit-transform: rotate(360deg); transform: rotate(360deg);" preserveAspectRatio="xMidYMid meet" viewBox="0 0 32 32">
               <g fill="none" stroke="#666666" stroke-linecap="round" stroke-linejoin="round" stroke-width="2">
                 <path d="M2 5s4-2 14-2s14 2 14 2L19 18v9l-6 3V18L2 5z"/>
@@ -183,14 +183,14 @@
              <p class="text-large text-grey">Total number of Patients</p>
              <span>
                <p class="text-normal text-grey">
-                 62% 
+                 62%
                 <svg width="13" height="9" viewBox="0 0 13 9" fill="none" xmlns="http://www.w3.org/2000/svg">
                   <path d="M6.49999 0L13 8.25H0L6.49999 0Z" fill="#5DF888"/>
                 </svg>
               </p>
               <svg width="63" height="26" viewBox="0 0 63 26" fill="none" xmlns="http://www.w3.org/2000/svg">
                 <path fill-rule="evenodd" clip-rule="evenodd" d="M0 26V10.3755L5.60289 18.645L11.8586 14.0553L17.1566 8.95548L22.5442 6.43643L27.8222 8.95548L33.8206 14.6354L39.481 8.95548L45.2619 14.0553L50.9223 3.80797C50.9223 3.80797 52.9538 5.69498 53.7891 7.26675C53.9586 7.58562 62.0776 -1.1916 62.7162 0.137052C63.3548 1.4657 62.7162 26 62.7162 26H0Z" fill="#C2D5FA"/>
-              </svg>  
+              </svg>
              </span>
            </div>
           </div>
@@ -203,14 +203,14 @@
               <p class="text-large text-grey">Total number of Doctors</p>
               <span>
                 <p class="text-normal text-grey">
-                  79% 
+                  79%
                  <svg width="13" height="9" viewBox="0 0 13 9" fill="none" xmlns="http://www.w3.org/2000/svg">
                    <path d="M6.49999 0L13 8.25H0L6.49999 0Z" fill="#5DF888"/>
                  </svg>
                </p>
                <svg width="63" height="26" viewBox="0 0 63 26" fill="none" xmlns="http://www.w3.org/2000/svg">
                  <path fill-rule="evenodd" clip-rule="evenodd" d="M0 26V10.3755L5.60289 18.645L11.8586 14.0553L17.1566 8.95548L22.5442 6.43643L27.8222 8.95548L33.8206 14.6354L39.481 8.95548L45.2619 14.0553L50.9223 3.80797C50.9223 3.80797 52.9538 5.69498 53.7891 7.26675C53.9586 7.58562 62.0776 -1.1916 62.7162 0.137052C63.3548 1.4657 62.7162 26 62.7162 26H0Z" fill="#C2D5FA"/>
-               </svg>  
+               </svg>
               </span>
             </div>
           </div>
@@ -223,14 +223,14 @@
               <p class="text-large text-grey">Total number of Laboratorist</p>
               <span>
                 <p class="text-normal text-grey">
-                  63% 
+                  63%
                  <svg width="13" height="9" viewBox="0 0 13 9" fill="none" xmlns="http://www.w3.org/2000/svg">
                    <path d="M6.49999 0L13 8.25H0L6.49999 0Z" fill="#5DF888"/>
                  </svg>
                </p>
                <svg width="63" height="26" viewBox="0 0 63 26" fill="none" xmlns="http://www.w3.org/2000/svg">
                  <path fill-rule="evenodd" clip-rule="evenodd" d="M0 26V10.3755L5.60289 18.645L11.8586 14.0553L17.1566 8.95548L22.5442 6.43643L27.8222 8.95548L33.8206 14.6354L39.481 8.95548L45.2619 14.0553L50.9223 3.80797C50.9223 3.80797 52.9538 5.69498 53.7891 7.26675C53.9586 7.58562 62.0776 -1.1916 62.7162 0.137052C63.3548 1.4657 62.7162 26 62.7162 26H0Z" fill="#C2D5FA"/>
-               </svg>  
+               </svg>
               </span>
             </div>
           </div>
@@ -241,11 +241,11 @@
           <h3 class="text-large text-grey">New Users</h3>
           <p class="text-normal text-grey">
             Filter
-            <svg xmlns="http://www.w3.org/2000/svg" 
-                  xmlns:xlink="http://www.w3.org/1999/xlink" 
-                  aria-hidden="true" focusable="false" 
-                  width="1em" 
-                  height="1em" 
+            <svg xmlns="http://www.w3.org/2000/svg"
+                  xmlns:xlink="http://www.w3.org/1999/xlink"
+                  aria-hidden="true" focusable="false"
+                  width="1em"
+                  height="1em"
                   style="-ms-transform: rotate(360deg); -webkit-transform: rotate(360deg); transform: rotate(360deg);" preserveAspectRatio="xMidYMid meet" viewBox="0 0 32 32">
               <g fill="none" stroke="#666666" stroke-linecap="round" stroke-linejoin="round" stroke-width="2">
                 <path d="M2 5s4-2 14-2s14 2 14 2L19 18v9l-6 3V18L2 5z"/>
@@ -300,8 +300,8 @@
           <button class="viewAll-btn text-small">View All Patients</button>
         </div>
       </section>
-      
-      
+
+
       <section id="statistics">
         <h3 class="text-large text-grey">Statistics</h3>
         <div class="cardWrapper">
@@ -310,11 +310,11 @@
               <h3 class="text-normal text-bold text-grey">User Growth (New Users)</h3>
               <p class="text-normal text-grey">
                 Filter
-                <svg xmlns="http://www.w3.org/2000/svg" 
-                      xmlns:xlink="http://www.w3.org/1999/xlink" 
-                      aria-hidden="true" focusable="false" 
-                      width="1em" 
-                      height="1em" 
+                <svg xmlns="http://www.w3.org/2000/svg"
+                      xmlns:xlink="http://www.w3.org/1999/xlink"
+                      aria-hidden="true" focusable="false"
+                      width="1em"
+                      height="1em"
                       style="-ms-transform: rotate(360deg); -webkit-transform: rotate(360deg); transform: rotate(360deg);" preserveAspectRatio="xMidYMid meet" viewBox="0 0 32 32">
                   <g fill="none" stroke="#666666" stroke-linecap="round" stroke-linejoin="round" stroke-width="2">
                     <path d="M2 5s4-2 14-2s14 2 14 2L19 18v9l-6 3V18L2 5z"/>
@@ -332,11 +332,11 @@
               <h3 class="text-normal text-bold text-grey">Tutor Growth (New Tutors)</h3>
               <p class="text-normal text-grey">
                 Filter
-                <svg xmlns="http://www.w3.org/2000/svg" 
-                      xmlns:xlink="http://www.w3.org/1999/xlink" 
-                      aria-hidden="true" focusable="false" 
-                      width="1em" 
-                      height="1em" 
+                <svg xmlns="http://www.w3.org/2000/svg"
+                      xmlns:xlink="http://www.w3.org/1999/xlink"
+                      aria-hidden="true" focusable="false"
+                      width="1em"
+                      height="1em"
                       style="-ms-transform: rotate(360deg); -webkit-transform: rotate(360deg); transform: rotate(360deg);" preserveAspectRatio="xMidYMid meet" viewBox="0 0 32 32">
                   <g fill="none" stroke="#666666" stroke-linecap="round" stroke-linejoin="round" stroke-width="2">
                     <path d="M2 5s4-2 14-2s14 2 14 2L19 18v9l-6 3V18L2 5z"/>
@@ -365,7 +365,7 @@
           </button>
         </div>
         <div class="modal-body d-inline-flex align-items-center justify-content-center flex-column p-5">
-          <div class="pb-5">   
+          <div class="pb-5">
             <svg width="104" height="132" viewBox="0 0 104 132" fill="none" xmlns="http://www.w3.org/2000/svg">
               <path d="M92.6324 131.958H0V36.7396C0 16.4813 16.4511 0 36.6722 0H55.9602C76.1813 0 92.6324 16.4813 92.6324 36.7396V131.958Z" fill="#F2F2F2"/>
               <path d="M73.3447 131.958H0.000124293V36.7396C-0.0201214 28.9771 2.43344 21.4107 7.00357 15.1422C7.17203 14.9122 7.34007 14.6851 7.51337 14.4605C9.72391 11.5559 12.3545 8.99794 15.3184 6.87091C15.4858 6.74887 15.6539 6.62895 15.8245 6.50902C18.3045 4.78961 20.9873 3.38403 23.8117 2.32427C23.9794 2.26058 24.1502 2.19677 24.321 2.13556C26.8754 1.2223 29.5233 0.596723 32.2159 0.270376C32.3828 0.247532 32.5542 0.229655 32.7256 0.211779C35.3495 -0.0692908 37.9958 -0.0692908 40.6197 0.211779C40.7906 0.229655 40.962 0.247529 41.1309 0.270621C43.8228 0.596988 46.47 1.22249 49.0238 2.13557C49.1946 2.19678 49.3654 2.26059 49.5336 2.3244C52.3231 3.37079 54.9743 4.7554 57.428 6.44733C57.5985 6.56465 57.7691 6.68458 57.9372 6.8045C59.5985 7.99256 61.159 9.31613 62.6027 10.7617C63.7605 11.9212 64.8393 13.1572 65.832 14.4613C66.0047 14.6851 66.1728 14.9122 66.3409 15.1419C70.9112 21.4104 73.3649 28.9769 73.3447 36.7396V131.958Z" fill="#CCCCCC"/>

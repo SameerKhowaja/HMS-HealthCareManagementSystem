@@ -22,10 +22,11 @@ class CreateHospitalDatasTable extends Migration
             $table->string('email_id');
             $table->string('gender');
             $table->string('phone_number');
+            $table->string('city');
             $table->string('address');
             $table->date('dob');
             $table->string('password');
-            $table->blob('image');
+            $table->binary('image');
             $table->timestamps('created_at');
             $table->timestamps('updated_at');
         });

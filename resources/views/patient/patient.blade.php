@@ -14,21 +14,21 @@
           <path d="M88.941 7.72271C86.8073 8.18448 85.4857 8.93287 83.8297 10.573C81.7915 12.6111 80.8998 14.7767 80.8839 17.6747C80.8839 20.0791 81.3457 21.6714 82.6036 23.5981C85.1991 27.5788 90.5652 29.1075 95.0077 27.1489C96.202 26.6235 97.428 25.8432 97.6191 25.477C97.7306 25.2541 97.4917 24.8082 96.4886 23.3433C95.788 22.3242 95.1351 21.4962 95.0555 21.4962C94.96 21.4962 94.6733 21.6395 94.4345 21.8147C92.046 23.5185 89.2117 23.3751 87.5079 21.4644C86.5048 20.3657 86.2341 19.5854 86.2341 17.7543C86.2341 16.3212 86.2818 16.0824 86.6799 15.2862C87.2213 14.2193 87.906 13.4869 88.8614 12.9296C89.5142 12.5474 89.7372 12.4997 91.1702 12.4997C92.7466 12.4997 92.7785 12.5156 94.0046 13.1684L95.2466 13.8531L96.4249 12.0379C97.0777 11.0506 97.6191 10.1271 97.6191 10.0156C97.6191 9.72903 95.9631 8.66218 94.7848 8.18448C93.081 7.49979 90.7881 7.30871 88.941 7.72271Z" fill="#0052E9"/>
           <path d="M107.491 7.7228C103.797 8.55081 100.629 11.6558 99.7847 15.2863C99.4662 16.6079 99.4662 19.0919 99.7687 20.3021C101.377 26.6554 108.319 29.84 114.147 26.9102C114.816 26.5599 115.612 26.0822 115.915 25.8274C116.392 25.4293 116.44 25.3497 116.265 25.0153C115.883 24.3147 113.829 21.4804 113.717 21.5282C113.67 21.56 112.985 21.8944 112.205 22.2925C110.931 22.9294 110.692 22.9931 109.657 22.9931C107.348 22.9931 105.692 21.6874 105.007 19.3308C104.227 16.6238 105.724 13.4551 108.16 12.643C108.733 12.452 109.307 12.4042 110.198 12.452C111.249 12.5157 111.584 12.6112 112.635 13.1685C113.733 13.7736 113.861 13.8054 114.068 13.5666C114.529 13.0093 116.249 10.2387 116.249 10.0157C116.249 9.58581 114.131 8.35973 112.587 7.89796C111.345 7.5158 108.781 7.43619 107.491 7.7228Z" fill="#0052E9"/>
           <path d="M126.44 7.72284C123.255 8.35976 120.66 10.3183 119.275 13.1367C118.447 14.8086 118.16 15.9869 118.16 17.7544C118.16 22.3243 121.042 26.1937 125.485 27.579C127.268 28.1363 129.863 28.0885 131.615 27.4834C134.306 26.5599 136.44 24.7447 137.586 22.404C138.51 20.4932 138.749 19.3786 138.653 17.3563C138.526 14.522 137.618 12.452 135.628 10.4775C133.271 8.13684 129.704 7.06999 126.44 7.72284ZM129.943 12.6749C131.105 13.0252 132.459 14.3628 132.937 15.6526C133.924 18.2799 132.921 21.2097 130.596 22.5791C129.943 22.9613 129.704 23.009 128.43 23.009C127.252 23.009 126.886 22.9453 126.329 22.6428C125.341 22.1173 124.545 21.2575 124.02 20.111C123.606 19.2512 123.542 18.9168 123.542 17.7703C123.542 16.0029 124.052 14.8245 125.278 13.694C126.599 12.4838 128.16 12.1495 129.943 12.6749Z" fill="#0052E9"/>
-        </svg>   
+        </svg>
         <svg class="hamburger" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" aria-hidden="true" focusable="false" width="1em" height="1em" style="-ms-transform: rotate(360deg); -webkit-transform: rotate(360deg); transform: rotate(360deg);" preserveAspectRatio="xMidYMid meet" viewBox="0 0 24 24">
           <g fill="none">
             <path d="M4 6h16M4 12h16m-7 6h7" stroke="#0052E9" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
           </g>
-        </svg>              
+        </svg>
       </div>
       <ul class="navLists">
         <a href="http://localhost/laravel/public/patient">
           <li class="text-normal">
-              <svg xmlns="http://www.w3.org/2000/svg" 
-              xmlns:xlink="http://www.w3.org/1999/xlink" 
-              aria-hidden="true" focusable="false" 
-              width="1em" 
-              height="1em" 
+              <svg xmlns="http://www.w3.org/2000/svg"
+              xmlns:xlink="http://www.w3.org/1999/xlink"
+              aria-hidden="true" focusable="false"
+              width="1em"
+              height="1em"
               fill="#0052E9"
               style="-ms-transform: rotate(360deg); -webkit-transform: rotate(360deg); transform: rotate(360deg);" preserveAspectRatio="xMidYMid meet" viewBox="0 0 16 16">
               <g>
@@ -38,7 +38,7 @@
             Dashboard
             </li>
         </a>
-        
+
         <a href="http://localhost/laravel/public/patient/doctor">
           <li class="text-normal">
             <svg width="12" height="12" viewBox="0 0 12 12" fill="#0052E9" xmlns="http://www.w3.org/2000/svg">
@@ -49,11 +49,11 @@
         </a>
         <a href="http://localhost/laravel/public/patient/patient">
           <li class="active text-normal">
-            <svg xmlns="http://www.w3.org/2000/svg" 
-                  xmlns:xlink="http://www.w3.org/1999/xlink" 
-                  aria-hidden="true" focusable="false" 
-                  width="1em" 
-                  height="1em" 
+            <svg xmlns="http://www.w3.org/2000/svg"
+                  xmlns:xlink="http://www.w3.org/1999/xlink"
+                  aria-hidden="true" focusable="false"
+                  width="1em"
+                  height="1em"
                   fill="#0052E9"
                   style="-ms-transform: rotate(360deg); -webkit-transform: rotate(360deg); transform: rotate(360deg);" preserveAspectRatio="xMidYMid meet" viewBox="0 0 16 16">
               <g>
@@ -63,14 +63,14 @@
             Admit History
           </li>
         </a>
-        
+
         <a href="http://localhost/laravel/public/patient/receptionist">
           <li class="text-normal">
-            <svg xmlns="http://www.w3.org/2000/svg" 
-                  xmlns:xlink="http://www.w3.org/1999/xlink" 
-                  aria-hidden="true" focusable="false" 
-                  width="1em" 
-                  height="1em" 
+            <svg xmlns="http://www.w3.org/2000/svg"
+                  xmlns:xlink="http://www.w3.org/1999/xlink"
+                  aria-hidden="true" focusable="false"
+                  width="1em"
+                  height="1em"
                   fill="#0052E9"
                   style="-ms-transform: rotate(360deg); -webkit-transform: rotate(360deg); transform: rotate(360deg);" preserveAspectRatio="xMidYMid meet" viewBox="0 0 16 16">
               <g>
@@ -82,11 +82,11 @@
         </a>
         <a href="http://localhost/laravel/public/patient/viewAppointment">
           <li class="text-normal">
-            <svg xmlns="http://www.w3.org/2000/svg" 
-                  xmlns:xlink="http://www.w3.org/1999/xlink" 
-                  aria-hidden="true" focusable="false" 
-                  width="1em" 
-                  height="1em" 
+            <svg xmlns="http://www.w3.org/2000/svg"
+                  xmlns:xlink="http://www.w3.org/1999/xlink"
+                  aria-hidden="true" focusable="false"
+                  width="1em"
+                  height="1em"
                   fill="#0052E9"
                   style="-ms-transform: rotate(360deg); -webkit-transform: rotate(360deg); transform: rotate(360deg);" preserveAspectRatio="xMidYMid meet" viewBox="0 0 16 16">
               <g>
@@ -97,10 +97,10 @@
           </li>
         </a>
       </ul>
-     
+
     </nav>
   </header>
-  
+
   <main class="mainWrapper">
   <section class="topNav" style='border-bottom: 0.5px solid #88B0B9;'>
       <div class="hamburger">
@@ -113,11 +113,11 @@
         <div class="topNav-btnWrapper">     </div>
         <div class="profile-wrapper">
         <ul  class="navbar-nav" >
-                
+
                 <li class="nav-item dropdown" >
                   <a style='font-size: 15px;' class="nav-link dropdown-toggle" href="#" id="navbarDropdownMenuLink" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
                   <img src="http://localhost/laravel/resources/images/profile.png" width="35" height="40" class="rounded-circle">
-                  {{session('user')}} 
+                  {{session('username')}}
                 </a>
                   <div class="dropdown-menu" aria-labelledby="navbarDropdownMenuLink" >
                       <a class="dropdown-item" href="http://localhost/laravel/public/admin">Dashboard</a>
@@ -125,24 +125,24 @@
                       <a class="dropdown-item" href="http://localhost/laravel/public/">Log Out</a>
                   </div>
               </li>
-              <li class="nav-item"><li>   
+              <li class="nav-item"><li>
             </ul>
         </div>
       </div>
     </section>
     <div>
-      
-     
+
+
       <section id="users">
         <div style="display: flex; justify-content: space-between; align-items: center;">
           <h3 class="text-large text-grey">Admin / Patient</h3>
           <p class="text-normal text-grey">
             Filter
-            <svg xmlns="http://www.w3.org/2000/svg" 
-                  xmlns:xlink="http://www.w3.org/1999/xlink" 
-                  aria-hidden="true" focusable="false" 
-                  width="1em" 
-                  height="1em" 
+            <svg xmlns="http://www.w3.org/2000/svg"
+                  xmlns:xlink="http://www.w3.org/1999/xlink"
+                  aria-hidden="true" focusable="false"
+                  width="1em"
+                  height="1em"
                   style="-ms-transform: rotate(360deg); -webkit-transform: rotate(360deg); transform: rotate(360deg);" preserveAspectRatio="xMidYMid meet" viewBox="0 0 32 32">
               <g fill="none" stroke="#666666" stroke-linecap="round" stroke-linejoin="round" stroke-width="2">
                 <path d="M2 5s4-2 14-2s14 2 14 2L19 18v9l-6 3V18L2 5z"/>
@@ -197,7 +197,7 @@
           <button class="viewAll-btn text-small">View All Patients</button>
         </div>
       </section>
-      
+
     </div>
   </main>
 

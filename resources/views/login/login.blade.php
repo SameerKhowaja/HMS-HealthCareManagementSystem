@@ -319,6 +319,14 @@ input[type=password]:placeholder {
   color: #0d0d0d;
 }
 
+#register-link{
+    color: #10a5f0;
+}
+
+#register-link:active{
+    color: #0d0d0d;
+}
+
 .underlineHover:hover:after{
   width: 100%;
 }
@@ -349,22 +357,23 @@ input[type=password]:placeholder {
 						<!-- Login Form -->
 						<form method="POST" action="/laravel/public/profile">
 							@csrf
-              @if($message!=='none')
-                <div style='margin-left: 20px; margin-right: 20px;' class="alert alert-danger alert-dismissible fade show" role="alert">
-                {{$message??''}}
-                <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
-              </div>
+                            @if($message!=='none')
+                                <div style='margin-left: 20px; margin-right: 20px;' class="alert alert-danger alert-dismissible fade show" role="alert">
+                                {{$message??''}}
+                                <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+                            </div>
 
-              @endif
+                            @endif
 							<select class="fadeIn third" class='loginAs' type="select" name="LoginAs">
-								<option value="Admin">Admin</option>
-								<option value="Doctor">Doctor</option>
-								<option value="Patient">Patient</option>
-								<option value="Receptionist">Receptionist</option>
-								<option value="Laboratorist">Laboratorist</option>
+                                @foreach($typesList as $data)
+                                    <option value="{{$data->type_id}}">{{$data->type_name}}</option>
+                                @endforeach
 							</select>
 							<input type="email" id="login" class="fadeIn second" name="email_id" placeholder="abc@xyz.com">
 							<input  type="password" id="password" class="fadeIn third" name="password" placeholder="password">
+
+                            <a id='register-link' href="#" class="fadeIn fourth">Patient Registration</a>
+                            <br>
 							<input type="submit" class="fadeIn fourth" value="Log In">
 							</form>
 					</div>

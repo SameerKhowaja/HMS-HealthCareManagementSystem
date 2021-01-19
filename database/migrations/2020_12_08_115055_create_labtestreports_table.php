@@ -16,7 +16,7 @@ class CreateLabTestReportsTable extends Migration
         Schema::create('lab_test_reports', function (Blueprint $table) {
             $table->increments('lab_report_id');
             $table->integer('lab_test_id');
-            $table->blob('report_image');
+            $table->binary('report_image');
             $table->string('description');
             $table->timestamps('result_time');
         });

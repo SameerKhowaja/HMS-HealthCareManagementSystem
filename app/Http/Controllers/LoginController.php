@@ -7,127 +7,83 @@ use App\Admin;
 use App\Doctor;
 use App\Patient;
 use App\Receptionist;
-use App\Laboratorist;
+use App\Type;
+use App\Room;
+use App\Hospital_data;
+
 class LoginController extends Controller
 {
     // Login
     function login(Request $req){
+        $getType = Type::all();
+
         $req->session()->put('userID',NULL);
         $req->session()->put('userType','none');
-        return view('login.login',['message'=>'none']);
+
+        return view('login.login',['message'=>'none', 'typesList'=>$getType]);
     }
+
 
     // Dashboards Navigation
     function profile(Request $req){
+        $getType = Type::all();
+        $selectedType = request('LoginAs');
+        $type_name = 'none';
+        $type_val = 'none';
+        $type_val_id = 'none';
+
+        forEach($getType as $data){
+            if($selectedType == $data->type_id){
+                $type_val = $data->type_name;
+                $type_val_id = $data->type_id;
+            }
+        }
 
         // Admin
-        if(request('LoginAs')=='Admin'){
+        if($type_val == "Admin"){
             $message= 'none';
             $flag = false;
             $admins = Admin::all();
             forEach ($admins as $admin) {
-                if(request('email_id')==$admin->email_id){
-                    if(request('password')==$admin->password){
-                        $page = 'admin.index';
-                        $req->session()->put('userID',$admin->admin_id);
-                        $req->session()->put('username',$admin->fname.' '.$admin->lname);
-                        $req->session()->put('userType','admin');
-                        $flag = true;
-                    }else{
-                        $message = 'Wrong Password';
-                    }
-                }else{
-                    $message = 'User does not exist';
+                if(request('email_id')==$admin->email_id && request('password')==$admin->password){
+                    $page = 'admin.index';
+                    $req->session()->put('userID',$admin->admin_id);
+                    $req->session()->put('username',$admin->fname.' '.$admin->lname);
+                    $req->session()->put('userType','admin');
+                    $flag = true;
                 }
             }
-            if($flag==false) $page = 'login.login';
-        // Doctor
-        }elseif(request('LoginAs')=='Doctor'){
-            $message= 'none';
-            $flag = false;
-            $doctors = Doctor::all();
-            forEach ($doctors as $doctor) {
-                if(request('name')==$doctor->doctor_name){
-                    if(request('password')==$doctor->doctor_password){
-                        $page = 'doctor.index';
-                        $req->session()->put('userID',$doctor->id);
-                        $req->session()->put('user',$doctor->doctor_name);
-                        $req->session()->put('userType','doctor');
-                        $flag = true;
-                    }else{
-                        $message = 'Wrong Password';
-                    }
-                }else{
-                    $message = 'User does not exist';
-                }
+            if($flag==false){
+                $message = 'Invalid Email or Password';
+                $page = 'login.login';
             }
-            if($flag==false) $page = 'login.login';
-        // Patient
-        }elseif(request('LoginAs')=='Patient'){
-            $message= 'none';
-            $flag = false;
-            $patients = Patient::all();
-            forEach ($patients as $patient) {
-                if(request('name')==$patient->patient_name){
-                    if(request('password')==$patient->patient_password){
-                        $page = 'patient.index';
-                        $req->session()->put('userID',$patient->id);
-                        $req->session()->put('user',$patient->patient_name);
-                        $req->session()->put('userType','patient');
-                        $flag = true;
-                    }else{
-                        $message = 'Wrong Password';
-                    }
-                }else{
-                    $message = 'User does not exist';
-                }
-            }
-            if($flag==false) $page = 'login.login';
-        // Receptionist
-        }elseif(request('LoginAs')=='Receptionist'){
-            $message= 'none';
-            $flag = false;
-            $receptionists = Receptionist::all();
-            forEach ($receptionists as $receptionist) {
-                if(request('name')==$receptionist->receptionist_name){
-                    if(request('password')==$receptionist->receptionist_password){
-                        $page = 'receptionist.index';
-                        $req->session()->put('userID',$receptionist->id);
-                        $req->session()->put('user',$receptionist->receptionist_name);
-                        $req->session()->put('userType','receptionist');
-                        $flag = true;
-                    }else{
-                        $message = 'Wrong Password';
-                    }
-                }else{
-                    $message = 'User does not exist';
-                }
-            }
-            if($flag==false) $page = 'login.login';
-        // Laboratorist
-        }elseif(request('LoginAs')=='Laboratorist'){
-            $message= 'none';
-            $flag = false;
-            $laboratorists = Laboratorist::all();
-            forEach ($laboratorists as $laboratorist) {
-                if(request('name')==$laboratorist->tech_name){
-                    if(request('password')==$laboratorist->tech_password){
-                        $page = 'laboratorist.index';
-                        $req->session()->put('userID',$laboratorist->id);
-                        $req->session()->put('user',$laboratorist->tech_name);
-                        $req->session()->put('userType','laboratorist');
-                        $flag = true;
-                    }else{
-                        $message = 'Wrong Password';
-                    }
-                }else{
-                    $message = 'User does not exist';
-                }
-            }
-            if($flag==false) $page = 'login.login';
-        }else{
-            $page = 'page404';
         }
-        return view($page,['message'=>$message]);
+        // Other than Admin
+        else{
+            $flag = false;
+            $message= 'none';
+            // tables combined
+            $hospital_data = Hospital_data::join('types', 'types.type_id', '=', 'hospital_datas.type_id')->get(['hospital_datas.*', 'types.type_name']);
+
+            forEach($hospital_data as $data){
+                if($data->type_name == $type_val){
+                    if(request('email_id')==$data->email_id && request('password')==$data->password){
+                        $lowercase_type_val = strtolower($data->type_name); //lowercase type value
+                        $page = $lowercase_type_val.'.index';   //set page view
+                        $req->session()->put('userID',$data->primary_id);
+                        $req->session()->put('username',$data->fname.' '.$data->lname);
+                        $req->session()->put('userType',$lowercase_type_val);
+                        $flag = true;
+                    }
+                }
+            }
+            if($flag==false){
+                $message = 'Invalid Email or Password';
+                $page = 'login.login';
+            }
+
+        }
+
+        return view($page, ['message'=>$message, 'typesList'=>$getType]);
     }
 }

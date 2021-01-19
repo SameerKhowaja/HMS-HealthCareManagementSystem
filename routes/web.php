@@ -1,6 +1,7 @@
 <?php
 
 use Illuminate\Support\Facades\Route;
+
 // Login
 Route::get('/','LoginController@login');
 Route::post('/profile','LoginController@profile');
@@ -45,7 +46,7 @@ Route::post('/admin/updateLaboratorist/{id}','AdminController@updateLaboratorist
 
 
 //======================================================
-//                 Admin Dashboard START 
+//                 Admin Dashboard START
 //======================================================
 // Doctor Dashboard
 Route::get('/doctor','DoctorController@index');
@@ -68,7 +69,7 @@ Route::post('/doctor/updateDoctor/{id}','DoctorController@updateDoctor');
 
 
 //======================================================
-//                 Patient Dashboard  
+//                 Patient Dashboard
 //======================================================
 
 // Patient Dashboard
@@ -84,7 +85,7 @@ Route::get('/patient/viewAppointment','PatientController@viewAppointment');
 
 
 //======================================================
-//                 Laboratorist Dashboard  
+//                 Laboratorist Dashboard
 //======================================================
 
 // Laboratorist Dashboard
@@ -95,10 +96,10 @@ Route::get('/laboratorist/viewAppointment','LaboratoristController@viewAppointme
 
 
 //======================================================
-//                 Receptionist Dashboard  
+//                 Receptionist Dashboard
 //======================================================
 
-// Receptionist Dashboard 
+// Receptionist Dashboard
 Route::get('/receptionist','ReceptionistController@index');
 Route::get('/receptionist/patient','ReceptionistController@patient');
 Route::get('/receptionist/doctor','ReceptionistController@doctor');
