@@ -3,13 +3,23 @@
 namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
+
 use App\Admin;
+use App\Appointment_result;
+use App\Appointment;
+use App\Bed;
 use App\Doctor;
+use App\Hospital_data;
+use App\Lab_technician;
+use App\Lab_test_name;
+use App\Lab_test_report;
+use App\Lab_test;
+use App\Patient_addmission;
 use App\Patient;
 use App\Receptionist;
-use App\Type;
 use App\Room;
-use App\Hospital_data;
+use App\Type;
+use App\User;
 
 class LoginController extends Controller
 {
