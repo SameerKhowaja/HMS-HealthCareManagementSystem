@@ -2,9 +2,11 @@
 
 use Illuminate\Support\Facades\Route;
 
-// Login
+// Login and Registration
 Route::get('/','LoginController@login');
 Route::post('/profile','LoginController@profile');
+Route::get('/patient-registration','SignupController@signup');
+Route::post('/patient-registration-progress','SignupController@register');
 
 
 //======================================================
