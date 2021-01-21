@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Host: 127.0.0.1
--- Generation Time: Jan 18, 2021 at 08:04 PM
+-- Generation Time: Jan 21, 2021 at 08:55 PM
 -- Server version: 10.4.14-MariaDB
 -- PHP Version: 7.4.11
 
@@ -43,7 +43,7 @@ CREATE TABLE `admins` (
 --
 
 INSERT INTO `admins` (`admin_id`, `fname`, `lname`, `email_id`, `password`, `image`, `created_at`, `updated_at`) VALUES
-(1, 'Sameer', 'Khowaja', 'sameerkhowaja@gmail.com', 'password', '', '2021-01-18 04:46:24', NULL);
+(1, 'Sameer', 'Khowaja', 'sameerkhowaja@gmail.com', 'pass', '', '2021-01-17 23:46:24', NULL);
 
 -- --------------------------------------------------------
 
@@ -55,7 +55,7 @@ CREATE TABLE `appointments` (
   `appointment_id` int(15) NOT NULL,
   `patient_id` int(15) NOT NULL,
   `doctor_id` int(15) NOT NULL,
-  `receptionist_id` int(15) NOT NULL,
+  `receptionist_id` int(15) DEFAULT NULL,
   `appointment_date` date NOT NULL,
   `appointment_time` time NOT NULL,
   `confrim` varchar(10) NOT NULL,
@@ -116,9 +116,9 @@ CREATE TABLE `hospital_datas` (
   `email_id` varchar(200) NOT NULL,
   `gender` varchar(15) NOT NULL,
   `phone_number` varchar(30) NOT NULL,
-  `city` varchar(100) NOT NULL,
-  `address` varchar(500) NOT NULL,
-  `dob` date NOT NULL,
+  `city` varchar(100) DEFAULT NULL,
+  `address` varchar(500) DEFAULT NULL,
+  `dob` date DEFAULT NULL,
   `password` varchar(100) NOT NULL,
   `image` blob DEFAULT NULL,
   `created_at` timestamp NULL DEFAULT NULL,
@@ -240,17 +240,6 @@ CREATE TABLE `types` (
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
 
 --
--- Dumping data for table `types`
---
-
-INSERT INTO `types` (`type_id`, `type_name`) VALUES
-(1, 'Admin'),
-(2, 'Doctor'),
-(3, 'Patient'),
-(4, 'Receptionist'),
-(5, 'Lab Technician');
-
---
 -- Indexes for dumped tables
 --
 
@@ -270,7 +259,8 @@ ALTER TABLE `appointments`
 -- Indexes for table `appointment_results`
 --
 ALTER TABLE `appointment_results`
-  ADD PRIMARY KEY (`appointment_result_id`);
+  ADD PRIMARY KEY (`appointment_result_id`),
+  ADD UNIQUE KEY `appointment_id` (`appointment_id`);
 
 --
 -- Indexes for table `beds`
@@ -282,7 +272,8 @@ ALTER TABLE `beds`
 -- Indexes for table `doctors`
 --
 ALTER TABLE `doctors`
-  ADD PRIMARY KEY (`doctor_id`);
+  ADD PRIMARY KEY (`doctor_id`),
+  ADD UNIQUE KEY `primary_id` (`primary_id`);
 
 --
 -- Indexes for table `hospital_datas`
@@ -294,7 +285,8 @@ ALTER TABLE `hospital_datas`
 -- Indexes for table `lab_technicians`
 --
 ALTER TABLE `lab_technicians`
-  ADD PRIMARY KEY (`technician_id`);
+  ADD PRIMARY KEY (`technician_id`),
+  ADD UNIQUE KEY `primary_id` (`primary_id`);
 
 --
 -- Indexes for table `lab_tests`
@@ -318,7 +310,8 @@ ALTER TABLE `lab_test_reports`
 -- Indexes for table `patients`
 --
 ALTER TABLE `patients`
-  ADD PRIMARY KEY (`patient_id`);
+  ADD PRIMARY KEY (`patient_id`),
+  ADD UNIQUE KEY `primary_id` (`primary_id`);
 
 --
 -- Indexes for table `patient_addmissions`
@@ -330,7 +323,8 @@ ALTER TABLE `patient_addmissions`
 -- Indexes for table `receptionists`
 --
 ALTER TABLE `receptionists`
-  ADD PRIMARY KEY (`receptionist_id`);
+  ADD PRIMARY KEY (`receptionist_id`),
+  ADD UNIQUE KEY `primary_id` (`primary_id`);
 
 --
 -- Indexes for table `rooms`
@@ -436,7 +430,7 @@ ALTER TABLE `rooms`
 -- AUTO_INCREMENT for table `types`
 --
 ALTER TABLE `types`
-  MODIFY `type_id` int(15) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=6;
+  MODIFY `type_id` int(15) NOT NULL AUTO_INCREMENT;
 COMMIT;
 
 /*!40101 SET CHARACTER_SET_CLIENT=@OLD_CHARACTER_SET_CLIENT */;
