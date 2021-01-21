@@ -16,11 +16,6 @@
     <link rel="stylesheet" type="text/css" href="{{asset('login-register-form/css/main.css')}}">
 
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
-    <script>
-        $(document).ready(function(){
-            $("#myModal").modal('show');
-        });
-    </script>
 </head>
 
 <body>
@@ -56,7 +51,7 @@
                     </div>
 
                     <div class="wrap-input100 validate-input fadeIn second" data-validate="Valid cnic is required: 41303XXXXXXXX">
-                        <input class="input100" type="text" name="cnic" placeholder="41303XXXXXXXX">
+                        <input class="input100" type="text" name="cnic" placeholder="41303XXXXXXXX" onkeypress="return isNumberKey(event)">
                         <span class="focus-input100"></span>
                         <span class="symbol-input100">
                             <i class="fa fa-id-card" aria-hidden="true"></i>
@@ -64,7 +59,7 @@
                     </div>
 
                     <div class="wrap-input100 validate-input fadeIn second" data-validate="Valid phone number is required: 923332134598">
-                        <input class="input100" type="text" name="phone_number" placeholder="923332134598">
+                        <input class="input100" class="number-only" type="text" name="phone_number" placeholder="923332134598" onkeypress="return isNumberKey(event)">
                         <span class="focus-input100"></span>
                         <span class="symbol-input100">
                             <i class="fa fa-phone" aria-hidden="true"></i>
@@ -110,6 +105,17 @@
             </div>
         </div>
     </div>
+
+    <script>
+        function isNumberKey(evt)
+        {
+            var charCode = (evt.which) ? evt.which : event.keyCode
+            if (charCode > 31 && (charCode < 48 || charCode > 57))
+                return false;
+
+            return true;
+        }
+    </script>
 
     <script src="{{asset('login-register-form/vendor/jquery/jquery-3.2.1.min.js')}}"></script>
     <script src="{{asset('login-register-form/vendor/bootstrap/js/bootstrap.min.js')}}"></script>

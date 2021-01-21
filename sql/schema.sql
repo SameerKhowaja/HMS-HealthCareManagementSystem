@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Host: 127.0.0.1
--- Generation Time: Jan 21, 2021 at 08:55 PM
+-- Generation Time: Jan 21, 2021 at 09:05 PM
 -- Server version: 10.4.14-MariaDB
 -- PHP Version: 7.4.11
 
@@ -125,6 +125,13 @@ CREATE TABLE `hospital_datas` (
   `updated_at` timestamp NULL DEFAULT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
 
+--
+-- Dumping data for table `hospital_datas`
+--
+
+INSERT INTO `hospital_datas` (`primary_id`, `type_id`, `fname`, `lname`, `cnic`, `email_id`, `gender`, `phone_number`, `city`, `address`, `dob`, `password`, `image`, `created_at`, `updated_at`) VALUES
+(1, 3, 'asad', 'ali', '4128389192991', 'sameerkhowaja@gmail.com', 'Male', 'sameerkhowaja@gmail.com', NULL, NULL, NULL, 'pass', NULL, '2021-01-21 15:04:36', '2021-01-21 15:04:36');
+
 -- --------------------------------------------------------
 
 --
@@ -191,6 +198,13 @@ CREATE TABLE `patients` (
   `primary_id` int(15) NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
 
+--
+-- Dumping data for table `patients`
+--
+
+INSERT INTO `patients` (`patient_id`, `primary_id`) VALUES
+(1, 1);
+
 -- --------------------------------------------------------
 
 --
@@ -238,6 +252,18 @@ CREATE TABLE `types` (
   `type_id` int(15) NOT NULL,
   `type_name` varchar(100) NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
+
+--
+-- Dumping data for table `types`
+--
+
+INSERT INTO `types` (`type_id`, `type_name`) VALUES
+(1, 'Admin'),
+(2, 'Doctor'),
+(3, 'Patient'),
+(4, 'Receptionist'),
+(5, 'Lab Technician'),
+(6, 'Others');
 
 --
 -- Indexes for dumped tables
@@ -376,7 +402,7 @@ ALTER TABLE `doctors`
 -- AUTO_INCREMENT for table `hospital_datas`
 --
 ALTER TABLE `hospital_datas`
-  MODIFY `primary_id` int(15) NOT NULL AUTO_INCREMENT;
+  MODIFY `primary_id` int(15) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=2;
 
 --
 -- AUTO_INCREMENT for table `lab_technicians`
@@ -406,7 +432,7 @@ ALTER TABLE `lab_test_reports`
 -- AUTO_INCREMENT for table `patients`
 --
 ALTER TABLE `patients`
-  MODIFY `patient_id` int(15) NOT NULL AUTO_INCREMENT;
+  MODIFY `patient_id` int(15) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=2;
 
 --
 -- AUTO_INCREMENT for table `patient_addmissions`
@@ -430,7 +456,7 @@ ALTER TABLE `rooms`
 -- AUTO_INCREMENT for table `types`
 --
 ALTER TABLE `types`
-  MODIFY `type_id` int(15) NOT NULL AUTO_INCREMENT;
+  MODIFY `type_id` int(15) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=7;
 COMMIT;
 
 /*!40101 SET CHARACTER_SET_CLIENT=@OLD_CHARACTER_SET_CLIENT */;
