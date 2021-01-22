@@ -8,11 +8,30 @@ Route::post('/profile','LoginController@profile');
 Route::get('/patient-registration','SignupController@signup');
 Route::post('/patient-registration-progress','SignupController@register');
 
+// Error Page
+Route::get('/error-page','ErrorController@index');
 
 //======================================================
 //                 Admin Dashboard START
 //=======================================================
-Route::get('/admin','AdminController@index');
+
+// navbar routes   -----------------------------------------------------
+Route::get('/admin','AdminController@dashboard');
+Route::get('/admin/patient-management','AdminController@patientManagement');
+Route::get('/admin/doctor-management','AdminController@doctorManagement');
+Route::get('/admin/staff-management','AdminController@staffManagement');
+Route::get('/admin/hospital-data','AdminController@hospitalData');
+Route::get('/admin/appointment','AdminController@appointment');
+Route::get('/admin/lab-test','AdminController@labTest');
+// ---------------------------------------------------------------------
+
+// admin dashboard routes
+Route::get('/admin/editProfile/{id}','AdminController@editProfile');
+Route::post('/admin/editProfile/{id}','AdminController@updateProfile');
+Route::post('/admin/editProfile/editPassword/{id}','AdminController@updatePassword');
+
+
+
 Route::get('/admin/department','AdminController@department');
 Route::get('/admin/doctor','AdminController@doctor');
 Route::get('/admin/patient','AdminController@patient');

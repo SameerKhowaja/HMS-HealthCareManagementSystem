@@ -1,0 +1,9 @@
+/* Course Providers section */
+#courseProviders .heading, 
+#courseProviders .row{
+  width: 100%;
+  display: grid;
+  grid-template-columns: 300px 150px 150px 150px;
+  align-items: center;
+  padding: 2rem 3rem;
+}

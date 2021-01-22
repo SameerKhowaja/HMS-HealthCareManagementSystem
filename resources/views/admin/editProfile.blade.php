@@ -92,171 +92,116 @@
 @endsection
 
 @section('content')
+
         <div>
-            <section id="overview">
+            <div style='margin-top: 2%;'>
                 <div style="display: flex; justify-content: space-between; align-items: center;">
-                    <h3 class="text-large text-grey">Admin / Dashboard</h3>
-                    <!-- <p class="text-normal text-grey">
-                        Filter
-                        <svg xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" aria-hidden="true" focusable="false" width="1em" height="1em" style="-ms-transform: rotate(360deg); -webkit-transform: rotate(360deg); transform: rotate(360deg);" preserveAspectRatio="xMidYMid meet" viewBox="0 0 32 32">
-                            <g fill="none" stroke="#666666" stroke-linecap="round" stroke-linejoin="round" stroke-width="2">
-                                <path d="M2 5s4-2 14-2s14 2 14 2L19 18v9l-6 3V18L2 5z"/>
-                            </g>
-                        </svg>
-                    </p> -->
+                    <h3 class="text-large text-grey">Admin / Dashboard / Edit Profile</h3>
                 </div>
 
-                <div class="cardWrapper">
-                    <div class="card">
-                        <!-- user progress target canvas -->
-                        <div class="progress-hamburger">
-                            <canvas id="userProgress" width="90" height="90"></canvas>
+                <!-- Table -->
+                <div class="table-responsive" style='box-shadow: 5px 3px 5px 3px #1b99d8; background-color: white; padding: 2%; border-radius: 10px; font-size: 13px;'>
+                    @if ($errors->any())
+                        <div class="alert alert-danger">
+                            <strong>Warning!</strong> Please check your input code<br><br>
+                            <ul>
+                                @foreach ($errors->all() as $error)
+                                    <li>{{ $error }}</li>
+                                @endforeach
+                            </ul>
                         </div>
-                        <div>
-                            <p class="text-large text-grey">Total Patients</p>
-                            <span>
-                                <p id="patientCount" class="text-normal text-grey text-center" style="margin: auto;">
-                                    {{$patientCount ?? 'Zero'}}
-                                    <!-- <svg width="13" height="9" viewBox="0 0 13 9" fill="none" xmlns="http://www.w3.org/2000/svg">
-                                        <path d="M6.49999 0L13 8.25H0L6.49999 0Z" fill="#5DF888"/>
-                                    </svg> -->
-                                </p>
-                                <!-- <svg width="63" height="26" viewBox="0 0 63 26" fill="none" xmlns="http://www.w3.org/2000/svg">
-                                    <path fill-rule="evenodd" clip-rule="evenodd" d="M0 26V10.3755L5.60289 18.645L11.8586 14.0553L17.1566 8.95548L22.5442 6.43643L27.8222 8.95548L33.8206 14.6354L39.481 8.95548L45.2619 14.0553L50.9223 3.80797C50.9223 3.80797 52.9538 5.69498 53.7891 7.26675C53.9586 7.58562 62.0776 -1.1916 62.7162 0.137052C63.3548 1.4657 62.7162 26 62.7162 26H0Z" fill="#C2D5FA"/>
-                                </svg> -->
-                            </span>
-                        </div>
-                    </div>
+                    @endif
 
-                    <div class="card">
-                        <!-- course progress target canvas -->
-                        <div class="progress-hamburger">
-                            <canvas id="courseProgress" width="90" height="90"></canvas>
+                    <form action="/laravel/public/admin/editProfile/{{session('userID')}}" method="POST">
+                        @csrf
+                        <!-- Head Row -->
+                        <div class="row" style="margin:auto;">
+                            <div class="col-sm-6" style="text-align:center;">
+                                <div class="form-group">
+                                    <h2>Update Profile</h2>
+                                </div>
+                            </div>
                         </div>
-                        <div>
-                            <p class="text-large text-grey">Total Doctors</p>
-                            <span>
-                                <p class="text-normal text-grey text-center" style="margin: auto;">
-                                    {{$doctorCount ?? 'Zero'}}
-                                    <!-- <svg width="13" height="9" viewBox="0 0 13 9" fill="none" xmlns="http://www.w3.org/2000/svg">
-                                        <path d="M6.49999 0L13 8.25H0L6.49999 0Z" fill="#5DF888"/>
-                                    </svg> -->
-                                </p>
-                                <!-- <svg width="63" height="26" viewBox="0 0 63 26" fill="none" xmlns="http://www.w3.org/2000/svg">
-                                    <path fill-rule="evenodd" clip-rule="evenodd" d="M0 26V10.3755L5.60289 18.645L11.8586 14.0553L17.1566 8.95548L22.5442 6.43643L27.8222 8.95548L33.8206 14.6354L39.481 8.95548L45.2619 14.0553L50.9223 3.80797C50.9223 3.80797 52.9538 5.69498 53.7891 7.26675C53.9586 7.58562 62.0776 -1.1916 62.7162 0.137052C63.3548 1.4657 62.7162 26 62.7162 26H0Z" fill="#C2D5FA"/>
-                                </svg> -->
-                            </span>
-                        </div>
-                    </div>
-
-                    <div class="card">
-                        <!-- provider progress target canvas -->
-                        <div class="progress-hamburger">
-                            <canvas id="providerProgress" width="90" height="90"></canvas>
-                        </div>
-                        <div>
-                            <p class="text-large text-grey">Total Staff</p>
-                            <span>
-                                <p class="text-normal text-grey text-center" style="margin: auto;">
-                                    {{$staffCount ?? 'Zero'}}
-                                    <!-- <svg width="13" height="9" viewBox="0 0 13 9" fill="none" xmlns="http://www.w3.org/2000/svg">
-                                        <path d="M6.49999 0L13 8.25H0L6.49999 0Z" fill="#5DF888"/>
-                                    </svg> -->
-                                </p>
-                                    <!-- <svg width="63" height="26" viewBox="0 0 63 26" fill="none" xmlns="http://www.w3.org/2000/svg">
-                                        <path fill-rule="evenodd" clip-rule="evenodd" d="M0 26V10.3755L5.60289 18.645L11.8586 14.0553L17.1566 8.95548L22.5442 6.43643L27.8222 8.95548L33.8206 14.6354L39.481 8.95548L45.2619 14.0553L50.9223 3.80797C50.9223 3.80797 52.9538 5.69498 53.7891 7.26675C53.9586 7.58562 62.0776 -1.1916 62.7162 0.137052C63.3548 1.4657 62.7162 26 62.7162 26H0Z" fill="#C2D5FA"/>
-                                    </svg> -->
-                            </span>
-                        </div>
-                    </div>
-                </div>
-            </section>
-
-            <section id="users">
-                <div style="display: flex; justify-content: space-between; align-items: center;">
-                    <h3 class="text-large text-grey">Dashboard / Admins View</h3>
-                    <!-- <p class="text-normal text-grey">
-                        Filter
-                        <svg xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" aria-hidden="true" focusable="false" width="1em" height="1em" style="-ms-transform: rotate(360deg); -webkit-transform: rotate(360deg); transform: rotate(360deg);" preserveAspectRatio="xMidYMid meet" viewBox="0 0 32 32">
-                            <g fill="none" stroke="#666666" stroke-linecap="round" stroke-linejoin="round" stroke-width="2">
-                                <path d="M2 5s4-2 14-2s14 2 14 2L19 18v9l-6 3V18L2 5z"/>
-                            </g>
-                        </svg>
-                    </p> -->
-                </div>
-                <!-- user table -->
-                <div class="card">
-                    <!-- <div class="heading">
-                        <li class="text-normal text-grey text-bold text-center" style="margin: 0 10%;">Image</li>
-                        <li class="text-normal text-grey text-bold text-center" style="margin: 0 0;">Full Name</li>
-                        <li class="text-normal text-grey text-bold text-center" style="margin: 0 0;">Email Address</li>
-                        <li class="text-normal text-grey text-bold text-center" style="margin: 0 0;">Updated Data</li>
-                    </div> -->
-                    @foreach($data as $d)
+                        <!-- row1 -->
                         <div class="row">
-                            @if($d->image=='')
-                            <li class="usernameCell text-normal text-grey text-center" style="margin: 0 0;">
-                                <img class="profile" src="{{asset('resources/images/profile.png')}}" alt="profile">
-                            </li>
-                            @else
-                            <li class="usernameCell text-normal text-grey text-center" style="margin: 0 0;">
-                                <img class="profile" src="{{asset('resources/images/profile1.png')}}" alt="profile">
-                            </li>
-                            @endif
-                            <li class="usernameCell text-normal text-grey text-center" style="margin: 0 0;">{{$d->fname.' '.$d->lname}}</li>
-                            <li class="usernameCell text-normal text-grey text-center" style="margin: 0 0;">{{$d->email_id}}</li>
-                            <li class="usernameCell text-normal text-grey text-center" style="margin: 0 0;">{{$d->created_at.' '}}</li>
-                            @if($d->updated_at=='')
-                            <li class="usernameCell text-normal text-grey text-center" style="margin: 0 100%;">{{$d->created_at.' '}}</li>
-                            @else
-                            <li class="usernameCell text-normal text-grey text-center" style="margin: 0 100%;">{{$d->updated_at.' '}}</li>
-                            @endif
+                            <div class="col-sm-6">
+                                <div class="form-group">
+                                    <strong>First Name</strong>
+                                    <input type="text" name="fname" class="form-control form-control-lg" placeholder="First Name" value={{$admin_data->fname ?? ''}}>
+                                </div>
+                            </div>
                         </div>
-                    @endforeach
-                    <!-- <button class="viewAll-btn text-small">View All Patients</button> -->
+                        <!-- row2 -->
+                        <div class="row">
+                            <div class="col-sm-6">
+                                <div class="form-group">
+                                    <strong>Last Name</strong>
+                                    <input type="text" name="lname" class="form-control form-control-lg" placeholder="Last Name" value={{$admin_data->lname ?? ''}}>
+                                </div>
+                            </div>
+                        </div>
+                        <!-- row3 -->
+                        <div class="row">
+                            <div class="col-sm-6">
+                                <div class="form-group">
+                                    <strong>Profile Image</strong>
+                                    <input type="file" name="image" class="form-control form-control-lg">
+                                </div>
+                            </div>
+                        </div>
+                        <!-- row4 -->
+                        <div class="row">
+                        <div class="col-xs-6 col-sm-6 col-md-6 text-center">
+                            <button type="submit" class="btn btn-primary btn-lg">Update Profile</button>
+                            <button type="button" class="btn btn-secondary btn-lg active" data-toggle="modal" data-target="#changePassword_modal">Change Password</button>
+                        </div>
+                    </form>
                 </div>
-            </section>
+            </div>
 
-            <section id="statistics">
-                <h3 class="text-large text-grey">Dashboard / Statistics</h3>
-                <div class="cardWrapper">
-                    <div class="card m-2 my-3">
-                        <div class="card-title">
-                            <h3 class="text-normal text-bold text-grey">Patient Registered</h3>
-                                <!-- <p class="text-normal text-grey">
-                                    Filter
-                                    <svg xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" aria-hidden="true" focusable="false" width="1em" height="1em" style="-ms-transform: rotate(360deg); -webkit-transform: rotate(360deg); transform: rotate(360deg);" preserveAspectRatio="xMidYMid meet" viewBox="0 0 32 32">
-                                        <g fill="none" stroke="#666666" stroke-linecap="round" stroke-linejoin="round" stroke-width="2">
-                                            <path d="M2 5s4-2 14-2s14 2 14 2L19 18v9l-6 3V18L2 5z"/>
-                                        </g>
-                                    </svg>
-                                </p> -->
-                        </div>
-                        <!-- user growth target canvas -->
-                        <div class="chart">
-                            <canvas id="userGrowth"></canvas>
-                        </div>
-                    </div>
 
-                    <div class="card m-2 my-3">
-                        <div class="card-title">
-                            <h3 class="text-normal text-bold text-grey">Staff Registered</h3>
-                                <!-- <p class="text-normal text-grey">
-                                    Filter
-                                    <svg xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" aria-hidden="true" focusable="false" width="1em" height="1em" style="-ms-transform: rotate(360deg); -webkit-transform: rotate(360deg); transform: rotate(360deg);" preserveAspectRatio="xMidYMid meet" viewBox="0 0 32 32">
-                                        <g fill="none" stroke="#666666" stroke-linecap="round" stroke-linejoin="round" stroke-width="2">
-                                            <path d="M2 5s4-2 14-2s14 2 14 2L19 18v9l-6 3V18L2 5z"/>
-                                        </g>
-                                    </svg>
-                                </p> -->
+            <!-- The Modal -->
+            <div class="modal fade" id="changePassword_modal">
+                <div class="modal-dialog modal-dialog-centered">
+                    <div class="modal-content">
+                        <!-- Modal Header -->
+                        <div class="modal-header">
+                        <h2 class="modal-title" style="margin:auto;">Reset Password</h2>
                         </div>
-                        <!-- tutor growth target canvas -->
-                        <div class="chart">
-                            <canvas id="tutorGrowth"></canvas>
-                        </div>
+
+                        <form method="POST" action="/laravel/public/admin/editProfile/editPassword/{{session('userID')}}">
+                            <!-- Modal body -->
+                            <div class="modal-body">
+                                <div class="row">
+                                    <div class="col-sm-12">
+                                        <div class="form-group">
+                                            <strong class="form-control-lg">Current Password</strong>
+                                            <input type="text" name="current_pass" class="form-control form-control-lg" required>
+                                        </div>
+                                    </div>
+                                </div>
+
+                                <div class="row">
+                                    <div class="col-sm-12">
+                                        <div class="form-group">
+                                            <strong class="form-control-lg">New Password</strong>
+                                            <input type="text" name="new_pass" class="form-control form-control-lg" required>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+
+                            <!-- Modal footer -->
+                            <div class="modal-footer">
+                                <button type="button" class="btn btn-secondary btn-lg" data-dismiss="modal">Close</button>
+                                <button type="submit" class="btn btn-primary btn-lg">Submit</button>
+                            </div>
+                        </form>
+
                     </div>
                 </div>
-            </section>
+            </div>
+            </div>
 
         </div>
 @endsection

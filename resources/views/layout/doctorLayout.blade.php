@@ -1,14 +1,14 @@
 
 
-@if(session('userID')!==NULL && session('userType')=='doctor') 
+@if(session('userID')!==NULL && session('userType')=='doctor')
 <!DOCTYPE html>
 <html lang="en">
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
- 
+
   <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@4.5.3/dist/css/bootstrap.min.css" integrity="sha384-TX8t27EcRE3e/ihU7zmQxVncDAy5uIKz4rEkgIXeMed4M0jlfIDPvg6uqKI2xXr2" crossorigin="anonymous">
-  
+
   <!-- <link rel="stylesheet" href="http://localhost/laravel/resources/sass/css/main.css"> -->
   <style>
     @import url('https://fonts.googleapis.com/css2?family=Montserrat:wght@300;400;500;600;700;800&display=swap');
@@ -37,7 +37,7 @@ main{
 main h2{
   padding: 2rem 0 0;
 }
-a:hover, 
+a:hover,
 a:focus{
   text-decoration: none;
 }
@@ -76,11 +76,11 @@ a:focus{
 .text_light{
   color: var(--light) !important;
 }
-.text-small, 
+.text-small,
 .text-normal{
   font-weight: 500;
 }
-.text-large, 
+.text-large,
 .text-larger{
   line-height: 2em;
   font-weight: 800;
@@ -217,8 +217,8 @@ figure + div{
   padding: 1.5rem;
   background-color: #fff;
   border-radius: 1.5rem;
-  box-shadow: 0px 8px 24px rgba(0, 0, 0, 0.06), 
-              0px -4px 6px rgba(0, 0, 0, 0.04), 
+  box-shadow: 0px 8px 24px rgba(0, 0, 0, 0.06),
+              0px -4px 6px rgba(0, 0, 0, 0.04),
               0px 0px 1px rgba(0, 0, 0, 0.04);
 }
 .cardWrapper .card span{
@@ -288,16 +288,16 @@ button.viewAll-btn.btn-light{
   <link rel="stylesheet" href="http://localhost/laravel/resources/sass/css/profile.css">
 
   <link rel="stylesheet" href="http://localhost/laravel/resources/sass/css/sideNav.css">
-  
+
   <link rel="stylesheet" href="http://localhost/laravel/resources/sass/css/topNav.css">
-  
+
   <link rel="stylesheet" href="http://localhost/laravel/resources/sass/css/Admin/users.css">
-  
+
   <link rel="stylesheet" href="http://localhost/laravel/resources/sass/css/Admin/adminOverview.css">
- 
+
   <link rel="stylesheet" href="http://localhost/laravel/resources/sass/css/responsive.css">
-  
-  
+
+
   <!-- charts.js cdn -->
   <script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/2.9.4/Chart.min.js" integrity="sha512-d9xgZrVZpmmQlfonhQUvTR7lMPtO7NkZMkA0ABN3PHCbKA5nqylQ/yWlFAyY6hYgdF1Qh6nYiuADWwKB4C2WSw==" crossorigin="anonymous"></script>
   <title>Doctor Dashboard</title>
@@ -308,9 +308,9 @@ button.viewAll-btn.btn-light{
 <script src="https://code.jquery.com/jquery-3.5.1.slim.min.js" integrity="sha384-DfXdz2htPH0lsSSs5nCTpuj/zy4C+OGpamoFVy38MVBnE+IbbVYUew+OrCXaRkfj" crossorigin="anonymous"></script>
   <script src="https://cdn.jsdelivr.net/npm/popper.js@1.16.1/dist/umd/popper.min.js" integrity="sha384-9/reFTGAW83EW2RDu2S0VKaIzap3H66lZH81PoYlFhbGU+6BZp6G7niu735Sk7lN" crossorigin="anonymous"></script>
   <script src="https://cdn.jsdelivr.net/npm/bootstrap@4.5.3/dist/js/bootstrap.min.js" integrity="sha384-w1Q4orYjBQndcko6MimVbzY0tgp4pWB4lZ7lr30WKz0vr/aWKhXdBNmNb5D92v7s" crossorigin="anonymous"></script>
-  
+
   <!-- custom script -->
- 
+
   <script src="http://localhost/laravel/resources/js/app.js"></script>
   <!-- <script src="./assets/js/app.js"></script> -->
   <script src="http://localhost/laravel/resources/js/Charts/progressCharts.js"></script>
@@ -381,16 +381,16 @@ svg {
   animation: float 1s infinite ease-in-out alternate;
 }
 #Polygon-2 {
-  animation-delay: .2s; 
+  animation-delay: .2s;
 }
 #Polygon-3 {
-  animation-delay: .4s; 
+  animation-delay: .4s;
 }
 #Polygon-4 {
-  animation-delay: .6s; 
+  animation-delay: .6s;
 }
 #Polygon-5 {
-  animation-delay: .8s; 
+  animation-delay: .8s;
 }
 
 @keyframes float {
@@ -441,5 +441,5 @@ svg {
 </div>
 </body>
 </html>
- 
+
 @endif

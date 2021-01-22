@@ -49,7 +49,7 @@ class LoginController extends Controller
         }
 
         // Admin
-        if($type_val == "Admin"){
+        if($type_val == "Admin" || $type_val == "admin"){
             $message= 'none';
             $flag = false;
             $admins = Admin::all();
@@ -60,6 +60,9 @@ class LoginController extends Controller
                     $req->session()->put('username',$admin->fname.' '.$admin->lname);
                     $req->session()->put('userType','admin');
                     $flag = true;
+
+                    return redirect('/'.strtolower($type_val))->with( ['user_id'=>$admin->admin_id]); // /admin url
+                    //return view($page, ['type_val'=>strtolower($type_val)]);
                 }
             }
             if($flag==false){

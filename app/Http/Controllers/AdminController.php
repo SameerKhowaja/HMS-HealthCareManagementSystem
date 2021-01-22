@@ -1,18 +1,123 @@
 <?php
 
 namespace App\Http\Controllers;
-use App\Doctor;
-use App\Patient;
-use App\Laboratorist;
-use App\Receptionist;
-
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\DB;
+
+use App\Admin;
+use App\Appointment_result;
+use App\Appointment;
+use App\Bed;
+use App\Doctor;
+use App\Hospital_data;
+use App\Lab_technician;
+use App\Lab_test_name;
+use App\Lab_test_report;
+use App\Lab_test;
+use App\Patient_addmission;
+use App\Patient;
+use App\Receptionist;
+use App\Room;
+use App\Type;
+use App\User;
+
+
 
 class AdminController extends Controller
 {
-    function index(){
-        return view('admin.index');
+    // Admin Dashboard View
+    function dashboard(){
+        $patientCount = 0;
+        $doctorCount = 0;
+        $staffCount = 0;
+
+        $type_data = Type::all();
+        $patient_type_id = 'patient';
+        $doctor_type_id = 'doctor';
+        forEach($type_data as $data){
+            if(strtolower($data->type_name) == $patient_type_id){
+                $patient_type_id = $data->type_id;
+            }
+            if(strtolower($data->type_name) == $doctor_type_id){
+                $doctor_type_id = $data->type_id;
+            }
+        }
+
+        $hospital_data = Hospital_data::all();
+        forEach($hospital_data as $data){
+            if($data->type_id == $patient_type_id){
+                $patientCount++;
+            }
+            elseif($data->type_id == $doctor_type_id){
+                $doctorCount++;
+            }
+            else{
+                $staffCount++;
+            }
+        }
+
+        $admins_data = DB::table('admins')->get();
+        return view('admin.index', ['data'=>$admins_data, 'patientCount'=>$patientCount, 'doctorCount'=>$doctorCount, 'staffCount'=>$staffCount]);
     }
+
+    // Admin Edit Profile
+    function editProfile($id){
+        $admin_data = Admin::findOrFail($id);
+        session(['username'=>$admin_data->fname.' '.$admin_data->lname]);   //update session username
+        return view('admin.editProfile', ['admin_data'=>$admin_data]);
+    }
+
+    // Admin Edit Profile Update Button
+    function updateProfile($id){
+        $admin_data = Admin::findOrFail($id);
+        $admin_data->fname = request('fname');
+        $admin_data->lname = request('lname');
+        $admin_data->save();
+        return redirect('/admin/editProfile/'.$id)->with('msg','success');
+    }
+
+    // Admin Edit Password
+    function updatePassword($id){
+        return $id;
+        return redirect('/admin/editProfile/'.$id)->with('msg','failed');
+        $cur_pass = request('current_pass');
+        $new_pass = request('new_pass');
+
+        $admin_data = Admin::findOrFail($id);
+        if($admin_data->password == $cur_pass){
+            $admin_data->password = $new_pass;
+            $admin_data->save();
+            return redirect('/admin/editProfile/'.$id)->with('msg','success');
+        }
+        return redirect('/admin/editProfile/'.$id)->with('msg','failed');
+    }
+
+
+
+    function patientManagement(){
+        return view('admin.patientManagement');
+    }
+
+    function doctorManagement(){
+        return view('admin.doctorManagement');
+    }
+
+    function staffManagement(){
+        return view('admin.staffManagement');
+    }
+
+    function hospitalData(){
+        return view('admin.hospitalData');
+    }
+
+    function appointment(){
+        return view('admin.appointment');
+    }
+
+    function labTest(){
+        return view('admin.labTest');
+    }
+
 
     function department(){
         return view('admin.department');
@@ -43,14 +148,14 @@ class AdminController extends Controller
     //============================================
     //           Doctor Crud Operation
     // ==========================================
-    
-    
+
+
     // Add Doctor
     public function createDoctor()
     {
         return view('admin.manageDoctors.create');
     }
-   
+
     public function addDoctor()
     {
         $doctor = new Doctor();
@@ -104,14 +209,14 @@ class AdminController extends Controller
     //============================================
     //           Patient Crud Operation
     // ==========================================
-    
-    
+
+
     // Add Patient
     public function createPatient()
     {
         return view('admin.managePatients.create');
     }
-   
+
     public function addPatient()
     {
         $patient = new Patient();
@@ -173,14 +278,14 @@ class AdminController extends Controller
     //============================================
     //           Laboratorist Crud Operation
     // ==========================================
-    
-    
+
+
     // Add Laboratorist
     public function createLaboratorist()
     {
         return view('admin.manageLaboratorist.create');
     }
-   
+
     public function addLaboratorist()
     {
         $laboratorist = new Laboratorist();

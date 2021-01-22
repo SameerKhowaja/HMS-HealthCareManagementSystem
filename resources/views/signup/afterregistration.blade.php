@@ -23,18 +23,18 @@
 <body>
     <div class="limiter">
         <div class="container-login100" style="background-image: url('{{asset('login-register-form/images/bg-01.jpg')}}');">
-            <div class="wrap-login100 fadeIn second">
+            <div class="wrap-login100 fadeIn first">
                 <form method="GET" action="/laravel/public/" class="login100-form">
 
-                    <span class="login100-form-logo fadeIn second">
+                    <span class="login100-form-logo fadeIn first">
                         <i class="zmdi zmdi-accounts-alt"></i>
                     </span>
 
-                    <span class="login100-form-title p-b-34 p-t-27 fadeIn second">Welcome! {{$User}}</span>
+                    <span class="login100-form-title p-b-34 p-t-27 fadeIn second">Welcome! {{$User ?? ''}}</span>
 
                     <div class="wrap-input100 fadeIn third">
                         <div class="alert alert-warning fade show text-center" role="alert">
-                            <strong>{{$msg}}</strong> {{$msg_more}}
+                            <strong>{{$msg ?? ''}}</strong> {{$msg_more ?? ''}}
                         </div>
                     </div>
 

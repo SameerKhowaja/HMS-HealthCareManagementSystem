@@ -28,21 +28,44 @@ class SignupController extends Controller
     }
 
     function register(Request $req){
-        $patient = new Patient();
-        $add_data = new Hospital_data();
+        $fname_no = $req->fname;
+        $lname_no = request('lname');
+        $cnic_no = request('cnic');
+        $email_no = request('email_id');
+        $gender_no = request('gender');
+        $phone_no = request('phone_number');
+        $password_no = request('password');
 
+        // Check Patient is Type or not
         $type_id = 0;
         $flag = false;
         $type_list = Type::all();
         forEach($type_list as $data){
             if($data->type_name == 'Patient' || $data->type_name == 'patient'){
                 $type_id = $data->type_id;
-                $flag = true;
+                $flag = true;   // This means patient is store as a type
+                break;
             }
         }
 
-        $username = "User";
+        // Check for email and type exist already or not
+        $prev_data = Hospital_data::all();
+        $check = true;
         if($flag == true){
+            forEach($prev_data as $find_data){
+                if($find_data->email_id==$email_no && $find_data->type_id==$type_id){
+                    $check = false; // This means data is already Present
+                    break;
+                }
+            }
+        }
+
+
+        $patient = new Patient();
+        $add_data = new Hospital_data();
+
+        $username = "User";
+        if($check == true){
             $add_data->type_id = $type_id;  //Patient id type 1,2,3,...
             $add_data->fname = $req->fname;
             $add_data->lname = request('lname');
@@ -62,6 +85,6 @@ class SignupController extends Controller
             return view('signup.afterregistration', ['User'=>$username, 'msg'=>'Congratulation! ', 'msg_more'=>'Your Account is Successfully Created...Login to Continue.']);
         }
 
-        return view('signup.afterregistration', ['message'=>$username, 'msg'=>'Error! ', 'msg_more'=>'You have entered invalid/incorrect information...Register Again.']);
+        return view('signup.afterregistration', ['User'=>$username, 'msg'=>'Error! ', 'msg_more'=>'Email ID exist OR Invalid/Incorrect information entered...Register Again.']);
     }
 }
