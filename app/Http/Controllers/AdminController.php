@@ -21,8 +21,6 @@ use App\Room;
 use App\Type;
 use App\User;
 
-
-
 class AdminController extends Controller
 {
     // Admin Dashboard View
@@ -68,8 +66,14 @@ class AdminController extends Controller
     }
 
     // Admin Edit Profile Update Button
-    function updateProfile($id){
+    function updateProfile($id, Request $request){
         $admin_data = Admin::findOrFail($id);
+
+        $request->validate([
+            'fname' => 'required|max:100',
+            'lname' => 'required|max:100',
+        ]);
+
         $admin_data->fname = request('fname');
         $admin_data->lname = request('lname');
         $admin_data->save();
@@ -78,8 +82,6 @@ class AdminController extends Controller
 
     // Admin Edit Password
     function updatePassword($id){
-        return $id;
-        return redirect('/admin/editProfile/'.$id)->with('msg','failed');
         $cur_pass = request('current_pass');
         $new_pass = request('new_pass');
 
@@ -92,8 +94,80 @@ class AdminController extends Controller
         return redirect('/admin/editProfile/'.$id)->with('msg','failed');
     }
 
+    // Add admin view
+    function addAdminRecord(){
+        return view('admin.manageAdmin.addAdmin');
+    }
+
+    // Save Admin on click
+    function addAdminRecordSave(Request $req){
+        $req->validate([
+            'fname' => 'required|max:100',
+            'lname' => 'required|max:100',
+            'email_id' => 'required|max:200',
+            'password1' => 'required|max:100',
+            'password2' => 'required|max:100',
+        ]);
+
+        // Check Password1 and Password2 Matched
+        if(request('password1') != request('password2')){
+            return view('admin.manageAdmin.addAdmin', ['msg'=>'Error! ', 'long_msg'=>"Password Not Matched"]);
+        }
+
+        // Check if same email not exits
+        $email_check = request('email_id');
+        $admin_data = Admin::all();
+        forEach($admin_data as $data){
+            if($data->email_id == $email_check){
+                return view('admin.manageAdmin.addAdmin', ['msg'=>'Error! ', 'long_msg'=>"Email Already Present"]);
+            }
+        }
+
+        // image add
+        $add_admin = new Admin;
+        if ($req->hasFile('image')){
+            $request->validate([
+                'image' => 'mimes:jpeg,bmp,png' // Only allow .jpg, .bmp and .png file types.
+            ]);
+
+            //return view('admin.manageAdmin.addAdmin', ['msg'=>'Error! ', 'long_msg'=>"Email Already Present"]);
+        }
+        else{
+            // Add data if everything correct
+            $add_admin->fname = request('fname');
+            $add_admin->lname = request('lname');
+            $add_admin->email_id = request('email_id');
+            $add_admin->password = request('password1');
+            $add_admin->save();
+        }
+
+        return view('admin.manageAdmin.addAdmin', ['msg'=>'Success! ', 'long_msg'=>"Added New Admin to database"]);
+    }
+
+    // Delete Admin Record
+    function deleteData($id){
+        $UserID = session('userID');
+        // could not delete yourself
+        if($UserID == $id){
+            return view("page404", ['msg'=>"Error", 'msg_long'=>'You Are Deleting Yourself']);
+        }
+
+        $count = Admin::count();
+        // could not delete if count is less than 1
+        if($count<=1){
+            return view("page404", ['msg'=>"Error", 'msg_long'=>'Only One Admin Left']);
+        }
+
+        // if everything fine then delete admin
+        $data = Admin::findOrFail($id);
+        $data->delete();
+        return redirect("/admin")->with('msg','success');
+    }
 
 
+
+
+// ---------------------------
     function patientManagement(){
         return view('admin.patientManagement');
     }

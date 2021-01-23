@@ -96,25 +96,25 @@
         <div>
             <div style='margin-top: 2%;'>
                 <div style="display: flex; justify-content: space-between; align-items: center;">
-                    <h3 class="text-large text-grey">Admin / Dashboard / Edit Profile</h3>
+                    <h3 class="text-large text-grey">Admin / Dashboard / Add Admin</h3>
                 </div>
 
                 <!-- Table -->
                 <div class="table-responsive" style='box-shadow: 5px 3px 5px 3px #1b99d8; background-color: white; padding: 2%; border-radius: 10px; font-size: 13px;'>
 
-                    <form action="/laravel/public/admin/editProfile/{{session('userID')}}" method="POST">
+                    <form action="/laravel/public/admin/add-record" method="POST">
                         @csrf
                         <!-- Head Row -->
                         <div class="row" style="margin:auto;">
-                            <div class="col-sm-6" style="text-align:center;">
+                            <div class="col-sm-12" style="text-align:center;">
                                 <div class="form-group">
-                                    <h2>Update Profile</h2>
+                                    <h2>Create Admin</h2>
                                 </div>
                             </div>
                         </div>
                         <!-- row1 - If error occurs -->
                         <div class="row">
-                            <div class="col-sm-6">
+                            <div class="col-sm-12">
                                 @if ($errors->any())
                                     <div class="alert alert-danger alert-dismissible fade show text-center" role="alert">
                                         <ul>
@@ -142,14 +142,19 @@
                                 </div>
                             </div>
                             @endif
-
                         </div>
                         <!-- row2 -->
                         <div class="row">
                             <div class="col-sm-6">
                                 <div class="form-group">
                                     <strong>First Name</strong>
-                                    <input type="text" name="fname" class="form-control form-control-lg" placeholder="First Name" value="{{$admin_data->fname ?? ''}}">
+                                    <input type="text" name="fname" class="form-control form-control-lg" placeholder="First Name" required>
+                                </div>
+                            </div>
+                            <div class="col-sm-6">
+                                <div class="form-group">
+                                    <strong>Last Name</strong>
+                                    <input type="text" name="lname" class="form-control form-control-lg" placeholder="Last Name" required>
                                 </div>
                             </div>
                         </div>
@@ -157,13 +162,10 @@
                         <div class="row">
                             <div class="col-sm-6">
                                 <div class="form-group">
-                                    <strong>Last Name</strong>
-                                    <input type="text" name="lname" class="form-control form-control-lg" placeholder="Last Name" value="{{$admin_data->lname ?? ''}}">
+                                    <strong>Email ID</strong>
+                                    <input type="email" name="email_id" class="form-control form-control-lg" placeholder="abc@demo.com" required>
                                 </div>
                             </div>
-                        </div>
-                        <!-- row3 -->
-                        <div class="row">
                             <div class="col-sm-6">
                                 <div class="form-group">
                                     <strong>Profile Image</strong>
@@ -171,11 +173,26 @@
                                 </div>
                             </div>
                         </div>
+                        <!-- row3 -->
+                        <div class="row">
+                            <div class="col-sm-6">
+                                <div class="form-group">
+                                    <strong>Password</strong>
+                                    <input type="password" name="password1" class="form-control form-control-lg" placeholder="password" required>
+                                </div>
+                            </div>
+                            <div class="col-sm-6">
+                                <div class="form-group">
+                                    <strong>Confirm Password</strong>
+                                    <input type="password" name="password2" class="form-control form-control-lg" placeholder="confirm password" required>
+                                </div>
+                            </div>
+                        </div>
                         <!-- row4 -->
                         <div class="row">
-                        <div class="col-xs-6 col-sm-6 col-md-6 text-center">
-                            <button type="submit" class="btn btn-primary btn-lg">Update Profile</button>
-                            <button type="button" class="btn btn-secondary btn-lg active" data-toggle="modal" data-target="#changePassword_modal">Change Password</button>
+                        <div class="col-xs-12 col-sm-12 col-md-12 text-center">
+                            <button type="button" class="btn btn-secondary btn-lg active" onclick="history.back(-1)">Back</button>
+                            <button type="submit" class="btn btn-primary btn-lg active">Save Record</button>
                         </div>
                     </form>
                 </div>

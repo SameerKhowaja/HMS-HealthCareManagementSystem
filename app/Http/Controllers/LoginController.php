@@ -58,10 +58,11 @@ class LoginController extends Controller
                     $page = 'admin.index';
                     $req->session()->put('userID',$admin->admin_id);
                     $req->session()->put('username',$admin->fname.' '.$admin->lname);
-                    $req->session()->put('userType','admin');
+                    $req->session()->put('userType', strtolower($type_val));
+                    // also send admin image if exist ------
                     $flag = true;
 
-                    return redirect('/'.strtolower($type_val))->with( ['user_id'=>$admin->admin_id]); // /admin url
+                    return redirect('/'.strtolower($type_val)); // /admin url
                     //return view($page, ['type_val'=>strtolower($type_val)]);
                 }
             }
@@ -85,7 +86,10 @@ class LoginController extends Controller
                         $req->session()->put('userID',$data->primary_id);
                         $req->session()->put('username',$data->fname.' '.$data->lname);
                         $req->session()->put('userType',$lowercase_type_val);
+                        // also send image if exist ----
                         $flag = true;
+
+                        return redirect('/'.strtolower($type_val));
                     }
                 }
             }

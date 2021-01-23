@@ -24,7 +24,7 @@
     <div class="limiter">
         <div class="container-login100" style="background-image: url('{{asset('login-register-form/images/bg-01.jpg')}}');">
             <div class="wrap-login100 fadeIn first">
-                <form method="GET" action="/laravel/public/" class="login100-form">
+                <form method="GET" action="/laravel/public/login" class="login100-form">
 
                     <span class="login100-form-logo fadeIn first">
                         <i class="zmdi zmdi-accounts-alt"></i>

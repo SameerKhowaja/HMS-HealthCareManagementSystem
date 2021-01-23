@@ -3,34 +3,39 @@
 use Illuminate\Support\Facades\Route;
 
 // Login and Registration
-Route::get('/','LoginController@login');
-Route::post('/profile','LoginController@profile');
-Route::get('/patient-registration','SignupController@signup');
-Route::post('/patient-registration-progress','SignupController@register');
+Route::get('/login','LoginController@login');   //login form
+Route::post('/profile','LoginController@profile');  //login submit click
+Route::get('/patient-registration','SignupController@signup');  //registration form
+Route::post('/patient-registration-progress','SignupController@register');  //registration submit click
 
 // Error Page
-Route::get('/error-page','ErrorController@index');
+Route::get('/error-page','ErrorController@index');  //error page
 
 //======================================================
 //                 Admin Dashboard START
 //=======================================================
 
 // navbar routes   -----------------------------------------------------
-Route::get('/admin','AdminController@dashboard');
-Route::get('/admin/patient-management','AdminController@patientManagement');
-Route::get('/admin/doctor-management','AdminController@doctorManagement');
-Route::get('/admin/staff-management','AdminController@staffManagement');
-Route::get('/admin/hospital-data','AdminController@hospitalData');
-Route::get('/admin/appointment','AdminController@appointment');
-Route::get('/admin/lab-test','AdminController@labTest');
+Route::get('/admin','AdminController@dashboard');   //dashboard
+Route::get('/admin/patient-management','AdminController@patientManagement');    //patient-management
+Route::get('/admin/doctor-management','AdminController@doctorManagement');  //doctor-management
+Route::get('/admin/staff-management','AdminController@staffManagement');    //staff-management
+Route::get('/admin/hospital-data','AdminController@hospitalData');  //hospital-data
+Route::get('/admin/appointment','AdminController@appointment'); //appointment
+Route::get('/admin/lab-test','AdminController@labTest');    //lab-test
 // ---------------------------------------------------------------------
 
 // admin dashboard routes
-Route::get('/admin/editProfile/{id}','AdminController@editProfile');
-Route::post('/admin/editProfile/{id}','AdminController@updateProfile');
-Route::post('/admin/editProfile/editPassword/{id}','AdminController@updatePassword');
+Route::get('/admin/editProfile/{id}','AdminController@editProfile');    //edit profile view
+Route::post('/admin/editProfile/{id}','AdminController@updateProfile'); //edit profile btn click
+Route::post('/admin/editProfile/editPassword/{id}','AdminController@updatePassword');   //change password btn click
+Route::get('/admin/add-record','AdminController@addAdminRecord'); //add admin view
+Route::post('/admin/add-record','AdminController@addAdminRecordSave'); //add admin btn click
+Route::delete('/admin/delete-record/{id}','AdminController@deleteData'); //delete admin data which click
 
 
+
+// ------------------------------------------------------------------------------- No work down
 
 Route::get('/admin/department','AdminController@department');
 Route::get('/admin/doctor','AdminController@doctor');

@@ -186,6 +186,13 @@
                 </div>
                 <!-- user table -->
                 <div class="card">
+                    <div class="alert alert-lg btn-block alert-primary alert-dismissible fade show text-center text-grey text-large" role="alert">
+                        {{$msg ?? 'Admin View'}}
+                        <button type="button" class="close" data-dismiss="alert" aria-label="Close">
+                            <span aria-hidden="true">&times;</span>
+                        </button>
+                    </div>
+
                     <!-- <div class="heading">
                         <li class="text-normal text-grey text-bold text-center" style="margin: 0 10%;">Image</li>
                         <li class="text-normal text-grey text-bold text-center" style="margin: 0 0;">Full Name</li>
@@ -206,14 +213,20 @@
                             <li class="usernameCell text-normal text-grey text-center" style="margin: 0 0;">{{$d->fname.' '.$d->lname}}</li>
                             <li class="usernameCell text-normal text-grey text-center" style="margin: 0 0;">{{$d->email_id}}</li>
                             <li class="usernameCell text-normal text-grey text-center" style="margin: 0 0;">{{$d->created_at.' '}}</li>
-                            @if($d->updated_at=='')
+                            <!-- @if($d->updated_at=='')
                             <li class="usernameCell text-normal text-grey text-center" style="margin: 0 100%;">{{$d->created_at.' '}}</li>
                             @else
                             <li class="usernameCell text-normal text-grey text-center" style="margin: 0 100%;">{{$d->updated_at.' '}}</li>
-                            @endif
+                            @endif -->
+                            <li class="usernameCell text-normal text-grey text-center" style="margin: 0 100%;">
+                                <a id="{{$d->admin_id}}" class="btn btn-danger btn-lg active deleteAdmin" role="button" aria-pressed="true" data-toggle="modal" data-target="#deleteAdmin_modal">Delete Record</a>
+                                <!-- <a id="{{$d->admin_id}}" href="/laravel/public/admin/delete-record/{{$d->admin_id}}" class="btn btn-danger btn-lg active" role="button" aria-pressed="true" data-toggle="modal" data-target="#exampleModalCenter">Delete Record</a> -->
+                            </li>
                         </div>
                     @endforeach
-                    <!-- <button class="viewAll-btn text-small">View All Patients</button> -->
+
+                    <a href="/laravel/public/admin/add-record/" class="btn btn-primary btn-lg active" role="button" aria-pressed="true">Add Admin</a>
+
                 </div>
             </section>
 
@@ -258,5 +271,44 @@
                 </div>
             </section>
 
+            <!-- Delete Modal -->
+            <div class="modal fade" id="deleteAdmin_modal">
+                <div class="modal-dialog modal-dialog-centered">
+                    <div class="modal-content">
+                        <!-- Modal Header -->
+                        <div class="modal-header">
+                            <h2 id="modal-heading" class="modal-title" style="margin:auto;">Are You Sure?</h2>
+                        </div>
+
+                        <form id="ok_delete" action="#" method="POST">
+                        @csrf
+                        @method('DELETE')
+                            <!-- Modal footer -->
+                            <div class="modal-footer">
+                                <button type="button" class="btn btn-secondary btn-lg" data-dismiss="modal">Close</button>
+                                <button type="submit" class="btn btn-danger btn-lg">Delete Record</button>
+                            </div>
+                        </form>
+                    </div>
+                </div>
+            </div>
+            <!-- Delete Modal Ends-->
+
         </div>
+
+        <script>
+            var user_id;
+            $(document).ready(function(){
+                $(".deleteAdmin").click(function(){
+                    user_id = $(this).attr('id');
+                    $("#ok_delete").attr("action","/laravel/public/admin/delete-record/"+user_id);
+                    $('#deleteAdmin_modal').modal('show');
+                });
+
+                $("#ok_delete").click(function(){
+                    $('#deleteAdmin_modal').modal('hide');
+                });
+            });
+        </script>
+
 @endsection

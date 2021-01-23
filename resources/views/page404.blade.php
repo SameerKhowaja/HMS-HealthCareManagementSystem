@@ -38,6 +38,10 @@
         margin-bottom: 40px;
     }
 
+    .message-box p {
+        font-size: 25px;
+    }
+
     .buttons-con .action-link-wrap {
         margin-top: 40px;
     }
@@ -123,12 +127,12 @@
     </g>
 </svg>
     <div class="message-box">
-        <h1>404</h1>
-        <p>Page not found</p>
+        <h1>{{$msg??'404'}}</h1>
+        <p>{{$msg_long??'Page not found'}}</p>
         <div class="buttons-con">
             <div class="action-link-wrap">
                 <a onclick="history.back(-1)" class="link-button link-back-button">Go Back</a>
-                <a href="/laravel/public/" class="link-button">Go to Home Page</a>
+                <a href="/laravel/public/login" class="link-button">Go to Login Page</a>
             </div>
         </div>
     </div>

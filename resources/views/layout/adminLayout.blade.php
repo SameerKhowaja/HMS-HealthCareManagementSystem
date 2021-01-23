@@ -6,7 +6,7 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
-    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@4.5.3/dist/css/bootstrap.min.css">
+    <link rel="stylesheet" href="{{asset('external-libraries/css/jsdelivrbootstrap.min.css')}}">
     <link rel="stylesheet" href="{{asset('resources/css/adminstyle.css')}}">
     <link rel="stylesheet" href="{{asset('resources/sass/css/profile.css')}}">
     <link rel="stylesheet" href="{{asset('resources/sass/css/sideNav.css')}}">
@@ -14,9 +14,11 @@
     <link rel="stylesheet" href="{{asset('resources/sass/css/Admin/users.css')}}">
     <link rel="stylesheet" href="{{asset('resources/sass/css/Admin/adminOverview.css')}}">
     <link rel="stylesheet" href="{{asset('resources/sass/css/responsive.css')}}">
+    <link rel="stylesheet" type="text/css" href="{{asset('login-register-form/fonts/font-awesome-4.7.0/css/font-awesome.min.css')}}">
 
-    <!-- charts.js cdn -->
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/2.9.4/Chart.min.js"></script>
+    <script src="{{asset('external-libraries/js/codejquery-3.5.1.js')}}"></script>
+    <!-- charts.js -->
+    <script src="{{asset('external-libraries/js/cloudflareChart.min.js')}}"></script>
     <title>Admin Dashboard</title>
 </head>
 
@@ -46,8 +48,10 @@
                                 </a>
                                 <div class="dropdown-menu" aria-labelledby="navbarDropdownMenuLink">
                                     <a class="dropdown-item" href="/laravel/public/admin">Dashboard</a>
+                                    <div class="dropdown-divider"></div>
                                     <a class="dropdown-item" href="/laravel/public/admin/editProfile/{{session('userID')}}">Edit Profile</a>
-                                    <a class="dropdown-item" href="/laravel/public/">Log Out</a>
+                                    <div class="dropdown-divider"></div>
+                                    <a class="dropdown-item" href="/laravel/public/login">Log Out</a>
                                 </div>
                             </li>
 
@@ -63,9 +67,9 @@
     </main>
 
     <!-- bootstrap enabled -->
-    <script src="https://code.jquery.com/jquery-3.5.1.slim.min.js" integrity="sha384-DfXdz2htPH0lsSSs5nCTpuj/zy4C+OGpamoFVy38MVBnE+IbbVYUew+OrCXaRkfj" crossorigin="anonymous"></script>
-    <script src="https://cdn.jsdelivr.net/npm/popper.js@1.16.1/dist/umd/popper.min.js" integrity="sha384-9/reFTGAW83EW2RDu2S0VKaIzap3H66lZH81PoYlFhbGU+6BZp6G7niu735Sk7lN" crossorigin="anonymous"></script>
-    <script src="https://cdn.jsdelivr.net/npm/bootstrap@4.5.3/dist/js/bootstrap.min.js" integrity="sha384-w1Q4orYjBQndcko6MimVbzY0tgp4pWB4lZ7lr30WKz0vr/aWKhXdBNmNb5D92v7s" crossorigin="anonymous"></script>
+    <script src="{{asset('external-libraries/js/codejquery-3.5.1.slim.min.js')}}"></script>
+    <script src="{{asset('external-libraries/js/jsdelivrpopper.min.js')}}"></script>
+    <script src="{{asset('external-libraries/js/jsdelivrbootstrap.min.js')}}"></script>
 
     <script src="{{asset('resources/js/app.js')}}"></script>
     <!-- <script src="./assets/js/app.js"></script> -->

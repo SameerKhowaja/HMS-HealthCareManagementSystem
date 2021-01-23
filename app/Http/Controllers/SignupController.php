@@ -28,6 +28,16 @@ class SignupController extends Controller
     }
 
     function register(Request $req){
+
+        $req->validate([
+            'fname' => 'required|max:100',
+            'lname' => 'required|max:100',
+            'cnic' => 'required|max:100',
+            'email_id' => 'required|max:200',
+            'phone_number' => 'required|max:30',
+            'password' => 'required|max:100',
+        ]);
+
         $fname_no = $req->fname;
         $lname_no = request('lname');
         $cnic_no = request('cnic');
@@ -36,7 +46,7 @@ class SignupController extends Controller
         $phone_no = request('phone_number');
         $password_no = request('password');
 
-        // Check Patient is Type or not
+        // Check Patient is Type or not in types table
         $type_id = 0;
         $flag = false;
         $type_list = Type::all();
@@ -63,8 +73,8 @@ class SignupController extends Controller
 
         $patient = new Patient();
         $add_data = new Hospital_data();
-
         $username = "User";
+
         if($check == true){
             $add_data->type_id = $type_id;  //Patient id type 1,2,3,...
             $add_data->fname = $req->fname;
