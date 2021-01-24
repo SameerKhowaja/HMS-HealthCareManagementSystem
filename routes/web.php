@@ -36,7 +36,12 @@ Route::delete('/admin/delete-record/{id}','AdminController@deleteData'); //delet
 // admin hospital-data routes
 Route::get('/admin/hospital-data/addPatient','AdminController@addRecord');    //add patient record view
 Route::post('/admin/hospital-data/addPatient','AdminController@addRecordSave');    //add patient record on btn click
+Route::post('/admin/hospital-data/{id}','AdminController@searchRecord');    //search account type data using select box on button click
 
 
+
+//======================================================
+//                 Admin Dashboard ENDS
+//=======================================================
 
 // ------------------------------------------------------------------------------- No work down

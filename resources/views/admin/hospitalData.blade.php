@@ -91,20 +91,13 @@
         <div style='margin-top:2%; margin-bottom:2%;'>
             <div style="display: flex; justify-content: space-between; align-items: center;">
                 <h3 class="text-large text-grey">Admin / Hospital Data</h3>
-                <a href="/laravel/public/admin/hospital-data/addPatient/" class="btn btn-primary btn-lg active" role="button" aria-pressed="true">Add Record</a>
+                <a href="/laravel/public/admin/hospital-data/addPatient/" class="btn btn-primary btn-lg active" role="button" aria-pressed="true"><i class="fa fa-plus-circle"> </i>  Add Record</a>
             </div>
 
             <br>
 
             <!-- Patient table -->
             <div class="table-responsive" style='box-shadow: 5px 3px 5px 3px #1b99d8; background-color: white; padding: 2%; border-radius: 10px; font-size: 13px;'>
-                <!-- <div style="display: flex; justify-content: space-between; align-items: center;">
-                    <div class="col-lg-12 margin-tb" >
-                        <div class="pull-left">
-                            <a class="btn btn-primary" href="/laravel/public/admin/createDoctor">Add Doctor</a>
-                        </div>
-                    </div>
-                </div> -->
                 @if ($message = Session::get('success'))
                 <br>
                 <div class="alert alert-success alert-dismissible fade show" role="alert">
@@ -114,46 +107,115 @@
                     </button>
                 </div>
                 @endif
-                <!-- Patient table Start -->
-                <table class="table">
-                    <thead>
-                        <tr>
-                            <th scope="col">Image</th>
-                            <th scope="col">Full Name</th>
-                            <th scope="col">CNIC #</th>
-                            <th scope="col">Email ID</th>
-                            <th scope="col">Contact No</th>
-                            <th scope="col">Gender</th>
-                            <th scope="col" >Action</th>
-                        </tr>
-                    </thead>
-                    <tbody>
-                        <tr>
-                            <td>
-                            <img class="profile" src="{{asset('resources/images/profile.png')}}" alt="profile">
-                            </td>
-                            <td style='margin: 0px;'>
-                            <a class="btn btn-info" style='font-size: 13px;' href="/laravel/public/admin/showDoctor/">Show</a>
-                            </td>
-                            <td>
-                            <a class="btn btn-warning" style='font-size: 13px;' href="/laravel/public/admin/editDoctor/">Edit</a>
-                            </td>
-                            <td>
-                                <form action="/laravel/public/admin/deleteDoctor/" method="POST">
-                                    @csrf
-                                    @method('DELETE')
 
-                                    <button type="submit" style='font-size: 13px;' class="btn btn-danger">Delete</button>
-                                </form>
-                            </td>
-                        </tr>
-                    </tbody>
-                </table>
+                <!-- Real Data from DB -->
+                <!-- <div class="row">
+                    <div class="col-sm-12">
+                        <h1 class="display-5 text-center">Hospital Data Records</h1>
+                    </div>
+                </div> -->
+
+                <div class="row">
+                    <div class="col-sm-6">
+                            <div class="input-group">
+                                <span class="input-group-addon form-control form-control-lg col-sm-1"><i class="fa fa-filter fa-lg"></i></span>
+                                <input type="text" name="searchTable" id="searchData" class="form-control form-control-lg col-sm-11" placeholder="Search Table Records" style="border:1px solid lightblue; color:black;">
+                            </div>
+                    </div>
+                    <div class="col-sm-6">
+                        <form action="/laravel/public/admin/hospital-data/{id}" method="POST">
+                        @csrf
+                            <div class="form-group" style="float:right;">
+                                <select class="form-select" name="accountType" id="accountType" style="height:30px; width:200px; padding:4px;">
+                                    <option value="0">All Records</option>
+                                    @foreach($typesList as $data)
+                                        @if($data->type_name != 'Admin' && $data->type_name != 'admin')
+                                            <option value="{{$data->type_id}}">{{$data->type_name}}</option>
+                                        @endif
+                                    @endforeach
+                                </select>
+                                <button type="submit" class="btn btn-primary btn-lg"><i class="fa fa-search"> </i> Search</button>
+                            </div>
+                        </form>
+                    </div>
+                </div>
+
+                <!-- Patient table Start -->
+                <div class="table-responsive-sm">
+                    <table class="table table-hover">
+                        <thead>
+                            <tr>
+                                <th scope="col" style="text-align:center">Image</th>
+                                <th scope="col" style="text-align:center">Full Name</th>
+                                <th scope="col" style="text-align:center">Type</th>
+                                <th scope="col" style="text-align:center">CNIC #</th>
+                                <th scope="col" style="text-align:center">Email ID</th>
+                                <th scope="col" style="text-align:center">Phone #</th>
+                                <th scope="col" style="text-align:center">Gender</th>
+                                <th scope="col" style="text-align:center" colspan="3">Action</th>
+                            </tr>
+                        </thead>
+
+                        <tbody id="myTable">
+                        @if($dataFetched != 'none')
+                            @foreach($dataFetched as $data)
+                            <tr>
+                                <td>
+                                    <img class="profile" src="{{asset('resources/images/profile.png')}}" alt="profile">
+                                </td>
+
+                                <td>{{$data->fname.' '.$data->lname}}</td>
+                                <td>{{$data->type_name}}</td>
+                                <td>{{$data->cnic}}</td>
+                                <td>{{$data->email_id}}</td>
+                                <td>{{$data->phone_number}}</td>
+                                <td>{{$data->gender}}</td>
+
+                                <td style='margin: 0px;'>
+                                    <a class="btn btn-info btn-lg" style='font-size: 13px;' href="/laravel/public/admin/hospital-data/show-record/{{$data->primary_id}}">Show</a>
+                                </td>
+                                <td>
+                                    <a class="btn btn-warning btn-lg" style='font-size: 13px;' href="/laravel/public/admin/hospital-data/edit-record/{{$data->primary_id}}">Edit</a>
+                                </td>
+                                <td>
+                                    <form action="/laravel/public/admin/hospital-data/delete-record/{{$data->primary_id}}" method="POST">
+                                        @csrf
+                                        @method('DELETE')
+                                        <button type="submit" style='font-size: 13px;' class="btn btn-danger btn-lg">Delete</button>
+                                    </form>
+                                </td>
+                            </tr>
+                            @endforeach
+                        @endif
+                        </tbody>
+                    </table>
+
+                    <!-- Alert if Zero Result Retrieved -->
+                    @if($msg??''!='')
+                    <div class="row">
+                        <div class="col-sm-12">
+                            <h1 class="display-3 text-center">{{$msg}}</h1>
+                        </div>
+                    </div>
+                    @endif
+
+                </div>
             </div>
             <!-- Patient Table end -->
 
         </div>
 
     </div>
+
+    <script>
+        $(document).ready(function(){
+            $("#searchData").on("keyup", function() {
+                var value = $(this).val().toLowerCase();
+                $("#myTable tr").filter(function() {
+                $(this).toggle($(this).text().toLowerCase().indexOf(value) > -1)
+                });
+            });
+        });
+    </script>
 
 @endsection

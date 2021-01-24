@@ -165,7 +165,8 @@ class AdminController extends Controller
 
     // Hospital Data View
     function hospitalData(){
-        return view('admin.hospitalData');
+        $getType = Type::all();
+        return view('admin.hospitalData', ['typesList'=>$getType, 'dataFetched'=>'none']);
     }
 
     // Add Record View btn click view
@@ -246,6 +247,34 @@ class AdminController extends Controller
         ]);
 
         return view('admin.hospitalData.addRecord', ['typesList'=>$dataType, 'msg'=>'Success! ', 'long_msg'=>"Added New ".$nameOfType." Record to database"]);
+    }
+
+    function searchRecord(Request $req, $id){
+        $getType = Type::all();
+        $type_id = request('accountType');
+        $type_name = '';
+        if($type_id == 0){    // All Records
+            // Complete Data of Hospital Table join with Types Table
+            $hospital_data = Hospital_data::join('types', 'types.type_id', '=', 'hospital_datas.type_id')->get(['hospital_datas.*', 'types.type_name']);
+            $rowsReturn = count($hospital_data);
+            if($rowsReturn == 0){
+                return view('admin.hospitalData', ['typesList'=>$getType, 'dataFetched'=>$hospital_data, 'msg'=>'No Records Found']);
+            }else{
+                return view('admin.hospitalData', ['typesList'=>$getType, 'dataFetched'=>$hospital_data]);
+            }
+        }
+        else{
+            $hospital_data = Hospital_data::join('types', 'types.type_id', '=', 'hospital_datas.type_id')->where('types.type_id', $type_id)->get(['hospital_datas.*', 'types.type_name']);
+            $rowsReturn = count($hospital_data);
+            if($rowsReturn == 0){
+                return view('admin.hospitalData', ['typesList'=>$getType, 'dataFetched'=>$hospital_data, 'msg'=>'No Records Found']);
+            }else{
+                return view('admin.hospitalData', ['typesList'=>$getType, 'dataFetched'=>$hospital_data]);
+            }
+        }
+
+        // At Failure
+        return view('admin.hospitalData', ['typesList'=>$getType, 'dataFetched'=>'none', 'msg'=>'No Records Found']);
     }
 
 
