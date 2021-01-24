@@ -189,9 +189,11 @@ class AdminController extends Controller
             'password1' => 'required|max:100',
         ]);
 
+        $dataType = Type::all();    // Type Table Access
+
         // Check Password1 and Password2 Matched
         if(request('password1') != request('password2')){
-            return view('admin.hospitalData.addRecord', ['msg'=>'Error! ', 'long_msg'=>"Password Not Matched"]);
+            return view('admin.hospitalData.addRecord', ['typesList'=>$dataType, 'msg'=>'Error! ', 'long_msg'=>"Password Not Matched"]);
         }
 
         // Check if same email not exits for patient type
@@ -200,15 +202,16 @@ class AdminController extends Controller
         $Hospital_data = Hospital_data::all();
         forEach($Hospital_data as $d){
             if(($d->email_id == $email_check && $d->type_id == $userType_id) || ($userType_id == 0)){
-                return view('admin.hospitalData.addRecord', ['msg'=>'Error! ', 'long_msg'=>"Email Already Present"]);
+                return view('admin.hospitalData.addRecord', ['typesList'=>$dataType, 'msg'=>'Error! ', 'long_msg'=>"Email Already Present"]);
             }
         }
 
         // Get Type name from Type ID
-        $dataType = Type::all();
         $dataType_value = '';
+        $nameOfType = '';
         forEach($dataType as $data){
             if($data->type_id == $userType_id){
+                $nameOfType = $data->type_name; // original name use later for alert
                 $dataType_value = strtolower($data->type_name); // lower case string
                 $dataType_value = ucwords(str_replace(" ", "_", $dataType_value));  // capital first letter and replace space with underscore
             }
@@ -216,16 +219,13 @@ class AdminController extends Controller
 
         // If type name not present in database
         if($dataType_value == ''){
-            return view('admin.hospitalData.addRecord', ['msg'=>'Error! ', 'long_msg'=>"No Account Type Available"]);
+            return view('admin.hospitalData.addRecord', ['typesList'=>$dataType, 'msg'=>'Error! ', 'long_msg'=>"No Account Type Available"]);
         }
-        return dd($dataType_value);
 
         // add Image ?
 
         // if all fine add Data
         $add_patient = new Hospital_data;
-        $dataTable = new $dataType_value;
-
         $add_patient->type_id = $userType_id;
         $add_patient->fname = request('fname');
         $add_patient->lname = request('lname');
@@ -240,10 +240,12 @@ class AdminController extends Controller
         $add_patient->save();
         $primaryid = $add_patient->id;  // return currently saved ID
 
-        $dataTable->primary_id = $primaryid;
-        $dataTable->save();
+        $dataType_value = $dataType_value.'s';  // Table name has 's' in end
+        DB::table($dataType_value)->insert([
+            'primary_id' => $primaryid,
+        ]);
 
-        return view('admin.hospitalData.addRecord', ['msg'=>'Success! ', 'long_msg'=>"Added New Patient to database"]);
+        return view('admin.hospitalData.addRecord', ['typesList'=>$dataType, 'msg'=>'Success! ', 'long_msg'=>"Added New ".$nameOfType." Record to database"]);
     }
 
 
