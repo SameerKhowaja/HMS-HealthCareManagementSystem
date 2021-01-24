@@ -79,15 +79,14 @@ class SignupController extends Controller
             $add_data->type_id = $type_id;  //Patient id type 1,2,3,...
             $add_data->fname = $req->fname;
             $add_data->lname = request('lname');
-            $username = $req->fname.' '.$req->lname;
-
+            $username = $req->fname.' '.$req->lname;    //set username
             $add_data->cnic = request('cnic');
             $add_data->email_id = request('email_id');
             $add_data->gender = request('gender');
             $add_data->phone_number = request('phone_number');
             $add_data->password = request('password');
             $add_data->save();
-            $primaryid = $add_data->id;
+            $primaryid = $add_data->id; // return currently saved ID
 
             $patient->primary_id = $primaryid;
             $patient->save();

@@ -86,74 +86,214 @@
 @endsection
 
 @section('content')
-    <div>
 
-        <div style='margin-top:2%; margin-bottom:2%;'>
-            <div style="display: flex; justify-content: space-between; align-items: center;">
-                <h3 class="text-large text-grey">Admin / Hospital Data</h3>
-                <a href="/laravel/public/admin/hospital-data/addPatient/" class="btn btn-primary btn-lg active" role="button" aria-pressed="true">Add Record</a>
-            </div>
-
-            <br>
-
-            <!-- Patient table -->
-            <div class="table-responsive" style='box-shadow: 5px 3px 5px 3px #1b99d8; background-color: white; padding: 2%; border-radius: 10px; font-size: 13px;'>
-                <!-- <div style="display: flex; justify-content: space-between; align-items: center;">
-                    <div class="col-lg-12 margin-tb" >
-                        <div class="pull-left">
-                            <a class="btn btn-primary" href="/laravel/public/admin/createDoctor">Add Doctor</a>
-                        </div>
-                    </div>
-                </div> -->
-                @if ($message = Session::get('success'))
-                <br>
-                <div class="alert alert-success alert-dismissible fade show" role="alert">
-                    <p>{{ $message }}</p>
-                    <button type="button" class="close" data-dismiss="alert" aria-label="Close">
-                        <span aria-hidden="true">&times;</span>
-                    </button>
+        <div>
+            <div style='margin-top: 2%; margin-bottom: 3%;'>
+                <div style="display: flex; justify-content: space-between; align-items: center;">
+                    <h3 class="text-large text-grey">Admin / Hospital Data / Add Record</h3>
                 </div>
-                @endif
-                <!-- Patient table Start -->
-                <table class="table">
-                    <thead>
-                        <tr>
-                            <th scope="col">Image</th>
-                            <th scope="col">Full Name</th>
-                            <th scope="col">CNIC #</th>
-                            <th scope="col">Email ID</th>
-                            <th scope="col">Contact No</th>
-                            <th scope="col">Gender</th>
-                            <th scope="col" >Action</th>
-                        </tr>
-                    </thead>
-                    <tbody>
-                        <tr>
-                            <td>
-                            <img class="profile" src="{{asset('resources/images/profile.png')}}" alt="profile">
-                            </td>
-                            <td style='margin: 0px;'>
-                            <a class="btn btn-info" style='font-size: 13px;' href="/laravel/public/admin/showDoctor/">Show</a>
-                            </td>
-                            <td>
-                            <a class="btn btn-warning" style='font-size: 13px;' href="/laravel/public/admin/editDoctor/">Edit</a>
-                            </td>
-                            <td>
-                                <form action="/laravel/public/admin/deleteDoctor/" method="POST">
-                                    @csrf
-                                    @method('DELETE')
 
-                                    <button type="submit" style='font-size: 13px;' class="btn btn-danger">Delete</button>
-                                </form>
-                            </td>
-                        </tr>
-                    </tbody>
-                </table>
+                <!-- Table -->
+                <div class="table-responsive" style='box-shadow: 5px 3px 5px 3px #1b99d8; background-color: white; padding: 2%; border-radius: 10px; font-size: 13px;'>
+
+                    <form action="/laravel/public/admin/hospital-data/addPatient" method="POST">
+                        @csrf
+                        <!-- Head Row -->
+                        <div class="row" style="margin:auto;">
+                            <div class="col-sm-12" style="text-align:center;">
+                                <div class="form-group">
+                                    <h1 class="display-4">Create New Record</h1>
+                                </div>
+                            </div>
+                            <!-- Account Type -->
+                            <div class="col-sm-12" style="text-align:center;">
+                                <div class="form-group">
+                                    <select class="form-select" name="accountType" id="accountType" style="height:30px; width:200px; padding:4px;">
+                                        @foreach($typesList as $data)
+                                            @if($data->type_name != 'Admin' && $data->type_name != 'admin')
+                                                <option value="{{$data->type_id}}">{{$data->type_name}}</option>
+                                            @endif
+                                        @endforeach
+                                    </select>
+                                </div>
+                            </div>
+                        </div>
+                        <hr>
+                        <!-- row1 - If error occurs -->
+                        <div class="row">
+                            <div class="col-sm-12">
+                                @if ($errors->any())
+                                    <div class="alert alert-danger alert-dismissible fade show text-center" role="alert">
+                                        <ul>
+                                        <li><strong>Warning!</strong></li>
+                                            @foreach ($errors->all() as $error)
+                                                <li>{{ $error }}</li>
+                                            @endforeach
+                                        </ul>
+                                        <button type="button" class="close" data-dismiss="alert" aria-label="Close">
+                                            <span aria-hidden="true">&times;</span>
+                                        </button>
+                                    </div>
+                                @endif
+                            </div>
+
+                            @if($msg??'' != '')
+                            <div class="col-sm-12">
+                                <div class="form-group">
+                                    <div class="alert alert-warning alert-dismissible fade show text-center" role="alert">
+                                        <strong>{{$msg ?? ''}}</strong> {{$long_msg ?? ''}}
+                                        <button type="button" class="close" data-dismiss="alert" aria-label="Close">
+                                            <span aria-hidden="true">&times;</span>
+                                        </button>
+                                    </div>
+                                </div>
+                            </div>
+                            @endif
+                        </div>
+                        <!-- row2 -->
+                        <div class="row">
+                            <div class="col-sm-6">
+                                <div class="form-group">
+                                    <strong>First Name*</strong>
+                                    <input type="text" name="fname" class="form-control form-control-lg" placeholder="First Name" required>
+                                </div>
+                            </div>
+                            <div class="col-sm-6">
+                                <div class="form-group">
+                                    <strong>Last Name*</strong>
+                                    <input type="text" name="lname" class="form-control form-control-lg" placeholder="Last Name" required>
+                                </div>
+                            </div>
+                        </div>
+                        <!-- row3 -->
+                        <div class="row">
+                            <div class="col-sm-6">
+                                <div class="form-group">
+                                    <strong>Email ID*</strong>
+                                    <input type="email" name="email_id" class="form-control form-control-lg" placeholder="abc@demo.com" required>
+                                </div>
+                            </div>
+                            <div class="col-sm-6">
+                                <div class="form-group">
+                                    <strong>CNIC Number*</strong>
+                                    <input type="text" name="cnic" class="form-control form-control-lg" placeholder="41303XXXXXXXX" required>
+                                </div>
+                            </div>
+                        </div>
+                        <!-- row4 -->
+                        <div class="row">
+                            <div class="col-sm-4">
+                                <div class="form-group">
+                                    <strong>Gender*</strong>
+                                    <select class="form-control form-control-lg" id="gender" name="gender">
+                                        <option selected>Male</option>
+                                        <option>Female</option>
+                                        <option>Other</option>
+                                    </select>
+                                </div>
+                            </div>
+                            <div class="col-sm-4">
+                                <div class="form-group">
+                                    <strong>Phone Number*</strong>
+                                    <input type="text" name="phone_number" class="form-control form-control-lg" placeholder="92333XXXXXXX" required>
+                                </div>
+                            </div>
+                            <div class="col-sm-4">
+                                <div class="form-group">
+                                    <strong>City</strong>
+                                    <input type="text" name="city" class="form-control form-control-lg" placeholder="Karachi">
+                                </div>
+                            </div>
+                        </div>
+                        <!-- row5 -->
+                        <div class="row">
+                            <div class="col-sm-12">
+                                <div class="form-group">
+                                    <strong>Address</strong>
+                                    <textarea name="address" id="address" cols="30" rows="3" class="form-control form-control-lg"></textarea>
+                                </div>
+                            </div>
+                        </div>
+                        <!-- row6 -->
+                        <div class="row">
+                            <div class="col-sm-6">
+                                <div class="form-group">
+                                    <strong>Date of Birth (DOB)</strong>
+                                    <input type="date" name="dob" class="form-control form-control-lg">
+                                </div>
+                            </div>
+                            <div class="col-sm-6">
+                                <div class="form-group">
+                                    <strong>Profile Image</strong>
+                                    <input type="file" name="image" class="form-control form-control-lg">
+                                </div>
+                            </div>
+                        </div>
+                        <!-- row3 -->
+                        <div class="row">
+                            <div class="col-sm-6">
+                                <div class="form-group">
+                                    <strong>Password*</strong>
+                                    <div class="input-group">
+                                        <input type="password" name="password1" class="form-control form-control-lg pwd1" placeholder="password" required>
+                                        <span class="input-group-btn">
+                                            <button class="btn btn-default btn-lg revealold" type="button"><i id="fa_old" class="fa fa-eye"></i></button>
+                                        </span>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="col-sm-6">
+                                <div class="form-group">
+                                    <strong>Confirm Password*</strong>
+                                    <div class="input-group">
+                                        <input type="password" name="password2" class="form-control form-control-lg pwd2" placeholder="confirm password" required>
+                                        <span class="input-group-btn">
+                                            <button class="btn btn-default btn-lg revealnew" type="button"><i id="fa_old" class="fa fa-eye"></i></button>
+                                        </span>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <!-- row4 -->
+                        <div class="row">
+                        <div class="col-xs-12 col-sm-12 col-md-12 text-center">
+                            <button type="button" class="btn btn-secondary btn-lg active" onclick="history.back(-1)">Back</button>
+                            <button type="submit" class="btn btn-primary btn-lg active">Save Record</button>
+                        </div>
+                    </form>
+                </div>
             </div>
-            <!-- Patient Table end -->
 
         </div>
 
-    </div>
+		<!-- Old Pass -->
+        <script>
+            $(".revealold").on('click',function() {
+                var $pwd = $(".pwd1");
+                var $icon = $("#fa_old");
+                if ($pwd.attr('type') === 'password') {
+                    $pwd.attr('type', 'text');
+                    $icon.attr('class', 'fa fa-eye-slash');
+                } else {
+                    $pwd.attr('type', 'password');
+                    $icon.attr('class', 'fa fa-eye');
+                }
+            });
+        </script>
+
+        <!-- New Pass -->
+        <script>
+            $(".revealnew").on('click',function() {
+                var $pwd = $(".pwd2");
+                var $icon = $("#fa_new");
+                if ($pwd.attr('type') === 'password') {
+                    $pwd.attr('type', 'text');
+                    $icon.attr('class', 'fa fa-eye-slash');
+                } else {
+                    $pwd.attr('type', 'password');
+                    $icon.attr('class', 'fa fa-eye');
+                }
+            });
+        </script>
 
 @endsection

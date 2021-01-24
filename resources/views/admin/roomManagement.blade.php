@@ -29,7 +29,7 @@
                 </a>
 
                 <a href="/laravel/public/admin/hospital-data">
-                    <li class="active text-normal">
+                    <li class="text-normal">
                         <svg xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" aria-hidden="true" focusable="false" width="1em" height="1em" fill="#0052E9" style="-ms-transform: rotate(360deg); -webkit-transform: rotate(360deg); transform: rotate(360deg);" preserveAspectRatio="xMidYMid meet" viewBox="0 0 16 16">
                             <path d="M15 14s1 0 1-1-1-4-5-4-5 3-5 4 1 1 1 1h8zm-7.978-1A.261.261 0 0 1 7 12.996c.001-.264.167-1.03.76-1.72C8.312 10.629 9.282 10 11 10c1.717 0 2.687.63 3.24 1.276.593.69.758 1.457.76 1.72l-.008.002a.274.274 0 0 1-.014.002H7.022zM11 7a2 2 0 1 0 0-4 2 2 0 0 0 0 4zm3-2a3 3 0 1 1-6 0 3 3 0 0 1 6 0zM6.936 9.28a5.88 5.88 0 0 0-1.23-.247A7.35 7.35 0 0 0 5 9c-4 0-5 3-5 4 0 .667.333 1 1 1h4.216A2.238 2.238 0 0 1 5 13c0-1.01.377-2.042 1.09-2.904.243-.294.526-.569.846-.816zM4.92 10A5.493 5.493 0 0 0 4 13H1c0-.26.164-1.03.76-1.724.545-.636 1.492-1.256 3.16-1.275zM1.5 5.5a3 3 0 1 1 6 0 3 3 0 0 1-6 0zm3-2a2 2 0 1 0 0 4 2 2 0 0 0 0-4z"/>
                         </svg> Hospital Data
@@ -37,7 +37,7 @@
                 </a>
 
                 <a href="/laravel/public/admin/room-management">
-                    <li class="text-normal">
+                    <li class="active text-normal">
                     <svg xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" aria-hidden="true" focusable="false" width="1em" height="1em" fill="#0052E9" style="-ms-transform: rotate(360deg); -webkit-transform: rotate(360deg); transform: rotate(360deg);" preserveAspectRatio="xMidYMid meet" viewBox="0 0 16 16">
                         <path d="M3 2a1 1 0 0 1 1-1h8a1 1 0 0 1 1 1v13h1.5a.5.5 0 0 1 0 1h-13a.5.5 0 0 1 0-1H3V2zm1 13h8V2H4v13z"/>
                         <path d="M9 9a1 1 0 1 0 2 0 1 1 0 0 0-2 0z"/>
@@ -88,16 +88,29 @@
 @section('content')
     <div>
 
-        <div style='margin-top:2%; margin-bottom:2%;'>
+        <div style='margin-top: 2%;'>
             <div style="display: flex; justify-content: space-between; align-items: center;">
-                <h3 class="text-large text-grey">Admin / Hospital Data</h3>
-                <a href="/laravel/public/admin/hospital-data/addPatient/" class="btn btn-primary btn-lg active" role="button" aria-pressed="true">Add Record</a>
+                <h3 class="text-large text-grey">Admin / Patient Management</h3>
+                <a href="/laravel/public/admin/patient-management/addPatient/" class="btn btn-primary btn-lg active" role="button" aria-pressed="true">Add Patient</a>
+                <!-- <p class="text-normal text-grey">
+                    Filter
+                    <svg xmlns="http://www.w3.org/2000/svg"
+                        xmlns:xlink="http://www.w3.org/1999/xlink"
+                        aria-hidden="true" focusable="false"
+                        width="1em"
+                        height="1em"
+                        style="-ms-transform: rotate(360deg); -webkit-transform: rotate(360deg); transform: rotate(360deg);" preserveAspectRatio="xMidYMid meet" viewBox="0 0 32 32">
+                        <g fill="none" stroke="#666666" stroke-linecap="round" stroke-linejoin="round" stroke-width="2">
+                            <path d="M2 5s4-2 14-2s14 2 14 2L19 18v9l-6 3V18L2 5z"/>
+                        </g>
+                    </svg>
+                </p> -->
             </div>
 
             <br>
 
             <!-- Patient table -->
-            <div class="table-responsive" style='box-shadow: 5px 3px 5px 3px #1b99d8; background-color: white; padding: 2%; border-radius: 10px; font-size: 13px;'>
+            <div class="table-responsive" style='box-shadow: 5px 3px 5px 3px #C4CACB; background-color: white; padding: 2%; border-radius: 10px; font-size: 13px;'>
                 <!-- <div style="display: flex; justify-content: space-between; align-items: center;">
                     <div class="col-lg-12 margin-tb" >
                         <div class="pull-left">

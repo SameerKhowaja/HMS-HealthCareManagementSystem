@@ -19,11 +19,14 @@ use App\Patient;
 use App\Receptionist;
 use App\Room;
 use App\Type;
+use App\Other;
 use App\User;
 
 class AdminController extends Controller
 {
-    // Admin Dashboard View
+
+    // Admin Dashboard ---------------------------------
+
     function dashboard(){
         $patientCount = 0;
         $doctorCount = 0;
@@ -125,21 +128,12 @@ class AdminController extends Controller
 
         // image add
         $add_admin = new Admin;
-        if ($req->hasFile('image')){
-            $request->validate([
-                'image' => 'mimes:jpeg,bmp,png' // Only allow .jpg, .bmp and .png file types.
-            ]);
-
-            //return view('admin.manageAdmin.addAdmin', ['msg'=>'Error! ', 'long_msg'=>"Email Already Present"]);
-        }
-        else{
-            // Add data if everything correct
-            $add_admin->fname = request('fname');
-            $add_admin->lname = request('lname');
-            $add_admin->email_id = request('email_id');
-            $add_admin->password = request('password1');
-            $add_admin->save();
-        }
+        // Add data if everything correct
+        $add_admin->fname = request('fname');
+        $add_admin->lname = request('lname');
+        $add_admin->email_id = request('email_id');
+        $add_admin->password = request('password1');
+        $add_admin->save();
 
         return view('admin.manageAdmin.addAdmin', ['msg'=>'Success! ', 'long_msg'=>"Added New Admin to database"]);
     }
@@ -164,24 +158,110 @@ class AdminController extends Controller
         return redirect("/admin")->with('msg','success');
     }
 
+// Admin Dashboard Ends ---------------------------------
 
 
+// Admin / Hospital Data Management ---------------------------------
 
-// ---------------------------
-    function patientManagement(){
-        return view('admin.patientManagement');
-    }
-
-    function doctorManagement(){
-        return view('admin.doctorManagement');
-    }
-
-    function staffManagement(){
-        return view('admin.staffManagement');
-    }
-
+    // Hospital Data View
     function hospitalData(){
         return view('admin.hospitalData');
+    }
+
+    // Add Record View btn click view
+    function addRecord(){
+        $getType = Type::all();
+        return view('admin.hospitalData.addRecord', ['typesList'=>$getType]);
+    }
+
+    // Add Record Save to database according to account type
+    function addRecordSave(Request $req){
+        $req->validate([
+            'accountType' => 'required',
+            'fname' => 'required|max:100',
+            'lname' => 'required|max:100',
+            'email_id' => 'required|max:200',
+            'cnic' => 'required|max:100',
+            'phone_number' => 'required|max:30',
+            'gender' => 'required|max:10',
+            'city' => 'max:100',
+            'address' => 'max:500',
+            'password1' => 'required|max:100',
+        ]);
+
+        // Check Password1 and Password2 Matched
+        if(request('password1') != request('password2')){
+            return view('admin.hospitalData.addRecord', ['msg'=>'Error! ', 'long_msg'=>"Password Not Matched"]);
+        }
+
+        // Check if same email not exits for patient type
+        $email_check = request('email_id');
+        $userType_id = request('accountType'); // In number 1,2,...
+        $Hospital_data = Hospital_data::all();
+        forEach($Hospital_data as $d){
+            if(($d->email_id == $email_check && $d->type_id == $userType_id) || ($userType_id == 0)){
+                return view('admin.hospitalData.addRecord', ['msg'=>'Error! ', 'long_msg'=>"Email Already Present"]);
+            }
+        }
+
+        // Get Type name from Type ID
+        $dataType = Type::all();
+        $dataType_value = '';
+        forEach($dataType as $data){
+            if($data->type_id == $userType_id){
+                $dataType_value = strtolower($data->type_name); // lower case string
+                $dataType_value = ucwords(str_replace(" ", "_", $dataType_value));  // capital first letter and replace space with underscore
+            }
+        }
+
+        // If type name not present in database
+        if($dataType_value == ''){
+            return view('admin.hospitalData.addRecord', ['msg'=>'Error! ', 'long_msg'=>"No Account Type Available"]);
+        }
+        return dd($dataType_value);
+
+        // add Image ?
+
+        // if all fine add Data
+        $add_patient = new Hospital_data;
+        $dataTable = new $dataType_value;
+
+        $add_patient->type_id = $userType_id;
+        $add_patient->fname = request('fname');
+        $add_patient->lname = request('lname');
+        $add_patient->cnic = request('cnic');
+        $add_patient->email_id = request('email_id');
+        $add_patient->phone_number = request('phone_number');
+        $add_patient->gender = request('gender');
+        $add_patient->city = request('city');
+        $add_patient->address = request('address');
+        $add_patient->dob = request('dob');
+        $add_patient->password = request('password1');
+        $add_patient->save();
+        $primaryid = $add_patient->id;  // return currently saved ID
+
+        $dataTable->primary_id = $primaryid;
+        $dataTable->save();
+
+        return view('admin.hospitalData.addRecord', ['msg'=>'Success! ', 'long_msg'=>"Added New Patient to database"]);
+    }
+
+
+
+
+
+// Admin / Patient Management Ends ---------------------------------
+
+    function roomManagement(){
+        return view('admin.roomManagement');
+    }
+
+    function accountType(){
+        return view('admin.accountType');
+    }
+
+    function admittedPatient(){
+        return view('admin.admittedPatient');
     }
 
     function appointment(){
@@ -192,218 +272,5 @@ class AdminController extends Controller
         return view('admin.labTest');
     }
 
-
-    function department(){
-        return view('admin.department');
-    }
-
-    function doctor(){
-        $doctors = Doctor::All();
-        return view('admin.doctor',['doctors'=>$doctors]);
-    }
-
-    function patient(){
-        $patients = Patient::All();
-        return view('admin.patient',['patients'=>$patients]);
-    }
-
-    function laboratorist(){
-        $laboratorists = Laboratorist::All();
-        return view('admin.laboratorist',['laboratorists'=> $laboratorists]);
-    }
-
-    function receptionist(){
-        return view('admin.receptionist');
-    }
-
-    function viewAppointment(){
-        return view('admin.viewAppointment');
-    }
-    //============================================
-    //           Doctor Crud Operation
-    // ==========================================
-
-
-    // Add Doctor
-    public function createDoctor()
-    {
-        return view('admin.manageDoctors.create');
-    }
-
-    public function addDoctor()
-    {
-        $doctor = new Doctor();
-        $doctor->doctor_name=request('doctor_name');
-        $doctor->doctor_password=request('doctor_password');
-        $doctor->last_name=request('last_name');
-        $doctor->CNIC=request('CNIC');
-        $doctor->gender=request('gender');
-        $doctor->address=request('address');
-        $doctor->contact_no=request('contact_no');
-        $doctor->DOB=request('DOB');
-        $doctor->email=request('email');
-        $doctor->specialist=request('specialist');
-        $doctor->save();
-        return redirect('/admin/doctor')->with('success','Doctor added successfully.');
-    }
-    // Show Doctor
-    public function showDoctor($id)
-    {
-        $doctor = Doctor::findOrFail($id);
-        return view('admin.manageDoctors.show',['doctor'=>$doctor]);
-    }
-    //  Delete Doctor
-    public function deleteDoctor($id)
-    {
-        $doctor = Doctor::findOrFail($id);
-        $doctor->delete();
-        return redirect('/admin/doctor')->with('success','Doctor deleted successfully.');
-    }
-    // Edit Doctor
-    public function editDoctor($id){
-        $doctor = Doctor::findOrFail($id);
-        return view('admin.manageDoctors.edit',['doctor'=>$doctor]);
-    }
-    public function updateDoctor($id){
-        $doctor = Doctor::findOrFail($id);
-        $doctor->doctor_name=request('doctor_name');
-        $doctor->doctor_password=request('doctor_password');
-        $doctor->last_name=request('last_name');
-        $doctor->CNIC=request('CNIC');
-        $doctor->gender=request('gender');
-        $doctor->address=request('address');
-        $doctor->contact_no=request('contact_no');
-        $doctor->DOB=request('DOB');
-        $doctor->email=request('email');
-        $doctor->specialist=request('specialist');
-        $doctor->save();
-        return redirect('/admin/doctor')->with('success','Doctor updated successfully.');
-    }
-
-    //============================================
-    //           Patient Crud Operation
-    // ==========================================
-
-
-    // Add Patient
-    public function createPatient()
-    {
-        return view('admin.managePatients.create');
-    }
-
-    public function addPatient()
-    {
-        $patient = new Patient();
-        $patient->patient_name=request('patient_name');
-        $patient->patient_password=request('patient_password');
-        $patient->last_name=request('last_name');
-        $patient->CNIC=request('CNIC');
-        $patient->gender=request('gender');
-        $patient->address=request('address');
-        $patient->contact_no=request('contact_no');
-        $patient->DOB=request('DOB');
-        $patient->email=request('email');
-        $patient->date_admitted=request('date_admitted');
-        $patient->admission_id=request('admission_id');
-        $patient->room=request('room');
-        $patient->PID=request('PID');
-        $patient->date_discharged=request('date_discharged');
-        $patient->save();
-        return redirect('/admin/patient')->with('success','Patient added successfully.');
-    }
-    // Show Patient
-    public function showPatient($id)
-    {
-        $patient = Patient::findOrFail($id);
-        return view('admin.managePatients.show',['patient'=>$patient]);
-    }
-    //  Delete Patient
-    public function deletePatient($id)
-    {
-        $patient = Patient::findOrFail($id);
-        $patient->delete();
-        return redirect('/admin/patient')->with('success','Patient deleted successfully.');
-    }
-    // Edit Patient
-    public function editPatient($id){
-        $patient = Patient::findOrFail($id);
-        return view('admin.managePatients.edit',['patient'=>$patient]);
-    }
-    public function updatePatient($id){
-        $patient = Patient::findOrFail($id);
-        $patient->patient_name=request('patient_name');
-        $patient->patient_password=request('patient_password');
-        $patient->last_name=request('last_name');
-        $patient->CNIC=request('CNIC');
-        $patient->gender=request('gender');
-        $patient->address=request('address');
-        $patient->contact_no=request('contact_no');
-        $patient->DOB=request('DOB');
-        $patient->email=request('email');
-        $patient->date_admitted=request('date_admitted');
-        $patient->admission_id=request('admission_id');
-        $patient->room=request('room');
-        $patient->PID=request('PID');
-        $patient->date_discharged=request('date_discharged');
-        $patient->save();
-        return redirect('/admin/patient')->with('success','Patient updated successfully.');
-    }
-
-    //============================================
-    //           Laboratorist Crud Operation
-    // ==========================================
-
-
-    // Add Laboratorist
-    public function createLaboratorist()
-    {
-        return view('admin.manageLaboratorist.create');
-    }
-
-    public function addLaboratorist()
-    {
-        $laboratorist = new Laboratorist();
-        $laboratorist->tech_name=request('tech_name');
-        $laboratorist->tech_password=request('tech_password');
-        $laboratorist->gender=request('gender');
-        $laboratorist->DOB=request('DOB');
-        $laboratorist->CNIC=request('CNIC');
-        $laboratorist->contact_no=request('contact_no');
-        $laboratorist->description=request('description');
-        $laboratorist->email=request('email');
-        $laboratorist->save();
-        return redirect('/admin/laboratorist')->with('success','Laboratorist added successfully.');
-    }
-    // Show Laboratorist
-    public function showLaboratorist($id)
-    {
-        $laboratorist = Laboratorist::findOrFail($id);
-        return view('admin.manageLaboratorist.show',['laboratorist'=>$laboratorist]);
-    }
-    //  Delete Laboratorist
-    public function deleteLaboratorist($id)
-    {
-        $laboratorist = Laboratorist::findOrFail($id);
-        $laboratorist->delete();
-        return redirect('/admin/laboratorist')->with('success','laboratorist deleted successfully.');
-    }
-    // Edit Laboratorist
-    public function editLaboratorist($id){
-        $laboratorist = Laboratorist::findOrFail($id);
-        return view('admin.manageLaboratorist.edit',['laboratorist'=>$laboratorist]);
-    }
-    public function updateLaboratorist($id){
-        $laboratorist = Laboratorist::findOrFail($id);
-        $laboratorist->tech_name=request('tech_name');
-        $laboratorist->tech_password=request('tech_password');
-        $laboratorist->gender=request('gender');
-        $laboratorist->DOB=request('DOB');
-        $laboratorist->CNIC=request('CNIC');
-        $laboratorist->contact_no=request('contact_no');
-        $laboratorist->description=request('description');
-        $laboratorist->email=request('email');
-        $laboratorist->save();
-        return redirect('/admin/laboratorist')->with('success','laboratorist updated successfully.');
-    }
 
 }

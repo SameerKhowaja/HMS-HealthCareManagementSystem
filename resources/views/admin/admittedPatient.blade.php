@@ -29,7 +29,7 @@
                 </a>
 
                 <a href="/laravel/public/admin/hospital-data">
-                    <li class="active text-normal">
+                    <li class="text-normal">
                         <svg xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" aria-hidden="true" focusable="false" width="1em" height="1em" fill="#0052E9" style="-ms-transform: rotate(360deg); -webkit-transform: rotate(360deg); transform: rotate(360deg);" preserveAspectRatio="xMidYMid meet" viewBox="0 0 16 16">
                             <path d="M15 14s1 0 1-1-1-4-5-4-5 3-5 4 1 1 1 1h8zm-7.978-1A.261.261 0 0 1 7 12.996c.001-.264.167-1.03.76-1.72C8.312 10.629 9.282 10 11 10c1.717 0 2.687.63 3.24 1.276.593.69.758 1.457.76 1.72l-.008.002a.274.274 0 0 1-.014.002H7.022zM11 7a2 2 0 1 0 0-4 2 2 0 0 0 0 4zm3-2a3 3 0 1 1-6 0 3 3 0 0 1 6 0zM6.936 9.28a5.88 5.88 0 0 0-1.23-.247A7.35 7.35 0 0 0 5 9c-4 0-5 3-5 4 0 .667.333 1 1 1h4.216A2.238 2.238 0 0 1 5 13c0-1.01.377-2.042 1.09-2.904.243-.294.526-.569.846-.816zM4.92 10A5.493 5.493 0 0 0 4 13H1c0-.26.164-1.03.76-1.724.545-.636 1.492-1.256 3.16-1.275zM1.5 5.5a3 3 0 1 1 6 0 3 3 0 0 1-6 0zm3-2a2 2 0 1 0 0 4 2 2 0 0 0 0-4z"/>
                         </svg> Hospital Data
@@ -55,7 +55,7 @@
                 </a>
 
                 <a href="/laravel/public/admin/admitted-patient">
-                    <li class="text-normal">
+                    <li class="active text-normal">
                         <svg xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" aria-hidden="true" focusable="false" width="1em" height="1em" fill="#0052E9" style="-ms-transform: rotate(360deg); -webkit-transform: rotate(360deg); transform: rotate(360deg);" preserveAspectRatio="xMidYMid meet" viewBox="0 0 16 16">
                             <path d="M6 8a3 3 0 1 0 0-6 3 3 0 0 0 0 6zm2-3a2 2 0 1 1-4 0 2 2 0 0 1 4 0zm4 8c0 1-1 1-1 1H1s-1 0-1-1 1-4 6-4 6 3 6 4zm-1-.004c-.001-.246-.154-.986-.832-1.664C9.516 10.68 8.289 10 6 10c-2.29 0-3.516.68-4.168 1.332-.678.678-.83 1.418-.832 1.664h10z"/>
                             <path fill-rule="evenodd" d="M13.5 5a.5.5 0 0 1 .5.5V7h1.5a.5.5 0 0 1 0 1H14v1.5a.5.5 0 0 1-1 0V8h-1.5a.5.5 0 0 1 0-1H13V5.5a.5.5 0 0 1 .5-.5z"/>
@@ -87,73 +87,6 @@
 
 @section('content')
     <div>
-
-        <div style='margin-top:2%; margin-bottom:2%;'>
-            <div style="display: flex; justify-content: space-between; align-items: center;">
-                <h3 class="text-large text-grey">Admin / Hospital Data</h3>
-                <a href="/laravel/public/admin/hospital-data/addPatient/" class="btn btn-primary btn-lg active" role="button" aria-pressed="true">Add Record</a>
-            </div>
-
-            <br>
-
-            <!-- Patient table -->
-            <div class="table-responsive" style='box-shadow: 5px 3px 5px 3px #1b99d8; background-color: white; padding: 2%; border-radius: 10px; font-size: 13px;'>
-                <!-- <div style="display: flex; justify-content: space-between; align-items: center;">
-                    <div class="col-lg-12 margin-tb" >
-                        <div class="pull-left">
-                            <a class="btn btn-primary" href="/laravel/public/admin/createDoctor">Add Doctor</a>
-                        </div>
-                    </div>
-                </div> -->
-                @if ($message = Session::get('success'))
-                <br>
-                <div class="alert alert-success alert-dismissible fade show" role="alert">
-                    <p>{{ $message }}</p>
-                    <button type="button" class="close" data-dismiss="alert" aria-label="Close">
-                        <span aria-hidden="true">&times;</span>
-                    </button>
-                </div>
-                @endif
-                <!-- Patient table Start -->
-                <table class="table">
-                    <thead>
-                        <tr>
-                            <th scope="col">Image</th>
-                            <th scope="col">Full Name</th>
-                            <th scope="col">CNIC #</th>
-                            <th scope="col">Email ID</th>
-                            <th scope="col">Contact No</th>
-                            <th scope="col">Gender</th>
-                            <th scope="col" >Action</th>
-                        </tr>
-                    </thead>
-                    <tbody>
-                        <tr>
-                            <td>
-                            <img class="profile" src="{{asset('resources/images/profile.png')}}" alt="profile">
-                            </td>
-                            <td style='margin: 0px;'>
-                            <a class="btn btn-info" style='font-size: 13px;' href="/laravel/public/admin/showDoctor/">Show</a>
-                            </td>
-                            <td>
-                            <a class="btn btn-warning" style='font-size: 13px;' href="/laravel/public/admin/editDoctor/">Edit</a>
-                            </td>
-                            <td>
-                                <form action="/laravel/public/admin/deleteDoctor/" method="POST">
-                                    @csrf
-                                    @method('DELETE')
-
-                                    <button type="submit" style='font-size: 13px;' class="btn btn-danger">Delete</button>
-                                </form>
-                            </td>
-                        </tr>
-                    </tbody>
-                </table>
-            </div>
-            <!-- Patient Table end -->
-
-        </div>
-
+        <h1>Patient Management<h1>
     </div>
-
 @endsection

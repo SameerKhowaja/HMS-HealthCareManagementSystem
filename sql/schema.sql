@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Host: 127.0.0.1
--- Generation Time: Jan 21, 2021 at 09:05 PM
+-- Generation Time: Jan 24, 2021 at 04:15 PM
 -- Server version: 10.4.14-MariaDB
 -- PHP Version: 7.4.11
 
@@ -43,7 +43,8 @@ CREATE TABLE `admins` (
 --
 
 INSERT INTO `admins` (`admin_id`, `fname`, `lname`, `email_id`, `password`, `image`, `created_at`, `updated_at`) VALUES
-(1, 'Sameer', 'Khowaja', 'sameerkhowaja@gmail.com', 'pass', '', '2021-01-17 23:46:24', NULL);
+(8, 'Sameer1', 'Khowaja', 'aslamaman@gmail.com', 'pass', NULL, '2021-01-24 09:51:15', '2021-01-24 09:51:15'),
+(6, 'Sameer', 'Khowaja', 'sameerkhowaja@gmail.com', 'pass', NULL, '2021-01-23 13:37:32', '2021-01-24 09:51:40');
 
 -- --------------------------------------------------------
 
@@ -98,7 +99,7 @@ CREATE TABLE `beds` (
 CREATE TABLE `doctors` (
   `doctor_id` int(15) NOT NULL,
   `primary_id` int(15) NOT NULL,
-  `specialist` varchar(300) NOT NULL
+  `specialist` varchar(300) DEFAULT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
 
 -- --------------------------------------------------------
@@ -130,7 +131,9 @@ CREATE TABLE `hospital_datas` (
 --
 
 INSERT INTO `hospital_datas` (`primary_id`, `type_id`, `fname`, `lname`, `cnic`, `email_id`, `gender`, `phone_number`, `city`, `address`, `dob`, `password`, `image`, `created_at`, `updated_at`) VALUES
-(1, 3, 'asad', 'ali', '4128389192991', 'sameerkhowaja@gmail.com', 'Male', 'sameerkhowaja@gmail.com', NULL, NULL, NULL, 'pass', NULL, '2021-01-21 15:04:36', '2021-01-21 15:04:36');
+(1, 3, 'asad', 'ali', '4128389192991', 'sameerkhowaja@gmail.com', 'Male', 'sameerkhowaja@gmail.com', NULL, NULL, NULL, 'pass', NULL, '2021-01-21 15:04:36', '2021-01-21 15:04:36'),
+(3, 3, 'Aslam', 'Aman', '4130392019334', 'abdulrahman@gmail.com', 'Male', '923343567480', NULL, NULL, NULL, 'pass', NULL, '2021-01-23 07:31:57', '2021-01-23 07:31:57'),
+(5, 3, 'Sameer1', 'Khowaja', '4130392019334', 'haseebhassan@gmail.com', 'Male', '923343567480', 'Karachi', 'ABC', '2021-01-16', 'pass', NULL, '2021-01-23 16:00:03', '2021-01-23 16:00:03');
 
 -- --------------------------------------------------------
 
@@ -190,6 +193,17 @@ CREATE TABLE `lab_test_reports` (
 -- --------------------------------------------------------
 
 --
+-- Table structure for table `others`
+--
+
+CREATE TABLE `others` (
+  `other_id` int(15) NOT NULL,
+  `primary_id` int(15) NOT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
+
+-- --------------------------------------------------------
+
+--
 -- Table structure for table `patients`
 --
 
@@ -203,7 +217,9 @@ CREATE TABLE `patients` (
 --
 
 INSERT INTO `patients` (`patient_id`, `primary_id`) VALUES
-(1, 1);
+(1, 1),
+(3, 3),
+(4, 5);
 
 -- --------------------------------------------------------
 
@@ -333,6 +349,13 @@ ALTER TABLE `lab_test_reports`
   ADD PRIMARY KEY (`lab_report_id`);
 
 --
+-- Indexes for table `others`
+--
+ALTER TABLE `others`
+  ADD PRIMARY KEY (`other_id`),
+  ADD UNIQUE KEY `primary_id` (`primary_id`);
+
+--
 -- Indexes for table `patients`
 --
 ALTER TABLE `patients`
@@ -372,7 +395,7 @@ ALTER TABLE `types`
 -- AUTO_INCREMENT for table `admins`
 --
 ALTER TABLE `admins`
-  MODIFY `admin_id` int(15) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=2;
+  MODIFY `admin_id` int(15) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=9;
 
 --
 -- AUTO_INCREMENT for table `appointments`
@@ -402,7 +425,7 @@ ALTER TABLE `doctors`
 -- AUTO_INCREMENT for table `hospital_datas`
 --
 ALTER TABLE `hospital_datas`
-  MODIFY `primary_id` int(15) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=2;
+  MODIFY `primary_id` int(15) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=7;
 
 --
 -- AUTO_INCREMENT for table `lab_technicians`
@@ -429,10 +452,16 @@ ALTER TABLE `lab_test_reports`
   MODIFY `lab_report_id` int(15) NOT NULL AUTO_INCREMENT;
 
 --
+-- AUTO_INCREMENT for table `others`
+--
+ALTER TABLE `others`
+  MODIFY `other_id` int(15) NOT NULL AUTO_INCREMENT;
+
+--
 -- AUTO_INCREMENT for table `patients`
 --
 ALTER TABLE `patients`
-  MODIFY `patient_id` int(15) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=2;
+  MODIFY `patient_id` int(15) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=6;
 
 --
 -- AUTO_INCREMENT for table `patient_addmissions`

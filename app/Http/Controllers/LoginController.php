@@ -18,6 +18,7 @@ use App\Patient;
 use App\Receptionist;
 use App\Room;
 use App\Type;
+use App\Other;
 use App\User;
 
 class LoginController extends Controller
@@ -59,6 +60,7 @@ class LoginController extends Controller
                     $req->session()->put('userID',$admin->admin_id);
                     $req->session()->put('username',$admin->fname.' '.$admin->lname);
                     $req->session()->put('userType', strtolower($type_val));
+                    $req->session()->put('userType_ID',$data->type_id);
                     // also send admin image if exist ------
                     $flag = true;
 
@@ -86,6 +88,7 @@ class LoginController extends Controller
                         $req->session()->put('userID',$data->primary_id);
                         $req->session()->put('username',$data->fname.' '.$data->lname);
                         $req->session()->put('userType',$lowercase_type_val);
+                        $req->session()->put('userType_ID',$data->type_id);
                         // also send image if exist ----
                         $flag = true;
 
