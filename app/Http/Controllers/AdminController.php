@@ -166,7 +166,7 @@ class AdminController extends Controller
     // Hospital Data View
     function hospitalData(){
         $getType = Type::all();
-        return view('admin.hospitalData', ['typesList'=>$getType, 'dataFetched'=>'none']);
+        return view('admin.hospitalData', ['typesList'=>$getType, 'dataFetched'=>'none', 'doctorList'=>'none']);
     }
 
     // Add Record View btn click view
@@ -265,6 +265,7 @@ class AdminController extends Controller
             }
         }
         else{
+            // Fetch Data on the basis of account Type
             $hospital_data = Hospital_data::join('types', 'types.type_id', '=', 'hospital_datas.type_id')->where('types.type_id', $type_id)->get(['hospital_datas.*', 'types.type_name']);
             $rowsReturn = count($hospital_data);
             if($rowsReturn == 0){
@@ -295,6 +296,98 @@ class AdminController extends Controller
         $userData->delete();    // Delete from hospital table
 
         return redirect("/admin/hospital-data")->with('msg','Successfully Deleted');
+    }
+
+    // Edit User Data View
+    function editUserData($id){
+        $hospitalData = Hospital_data::findOrFail($id);
+        $getType = Type::all(); // for getting type name
+        $typeName_val = '';
+        forEach($getType as $typ){
+            if($typ->type_id == $hospitalData->type_id){
+                $typeName_val = $typ->type_name;
+            }
+        }
+
+        if($typeName_val == "Doctor" || $typeName_val=="doctor"){
+            $getSpecialist = Doctor::all();   // for getting doctor specialist
+            $specialist_val = '';
+            forEach($getSpecialist as $spec){
+                if($spec->primary_id == $hospitalData->primary_id){
+                    $specialist_val = $spec->specialist;
+                }
+            }
+            return view("admin.hospitalData.editRecord", ['hospitalData'=>$hospitalData, 'accountTypeName'=>$typeName_val, 'doctorSpecialist'=>$specialist_val]);
+        }
+
+        // if type is not doctor
+        return view("admin.hospitalData.editRecord", ['hospitalData'=>$hospitalData, 'accountTypeName'=>$typeName_val, 'doctorSpecialist'=>'']);
+    }
+
+    // Edit User Data on btn click save to DB
+    function editUserDataSave($id, Request $req){
+        $hospitalData = Hospital_data::findOrFail($id);
+        $req->validate([
+            'fname' => 'required|max:100',
+            'lname' => 'required|max:100',
+            'email_id' => 'required|max:200',
+            'cnic' => 'required|max:100',
+            'phone_number' => 'required|max:30',
+            'gender' => 'required|max:10',
+            'city' => 'max:100',
+            'address' => 'max:500',
+            'password1' => 'required|max:100',
+        ]);
+
+        // Getting Type Name
+        $getType = Type::all();
+        $typeName_val = '';
+        forEach($getType as $typ){
+            if($typ->type_id == $hospitalData->type_id){
+                $typeName_val = $typ->type_name;
+            }
+        }
+
+        //Check for email not in use in hospital data table
+        $email_id = request('email_id');    // input box mail
+        $hospital_data = Hospital_data::all();
+        forEach($hospital_data as $data){
+            // check if updated email does not exist in db with same account type
+            if($hospitalData->email_id != $email_id && $email_id == $data->email_id && $hospitalData->type_id == $data->type_id){
+                // email present in db so return error msg
+                return view("admin.hospitalData.editRecord", ['hospitalData'=>$hospitalData, 'accountTypeName'=>$typeName_val, 'msg'=>'Error! ', 'long_msg'=>"Email Already Exists...!"]);
+            }
+        }
+
+        // Image is also require ??
+        // If everything is OK update Data
+        $hospitalData->fname = request('fname');
+        $hospitalData->lname = request('lname');
+        $hospitalData->cnic = request('cnic');
+        $hospitalData->email_id = request('email_id');
+        $hospitalData->phone_number = request('phone_number');
+        $hospitalData->gender = request('gender');
+        $hospitalData->city = request('city');
+        $hospitalData->address = request('address');
+        $hospitalData->dob = request('dob');
+        $hospitalData->password = request('password1');
+        $hospitalData->save();
+
+        // Check if doctor or not
+        $specialist = request('specialist');
+        if($specialist != ''){
+            // Type is Doctor
+            $primaryID = $hospitalData->primary_id;  // return currently saved ID
+            $doctor_data = Doctor::all();
+            forEach($doctor_data as $data){
+                if($data->primary_id == $primaryID){
+                    $data->specialist = $specialist;
+                    $data->save();
+                }
+            }
+        }
+
+        return view("admin.hospitalData.editRecord", ['hospitalData'=>$hospitalData, 'accountTypeName'=>$typeName_val, 'doctorSpecialist'=>$specialist, 'msg'=>'Success! ', 'long_msg'=>"Record Updated...!"]);
     }
 
 

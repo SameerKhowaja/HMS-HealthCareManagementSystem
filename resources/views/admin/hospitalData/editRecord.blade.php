@@ -74,50 +74,47 @@
         <div>
             <div style='margin-top: 2%; margin-bottom: 3%;'>
                 <div style="display: flex; justify-content: space-between; align-items: center;">
-                    <h3 class="text-large text-grey">Admin / Hospital Data / Add Record</h3>
+                    <h3 class="text-large text-grey">Admin / Hospital Data / Edit Record</h3>
                 </div>
 
                 <!-- Table -->
                 <div class="table-responsive" style='box-shadow: 5px 3px 5px 3px #1b99d8; background-color: white; padding: 2%; border-radius: 10px; font-size: 13px;'>
 
-                    <form action="/laravel/public/admin/hospital-data/addRecord" method="POST">
+                    <form action="/laravel/public/admin/hospital-data/edit-record/{{$hospitalData->primary_id}}" method="POST">
                         @csrf
                         <!-- Head Row -->
                         <div class="row" style="margin:auto;">
                             <div class="col-sm-12" style="text-align:center;">
                                 <div class="form-group">
-                                    <h1 class="display-4">Create New Record</h1>
+                                    <h1 class="display-4">Edit {{$accountTypeName}} Record</h1>
                                 </div>
                             </div>
-                            <!-- Account Type -->
-                            <div class="col-sm-12" style="text-align:center;">
-                                <div class="form-group">
-                                    <select class="form-select" name="accountType" id="accountType" style="height:30px; width:200px; padding:4px;">
-                                        @foreach($typesList as $data)
-                                            @if($data->type_name != 'Admin' && $data->type_name != 'admin')
-                                                <option value="{{$data->type_id}}">{{$data->type_name}}</option>
-                                            @endif
-                                        @endforeach
-                                    </select>
-                                </div>
+                        <hr>
+                        <!-- row1 -->
+                        <!-- Photo and file -->
+                        <div class="row">
+                            <div class="col-lg-12">
+                                <img class="img-fluid rounded img-thumbnail mx-auto d-block rounded-circle" src="{{asset('resources/images/profile.png')}}" alt="profile" width="150" height="150" style="margin-bottom:5px;">
+                            </div>
+                            <div class="col-lg-12">
+                                <input type="file" name="image" class="form-control form-control-lg mx-auto d-block" style="width:250px;">
                             </div>
                         </div>
-                        <hr>
-                        <!-- row1 - If error occurs -->
+                        <!-- row2 - If error occurs -->
                         <div class="row">
                             <div class="col-sm-12">
                                 @if ($errors->any())
-                                    <div class="alert alert-danger alert-dismissible fade show text-center" role="alert">
-                                        <ul>
-                                        <li><strong>Warning!</strong></li>
-                                            @foreach ($errors->all() as $error)
-                                                <li>{{ $error }}</li>
-                                            @endforeach
-                                        </ul>
-                                        <button type="button" class="close" data-dismiss="alert" aria-label="Close">
-                                            <span aria-hidden="true">&times;</span>
-                                        </button>
-                                    </div>
+                                <div class="alert alert-danger alert-dismissible fade show text-center" role="alert">
+                                    <ul>
+                                    <li><strong>Warning!</strong></li>
+                                        @foreach ($errors->all() as $error)
+                                            <li>{{ $error }}</li>
+                                        @endforeach
+                                    </ul>
+                                    <button type="button" class="close" data-dismiss="alert" aria-label="Close">
+                                        <span aria-hidden="true">&times;</span>
+                                    </button>
+                                </div>
                                 @endif
                             </div>
 
@@ -134,43 +131,55 @@
                             </div>
                             @endif
                         </div>
-                        <!-- row2 -->
+                        <!-- row3 -->
                         <div class="row">
                             <div class="col-sm-6">
                                 <div class="form-group">
                                     <strong>First Name*</strong>
-                                    <input type="text" name="fname" class="form-control form-control-lg" placeholder="First Name" required>
+                                    <input type="text" name="fname" class="form-control form-control-lg" placeholder="First Name" value="{{$hospitalData->fname}}" required>
                                 </div>
                             </div>
                             <div class="col-sm-6">
                                 <div class="form-group">
                                     <strong>Last Name*</strong>
-                                    <input type="text" name="lname" class="form-control form-control-lg" placeholder="Last Name" required>
+                                    <input type="text" name="lname" class="form-control form-control-lg" placeholder="Last Name" value="{{$hospitalData->lname}}" required>
                                 </div>
                             </div>
                         </div>
-                        <!-- row3 -->
+                        <!-- If Doctor then is specialist -->
+                        @if($accountTypeName=='Doctor' || $accountTypeName=='doctor')
+                        <div class="row">
+                            <div class="col-sm-12">
+                                <div class="form-group">
+                                    <strong>Doctor Specialist</strong>
+                                    <input type="text" name="specialist" class="form-control form-control-lg" placeholder="First Name" value="{{$doctorSpecialist ?? ''}}" required>
+                                </div>
+                            </div>
+                        </div>
+                        @endif
+                        <!-- row4 -->
                         <div class="row">
                             <div class="col-sm-6">
                                 <div class="form-group">
                                     <strong>Email ID*</strong>
-                                    <input type="email" name="email_id" class="form-control form-control-lg" placeholder="abc@demo.com" required>
+                                    <input type="email" name="email_id" class="form-control form-control-lg" placeholder="abc@demo.com" value="{{$hospitalData->email_id}}" required>
                                 </div>
                             </div>
                             <div class="col-sm-6">
                                 <div class="form-group">
                                     <strong>CNIC Number*</strong>
-                                    <input type="text" name="cnic" class="form-control form-control-lg" placeholder="41303XXXXXXXX" onkeyup="if (/\D/g.test(this.value)) this.value = this.value.replace(/\D/g,'')" required>
+                                    <input type="text" name="cnic" class="form-control form-control-lg" placeholder="41303XXXXXXXX" value="{{$hospitalData->cnic}}" onkeyup="if (/\D/g.test(this.value)) this.value = this.value.replace(/\D/g,'')" required>
                                 </div>
                             </div>
                         </div>
-                        <!-- row4 -->
+                        <!-- row5 -->
                         <div class="row">
                             <div class="col-sm-4">
                                 <div class="form-group">
                                     <strong>Gender*</strong>
                                     <select class="form-control form-control-lg" id="gender" name="gender">
-                                        <option selected>Male</option>
+                                        <option selected>{{$hospitalData->gender}}</option>
+                                        <option>Male</option>
                                         <option>Female</option>
                                         <option>Other</option>
                                     </select>
@@ -179,66 +188,46 @@
                             <div class="col-sm-4">
                                 <div class="form-group">
                                     <strong>Phone Number*</strong>
-                                    <input type="text" name="phone_number" class="form-control form-control-lg" placeholder="92333XXXXXXX" onkeyup="if (/\D/g.test(this.value)) this.value = this.value.replace(/\D/g,'')" required>
+                                    <input type="text" name="phone_number" class="form-control form-control-lg" placeholder="92333XXXXXXX" value="{{$hospitalData->phone_number}}" onkeyup="if (/\D/g.test(this.value)) this.value = this.value.replace(/\D/g,'')" required>
                                 </div>
                             </div>
                             <div class="col-sm-4">
                                 <div class="form-group">
                                     <strong>City</strong>
-                                    <input type="text" name="city" class="form-control form-control-lg" placeholder="Karachi">
-                                </div>
-                            </div>
-                        </div>
-                        <!-- row5 -->
-                        <div class="row">
-                            <div class="col-sm-12">
-                                <div class="form-group">
-                                    <strong>Address</strong>
-                                    <textarea name="address" id="address" cols="30" rows="3" class="form-control form-control-lg"></textarea>
+                                    <input type="text" name="city" class="form-control form-control-lg" value="{{$hospitalData->city}}" placeholder="Karachi">
                                 </div>
                             </div>
                         </div>
                         <!-- row6 -->
                         <div class="row">
-                            <div class="col-sm-6">
+                            <div class="col-sm-12">
                                 <div class="form-group">
-                                    <strong>Date of Birth (DOB)</strong>
-                                    <input type="date" name="dob" class="form-control form-control-lg">
-                                </div>
-                            </div>
-                            <div class="col-sm-6">
-                                <div class="form-group">
-                                    <strong>Profile Image</strong>
-                                    <input type="file" name="image" class="form-control form-control-lg">
+                                    <strong>Address</strong>
+                                    <textarea name="address" id="address" cols="30" rows="3" class="form-control form-control-lg">{{$hospitalData->address}}</textarea>
                                 </div>
                             </div>
                         </div>
-                        <!-- row3 -->
+                        <!-- row7 -->
                         <div class="row">
+                            <div class="col-sm-6">
+                                <div class="form-group">
+                                    <strong>Date of Birth (DOB)</strong>
+                                    <input type="date" name="dob" class="form-control form-control-lg" value="{{$hospitalData->dob}}">
+                                </div>
+                            </div>
                             <div class="col-sm-6">
                                 <div class="form-group">
                                     <strong>Password*</strong>
                                     <div class="input-group">
-                                        <input type="password" name="password1" class="form-control form-control-lg pwd1" placeholder="password" required>
+                                        <input type="password" name="password1" class="form-control form-control-lg pwd1" placeholder="password" value="{{$hospitalData->password}}" required>
                                         <span class="input-group-btn">
                                             <button class="btn btn-default btn-lg revealold" type="button"><i id="fa_old" class="fa fa-eye"></i></button>
                                         </span>
                                     </div>
                                 </div>
                             </div>
-                            <div class="col-sm-6">
-                                <div class="form-group">
-                                    <strong>Confirm Password*</strong>
-                                    <div class="input-group">
-                                        <input type="password" name="password2" class="form-control form-control-lg pwd2" placeholder="confirm password" required>
-                                        <span class="input-group-btn">
-                                            <button class="btn btn-default btn-lg revealnew" type="button"><i id="fa_old" class="fa fa-eye"></i></button>
-                                        </span>
-                                    </div>
-                                </div>
-                            </div>
                         </div>
-                        <!-- row4 -->
+                        <!-- row8 -->
                         <div class="row">
                         <div class="col-xs-12 col-sm-12 col-md-12 text-center">
                             <button type="button" class="btn btn-secondary btn-lg active" onclick="history.back(-2)">Back</button>

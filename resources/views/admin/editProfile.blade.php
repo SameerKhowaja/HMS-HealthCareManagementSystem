@@ -72,7 +72,7 @@
 @section('content')
 
         <div>
-            <div style='margin-top: 2%; margin-bottom: 3%;'>
+            <div style='margin-top: 2%; margin-bottom: 2%;'>
                 <div style="display: flex; justify-content: space-between; align-items: center;">
                     <h3 class="text-large text-grey">Admin / Dashboard / Edit Profile</h3>
                 </div>

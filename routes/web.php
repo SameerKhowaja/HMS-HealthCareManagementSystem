@@ -38,6 +38,8 @@ Route::get('/admin/hospital-data/addRecord','AdminController@addRecord');    //a
 Route::post('/admin/hospital-data/addRecord','AdminController@addRecordSave');    //add patient record on btn click
 Route::post('/admin/hospital-data/{id}','AdminController@searchRecord');    //search account type data using select box on button click
 Route::delete('/admin/hospital-data/delete-record/{id}','AdminController@deleteUserData');    //delete User when modal btn clicks
+Route::get('/admin/hospital-data/edit-record/{id}','AdminController@editUserData');    //edit User view
+Route::post('/admin/hospital-data/edit-record/{id}','AdminController@editUserDataSave');    //edit User data on btn click
 
 
 //======================================================
