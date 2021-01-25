@@ -139,7 +139,7 @@ class AdminController extends Controller
     }
 
     // Delete Admin Record
-    function deleteData($id){
+    function deleteAdminData($id){
         $UserID = session('userID');
         // could not delete yourself
         if($UserID == $id){
@@ -239,7 +239,7 @@ class AdminController extends Controller
         $add_patient->dob = request('dob');
         $add_patient->password = request('password1');
         $add_patient->save();
-        $primaryid = $add_patient->id;  // return currently saved ID
+        $primaryid = $add_patient->primary_id;  // return currently saved ID
 
         $dataType_value = $dataType_value.'s';  // Table name has 's' in end
         DB::table($dataType_value)->insert([
@@ -251,6 +251,7 @@ class AdminController extends Controller
 
     function searchRecord(Request $req, $id){
         $getType = Type::all();
+        $doctorList = Doctor::all();
         $type_id = request('accountType');
         $type_name = '';
         if($type_id == 0){    // All Records
@@ -258,18 +259,18 @@ class AdminController extends Controller
             $hospital_data = Hospital_data::join('types', 'types.type_id', '=', 'hospital_datas.type_id')->get(['hospital_datas.*', 'types.type_name']);
             $rowsReturn = count($hospital_data);
             if($rowsReturn == 0){
-                return view('admin.hospitalData', ['typesList'=>$getType, 'dataFetched'=>$hospital_data, 'msg'=>'No Records Found']);
+                return view('admin.hospitalData', ['typesList'=>$getType, 'dataFetched'=>$hospital_data, 'doctorList'=>$doctorList, 'msg'=>'No Records Found']);
             }else{
-                return view('admin.hospitalData', ['typesList'=>$getType, 'dataFetched'=>$hospital_data]);
+                return view('admin.hospitalData', ['typesList'=>$getType, 'dataFetched'=>$hospital_data, 'doctorList'=>$doctorList]);
             }
         }
         else{
             $hospital_data = Hospital_data::join('types', 'types.type_id', '=', 'hospital_datas.type_id')->where('types.type_id', $type_id)->get(['hospital_datas.*', 'types.type_name']);
             $rowsReturn = count($hospital_data);
             if($rowsReturn == 0){
-                return view('admin.hospitalData', ['typesList'=>$getType, 'dataFetched'=>$hospital_data, 'msg'=>'No Records Found']);
+                return view('admin.hospitalData', ['typesList'=>$getType, 'dataFetched'=>$hospital_data, 'doctorList'=>$doctorList, 'msg'=>'No Records Found']);
             }else{
-                return view('admin.hospitalData', ['typesList'=>$getType, 'dataFetched'=>$hospital_data]);
+                return view('admin.hospitalData', ['typesList'=>$getType, 'dataFetched'=>$hospital_data, 'doctorList'=>$doctorList]);
             }
         }
 
@@ -277,6 +278,24 @@ class AdminController extends Controller
         return view('admin.hospitalData', ['typesList'=>$getType, 'dataFetched'=>'none', 'msg'=>'No Records Found']);
     }
 
+    // Delete User in hospital data using modal
+    function deleteUserData($id){
+        $userData = Hospital_data::findOrFail($id);
+        $primary_id = $userData->primary_id;    // primary_id of hospital data table
+        $getType_id = $userData->type_id;       // type is also fetched
+
+        $userTypeData = Type::findOrFail($getType_id);
+        $getType_name = $userTypeData->type_name;   // type name fetched
+
+        $getType_name = strtolower($getType_name); // lower case string
+        $getType_name = ucwords(str_replace(" ", "_", $getType_name));  // capital first letter and replace space with underscore
+
+        $getType_name = $getType_name.'s';    // Table name has 's' in end
+        DB::table($getType_name)->where('primary_id', $primary_id)->delete();
+        $userData->delete();    // Delete from hospital table
+
+        return redirect("/admin/hospital-data")->with('msg','Successfully Deleted');
+    }
 
 
 

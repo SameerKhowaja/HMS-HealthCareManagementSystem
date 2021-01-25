@@ -24,6 +24,10 @@
 
 <body style='background-color: #D1DADC;'>
     <header>
+        <nav class="sideNav">
+            <div class="brand">
+                <img width="185" height="50" src="{{asset('hms/hms_logo.png')}}" alt="brand">
+            </div>
         @yield('navSection')
     </header>
 
