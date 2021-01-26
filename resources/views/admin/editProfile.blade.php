@@ -80,7 +80,7 @@
                 <!-- Table -->
                 <div class="table-responsive" style='box-shadow: 5px 3px 5px 3px #1b99d8; background-color: white; padding: 2%; border-radius: 10px; font-size: 13px;'>
 
-                    <form action="/laravel/public/admin/editProfile/{{session('userID')}}" method="POST">
+                    <form action="/laravel/public/admin/editProfile/{{session('userID')}}" method="POST" enctype="multipart/form-data">
                         @csrf
                         <div  class="row">
                             <!-- Head Row -->
@@ -130,7 +130,11 @@
                                     <div class="row">
                                         <div class="col-sm-12">
                                             <div class="form-group">
-                                                <img class="img-fluid rounded img-thumbnail mx-auto d-block rounded-circle" src="{{asset('resources/images/profile.png')}}" alt="profile">
+                                                @if(session("image") != '')
+                                                    <img class="img-fluid rounded img-thumbnail mx-auto d-block rounded-circle" src='{{"data:image/*;base64,".$admin_data->image}}' alt="profile">
+                                                @else
+                                                    <img class="img-fluid rounded img-thumbnail mx-auto d-block rounded-circle" src="{{asset('resources/images/profile.png')}}" alt="profile">
+                                                @endif
                                             </div>
                                         </div>
                                     </div>
@@ -161,7 +165,7 @@
                                         <div class="col-sm-12">
                                             <div class="form-group">
                                                 <strong>Profile Image</strong>
-                                                <input type="file" name="image" class="form-control form-control-lg">
+                                                <input type="file" name="image" class="form-control form-control-lg" accept="image/*" >
                                             </div>
                                         </div>
                                     </div>

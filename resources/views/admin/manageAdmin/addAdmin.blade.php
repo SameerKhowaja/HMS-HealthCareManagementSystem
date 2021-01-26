@@ -80,7 +80,7 @@
                 <!-- Table -->
                 <div class="table-responsive" style='box-shadow: 5px 3px 5px 3px #1b99d8; background-color: white; padding: 2%; border-radius: 10px; font-size: 13px;'>
 
-                    <form action="/laravel/public/admin/add-record" method="POST">
+                    <form action="/laravel/public/admin/add-record" method="POST" enctype="multipart/form-data">
                         @csrf
                         <!-- Head Row -->
                         <div class="row" style="margin:auto;">
@@ -125,13 +125,13 @@
                         <div class="row">
                             <div class="col-sm-6">
                                 <div class="form-group">
-                                    <strong>First Name</strong>
+                                    <strong>First Name*</strong>
                                     <input type="text" name="fname" class="form-control form-control-lg" placeholder="First Name" required>
                                 </div>
                             </div>
                             <div class="col-sm-6">
                                 <div class="form-group">
-                                    <strong>Last Name</strong>
+                                    <strong>Last Name*</strong>
                                     <input type="text" name="lname" class="form-control form-control-lg" placeholder="Last Name" required>
                                 </div>
                             </div>
@@ -140,14 +140,14 @@
                         <div class="row">
                             <div class="col-sm-6">
                                 <div class="form-group">
-                                    <strong>Email ID</strong>
+                                    <strong>Email ID*</strong>
                                     <input type="email" name="email_id" class="form-control form-control-lg" placeholder="abc@demo.com" required>
                                 </div>
                             </div>
                             <div class="col-sm-6">
                                 <div class="form-group">
                                     <strong>Profile Image</strong>
-                                    <input type="file" name="image" class="form-control form-control-lg">
+                                    <input type="file" name="image" class="form-control form-control-lg" accept="image/*" >
                                 </div>
                             </div>
                         </div>
@@ -155,7 +155,7 @@
                         <div class="row">
                             <div class="col-sm-6">
                                 <div class="form-group">
-                                    <strong>Password</strong>
+                                    <strong>Password*</strong>
                                     <div class="input-group">
                                         <input type="password" name="password1" class="form-control form-control-lg pwd1" placeholder="password" required>
                                         <span class="input-group-btn">
@@ -166,7 +166,7 @@
                             </div>
                             <div class="col-sm-6">
                                 <div class="form-group">
-                                    <strong>Confirm Password</strong>
+                                    <strong>Confirm Password*</strong>
                                     <div class="input-group">
                                         <input type="password" name="password2" class="form-control form-control-lg pwd2" placeholder="confirm password" required>
                                         <span class="input-group-btn">

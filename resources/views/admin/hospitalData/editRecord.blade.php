@@ -80,7 +80,7 @@
                 <!-- Table -->
                 <div class="table-responsive" style='box-shadow: 5px 3px 5px 3px #1b99d8; background-color: white; padding: 2%; border-radius: 10px; font-size: 13px;'>
 
-                    <form action="/laravel/public/admin/hospital-data/edit-record/{{$hospitalData->primary_id}}" method="POST">
+                    <form action="/laravel/public/admin/hospital-data/edit-record/{{$hospitalData->primary_id}}" method="POST" enctype="multipart/form-data">
                         @csrf
                         <!-- Head Row -->
                         <div class="row" style="margin:auto;">
@@ -94,10 +94,14 @@
                         <!-- Photo and file -->
                         <div class="row">
                             <div class="col-lg-12">
-                                <img class="img-fluid rounded img-thumbnail mx-auto d-block rounded-circle" src="{{asset('resources/images/profile.png')}}" alt="profile" width="150" height="150" style="margin-bottom:5px;">
+                                @if($hospitalData->image == '')
+                                    <img class="img-fluid rounded img-thumbnail mx-auto d-block rounded-circle" src="{{asset('resources/images/profile.png')}}" alt="profile" width="150" height="150" style="margin-bottom:5px;">
+                                @else
+                                    <img class="img-fluid rounded img-thumbnail mx-auto d-block rounded-circle" src='{{"data:image/*;base64,".$hospitalData->image}}' alt="profile" width="150" height="150" style="margin-bottom:5px;">
+                                @endif
                             </div>
                             <div class="col-lg-12">
-                                <input type="file" name="image" class="form-control form-control-lg mx-auto d-block" style="width:250px;">
+                                <input type="file" name="image" class="form-control form-control-lg mx-auto d-block" style="width:250px;" accept="image/*">
                             </div>
                         </div>
                         <!-- row2 - If error occurs -->

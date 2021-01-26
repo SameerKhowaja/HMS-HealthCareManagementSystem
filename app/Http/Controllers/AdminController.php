@@ -25,7 +25,7 @@ use App\User;
 class AdminController extends Controller
 {
 
-    // Admin Dashboard ---------------------------------
+// Admin Dashboard STARTS ---------------------------------
 
     function dashboard(){
         $patientCount = 0;
@@ -65,6 +65,7 @@ class AdminController extends Controller
     function editProfile($id){
         $admin_data = Admin::findOrFail($id);
         session(['username'=>$admin_data->fname.' '.$admin_data->lname]);   //update session username
+        session(['image'=>$admin_data->image]);   //update session image
         return view('admin.editProfile', ['admin_data'=>$admin_data]);
     }
 
@@ -75,10 +76,15 @@ class AdminController extends Controller
         $request->validate([
             'fname' => 'required|max:100',
             'lname' => 'required|max:100',
+            'image' => 'mimes:jpeg,png,jpg|max:30',  // image size less than 30KB
         ]);
 
         $admin_data->fname = request('fname');
         $admin_data->lname = request('lname');
+        if($request->hasFile('image')){
+            $img = base64_encode(file_get_contents($request->file('image')->path()));
+            $admin_data->image = $img;
+        }
         $admin_data->save();
         return redirect('/admin/editProfile/'.$id)->with('msg','success');
     }
@@ -110,6 +116,7 @@ class AdminController extends Controller
             'email_id' => 'required|max:200',
             'password1' => 'required|max:100',
             'password2' => 'required|max:100',
+            'image' => 'mimes:jpeg,png,jpg|max:30',  // image size less than 30KB
         ]);
 
         // Check Password1 and Password2 Matched
@@ -133,6 +140,10 @@ class AdminController extends Controller
         $add_admin->lname = request('lname');
         $add_admin->email_id = request('email_id');
         $add_admin->password = request('password1');
+        if($req->hasFile('image')){
+            $img = base64_encode(file_get_contents($req->file('image')->path()));
+            $add_admin->image = $img;
+        }
         $add_admin->save();
 
         return view('admin.manageAdmin.addAdmin', ['msg'=>'Success! ', 'long_msg'=>"Added New Admin to database"]);
@@ -158,10 +169,10 @@ class AdminController extends Controller
         return redirect("/admin")->with('msg','success');
     }
 
-// Admin Dashboard Ends ---------------------------------
+// Admin Dashboard ENDS ---------------------------------
 
 
-// Admin / Hospital Data Management ---------------------------------
+// Admin / Hospital Data Management STARTS ---------------------------------
 
     // Hospital Data View
     function hospitalData(){
@@ -188,6 +199,7 @@ class AdminController extends Controller
             'city' => 'max:100',
             'address' => 'max:500',
             'password1' => 'required|max:100',
+            'image' => 'mimes:jpeg,png,jpg|max:25',  // image size less than 25KB
         ]);
 
         $dataType = Type::all();    // Type Table Access
@@ -238,6 +250,10 @@ class AdminController extends Controller
         $add_patient->address = request('address');
         $add_patient->dob = request('dob');
         $add_patient->password = request('password1');
+        if($req->hasFile('image')){
+            $img = base64_encode(file_get_contents($req->file('image')->path()));
+            $add_patient->image = $img;
+        }
         $add_patient->save();
         $primaryid = $add_patient->primary_id;  // return currently saved ID
 
@@ -337,6 +353,7 @@ class AdminController extends Controller
             'city' => 'max:100',
             'address' => 'max:500',
             'password1' => 'required|max:100',
+            'image' => 'mimes:jpeg,png,jpg|max:25',  // image size less than 25KB
         ]);
 
         // Getting Type Name
@@ -371,6 +388,10 @@ class AdminController extends Controller
         $hospitalData->address = request('address');
         $hospitalData->dob = request('dob');
         $hospitalData->password = request('password1');
+        if($req->hasFile('image')){
+            $img = base64_encode(file_get_contents($req->file('image')->path()));
+            $hospitalData->image = $img;
+        }
         $hospitalData->save();
 
         // Check if doctor or not
@@ -391,13 +412,27 @@ class AdminController extends Controller
     }
 
 
+// Admin / Hospital Data Management ENDS ---------------------------------
 
 
-// Admin / Patient Management Ends ---------------------------------
+// Admin / Room Management STARTS ----------------------------------------
 
     function roomManagement(){
-        return view('admin.roomManagement');
+        // joining room and bed table using room id
+        $room_data = Room::join('beds', 'beds.room_id', '=', 'rooms.room_id')->get(['rooms.*', 'beds.*']);
+        $allRooms = array();    //Empty Rooms array
+        forEach($room_data as $data){
+            array_push($allRooms, $data->room_number);  // Add all rooms to array
+        }
+        $allRooms = array_unique($allRooms); // remove duplicate rooms
+        return $allRooms;
+        return view('admin.roomManagement', ['room_data'=>$room_data]);
     }
+
+
+// Admin / Room Management ENDS ----------------------------------------
+
+
 
     function accountType(){
         return view('admin.accountType');

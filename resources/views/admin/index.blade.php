@@ -185,7 +185,7 @@
                             </li>
                             @else
                             <li class="usernameCell text-normal text-grey text-center" style="margin: 0 0;">
-                                <img class="profile" src="{{asset('resources/images/profile1.png')}}" alt="profile">
+                                <img class="profile" src='{{"data:image/*;base64,".$d->image}}' alt="profile">
                             </li>
                             @endif
                             <li class="usernameCell text-normal text-grey text-center" style="margin: 0 0;">{{$d->fname.' '.$d->lname}}</li>

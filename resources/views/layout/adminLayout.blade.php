@@ -47,7 +47,11 @@
 
                             <li class="nav-item dropdown">
                                 <a style='font-size: 15px;' class="nav-link dropdown-toggle" href="#" id="navbarDropdownMenuLink" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-                                    <img src="{{asset('resources/images/profile.png')}}" width="35" height="40" class="rounded-circle">
+                                    @if(session("image") != '')
+                                        <img src='{{"data:image/*;base64,".session("image")}}' width="35" height="40" class="rounded-circle">
+                                    @else
+                                        <img src="{{asset('resources/images/profile.png')}}" width="35" height="40" class="rounded-circle">
+                                    @endif
                                     {{session('username')}}
                                 </a>
                                 <div class="dropdown-menu" aria-labelledby="navbarDropdownMenuLink">

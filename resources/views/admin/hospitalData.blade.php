@@ -80,18 +80,8 @@
 
             <br>
 
-            <!-- Patient table -->
+            <!-- Hospital table -->
             <div class="table-responsive" style='box-shadow: 5px 3px 5px 3px #1b99d8; background-color: white; padding: 2%; border-radius: 10px; font-size: 13px;'>
-                @if ($message = Session::get('success'))
-                <br>
-                <div class="alert alert-success alert-dismissible fade show" role="alert">
-                    <p>{{ $message }}</p>
-                    <button type="button" class="close" data-dismiss="alert" aria-label="Close">
-                        <span aria-hidden="true">&times;</span>
-                    </button>
-                </div>
-                @endif
-
                 <div class="row">
                     <div class="col-sm-6">
                             <div class="input-group">
@@ -117,8 +107,6 @@
                     </div>
                 </div>
 
-                <!-- <p>{{$dataFetched}}</p> -->
-
                 <!-- Patient table Start -->
                 <div class="table-responsive-sm">
                     <table id="RecordTable" class="table table-hover">
@@ -137,8 +125,8 @@
 
                         <tbody id="myTable">
                         @if($dataFetched != 'none')
-                        <!-- Complete Data Fetched -->
-                        <div class="AllData" id="{{$dataFetched}}"></div>
+                            <!-- Complete Data Fetched -->
+                            <div class="AllData" id="{{$dataFetched}}"></div>
                             @if($doctorList != 'none')
                             <!-- Complete Doctor Fetched -->
                             <div class="DoctorData" id="{{$doctorList}}"></div>
@@ -147,7 +135,11 @@
                             @foreach($dataFetched as $data)
                             <tr>
                                 <td style="text-align:center">
-                                    <img class="profile" src="{{asset('resources/images/profile.png')}}" alt="profile">
+                                    @if($data->image == '')
+                                        <img class="profile" src="{{asset('resources/images/profile.png')}}" alt="profile">
+                                    @else
+                                        <img class="profile" src='{{"data:image/*;base64,".$data->image}}' alt="profile">
+                                    @endif
                                 </td>
 
                                 <td style="text-align:center">{{$data->fname.' '.$data->lname}}</td>
@@ -182,7 +174,7 @@
 
                 </div>
             </div>
-            <!-- Patient Table end -->
+            <!-- Hospital Table end -->
         </div>
 
         <!-- Delete Modal -->
@@ -216,7 +208,7 @@
                         <!-- Photo and Name -->
                         <div class="row">
                             <div class="col-lg-12">
-                                <img class="img-fluid rounded img-thumbnail mx-auto d-block rounded-circle" src="{{asset('resources/images/profile.png')}}" alt="profile" width="140" height="140">
+                                <img id="image" class="img-fluid rounded img-thumbnail mx-auto d-block rounded-circle" src="{{asset('resources/images/profile.png')}}" alt="profile" width="140" height="140">
                             </div>
                             <div class="col-lg-12">
                                 <h1 id="fullName" class="media-heading display-5 text-center">Joe Sixpack</h1>
@@ -333,8 +325,27 @@
                         $("#city").html(obj[i].city);
                         $("#dob").html(obj[i].dob);
                         $("#address").html(obj[i].address);
-                        $("#createdAt").html(obj[i].created_at);
-                        $("#updatedAt").html(obj[i].updated_at);
+
+                        var temp = obj[i].created_at;
+                        created_array = temp.split("T");
+                        var createdDate = created_array[0]; // Created Date
+                        created_array = created_array[1].split(".");
+                        var createdTime = created_array[0]; // time
+                        $("#createdAt").html(createdDate+' - '+createdTime);
+
+                        var temp = obj[i].updated_at;
+                        updated_array = temp.split("T");
+                        var UpdatedDate = updated_array[0]; // Created Date
+                        updated_array = updated_array[1].split(".");
+                        var updatedTime = updated_array[0]; // time
+                        $("#updatedAt").html(UpdatedDate+' - '+updatedTime);
+
+                        if(obj[i].image != null){
+                            $('#image').attr("src", 'data:image/*;base64,'+obj[i].image);
+                        }
+                        else{
+                            $('#image').attr('src', 'https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcRCU4AoQASk65ZwYPHbNqQvYp5pwbhS-tOLbg&usqp=CAU');
+                        }
 
                         if(obj[i].type_name != "Doctor" && obj[i].type_name != "doctor"){
                             $(".checkDoctor").hide();

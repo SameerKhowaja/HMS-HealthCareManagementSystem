@@ -74,83 +74,83 @@
 
         <div style='margin-top: 2%;'>
             <div style="display: flex; justify-content: space-between; align-items: center;">
-                <h3 class="text-large text-grey">Admin / Patient Management</h3>
-                <a href="/laravel/public/admin/patient-management/addPatient/" class="btn btn-primary btn-lg active" role="button" aria-pressed="true">Add Patient</a>
-                <!-- <p class="text-normal text-grey">
-                    Filter
-                    <svg xmlns="http://www.w3.org/2000/svg"
-                        xmlns:xlink="http://www.w3.org/1999/xlink"
-                        aria-hidden="true" focusable="false"
-                        width="1em"
-                        height="1em"
-                        style="-ms-transform: rotate(360deg); -webkit-transform: rotate(360deg); transform: rotate(360deg);" preserveAspectRatio="xMidYMid meet" viewBox="0 0 32 32">
-                        <g fill="none" stroke="#666666" stroke-linecap="round" stroke-linejoin="round" stroke-width="2">
-                            <path d="M2 5s4-2 14-2s14 2 14 2L19 18v9l-6 3V18L2 5z"/>
-                        </g>
-                    </svg>
-                </p> -->
+                <h3 class="text-large text-grey">Admin / Room Management</h3>
+                <a href="/laravel/public/admin/hospital-data/addRecord/" class="btn btn-primary btn-lg active" role="button" aria-pressed="true"><i class="fa fa-tasks"> </i>  Manage Room</a>
             </div>
 
             <br>
 
-            <!-- Patient table -->
-            <div class="table-responsive" style='box-shadow: 5px 3px 5px 3px #C4CACB; background-color: white; padding: 2%; border-radius: 10px; font-size: 13px;'>
-                <!-- <div style="display: flex; justify-content: space-between; align-items: center;">
-                    <div class="col-lg-12 margin-tb" >
-                        <div class="pull-left">
-                            <a class="btn btn-primary" href="/laravel/public/admin/createDoctor">Add Doctor</a>
+            <!-- Room/Bed table -->
+            <div class="table-responsive" style='box-shadow: 5px 3px 5px 3px #1b99d8; background-color: white; padding: 2%; border-radius: 10px; font-size: 13px;'>
+                <div class="row">
+                    <div class="col-sm-6">
+                            <div class="input-group">
+                                <span class="input-group-addon form-control form-control-lg col-sm-1"><i class="fa fa-filter fa-lg"></i></span>
+                                <input type="text" name="searchTable" id="searchData" class="form-control form-control-lg col-sm-11" placeholder="Search Table Records" style="border:1px solid lightblue; color:black;">
+                            </div>
+                    </div>
+                </div>
+
+                <!-- Patient table Start -->
+                <div class="table-responsive-sm">
+                    <table id="RecordTable" class="table table-hover">
+                        <thead>
+                            <tr>
+                                <th scope="col" style="text-align:center">Room Number</th>
+                                <th scope="col" style="text-align:center">Beds Count</th>
+                                <th scope="col" style="text-align:center">Beds List</th>
+                                <th scope="col" style="text-align:center">Action</th>
+                            </tr>
+                        </thead>
+
+                        <tbody id="myTable">
+                        <!-- Complete Data Fetched -->
+                        <div class="AllData" id="{{$room_data}}"></div>
+
+                            @foreach($room_data as $data)
+                            <tr>
+                                <td style="text-align:center">{{$data->room_number}}</td>
+                                <td style="text-align:center">{{$data->bed_number}}</td>
+
+                                <td style="text-align:center">
+                                    <div class="btn-group" role="group">
+                                        <!-- View - Edit - Delete -->
+                                        <a id='{{$data->bed_id}}' style='font-size:13px;' class="btn btn-info btn-lg viewUser" role="button" aria-pressed="true" data-toggle="modal" data-target="#viewUser_modal"><i class="fa fa-database fa-lg" aria-hidden="true"></i></a>
+                                        <a class="btn btn-warning btn-lg" style='font-size: 13px;' href="/laravel/public/admin/room-management/edit-bed/{{$data->bed_id}}"><i class="fa fa-pencil-square-o fa-lg" aria-hidden="true"></i></a>
+                                        <a id='{{$data->bed_id}}' style='font-size:13px;' class="btn btn-danger btn-lg deleteUser" role="button" aria-pressed="true" data-toggle="modal" data-target="#deleteUser_modal"><i class="fa fa-trash fa-lg" aria-hidden="true"></i></a>
+                                    </div>
+                                </td>
+                            </tr>
+                            @endforeach
+                        </tbody>
+                    </table>
+
+                    <!-- Alert if Zero Result Retrieved -->
+                    @if($msg??''!='')
+                    <div class="row">
+                        <div class="col-sm-12">
+                            <h1 class="display-3 text-center">{{$msg}}</h1>
                         </div>
                     </div>
-                </div> -->
-                @if ($message = Session::get('success'))
-                <br>
-                <div class="alert alert-success alert-dismissible fade show" role="alert">
-                    <p>{{ $message }}</p>
-                    <button type="button" class="close" data-dismiss="alert" aria-label="Close">
-                        <span aria-hidden="true">&times;</span>
-                    </button>
-                </div>
-                @endif
-                <!-- Patient table Start -->
-                <table class="table">
-                    <thead>
-                        <tr>
-                            <th scope="col">Image</th>
-                            <th scope="col">Full Name</th>
-                            <th scope="col">CNIC #</th>
-                            <th scope="col">Email ID</th>
-                            <th scope="col">Contact No</th>
-                            <th scope="col">Gender</th>
-                            <th scope="col" >Action</th>
-                        </tr>
-                    </thead>
-                    <tbody>
-                        <tr>
-                            <td>
-                            <img class="profile" src="{{asset('resources/images/profile.png')}}" alt="profile">
-                            </td>
-                            <td style='margin: 0px;'>
-                            <a class="btn btn-info" style='font-size: 13px;' href="/laravel/public/admin/showDoctor/">Show</a>
-                            </td>
-                            <td>
-                            <a class="btn btn-warning" style='font-size: 13px;' href="/laravel/public/admin/editDoctor/">Edit</a>
-                            </td>
-                            <td>
-                                <form action="/laravel/public/admin/deleteDoctor/" method="POST">
-                                    @csrf
-                                    @method('DELETE')
+                    @endif
 
-                                    <button type="submit" style='font-size: 13px;' class="btn btn-danger">Delete</button>
-                                </form>
-                            </td>
-                        </tr>
-                    </tbody>
-                </table>
+                </div>
             </div>
-            <!-- Patient Table end -->
+            <!-- Room/Bed Table end -->
 
         </div>
 
     </div>
+
+    <script>
+        $(document).ready(function(){
+            $("#searchData").on("keyup", function() {
+                var value = $(this).val().toLowerCase();
+                $("#myTable tr").filter(function() {
+                $(this).toggle($(this).text().toLowerCase().indexOf(value) > -1)
+                });
+            });
+        });
+    </script>
 
 @endsection

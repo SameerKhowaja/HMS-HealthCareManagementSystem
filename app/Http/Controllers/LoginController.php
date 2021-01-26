@@ -62,6 +62,7 @@ class LoginController extends Controller
                     $req->session()->put('userType', strtolower($type_val));
                     $req->session()->put('userType_ID',$data->type_id);
                     // also send admin image if exist ------
+                    $req->session()->put('image',$admin->image);
                     $flag = true;
 
                     return redirect('/'.strtolower($type_val)); // /admin url
@@ -90,6 +91,7 @@ class LoginController extends Controller
                         $req->session()->put('userType',$lowercase_type_val);
                         $req->session()->put('userType_ID',$data->type_id);
                         // also send image if exist ----
+                        $req->session()->put('image',$admin->image);
                         $flag = true;
 
                         return redirect('/'.strtolower($type_val));

@@ -80,7 +80,7 @@
                 <!-- Table -->
                 <div class="table-responsive" style='box-shadow: 5px 3px 5px 3px #1b99d8; background-color: white; padding: 2%; border-radius: 10px; font-size: 13px;'>
 
-                    <form action="/laravel/public/admin/hospital-data/addRecord" method="POST">
+                    <form action="/laravel/public/admin/hospital-data/addRecord" method="POST" enctype="multipart/form-data">
                         @csrf
                         <!-- Head Row -->
                         <div class="row" style="margin:auto;">
@@ -209,7 +209,7 @@
                             <div class="col-sm-6">
                                 <div class="form-group">
                                     <strong>Profile Image</strong>
-                                    <input type="file" name="image" class="form-control form-control-lg">
+                                    <input type="file" name="image" class="form-control form-control-lg" accept="image/*">
                                 </div>
                             </div>
                         </div>
