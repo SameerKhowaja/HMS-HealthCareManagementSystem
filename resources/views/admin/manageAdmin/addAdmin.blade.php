@@ -86,7 +86,7 @@
                         <div class="row" style="margin:auto;">
                             <div class="col-sm-12" style="text-align:center;">
                                 <div class="form-group">
-                                    <h2>Create Admin</h2>
+                                    <h2 class="display-4">Create Admin</h2>
                                 </div>
                             </div>
                         </div>
@@ -146,12 +146,21 @@
                             </div>
                             <div class="col-sm-6">
                                 <div class="form-group">
+                                    <strong>CNIC*</strong>
+                                    <input type="text" name="cnic" class="form-control form-control-lg" placeholder="41303XXXXXXXX" onkeyup="if (/\D/g.test(this.value)) this.value = this.value.replace(/\D/g,'')" required>
+                                </div>
+                            </div>
+                        </div>
+                        <!-- row3 -->
+                        <div class="row">
+                            <div class="col-sm-12">
+                                <div class="form-group">
                                     <strong>Profile Image</strong>
                                     <input type="file" name="image" class="form-control form-control-lg" accept="image/*" >
                                 </div>
                             </div>
                         </div>
-                        <!-- row3 -->
+                        <!-- row4 -->
                         <div class="row">
                             <div class="col-sm-6">
                                 <div class="form-group">

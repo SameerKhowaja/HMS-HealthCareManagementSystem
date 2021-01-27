@@ -12,7 +12,7 @@ Route::post('/patient-registration-progress','SignupController@register');  //re
 Route::get('/error-page','ErrorController@index');  //error page
 
 //======================================================
-//                 Admin Dashboard START
+//                 Admin Module START
 //=======================================================
 
 // navbar routes   -----------------------------------------------------
@@ -51,7 +51,19 @@ Route::post('/admin/room-management/room-edit/{id}','AdminController@editRoomNum
 Route::post('/admin/room-management/bed-edit/{id}','AdminController@editBedNumber');    //edit bed number on admin modal click
 
 //======================================================
-//                 Admin Dashboard ENDS
+//                 Admin Module ENDS
+//=======================================================
+
+
+//======================================================
+//                 Patient Module START
+//=======================================================
+
+Route::get('/patient','PatientController@dashboard');   //dashboard
+
+
+//======================================================
+//                 Patient Module ENDS
 //=======================================================
 
 // ------------------------------------------------------------------------------- No work down

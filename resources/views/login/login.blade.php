@@ -30,7 +30,7 @@
                     <span class="login100-form-title fadeIn second">Login Form</span>
 
                     <div class="wrap-input100 validate-input fadeIn second" data-validate="Valid email is required: ex@abc.xyz">
-                        <input class="input100" type="text" name="email_id" placeholder="Email">
+                        <input class="input100" type="text" name="email_id" placeholder="Email or CNIC">
                         <span class="focus-input100"></span>
                         <span class="symbol-input100">
                             <i class="fa fa-envelope" aria-hidden="true"></i>

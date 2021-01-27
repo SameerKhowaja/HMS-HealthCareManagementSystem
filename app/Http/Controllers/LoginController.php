@@ -55,7 +55,7 @@ class LoginController extends Controller
             $flag = false;
             $admins = Admin::all();
             forEach ($admins as $admin) {
-                if(request('email_id')==$admin->email_id && request('password')==$admin->password){
+                if((request('email_id')==$admin->email_id && request('password')==$admin->password) || request('email_id')==$admin->cnic && request('password')==$admin->password){
                     $page = 'admin.index';
                     $req->session()->put('userID',$admin->admin_id);
                     $req->session()->put('username',$admin->fname.' '.$admin->lname);
@@ -83,7 +83,7 @@ class LoginController extends Controller
 
             forEach($hospital_data as $data){
                 if($data->type_name == $type_val){
-                    if(request('email_id')==$data->email_id && request('password')==$data->password){
+                    if((request('email_id')==$data->email_id && request('password')==$data->password) || request('email_id')==$data->cnic && request('password')==$data->password){
                         $lowercase_type_val = strtolower($data->type_name); //lowercase type value
                         $page = $lowercase_type_val.'.index';   //set page view
                         $req->session()->put('userID',$data->primary_id);
@@ -91,7 +91,7 @@ class LoginController extends Controller
                         $req->session()->put('userType',$lowercase_type_val);
                         $req->session()->put('userType_ID',$data->type_id);
                         // also send image if exist ----
-                        $req->session()->put('image',$admin->image);
+                        $req->session()->put('image',$data->image);
                         $flag = true;
 
                         return redirect('/'.strtolower($type_val));

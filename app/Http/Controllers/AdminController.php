@@ -114,6 +114,7 @@ class AdminController extends Controller
             'fname' => 'required|max:100',
             'lname' => 'required|max:100',
             'email_id' => 'required|max:200',
+            'cnic' => 'required|max:100',
             'password1' => 'required|max:100',
             'password2' => 'required|max:100',
             'image' => 'mimes:jpeg,png,jpg|max:30',  // image size less than 30KB
@@ -124,21 +125,22 @@ class AdminController extends Controller
             return view('admin.manageAdmin.addAdmin', ['msg'=>'Error! ', 'long_msg'=>"Password Not Matched"]);
         }
 
-        // Check if same email not exits
+        // Check if same email-cnic not exits
         $email_check = request('email_id');
+        $cnic_check = request('cnic');
         $admin_data = Admin::all();
         forEach($admin_data as $data){
-            if($data->email_id == $email_check){
-                return view('admin.manageAdmin.addAdmin', ['msg'=>'Error! ', 'long_msg'=>"Email Already Present"]);
+            if($data->email_id == $email_check || $data->cnic == $cnic_check){
+                return view('admin.manageAdmin.addAdmin', ['msg'=>'Error! ', 'long_msg'=>"Email/CNIC Already Present"]);
             }
         }
 
-        // image add
         $add_admin = new Admin;
         // Add data if everything correct
         $add_admin->fname = request('fname');
         $add_admin->lname = request('lname');
         $add_admin->email_id = request('email_id');
+        $add_admin->cnic = request('cnic');
         $add_admin->password = request('password1');
         if($req->hasFile('image')){
             $img = base64_encode(file_get_contents($req->file('image')->path()));
@@ -217,13 +219,14 @@ class AdminController extends Controller
             return view('admin.hospitalData.addRecord', ['typesList'=>$dataType, 'msg'=>'Error! ', 'long_msg'=>"Password Not Matched"]);
         }
 
-        // Check if same email not exits for patient type
+        // Check if same email-cnic not exits for patient type
         $email_check = request('email_id');
+        $cnic_check = request('cnic');
         $userType_id = request('accountType'); // In number 1,2,...
         $Hospital_data = Hospital_data::all();
         forEach($Hospital_data as $d){
-            if(($d->email_id == $email_check && $d->type_id == $userType_id) || ($userType_id == 0)){
-                return view('admin.hospitalData.addRecord', ['typesList'=>$dataType, 'msg'=>'Error! ', 'long_msg'=>"Email Already Present"]);
+            if(($d->email_id == $email_check && $d->type_id == $userType_id) || ($d->cnic == $cnic_check && $d->type_id == $userType_id) || ($userType_id == 0)){
+                return view('admin.hospitalData.addRecord', ['typesList'=>$dataType, 'msg'=>'Error! ', 'long_msg'=>"Email/CNIC Already Present"]);
             }
         }
 
@@ -333,7 +336,7 @@ class AdminController extends Controller
             }
         }
 
-        if($typeName_val == "Doctor" || $typeName_val=="doctor"){
+        if($typeName_val == "Doctor" || $typeName_val=="doctor"){ // doctor have speciality
             $getSpecialist = Doctor::all();   // for getting doctor specialist
             $specialist_val = '';
             forEach($getSpecialist as $spec){
@@ -375,12 +378,13 @@ class AdminController extends Controller
 
         //Check for email not in use in hospital data table
         $email_id = request('email_id');    // input box mail
+        $email_no = request('cnic');    // input box cnic
         $hospital_data = Hospital_data::all();
         forEach($hospital_data as $data){
             // check if updated email does not exist in db with same account type
-            if($hospitalData->email_id != $email_id && $email_id == $data->email_id && $hospitalData->type_id == $data->type_id){
+            if(($hospitalData->email_id != $email_id && $email_id == $data->email_id && $hospitalData->type_id == $data->type_id) || $hospitalData->cnic != $email_no && $email_no == $data->cnic && $hospitalData->type_id == $data->type_id){
                 // email present in db so return error msg
-                return view("admin.hospitalData.editRecord", ['hospitalData'=>$hospitalData, 'accountTypeName'=>$typeName_val, 'msg'=>'Error! ', 'long_msg'=>"Email Already Exists...!"]);
+                return view("admin.hospitalData.editRecord", ['hospitalData'=>$hospitalData, 'accountTypeName'=>$typeName_val, 'msg'=>'Error! ', 'long_msg'=>"Email/CNIC Already Exists...!"]);
             }
         }
 

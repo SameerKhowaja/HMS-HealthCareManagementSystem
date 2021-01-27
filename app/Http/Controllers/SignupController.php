@@ -58,18 +58,17 @@ class SignupController extends Controller
             }
         }
 
-        // Check for email and type exist already or not
+        // Check for email-cnic and type exist already or not
         $prev_data = Hospital_data::all();
         $check = true;
         if($flag == true){
             forEach($prev_data as $find_data){
-                if($find_data->email_id==$email_no && $find_data->type_id==$type_id){
+                if(($find_data->email_id==$email_no && $find_data->type_id==$type_id) || ($find_data->cnic==$cnic_no && $find_data->type_id==$type_id)){
                     $check = false; // This means data is already Present
                     break;
                 }
             }
         }
-
 
         $patient = new Patient();
         $add_data = new Hospital_data();
@@ -94,6 +93,6 @@ class SignupController extends Controller
             return view('signup.afterregistration', ['User'=>$username, 'msg'=>'Congratulation! ', 'msg_more'=>'Your Account is Successfully Created...Login to Continue.']);
         }
 
-        return view('signup.afterregistration', ['User'=>$username, 'msg'=>'Error! ', 'msg_more'=>'Email ID exist OR Invalid/Incorrect information entered...Register Again.']);
+        return view('signup.afterregistration', ['User'=>$username, 'msg'=>'Error! ', 'msg_more'=>'Email ID / CNIC exist OR Invalid/Incorrect information entered...Register Again.']);
     }
 }
