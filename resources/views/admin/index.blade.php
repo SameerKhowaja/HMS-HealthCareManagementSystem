@@ -197,7 +197,7 @@
                             <li class="usernameCell text-normal text-grey text-center" style="margin: 0 100%;">{{$d->updated_at.' '}}</li>
                             @endif -->
                             <li class="usernameCell text-normal text-grey text-center" style="margin: 0 100%;">
-                                <a id="{{$d->admin_id}}" class="btn btn-danger btn-lg deleteAdmin" role="button" aria-pressed="true" data-toggle="modal" data-target="#deleteAdmin_modal">Delete Record</a>
+                                <a id="{{$d->admin_id}}" class="btn btn-danger btn-lg deleteAdmin" role="button" aria-pressed="true" data-toggle="modal" data-target="#deleteAdmin_modal">Delete Admin</a>
                                 <!-- <a id="{{$d->admin_id}}" href="/laravel/public/admin/delete-record/{{$d->admin_id}}" class="btn btn-danger btn-lg active" role="button" aria-pressed="true" data-toggle="modal" data-target="#exampleModalCenter">Delete Record</a> -->
                             </li>
                         </div>
@@ -251,7 +251,7 @@
 
             <!-- Delete Modal -->
             <div class="modal fade" id="deleteAdmin_modal">
-                <div class="modal-dialog modal-dialog-centered">
+                <div class="modal-dialog modal-dialog-centered modal-sm">
                     <div class="modal-content">
                         <!-- Modal Header -->
                         <div class="modal-header">
@@ -264,7 +264,7 @@
                             <!-- Modal footer -->
                             <div class="modal-footer">
                                 <button type="button" class="btn btn-secondary btn-lg" data-dismiss="modal">Close</button>
-                                <button type="submit" class="btn btn-danger btn-lg">Delete Record</button>
+                                <button type="submit" class="btn btn-danger btn-lg">Remove Admin</button>
                             </div>
                         </form>
                     </div>

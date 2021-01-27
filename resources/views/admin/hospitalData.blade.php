@@ -179,7 +179,7 @@
 
         <!-- Delete Modal -->
         <div class="modal fade" id="deleteUser_modal">
-            <div class="modal-dialog modal-dialog-centered">
+            <div class="modal-dialog modal-dialog-centered modal-sm">
                 <div class="modal-content">
                     <!-- Modal Header -->
                     <div class="modal-header">

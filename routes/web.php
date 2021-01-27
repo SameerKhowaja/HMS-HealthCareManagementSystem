@@ -41,6 +41,13 @@ Route::delete('/admin/hospital-data/delete-record/{id}','AdminController@deleteU
 Route::get('/admin/hospital-data/edit-record/{id}','AdminController@editUserData');    //edit User view
 Route::post('/admin/hospital-data/edit-record/{id}','AdminController@editUserDataSave');    //edit User data on btn click
 
+// admin room-management routes
+Route::delete('/admin/room-management/bed-delete/{id}','AdminController@deleteBed'); //delete bed on admin modal click
+Route::post('/admin/room-management/add-new-room','AdminController@addNewRoom');   //add new room on modal btn click
+Route::post('/admin/room-management/add-new-bed','AdminController@addNewBed');   //add new bed on modal btn click
+Route::delete('/admin/room-management/room-delete/{id}','AdminController@deleteRoom'); //delete room on admin modal click
+Route::post('/admin/room-management/{id}','AdminController@searchAvailable');    //search Room and Bed According to Availability on click
+Route::post('/admin/room-management/room-edit/{id}','AdminController@editRoomNumber');    //edit room number on admin modal click
 
 //======================================================
 //                 Admin Dashboard ENDS
