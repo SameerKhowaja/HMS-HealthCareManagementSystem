@@ -609,6 +609,32 @@ class AdminController extends Controller
         return redirect("/admin/room-management/");
     }
 
+    // Edit Bed Number on modal btn click
+    function editBedNumber(Request $req, $id){
+        $bed_data = Bed::findOrFail($id);
+        $newBedNumber = request("newBedNumber");
+
+        // If both Number are Same
+        if($newBedNumber == $bed_data->bed_number){
+            return view("page404", ['msg'=>"Error", 'msg_long'=>'Entered Same Bed Number']);
+        }
+
+        // Check if bed number is not same in that room
+        $beds = Bed::all();
+        forEach($beds as $b){
+            if($b->room_id == $bed_data->room_id && $b->bed_number == $newBedNumber){
+                // Fail to enter
+                return view("page404", ['msg'=>"Error", 'msg_long'=>$newBedNumber.' Already Exist in Room']);
+            }
+        }
+
+        // if everything is good
+        $bed_data->bed_number = $newBedNumber;
+        $bed_data->save();
+
+        return redirect("/admin/room-management/");
+    }
+
 
 
 // Admin / Room Management ENDS ----------------------------------------

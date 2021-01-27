@@ -183,8 +183,8 @@
                                 <div class="AllData" id="{{$room_data}}"></div>
                                     @foreach($room_data as $data)
                                     <tr>
-                                        <td style="text-align:center">{{$data->room_number}}</td>
-                                        <td style="text-align:center">{{$data->bed_number}}</td>
+                                        <td class="roomNumber_table" style="text-align:center">{{$data->room_number}}</td>
+                                        <td class="bedNumber_table" style="text-align:center">{{$data->bed_number}}</td>
                                         @if($data->available == 1)
                                         <td style="text-align:center">Yes</td>
                                         @else
@@ -274,6 +274,7 @@
             <div class="modal-dialog modal-dialog-centered modal-sm" role="document">
                 <div class="modal-content">
                     <form id="ok_edit_bed" action="#" method="POST">
+                    @csrf
                         <div class="modal-body">
                             <table class="table table-hover">
                                 <thead>
@@ -295,7 +296,7 @@
                                     <tr>
                                         <td colspan="2">
                                             <div class="form-group">
-                                                <input type="text" class="form-control form-control-lg" id="newBedNumber" placeholder="New Bed Number" style="font-size:14px;" required>
+                                                <input type="text" class="form-control form-control-lg" name="newBedNumber" placeholder="New Bed Number" style="font-size:14px;" required>
                                             </div>
                                         </td>
                                     </tr>
@@ -456,10 +457,21 @@
                 $("#ok_edit_room").attr("action","/laravel/public/admin/room-management/room-edit/"+user_id);
                 $('#editRoom_modal').modal('show');
             });
+        });
+    </script>
 
-            $("#ok_delete_bed").click(function(){
-                $('#editRoom_modal').modal('hide');
-            });
+    <script>
+        $(".editBed").click(function() {
+            var $row = $(this).closest("tr");    // Find the row
+            var $roomNumber_table = $row.find(".roomNumber_table").text(); // Find the room text
+            var $bedNumber_table = $row.find(".bedNumber_table").text(); // Find the bed text
+            var $bedID = $row.find(".editBed").attr('id');
+
+            $('#roomNumber').html($roomNumber_table);
+            $('#bedNumber').html($bedNumber_table);
+
+            $("#ok_edit_bed").attr("action","/laravel/public/admin/room-management/bed-edit/"+$bedID);
+            $('#editBed_modal').modal('show');
         });
     </script>
 
@@ -470,10 +482,6 @@
                 user_id = $(this).attr('id');
                 $("#ok_delete_bed").attr("action","/laravel/public/admin/room-management/bed-delete/"+user_id);
                 $('#deleteBed_modal').modal('show');
-            });
-
-            $("#ok_delete_bed").click(function(){
-                $('#deleteBed_modal').modal('hide');
             });
         });
     </script>
@@ -486,10 +494,6 @@
                 $("#roomName_value").html("Removing Room # "+user_id);  // set html
                 $("#ok_delete_room").attr("action","/laravel/public/admin/room-management/room-delete/"+user_id);
                 $('#deleteRoom_modal').modal('show');
-            });
-
-            $("#ok_delete_bed").click(function(){
-                $('#deleteRoom_modal').modal('hide');
             });
         });
     </script>

@@ -48,6 +48,7 @@ Route::post('/admin/room-management/add-new-bed','AdminController@addNewBed');  
 Route::delete('/admin/room-management/room-delete/{id}','AdminController@deleteRoom'); //delete room on admin modal click
 Route::post('/admin/room-management/{id}','AdminController@searchAvailable');    //search Room and Bed According to Availability on click
 Route::post('/admin/room-management/room-edit/{id}','AdminController@editRoomNumber');    //edit room number on admin modal click
+Route::post('/admin/room-management/bed-edit/{id}','AdminController@editBedNumber');    //edit bed number on admin modal click
 
 //======================================================
 //                 Admin Dashboard ENDS
