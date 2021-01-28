@@ -9,6 +9,7 @@ use App\Appointment_result;
 use App\Appointment;
 use App\Bed;
 use App\Doctor;
+use App\Doctor_availability;
 use App\Hospital_data;
 use App\Lab_technician;
 use App\Lab_test_name;
@@ -268,10 +269,20 @@ class AdminController extends Controller
         $add_patient->save();
         $primaryid = $add_patient->primary_id;  // return currently saved ID
 
-        $dataType_value = $dataType_value.'s';  // Table name has 's' in end
+        $dataType_value = $dataType_value.'s';  // Table name concat with 's' in end
         DB::table($dataType_value)->insert([
             'primary_id' => $primaryid,
         ]);
+
+        // Now find doctor id if type is doctor
+        try{
+            $doctorsList = DB::table($dataType_value)->select('doctor_id')->where('primary_id', $primaryid)->get();
+            $doctorAvailability = new Doctor_availability; // add doctor id to this table
+            $doctorAvailability->doctor_id = $doctorsList[0]->doctor_id;
+            $doctorAvailability->save();
+        }catch (Throwable $e) {
+            // is not doctor type
+        }
 
         return view('admin.hospitalData.addRecord', ['typesList'=>$dataType, 'msg'=>'Success! ', 'long_msg'=>"Added New ".$nameOfType." Record to database"]);
     }
@@ -318,7 +329,16 @@ class AdminController extends Controller
         $getType_name = strtolower($getType_name); // lower case string
         $getType_name = ucwords(str_replace(" ", "_", $getType_name));  // capital first letter and replace space with underscore
 
-        $getType_name = $getType_name.'s';    // Table name has 's' in end
+        $getType_name = $getType_name.'s';    // Table name concat with 's' in end
+
+        // Now find doctor id if type is doctor delete doctor data from doctor_availability table
+        try{
+            $doctorsList = DB::table($getType_name)->select('doctor_id')->where('primary_id', $primary_id)->get();
+            DB::table('doctor_availability')->where('doctor_id', $doctorsList[0]->doctor_id)->delete();
+        }catch (Throwable $e) {
+            // is not doctor type
+        }
+
         DB::table($getType_name)->where('primary_id', $primary_id)->delete();
         $userData->delete();    // Delete from hospital table
 
@@ -354,6 +374,7 @@ class AdminController extends Controller
     // Edit User Data on btn click save to DB
     function editUserDataSave($id, Request $req){
         $hospitalData = Hospital_data::findOrFail($id);
+
         $req->validate([
             'fname' => 'required|max:100',
             'lname' => 'required|max:100',
@@ -363,6 +384,7 @@ class AdminController extends Controller
             'gender' => 'required|max:10',
             'city' => 'max:100',
             'address' => 'max:500',
+            'specialist' => 'max:300',
             'password1' => 'required|max:100',
             'image' => 'mimes:jpeg,png,jpg|max:25',  // image size less than 25KB
         ]);
@@ -378,17 +400,16 @@ class AdminController extends Controller
 
         //Check for email not in use in hospital data table
         $email_id = request('email_id');    // input box mail
-        $email_no = request('cnic');    // input box cnic
+        $cnic_no = request('cnic');    // input box cnic
         $hospital_data = Hospital_data::all();
         forEach($hospital_data as $data){
             // check if updated email does not exist in db with same account type
-            if(($hospitalData->email_id != $email_id && $email_id == $data->email_id && $hospitalData->type_id == $data->type_id) || $hospitalData->cnic != $email_no && $email_no == $data->cnic && $hospitalData->type_id == $data->type_id){
+            if(($hospitalData->email_id != $email_id && $email_id == $data->email_id && $hospitalData->type_id == $data->type_id) || $hospitalData->cnic != $cnic_no && $cnic_no == $data->cnic && $hospitalData->type_id == $data->type_id){
                 // email present in db so return error msg
                 return view("admin.hospitalData.editRecord", ['hospitalData'=>$hospitalData, 'accountTypeName'=>$typeName_val, 'msg'=>'Error! ', 'long_msg'=>"Email/CNIC Already Exists...!"]);
             }
         }
 
-        // Image is also require ??
         // If everything is OK update Data
         $hospitalData->fname = request('fname');
         $hospitalData->lname = request('lname');
@@ -405,22 +426,45 @@ class AdminController extends Controller
             $hospitalData->image = $img;
         }
         $hospitalData->save();
+        $primaryID = $hospitalData->primary_id;  // return currently saved ID
 
         // Check if doctor or not
         $specialist = request('specialist');
-        if($specialist != ''){
-            // Type is Doctor
-            $primaryID = $hospitalData->primary_id;  // return currently saved ID
-            $doctor_data = Doctor::all();
-            forEach($doctor_data as $data){
-                if($data->primary_id == $primaryID){
-                    $data->specialist = $specialist;
-                    $data->save();
-                }
+
+        $doctor_data = Doctor::all();
+        forEach($doctor_data as $data){
+            if($data->primary_id == $primaryID){
+                $data->specialist = request('specialist');
+                $data->save();
             }
         }
 
         return view("admin.hospitalData.editRecord", ['hospitalData'=>$hospitalData, 'accountTypeName'=>$typeName_val, 'doctorSpecialist'=>$specialist, 'msg'=>'Success! ', 'long_msg'=>"Record Updated...!"]);
+    }
+
+    // doctor timing view
+    function doctorTiming(){
+        // joining 3 tables
+        $dataFetched = DB::table('doctors')
+            ->join('hospital_datas', 'hospital_datas.primary_id', '=', 'doctors.primary_id')
+            ->join('doctor_availability', 'doctor_availability.doctor_id', '=', 'doctors.doctor_id')
+            ->select('doctors.*', 'hospital_datas.*', 'doctor_availability.*')
+            ->get();
+
+        return view("admin.doctorTiming", ['dataFetched'=>$dataFetched]);
+    }
+
+    //edit doctor timings view
+    function doctorTimingEditView($id){
+        // joining 3 tables where clause
+        $data = DB::table('doctors')
+            ->join('hospital_datas', 'hospital_datas.primary_id', '=', 'doctors.primary_id')
+            ->join('doctor_availability', 'doctor_availability.doctor_id', '=', 'doctors.doctor_id')
+            ->select('doctors.*', 'hospital_datas.*', 'doctor_availability.*')
+            ->where('doctor_available_id', $id)->get();
+
+        $dataFetched = $data[0]; // first index fetched
+        return view("admin.doctorTiming.editTiming", ['dataFetched'=>$dataFetched]);
     }
 
 

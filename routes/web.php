@@ -18,6 +18,7 @@ Route::get('/error-page','ErrorController@index');  //error page
 // navbar routes   -----------------------------------------------------
 Route::get('/admin','AdminController@dashboard');   //dashboard
 Route::get('/admin/hospital-data','AdminController@hospitalData');    //hospital-data
+Route::get('/admin/doctor-timing','AdminController@doctorTiming');    //doctor-timing
 Route::get('/admin/room-management','AdminController@roomManagement');  //room-management
 Route::get('/admin/account-type','AdminController@accountType');    //account-type
 Route::get('/admin/admitted-patient','AdminController@admittedPatient');  //admitted-patient
@@ -41,6 +42,9 @@ Route::delete('/admin/hospital-data/delete-record/{id}','AdminController@deleteU
 Route::get('/admin/hospital-data/edit-record/{id}','AdminController@editUserData');    //edit User view
 Route::post('/admin/hospital-data/edit-record/{id}','AdminController@editUserDataSave');    //edit User data on btn click
 
+// admin doctor-timing routes
+Route::get('/admin/doctor-timing/edit-timing/{id}','AdminController@doctorTimingEditView'); //edit doctor timing view
+
 // admin room-management routes
 Route::delete('/admin/room-management/bed-delete/{id}','AdminController@deleteBed'); //delete bed on admin modal click
 Route::post('/admin/room-management/add-new-room','AdminController@addNewRoom');   //add new room on modal btn click
@@ -59,7 +63,22 @@ Route::post('/admin/room-management/bed-edit/{id}','AdminController@editBedNumbe
 //                 Patient Module START
 //=======================================================
 
-Route::get('/patient','PatientController@dashboard');   //dashboard
+// navbar routes   -----------------------------------------------------
+Route::get('/patient','PatientController@index');   //dashboard
+Route::get('/patient/doctor-appointment','PatientController@doctorAppointment');   //view-doctor
+Route::get('/patient/current-appointment','PatientController@currentAppointment');   //request-appointment
+Route::get('/patient/appointments-detail','PatientController@appointmentsDetail');   //appointments-detail
+Route::get('/patient/lab-test','PatientController@labTest');   //lab-test
+Route::get('/patient/admissions-detail','PatientController@admissionsDetail');   //admissions-detail
+Route::get('/patient/contact-us','PatientController@index');   //contact-us  NOT SET
+// ---------------------------------------------------------------------
+
+Route::get('/patient/editPatientProfile/{id}','PatientController@editProfile');   //edit patient profile data
+Route::post('/patient/editPatientProfile/{id}','PatientController@editProfileSave');   //edit patient profile data save on btn click
+Route::post('/patient/editPatientProfile/editPassword/{id}','PatientController@editProfilePassword');   //edit patient profile password modal save on btn click
+
+Route::get('/patient/doctor-appointment/schedule-appointment/{id}','PatientController@scheduleAppointmentView');   //schedule appointment view
+
 
 
 //======================================================

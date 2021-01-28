@@ -94,7 +94,7 @@ class LoginController extends Controller
                         $req->session()->put('image',$data->image);
                         $flag = true;
 
-                        return redirect('/'.strtolower($type_val));
+                        return redirect('/'.strtolower($type_val)); // patient, doctor, etc dashboard
                     }
                 }
             }
