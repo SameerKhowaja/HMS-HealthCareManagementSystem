@@ -94,7 +94,7 @@
                 </div>
 
                 <div class="cardWrapper">
-                    <div class="card">
+                    <div class="card" style="box-shadow: 5px 3px 5px 3px #1b99d8;">
                         <!-- user progress target canvas -->
                         <div class="progress-hamburger">
                             <canvas id="userProgress" width="90" height="90"></canvas>
@@ -115,7 +115,7 @@
                         </div>
                     </div>
 
-                    <div class="card">
+                    <div class="card" style="box-shadow: 5px 3px 5px 3px #1b99d8;">
                         <!-- course progress target canvas -->
                         <div class="progress-hamburger">
                             <canvas id="courseProgress" width="90" height="90"></canvas>
@@ -136,7 +136,7 @@
                         </div>
                     </div>
 
-                    <div class="card">
+                    <div class="card" style="box-shadow: 5px 3px 5px 3px #1b99d8;">
                         <!-- provider progress target canvas -->
                         <div class="progress-hamburger">
                             <canvas id="providerProgress" width="90" height="90"></canvas>
@@ -172,7 +172,7 @@
                     </p> -->
                 </div>
                 <!-- user table -->
-                <div class="card">
+                <div class="card" style="box-shadow: 5px 3px 5px 3px #1b99d8;">
                     <div class="alert alert-lg btn-block alert-primary alert-dismissible fade show text-center text-grey text-large" role="alert">
                         {{$msg ?? 'Admin View'}}
                         <button type="button" class="close" data-dismiss="alert" aria-label="Close">

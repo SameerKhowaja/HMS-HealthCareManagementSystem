@@ -84,7 +84,10 @@
             <div style='margin-top: 3%; margin-bottom: 4%;'>
                 <div style="display: flex; justify-content: space-between; align-items: center;">
                     <h3 class="text-large text-grey">Admin / Doctor Timings Manager / Edit Timing</h3>
+                    <a href="/laravel/public/admin/doctor-timing" role="button" class="btn btn-secondary btn-lg active">Back</a>
                 </div>
+
+                <br>
 
                 <!-- Table Info -->
                 <div class="table-responsive" style='box-shadow: 5px 3px 5px 3px #1b99d8; background-color: white; padding: 2%; border-radius: 10px; font-size: 13px;'>
@@ -113,19 +116,6 @@
                             </div>
                             @endif
                         </div>
-
-                        @if($msg??'' != '')
-                        <div class="col-sm-12">
-                            <div class="form-group">
-                                <div class="alert alert-warning alert-dismissible fade show text-center" role="alert">
-                                    <strong>{{$msg ?? ''}}</strong> {{$long_msg ?? ''}}
-                                    <button type="button" class="close" data-dismiss="alert" aria-label="Close">
-                                        <span aria-hidden="true">&times;</span>
-                                    </button>
-                                </div>
-                            </div>
-                        </div>
-                        @endif
                     </div>
                     <!-- row1 -->
                     <!-- Photo and file -->
@@ -187,15 +177,22 @@
                             </div>
                         </div>
                     </div>
+                    <div class="row">
+                        <div class="col-xs-12 col-sm-12 col-md-12 text-center">
+                            <!-- Hospital Data Edit Record Link -->
+                            <a class="btn btn-primary btn-lg" style='font-size: 13px;' href="/laravel/public/admin/hospital-data/edit-record/{{$dataFetched->primary_id}}"><i class="fa fa-pencil-square-o fa-lg" aria-hidden="true"></i> Edit Profile</a>
+                        </div>
+                    </div>
                 </div>
             </div>
 
             <!-- Edit Timings -->
             <div style='margin-top: 3%; margin-bottom: 4%;'>
                 <!-- Table Info -->
-                <div class="table-responsive" style='box-shadow: 5px 3px 5px 3px #1b99d8; background-color: white; padding: 2%; border-radius: 10px; font-size: 13px;'>
+                <div class="table-responsive" style='box-shadow: 5px 3px 5px 3px #1b99d8; background-color: white; padding: 2%; border-radius: 10px; font-size: 14px;'>
 
-                    <form action="">
+                    <form action="/laravel/public/admin/doctor-timing/edit-timing/{{$dataFetched->doctor_available_id}}" method="POST">
+                    @csrf
                         <!-- Head Row -->
                         <div class="row" style="margin:auto;">
                             <div class="col-sm-12" style="text-align:center;">
@@ -245,16 +242,22 @@
                                             <div class="col-sm-12 text-center">
                                                 <h3 class="display-5" style="font-size:22px;">Monday Timing</h3>
                                             </div>
-                                            <div class="col-sm-6">
+                                            <div class="col-sm-5">
                                                 <div class="form-group">
-                                                    <strong>Start Time</strong>
-                                                    <input type="time" name="monday_start" class="form-control form-control-lg" value="{{$dataFetched->monday_start}}">
+                                                    <strong id="xyz">Start Time</strong>
+                                                    <input type="time" id="monday_start" name="monday_start" class="form-control form-control-lg" value="{{$dataFetched->monday_start}}">
                                                 </div>
                                             </div>
-                                            <div class="col-sm-6">
+                                            <div class="col-sm-5">
                                                 <div class="form-group">
                                                     <strong>End Time</strong>
-                                                    <input type="time" name="monday_end" class="form-control form-control-lg" value="{{$dataFetched->monday_end}}">
+                                                    <input type="time" id="monday_end" name="monday_end" class="form-control form-control-lg" value="{{$dataFetched->monday_end}}">
+                                                </div>
+                                            </div>
+                                            <div class="col-sm-2 text-center">
+                                                <div class="form-group">
+                                                    <br>
+                                                    <button type="button" class="btn btn-info btn-lg timeClearBTN" onclick="document.getElementById('monday_start').value = ''; document.getElementById('monday_end').value = '';"><i class="fa fa-refresh" aria-hidden="true"></i></button>
                                                 </div>
                                             </div>
                                         </div>
@@ -270,16 +273,22 @@
                                             <div class="col-sm-12 text-center">
                                                 <h3 class="display-5" style="font-size:22px;">Tuesday Timing</h3>
                                             </div>
-                                            <div class="col-sm-6">
+                                            <div class="col-sm-5">
                                                 <div class="form-group">
                                                     <strong>Start Time</strong>
-                                                    <input type="time" name="tuesday_start" class="form-control form-control-lg" value="{{$dataFetched->tuesday_start}}">
+                                                    <input type="time" id="tuesday_start" name="tuesday_start" class="form-control form-control-lg" value="{{$dataFetched->tuesday_start}}">
                                                 </div>
                                             </div>
-                                            <div class="col-sm-6">
+                                            <div class="col-sm-5">
                                                 <div class="form-group">
                                                     <strong>End Time</strong>
-                                                    <input type="time" name="tuesday_end" class="form-control form-control-lg" value="{{$dataFetched->tuesday_end}}">
+                                                    <input type="time" id="tuesday_end" name="tuesday_end" class="form-control form-control-lg" value="{{$dataFetched->tuesday_end}}">
+                                                </div>
+                                            </div>
+                                            <div class="col-sm-2 text-center">
+                                                <div class="form-group">
+                                                    <br>
+                                                    <button type="button" class="btn btn-info btn-lg timeClearBTN" onclick="document.getElementById('tuesday_start').value = ''; document.getElementById('tuesday_end').value = '';"><i class="fa fa-refresh" aria-hidden="true"></i></button>
                                                 </div>
                                             </div>
                                         </div>
@@ -297,16 +306,22 @@
                                             <div class="col-sm-12 text-center">
                                                 <h3 class="display-5" style="font-size:22px;">Wednesday Timing</h3>
                                             </div>
-                                            <div class="col-sm-6">
+                                            <div class="col-sm-5">
                                                 <div class="form-group">
                                                     <strong>Start Time</strong>
-                                                    <input type="time" name="wednesday_start" class="form-control form-control-lg" value="{{$dataFetched->wednesday_start}}">
+                                                    <input type="time" id="wednesday_start" name="wednesday_start" class="form-control form-control-lg" value="{{$dataFetched->wednesday_start}}">
                                                 </div>
                                             </div>
-                                            <div class="col-sm-6">
+                                            <div class="col-sm-5">
                                                 <div class="form-group">
                                                     <strong>End Time</strong>
-                                                    <input type="time" name="wednesday_end" class="form-control form-control-lg" value="{{$dataFetched->wednesday_end}}">
+                                                    <input type="time" id="wednesday_end" name="wednesday_end" class="form-control form-control-lg" value="{{$dataFetched->wednesday_end}}">
+                                                </div>
+                                            </div>
+                                            <div class="col-sm-2 text-center">
+                                                <div class="form-group">
+                                                    <br>
+                                                    <button type="button" class="btn btn-info btn-lg timeClearBTN" onclick="document.getElementById('wednesday_start').value = ''; document.getElementById('wednesday_end').value = '';"><i class="fa fa-refresh" aria-hidden="true"></i></button>
                                                 </div>
                                             </div>
                                         </div>
@@ -322,16 +337,22 @@
                                             <div class="col-sm-12 text-center">
                                                 <h3 class="display-5" style="font-size:22px;">Thursday Timing</h3>
                                             </div>
-                                            <div class="col-sm-6">
+                                            <div class="col-sm-5">
                                                 <div class="form-group">
                                                     <strong>Start Time</strong>
-                                                    <input type="time" name="thursday_start" class="form-control form-control-lg" value="{{$dataFetched->thursday_start}}">
+                                                    <input type="time" id="thursday_start" name="thursday_start" class="form-control form-control-lg" value="{{$dataFetched->thursday_start}}">
                                                 </div>
                                             </div>
-                                            <div class="col-sm-6">
+                                            <div class="col-sm-5">
                                                 <div class="form-group">
                                                     <strong>End Time</strong>
-                                                    <input type="time" name="thursday_end" class="form-control form-control-lg" value="{{$dataFetched->thursday_end}}">
+                                                    <input type="time" id="thursday_end" name="thursday_end" class="form-control form-control-lg" value="{{$dataFetched->thursday_end}}">
+                                                </div>
+                                            </div>
+                                            <div class="col-sm-2 text-center">
+                                                <div class="form-group">
+                                                    <br>
+                                                    <button type="button" class="btn btn-info btn-lg timeClearBTN" onclick="document.getElementById('thursday_start').value = ''; document.getElementById('thursday_end').value = '';"><i class="fa fa-refresh" aria-hidden="true"></i></button>
                                                 </div>
                                             </div>
                                         </div>
@@ -347,16 +368,22 @@
                                     <div class="col-sm-12 text-center">
                                         <h3 class="display-5" style="font-size:22px;">Friday Timing</h3>
                                     </div>
-                                    <div class="col-sm-6">
+                                    <div class="col-sm-5">
                                         <div class="form-group">
                                             <strong>Start Time</strong>
-                                            <input type="time" name="friday_start" class="form-control form-control-lg" value="{{$dataFetched->friday_start}}">
+                                            <input type="time" id="friday_start" name="friday_start" class="form-control form-control-lg" value="{{$dataFetched->friday_start}}">
                                         </div>
                                     </div>
-                                    <div class="col-sm-6">
+                                    <div class="col-sm-5">
                                         <div class="form-group">
                                             <strong>End Time</strong>
-                                            <input type="time" name="friday_end" class="form-control form-control-lg" value="{{$dataFetched->friday_end}}">
+                                            <input type="time" id="friday_end" name="friday_end" class="form-control form-control-lg" value="{{$dataFetched->friday_end}}">
+                                        </div>
+                                    </div>
+                                    <div class="col-sm-2 text-center">
+                                        <div class="form-group">
+                                            <br>
+                                            <button type="button" class="btn btn-info btn-lg timeClearBTN" onclick="document.getElementById('friday_start').value = ''; document.getElementById('friday_end').value = '';"><i class="fa fa-refresh" aria-hidden="true"></i></button>
                                         </div>
                                     </div>
                                 </div>
@@ -372,16 +399,22 @@
                                             <div class="col-sm-12 text-center">
                                                 <h3 class="display-5" style="font-size:22px;">Saturday Timing</h3>
                                             </div>
-                                            <div class="col-sm-6">
+                                            <div class="col-sm-5">
                                                 <div class="form-group">
                                                     <strong>Start Time</strong>
-                                                    <input type="time" name="saturday_start" class="form-control form-control-lg" value="{{$dataFetched->saturday_start}}">
+                                                    <input type="time" id="saturday_start" name="saturday_start" class="form-control form-control-lg" value="{{$dataFetched->saturday_start}}">
                                                 </div>
                                             </div>
-                                            <div class="col-sm-6">
+                                            <div class="col-sm-5">
                                                 <div class="form-group">
                                                     <strong>End Time</strong>
-                                                    <input type="time" name="saturday_end" class="form-control form-control-lg" value="{{$dataFetched->saturday_end}}">
+                                                    <input type="time" id="saturday_end" name="saturday_end" class="form-control form-control-lg" value="{{$dataFetched->saturday_end}}">
+                                                </div>
+                                            </div>
+                                            <div class="col-sm-2 text-center">
+                                                <div class="form-group">
+                                                    <br>
+                                                    <button type="button" class="btn btn-info btn-lg timeClearBTN" onclick="document.getElementById('saturday_start').value = ''; document.getElementById('saturday_end').value = '';"><i class="fa fa-refresh" aria-hidden="true"></i></button>
                                                 </div>
                                             </div>
                                         </div>
@@ -397,16 +430,22 @@
                                             <div class="col-sm-12 text-center">
                                                 <h3 class="display-5" style="font-size:22px;">Sunday Timing</h3>
                                             </div>
-                                            <div class="col-sm-6">
+                                            <div class="col-sm-5">
                                                 <div class="form-group">
                                                     <strong>Start Time</strong>
-                                                    <input type="time" name="sunday_start" class="form-control form-control-lg" value="{{$dataFetched->sunday_start}}">
+                                                    <input type="time" id="sunday_start" name="sunday_start" class="form-control form-control-lg" value="{{$dataFetched->sunday_start}}">
                                                 </div>
                                             </div>
-                                            <div class="col-sm-6">
+                                            <div class="col-sm-5">
                                                 <div class="form-group">
                                                     <strong>End Time</strong>
-                                                    <input type="time" name="sunday_end" class="form-control form-control-lg" value="{{$dataFetched->sunday_end}}">
+                                                    <input type="time" id="sunday_end" name="sunday_end" class="form-control form-control-lg" value="{{$dataFetched->sunday_end}}">
+                                                </div>
+                                            </div>
+                                            <div class="col-sm-2 text-center">
+                                                <div class="form-group">
+                                                    <br>
+                                                    <button type="button" class="btn btn-info btn-lg timeClearBTN" onclick="document.getElementById('sunday_start').value = ''; document.getElementById('sunday_end').value = '';"><i class="fa fa-refresh" aria-hidden="true"></i></button>
                                                 </div>
                                             </div>
                                         </div>
@@ -416,8 +455,8 @@
 
                             <div class="row">
                                 <div class="col-xs-12 col-sm-12 col-md-12 text-center">
-                                    <button type="button" class="btn btn-secondary btn-lg active" onclick="history.back(-1)">Back</button>
-                                    <button type="submit" class="btn btn-primary btn-lg active">Update Timings</button>
+                                    <button type="button" class="btn btn-info btn-lg active" onclick="clearAllTime()">Clear All Timings</button>
+                                    <button id="btnSubmit" type="submit" class="btn btn-primary btn-lg active">Update Timings</button>
                                 </div>
                             </div>
 
@@ -427,7 +466,201 @@
                 </div>
             </div>
 
+            <!-- Timing Error Modal -->
+            <div class="modal fade" id="timmingError_modal">
+                <div class="modal-dialog modal-dialog-centered modal-sm">
+                    <div class="modal-content">
+                        <!-- Modal Header -->
+                        <div class="modal-header">
+                            <h2 class="modal-title text-center" style="margin:auto;"><strong id="error_day">Timing Error</strong></h2>
+                        </div>
+                        <!-- Modal Body -->
+                        <div class="modal-body">
+                            <h3 id="time_message" class="modal-title text-center" style="margin:auto;">Message</h3>
+                        </div>
+                        <!-- Modal footer -->
+                        <div class="modal-footer">
+                            <button type="button" class="btn btn-primary btn-lg" data-dismiss="modal">Close</button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <!-- Timing Error Ends-->
+
         </div>
+
+    <script>
+        function clearAllTime(){
+            document.getElementById('monday_start').value = '';
+            document.getElementById('monday_end').value = '';
+            document.getElementById('tuesday_start').value = '';
+            document.getElementById('tuesday_end').value = '';
+            document.getElementById('wednesday_start').value = '';
+            document.getElementById('wednesday_end').value = '';
+            document.getElementById('thursday_start').value = '';
+            document.getElementById('thursday_end').value = '';
+            document.getElementById('friday_start').value = '';
+            document.getElementById('friday_end').value = '';
+            document.getElementById('saturday_start').value = '';
+            document.getElementById('saturday_end').value = '';
+            document.getElementById('sunday_start').value = '';
+            document.getElementById('sunday_end').value = '';
+        }
+    </script>
+
+    <script>
+        $(document).ready(function(){
+            $('#btnSubmit').on('click', function () {
+                // Monday
+                var startTime = $('#monday_start').val();
+                var endTime = $('#monday_end').val();
+
+                var timefrom = new Date();
+                temp = startTime.split(":");
+                timefrom.setHours((parseInt(temp[0]) - 1 + 24) % 24);
+                timefrom.setMinutes(parseInt(temp[1]));
+
+                var timeto = new Date();
+                temp = endTime.split(":");
+                timeto.setHours((parseInt(temp[0]) - 1 + 24) % 24);
+                timeto.setMinutes(parseInt(temp[1]));
+
+                if (timeto < timefrom){
+                    $('#error_day').html("(Monday Timing)");
+                    $('#time_message').html("End Time Should Always Greater Then Start Time...!");
+                    $('#timmingError_modal').modal('show');
+                    return false;
+                }
+
+                // Tuesday
+                var startTime = $('#tuesday_start').val();
+                var endTime = $('#tuesday_end').val();
+
+                var timefrom = new Date();
+                temp = startTime.split(":");
+                timefrom.setHours((parseInt(temp[0]) - 1 + 24) % 24);
+                timefrom.setMinutes(parseInt(temp[1]));
+
+                var timeto = new Date();
+                temp = endTime.split(":");
+                timeto.setHours((parseInt(temp[0]) - 1 + 24) % 24);
+                timeto.setMinutes(parseInt(temp[1]));
+
+                if (timeto < timefrom){
+                    $('#error_day').html("(Tuesday Timing)");
+                    $('#time_message').html("End Time Should Always Greater Then Start Time...!");
+                    $('#timmingError_modal').modal('show');
+                    return false;
+                }
+
+                // Wednesday
+                var startTime = $('#wednesday_start').val();
+                var endTime = $('#wednesday_end').val();
+
+                var timefrom = new Date();
+                temp = startTime.split(":");
+                timefrom.setHours((parseInt(temp[0]) - 1 + 24) % 24);
+                timefrom.setMinutes(parseInt(temp[1]));
+
+                var timeto = new Date();
+                temp = endTime.split(":");
+                timeto.setHours((parseInt(temp[0]) - 1 + 24) % 24);
+                timeto.setMinutes(parseInt(temp[1]));
+
+                if (timeto < timefrom){
+                    $('#error_day').html("(Wednesday Timing)");
+                    $('#time_message').html("End Time Should Always Greater Then Start Time...!");
+                    $('#timmingError_modal').modal('show');
+                    return false;
+                }
+
+                // Thursday
+                var startTime = $('#thursday_start').val();
+                var endTime = $('#thursday_end').val();
+
+                var timefrom = new Date();
+                temp = startTime.split(":");
+                timefrom.setHours((parseInt(temp[0]) - 1 + 24) % 24);
+                timefrom.setMinutes(parseInt(temp[1]));
+
+                var timeto = new Date();
+                temp = endTime.split(":");
+                timeto.setHours((parseInt(temp[0]) - 1 + 24) % 24);
+                timeto.setMinutes(parseInt(temp[1]));
+
+                if (timeto < timefrom){
+                    $('#error_day').html("(Thursday Timing)");
+                    $('#time_message').html("End Time Should Always Greater Then Start Time...!");
+                    $('#timmingError_modal').modal('show');
+                    return false;
+                }
+
+                // Friday
+                var startTime = $('#friday_start').val();
+                var endTime = $('#friday_end').val();
+
+                var timefrom = new Date();
+                temp = startTime.split(":");
+                timefrom.setHours((parseInt(temp[0]) - 1 + 24) % 24);
+                timefrom.setMinutes(parseInt(temp[1]));
+
+                var timeto = new Date();
+                temp = endTime.split(":");
+                timeto.setHours((parseInt(temp[0]) - 1 + 24) % 24);
+                timeto.setMinutes(parseInt(temp[1]));
+
+                if (timeto < timefrom){
+                    $('#error_day').html("(Friday Timing)");
+                    $('#time_message').html("End Time Should Always Greater Then Start Time...!");
+                    $('#timmingError_modal').modal('show');
+                    return false;
+                }
+
+                // Saturday
+                var startTime = $('#saturday_start').val();
+                var endTime = $('#saturday_end').val();
+
+                var timefrom = new Date();
+                temp = startTime.split(":");
+                timefrom.setHours((parseInt(temp[0]) - 1 + 24) % 24);
+                timefrom.setMinutes(parseInt(temp[1]));
+
+                var timeto = new Date();
+                temp = endTime.split(":");
+                timeto.setHours((parseInt(temp[0]) - 1 + 24) % 24);
+                timeto.setMinutes(parseInt(temp[1]));
+
+                if (timeto < timefrom){
+                    $('#error_day').html("(Saturday Timing)");
+                    $('#time_message').html("End Time Should Always Greater Then Start Time...!");
+                    $('#timmingError_modal').modal('show');
+                    return false;
+                }
+
+                // Sunday
+                var startTime = $('#sunday_start').val();
+                var endTime = $('#sunday_end').val();
+
+                var timefrom = new Date();
+                temp = startTime.split(":");
+                timefrom.setHours((parseInt(temp[0]) - 1 + 24) % 24);
+                timefrom.setMinutes(parseInt(temp[1]));
+
+                var timeto = new Date();
+                temp = endTime.split(":");
+                timeto.setHours((parseInt(temp[0]) - 1 + 24) % 24);
+                timeto.setMinutes(parseInt(temp[1]));
+
+                if (timeto < timefrom){
+                    $('#error_day').html("(Sunday Timing)");
+                    $('#time_message').html("End Time Should Always Greater Then Start Time...!");
+                    $('#timmingError_modal').modal('show');
+                    return false;
+                }
+
+            });
+        });
+    </script>
 
 
 @endsection

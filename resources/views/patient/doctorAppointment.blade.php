@@ -104,7 +104,7 @@
                             <!-- Complete Data Fetched -->
                             <div class="AllData" id="{{$dataFetched}}"></div>
                             @foreach($dataFetched as $data)
-                            @if($data->specialist != '')
+                            @if($data->specialist!='' && ($data->monday_start!='' || $data->tuesday_start!='' || $data->wednesday_start!='' || $data->thursday_start!='' || $data->friday_start!='' || $data->saturday_start!='' || $data->sunday_start!=''))
                             <tr>
                                 <td style="text-align:center">
                                     @if($data->image == '')
@@ -121,8 +121,8 @@
                                 <td style="text-align:center">
                                     <div class="btn-group" role="group">
                                         <!-- View - Edit - Delete -->
-                                        <a id='{{$data->doctor_id}}' style='font-size:13px;' class="btn btn-info btn-lg viewDoctor" role="button" aria-pressed="true" data-toggle="modal" data-target="#viewDoctor_modal"><i class="fa fa-calendar fa-lg" aria-hidden="true"></i></a>
-                                        <a href='/laravel/public/patient/doctor-appointment/schedule-appointment/{{$data->doctor_id}}' style='font-size:13px;' class="btn btn-primary btn-lg active bookAppointment" role="button" aria-pressed="true">Appointment</a>
+                                        <a id='{{$data->doctor_available_id}}' style='font-size:13px;' class="btn btn-info btn-lg viewDoctor" role="button" aria-pressed="true" data-toggle="modal" data-target="#viewDoctor_modal"><i class="fa fa-clock-o fa-lg" aria-hidden="true"></i> View Timings</a>
+                                        <a href='/laravel/public/patient/doctor-appointment/schedule-appointment/{{$data->doctor_id}}' style='font-size:13px;' class="btn btn-primary btn-lg active bookAppointment" role="button" aria-pressed="true"><i class="fa fa-calendar fa-lg" aria-hidden="true"></i> Appointment</a>
                                     </div>
                                 </td>
                             </tr>
@@ -170,13 +170,33 @@
                         <!-- Main Data -->
                         <div class="row" style="padding-left:2%;">
                             <table class="table table-hover" style="padding-left:2%;">
-                                <tr>
-                                    <td><h4 class="display-6"><strong>Available Days: </strong></h4></td>
-                                    <td><h4 id="available_days" class="display-6">Mon - Fri</h4></td>
+                                <tr id="Monday">
+                                    <td><h4 class="display-6"><strong>Monday: </strong></h4></td>
+                                    <td><h4 id="monday_time" class="display-6">N/A</h4></td>
                                 </tr>
-                                <tr>
-                                    <td><h4 class="display-6"><strong>Timings: </strong></h4></td>
-                                    <td><h4 id="available_timings" class="display-6">12:00 pm - 5:00pm</h4></td>
+                                <tr id="Tuesday">
+                                    <td><h4 class="display-6"><strong>Tuesday: </strong></h4></td>
+                                    <td><h4 id="tuesday_time" class="display-6">N/A</h4></td>
+                                </tr>
+                                <tr id="Wednesday">
+                                    <td><h4 class="display-6"><strong>Wednesday: </strong></h4></td>
+                                    <td><h4 id="wednesday_time" class="display-6">N/A</h4></td>
+                                </tr>
+                                <tr id="Thursday">
+                                    <td><h4 class="display-6"><strong>Thursday: </strong></h4></td>
+                                    <td><h4 id="thursday_time" class="display-6">N/A</h4></td>
+                                </tr>
+                                <tr id="Friday">
+                                    <td><h4 class="display-6"><strong>Friday: </strong></h4></td>
+                                    <td><h4 id="friday_time" class="display-6">N/A</h4></td>
+                                </tr>
+                                <tr id="Saturday">
+                                    <td><h4 class="display-6"><strong>Saturday: </strong></h4></td>
+                                    <td><h4 id="saturday_time" class="display-6">N/A</h4></td>
+                                </tr>
+                                <tr id="Sunday">
+                                    <td><h4 class="display-6"><strong>Sunday: </strong></h4></td>
+                                    <td><h4 id="sunday_time" class="display-6">N/A</h4></td>
                                 </tr>
                             </table>
                             <div class="col-lg-12">
@@ -203,9 +223,20 @@
     </script>
 
     <script>
+        // function convert 24hr time to 12hr
+        function tConv24(time24) {
+            var ts = time24;
+            var H = +ts.substr(0, 2);
+            var h = (H % 12) || 12;
+            h = (h < 10)?("0"+h):h;  // leading 0 at the left for 1 digit hours
+            var ampm = H < 12 ? " AM" : " PM";
+            ts = h + ts.substr(2, 3) + ampm;
+            return ts;
+        }
+        // function ends
+
         var user_id;
         var allData;
-        var doctorData;
         $(document).ready(function(){
             $(".viewDoctor").click(function(){
                 user_id = $(this).attr('id');   // current id
@@ -214,7 +245,7 @@
                 var obj = JSON.parse(allData);
 
                 for(var i=0;i<obj.length;i++){
-                    if(user_id == obj[i].doctor_id){
+                    if(user_id == obj[i].doctor_available_id){
                         $("#fullName").html(obj[i].fname+' '+obj[i].lname);
                         $("#gender").html(obj[i].gender);
                         $("#doctorSpecialist").html(obj[i].specialist);
@@ -226,13 +257,60 @@
                             $('#image').attr('src', 'https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcRCU4AoQASk65ZwYPHbNqQvYp5pwbhS-tOLbg&usqp=CAU');
                         }
 
-                        if(obj[i].available_days == null || obj[i].available_timings == null){
-                            $("#available_days").html("Not Available");
-                            $("#available_timings").html("Not Available");
+                        if(obj[i].monday_start==null || obj[i].monday_end==null){
+                            $("#monday_time").html('N/A');
+                            $("#Monday").hide();
+                        }else{
+                            $("#Monday").show();
+                            $("#monday_time").html(tConv24(obj[i].monday_start) + ' - ' + tConv24(obj[i].monday_end));
                         }
-                        else{
-                            $("#available_days").html(obj[i].available_days);
-                            $("#available_timings").html(obj[i].available_timings);
+
+                        if(obj[i].tuesday_start==null || obj[i].tuesday_end==null){
+                            $("#tuesday_time").html('N/A');
+                            $("#Tuesday").hide();
+                        }else{
+                            $("#Tuesday").show();
+                            $("#tuesday_time").html(tConv24(obj[i].tuesday_start) + ' - ' + tConv24(obj[i].tuesday_end));
+                        }
+
+                        if(obj[i].wednesday_start==null || obj[i].wednesday_end==null){
+                            $("#wednesday_time").html('N/A');
+                            $("#Wednesday").hide();
+                        }else{
+                            $("#Wednesday").show();
+                            $("#wednesday_time").html(tConv24(obj[i].wednesday_start) + ' - ' + tConv24(obj[i].wednesday_end));
+                        }
+
+                        if(obj[i].thursday_start==null || obj[i].thursday_end==null){
+                            $("#thursday_time").html('N/A');
+                            $("#Thursday").hide();
+                        }else{
+                            $("#Thursday").show();
+                            $("#thursday_time").html(tConv24(obj[i].thursday_start) + ' - ' + tConv24(obj[i].thursday_end));
+                        }
+
+                        if(obj[i].friday_start==null || obj[i].friday_end==null){
+                            $("#friday_time").html('N/A');
+                            $("#Friday").hide();
+                        }else{
+                            $("#Friday").show();
+                            $("#friday_time").html(tConv24(obj[i].friday_start) + ' - ' + tConv24(obj[i].friday_end));
+                        }
+
+                        if(obj[i].saturday_start==null || obj[i].saturday_end==null){
+                            $("#saturday_time").html('N/A');
+                            $("#Saturday").hide();
+                        }else{
+                            $("#Saturday").show();
+                            $("#saturday_time").html(tConv24(obj[i].saturday_start) + ' - ' + tConv24(obj[i].saturday_end));
+                        }
+
+                        if(obj[i].sunday_start==null || obj[i].sunday_end==null){
+                            $("#sunday_time").html('N/A');
+                            $("#Sunday").hide();
+                        }else{
+                            $("#Sunday").show();
+                            $("#sunday_time").html(tConv24(obj[i].sunday_start) + ' - ' + tConv24(obj[i].sunday_end));
                         }
 
                     }

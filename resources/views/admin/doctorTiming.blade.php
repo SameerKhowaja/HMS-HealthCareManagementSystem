@@ -102,7 +102,7 @@
                     <table id="RecordTable" class="table table-hover">
                         <thead>
                             <tr>
-                                <th scope="col" style="text-align:center">Full Name</th>
+                                <th scope="col" style="text-align:center">Doctor Name</th>
                                 <th scope="col" style="text-align:center">Monday</th>
                                 <th scope="col" style="text-align:center">Tuesday</th>
                                 <th scope="col" style="text-align:center">Wednesday</th>
@@ -122,18 +122,52 @@
                             @foreach($dataFetched as $data)
                             <tr>
                                 <td style="text-align:center">{{$data->fname.' '.$data->lname}}</td>
-
-                                <td style="text-align:center">{{$data->monday_start.' - '.$data->monday_end}}</td>
-                                <td style="text-align:center">{{$data->tuesday_start.' - '.$data->tuesday_end}}</td>
-                                <td style="text-align:center">{{$data->wednesday_start.' - '.$data->wednesday_end}}</td>
-                                <td style="text-align:center">{{$data->thursday_start.' - '.$data->thursday_end}}</td>
-                                <td style="text-align:center">{{$data->friday_start.' - '.$data->friday_end}}</td>
-                                <td style="text-align:center">{{$data->saturday_start.' - '.$data->saturday_end}}</td>
-                                <td style="text-align:center">{{$data->sunday_start.' - '.$data->sunday_end}}</td>
+                                <!-- Monday -->
+                                @if($data->monday_start!='' && $data->monday_end!='')
+                                    <td style="text-align:center">{{date("g:i a", strtotime($data->monday_start)).' - '.date("g:i a", strtotime($data->monday_end))}}</td>
+                                @else
+                                <td style="text-align:center">N/A</td>
+                                @endif
+                                <!-- Tuesday -->
+                                @if($data->tuesday_start!='' && $data->tuesday_end!='')
+                                    <td style="text-align:center">{{date("g:i a", strtotime($data->tuesday_start)).' - '.date("g:i a", strtotime($data->tuesday_end))}}</td>
+                                @else
+                                <td style="text-align:center">N/A</td>
+                                @endif
+                                <!-- Wednesday -->
+                                @if($data->wednesday_start!='' && $data->wednesday_end!='')
+                                    <td style="text-align:center">{{date("g:i a", strtotime($data->wednesday_start)).' - '.date("g:i a", strtotime($data->wednesday_end))}}</td>
+                                @else
+                                <td style="text-align:center">N/A</td>
+                                @endif
+                                <!-- Thursday -->
+                                @if($data->thursday_start!='' && $data->thursday_end!='')
+                                    <td style="text-align:center">{{date("g:i a", strtotime($data->thursday_start)).' - '.date("g:i a", strtotime($data->thursday_end))}}</td>
+                                @else
+                                <td style="text-align:center">N/A</td>
+                                @endif
+                                <!-- Friday -->
+                                @if($data->friday_start!='' && $data->friday_end!='')
+                                    <td style="text-align:center">{{date("g:i a", strtotime($data->friday_start)).' - '.date("g:i a", strtotime($data->friday_end))}}</td>
+                                @else
+                                <td style="text-align:center">N/A</td>
+                                @endif
+                                <!-- Saturday -->
+                                @if($data->saturday_start!='' && $data->saturday_end!='')
+                                    <td style="text-align:center">{{date("g:i a", strtotime($data->saturday_start)).' - '.date("g:i a", strtotime($data->saturday_end))}}</td>
+                                @else
+                                <td style="text-align:center">N/A</td>
+                                @endif
+                                <!-- Sunday -->
+                                @if($data->sunday_start!='' && $data->sunday_end!='')
+                                    <td style="text-align:center">{{date("g:i a", strtotime($data->sunday_start)).' - '.date("g:i a", strtotime($data->sunday_end))}}</td>
+                                @else
+                                <td style="text-align:center">N/A</td>
+                                @endif
 
                                 <td style="text-align:center">
                                     <div class="btn-group" role="group">
-                                        <!-- View - Edit - Delete -->
+                                        <!-- View - Edit -->
                                         <a id='{{$data->primary_id}}' style='font-size:13px;' class="btn btn-info btn-lg viewDoctor" role="button" aria-pressed="true" data-toggle="modal" data-target="#viewDoctor_modal"><i class="fa fa-database fa-lg" aria-hidden="true"></i></a>
                                         <a class="btn btn-warning btn-lg" style='font-size: 13px;' href="/laravel/public/admin/doctor-timing/edit-timing/{{$data->doctor_available_id}}"><i class="fa fa-pencil-square-o fa-lg" aria-hidden="true"></i></a>
                                     </div>

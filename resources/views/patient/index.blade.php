@@ -69,145 +69,125 @@
 
 @section('content')
         <div>
-            <div style='margin-top: 2%; margin-bottom: 3%;'>
-                <div style="display: flex; justify-content: space-between; align-items: center;">
-                    <h3 class="text-large text-grey">Patient / Profile View</h3>
-                </div>
+            <section id="overview">
+                <div style='margin-top: 3%; margin-bottom: 4%;'>
+                    <div style="display: flex; justify-content: space-between; align-items: center;">
+                        <h3 class="text-large text-grey">Patient / Profile View</h3>
+                    </div>
 
-                <div class="row">
-                    <!-- Profile Data -->
-                    <div class="col-xs-7 col-sm-7 col-md-7">
-                        <div class="table-responsive" style='box-shadow: 5px 5px #1b99d8; background-color: white; padding: 4% 4%;; border-radius: 15px; font-family:"Courier New"; font-size:14px;'>
-                            <table class="table table-hover">
-                                <thead>
-                                    <div class="row">
-                                        <div class="col-lg-12">
-                                            @if(session("image") == '')
-                                                <img class="img-fluid rounded img-thumbnail mx-auto d-block rounded-circle" src="{{asset('resources/images/profile.png')}}" alt="profile" width="150" height="150" style="margin-bottom:5px;">
-                                            @else
-                                                <img class="img-fluid rounded img-thumbnail mx-auto d-block rounded-circle" src='{{"data:image/*;base64,".session("image")}}' alt="profile" width="150" height="150" style="margin-bottom:5px;">
-                                            @endif
-                                        </div>
-                                    </div>
-                                </thead>
+                    <div class="cardWrapper">
+                        <div class="card" style="box-shadow: 5px 3px 5px 3px #1b99d8;">
+                            <svg xmlns="http://www.w3.org/2000/svg" width="50" height="50" fill="currentColor" class="bi bi-door-open-fill" viewBox="0 0 16 16">
+                                <path fill="#0052E9" d="M1.5 15a.5.5 0 0 0 0 1h13a.5.5 0 0 0 0-1H13V2.5A1.5 1.5 0 0 0 11.5 1H11V.5a.5.5 0 0 0-.57-.495l-7 1A.5.5 0 0 0 3 1.5V15H1.5zM11 2h.5a.5.5 0 0 1 .5.5V15h-1V2zm-2.5 8c-.276 0-.5-.448-.5-1s.224-1 .5-1 .5.448.5 1-.224 1-.5 1z"/>
+                            </svg>
+                            <div>
+                                <p class="text-large text-grey">Total Rooms</p>
+                                <span>
+                                    <p id="patientCount" class="text-normal text-grey text-center" style="margin: auto;">{{$roomCount ?? 'Zero'}}</p></span>
+                            </div>
+                        </div>
 
-                                <tbody>
-                                    <tr>
-                                        <td><strong>First Name</strong></td>
-                                        <td style="text-align:left">{{$userData->fname ?? 'Sameer'}}</td>
-                                    </tr>
-                                    <tr>
-                                        <td><strong>Last Name</strong></td>
-                                        <td style="text-align:left">{{$userData->lname ?? 'Khowaja'}}</td>
-                                    </tr>
-                                    <tr>
-                                        <td><strong>Email ID</strong></td>
-                                        <td style="text-align:left">{{$userData->email_id ?? 'sameerkhowaja@gmail.com'}}</td>
-                                    </tr>
-                                    <tr>
-                                        <td><strong>CNIC</strong></td>
-                                        <td style="text-align:left">{{$userData->cnic ?? '41430XXXXXXXX'}}</td>
-                                    </tr>
-                                    <tr>
-                                        <td><strong>Phone Number</strong></td>
-                                        <td style="text-align:left">{{$userData->phone_number ?? '92333XXXXXXX'}}</td>
-                                    </tr>
-                                    <tr>
-                                        <td><strong>Gender</strong></td>
-                                        <td style="text-align:left">{{$userData->gender ?? 'Male'}}</td>
-                                    </tr>
-                                    <tr>
-                                        <td><strong>City</strong></td>
-                                        <td style="text-align:left">{{$userData->city ?? 'Karachi'}}</td>
-                                    </tr>
-                                    <tr>
-                                        <td><strong>Date of Birth</strong></td>
-                                        <td style="text-align:left">{{$userData->dob ?? '28 May 2000'}}</td>
-                                    </tr>
-                                    <tr>
-                                        <td><strong>Address</strong></td>
-                                        <td style="text-align:left">{{$userData->address ?? 'FB Area 14'}}</td>
-                                    </tr>
-                                </tbody>
-                            </table>
+                        <div class="card" style="box-shadow: 5px 3px 5px 3px #1b99d8;">
+                            <svg xmlns="http://www.w3.org/2000/svg" width="50" height="50" fill="currentColor" class="bi bi-door-open-fill" viewBox="0 0 16 16">
+                                <path fill="#0052E9" d="M11.5 4a.5.5 0 0 1 .5.5V5h1.02a1.5 1.5 0 0 1 1.17.563l1.481 1.85a1.5 1.5 0 0 1 .329.938V10.5a1.5 1.5 0 0 1-1.5 1.5H14a2 2 0 1 1-4 0H5a2 2 0 1 1-4 0 1 1 0 0 1-1-1v-1h11V4.5a.5.5 0 0 1 .5-.5zM3 11a1 1 0 1 0 0 2 1 1 0 0 0 0-2zm9 0a1 1 0 1 0 0 2 1 1 0 0 0 0-2zm1.732 0h.768a.5.5 0 0 0 .5-.5V8.35a.5.5 0 0 0-.11-.312l-1.48-1.85A.5.5 0 0 0 13.02 6H12v4a2 2 0 0 1 1.732 1z"/>
+                            </svg>
+                            <div>
+                                <p class="text-large text-grey">Total Beds</p>
+                                <span><p class="text-normal text-grey text-center" style="margin: auto;">{{$bedCount ?? 'Zero'}}</span>
+                            </div>
+                        </div>
 
-                            <div class="col-xs-12 col-sm-12 col-md-12 text-center">
-                                <a href="/laravel/public/patient/editPatientProfile/{{$userData->primary_id}}" class="btn btn-primary btn-lg active" style="font-size:14px;">Edit Profile</a>
+                        <div class="card" style="box-shadow: 5px 3px 5px 3px #1b99d8;">
+                            <svg xmlns="http://www.w3.org/2000/svg" width="50" height="50" fill="currentColor" class="bi bi-door-open-fill" viewBox="0 0 16 16">
+                                <path fill="#0052E9" d="M2.97 1.35A1 1 0 0 1 3.73 1h8.54a1 1 0 0 1 .76.35l2.609 3.044A1.5 1.5 0 0 1 16 5.37v.255a2.375 2.375 0 0 1-4.25 1.458A2.371 2.371 0 0 1 9.875 8 2.37 2.37 0 0 1 8 7.083 2.37 2.37 0 0 1 6.125 8a2.37 2.37 0 0 1-1.875-.917A2.375 2.375 0 0 1 0 5.625V5.37a1.5 1.5 0 0 1 .361-.976l2.61-3.045zm1.78 4.275a1.375 1.375 0 0 0 2.75 0 .5.5 0 0 1 1 0 1.375 1.375 0 0 0 2.75 0 .5.5 0 0 1 1 0 1.375 1.375 0 1 0 2.75 0V5.37a.5.5 0 0 0-.12-.325L12.27 2H3.73L1.12 5.045A.5.5 0 0 0 1 5.37v.255a1.375 1.375 0 0 0 2.75 0 .5.5 0 0 1 1 0zM1.5 8.5A.5.5 0 0 1 2 9v6h12V9a.5.5 0 0 1 1 0v6h.5a.5.5 0 0 1 0 1H.5a.5.5 0 0 1 0-1H1V9a.5.5 0 0 1 .5-.5zm2 .5a.5.5 0 0 1 .5.5V13h8V9.5a.5.5 0 0 1 1 0V13a1 1 0 0 1-1 1H4a1 1 0 0 1-1-1V9.5a.5.5 0 0 1 .5-.5z"/>
+                            </svg>
+                            <div>
+                                <p class="text-large text-grey">Available Beds</p>
+                                <span><p class="text-normal text-grey text-center" style="margin: auto;">{{$availableBed ?? 'Zero'}}</p></span>
                             </div>
                         </div>
                     </div>
 
-                    <!-- View Other Data -->
-                    <div class="col-xs-5 col-sm-5 col-md-5">
+                    <br><br>
+                    <!-- Table Info -->
+                    <div class="table-responsive" style='box-shadow: 5px 3px 5px 3px #1b99d8; background-color: white; padding: 2%; border-radius: 10px; font-size: 13px;'>
+                        <!-- Head Row -->
+                        <div class="row" style="margin:auto;">
+                            <div class="col-sm-12" style="text-align:center;">
+                                <div class="form-group">
+                                    <h1 class="display-4">Profile Information</h1>
+                                </div>
+                            </div>
+                        <hr>
+                        <!-- Photo and file -->
+                        <div class="row" style="border:2px solid lightblue;">
+                            <div class="col-lg-4">
+                                <div class="row">
+                                    <div class="col-md-12" style="margin-top:3%;">
+                                        @if(session("image") == '')
+                                            <img class="img-fluid rounded img-thumbnail mx-auto d-block rounded-circle" src="{{asset('resources/images/profile.png')}}" alt="profile" width="150" height="150" style="margin-bottom:5px;">
+                                        @else
+                                            <img class="img-fluid rounded img-thumbnail mx-auto d-block rounded-circle" src='{{"data:image/*;base64,".session("image")}}' alt="profile" width="150" height="150" style="margin-bottom:5px;">
+                                        @endif
+                                    </div>
+                                    <div class="col-md-12 text-center">
+                                        <h2 class="display-5">{{$userData->fname.' '.$userData->lname}}</h2>
+                                    </div>
+                                    <div class="col-md-12 text-center">
+                                        <h3><span class="badge badge-dark">Patient</span></h3>
+                                    </div>
+                                </div>
+                            </div>
+
+                            <div class="col-lg-8">
+                                <div class="row">
+                                    <div class="col-sm-12">
+                                        <table class="table table-hover table-borderless">
+                                            <tbody style="font-size:15px;">
+                                                <tr>
+                                                    <td><strong>Email ID: </strong></td>
+                                                    <td>{{$userData->email_id}}</td>
+                                                </tr>
+                                                <tr>
+                                                    <td><strong>CNIC Number: </strong></td>
+                                                    <td>{{$userData->cnic}}</td>
+                                                </tr>
+                                                <tr>
+                                                    <td><strong>Gender: </strong></td>
+                                                    <td>{{$userData->gender}}</td>
+                                                </tr>
+                                                <tr>
+                                                    <td><strong>Phone Number: </strong></td>
+                                                    <td>{{$userData->phone_number}}</td>
+                                                </tr>
+                                                <tr>
+                                                    <td><strong>Date of Birth: </strong></td>
+                                                    <td>{{$userData->dob}}</td>
+                                                </tr>
+                                                <tr>
+                                                    <td><strong>City: </strong></td>
+                                                    <td>{{$userData->city}}</td>
+                                                </tr>
+                                                <tr>
+                                                    <td><strong>Address: </strong></td>
+                                                    <td>{{$userData->address}}</td>
+                                                </tr>
+                                            </tbody>
+                                        </table>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
                         <div class="row">
-                            <div class="col-md-12">
-                                <div class="cardWrapper" style="padding-top:2%;">
-                                    <div class="card">
-                                        <svg xmlns="http://www.w3.org/2000/svg" width="50" height="50" fill="currentColor" class="bi bi-door-open-fill" viewBox="0 0 16 16">
-                                            <path fill="#0052E9" d="M1.5 15a.5.5 0 0 0 0 1h13a.5.5 0 0 0 0-1H13V2.5A1.5 1.5 0 0 0 11.5 1H11V.5a.5.5 0 0 0-.57-.495l-7 1A.5.5 0 0 0 3 1.5V15H1.5zM11 2h.5a.5.5 0 0 1 .5.5V15h-1V2zm-2.5 8c-.276 0-.5-.448-.5-1s.224-1 .5-1 .5.448.5 1-.224 1-.5 1z"/>
-                                        </svg>
-                                        <div>
-                                            <p class="text-large text-grey">Doctor Visits</p>
-                                            <span>
-                                                <p id="patientCount" class="text-normal text-grey text-center" style="margin: auto;">{{$roomCount ?? 'Zero'}}</p></span>
-                                        </div>
-                                    </div>
-                                </div>
+                            <div class="col-xs-12 col-sm-12 col-md-12 text-center">
+                                <!-- Hospital Data Edit Record Link -->
+                                <a class="btn btn-primary btn-lg" style='font-size: 13px;' href="/laravel/public/patient/editPatientProfile/{{session('userID')}}"><i class="fa fa-pencil-square-o fa-lg" aria-hidden="true"></i> Edit Profile</a>
                             </div>
-
-                            <div class="col-md-12">
-                                <div class="cardWrapper" style="padding-top:2%;">
-                                    <div class="card">
-                                        <svg xmlns="http://www.w3.org/2000/svg" width="50" height="50" fill="currentColor" class="bi bi-door-open-fill" viewBox="0 0 16 16">
-                                            <path fill="#0052E9" d="M1.5 15a.5.5 0 0 0 0 1h13a.5.5 0 0 0 0-1H13V2.5A1.5 1.5 0 0 0 11.5 1H11V.5a.5.5 0 0 0-.57-.495l-7 1A.5.5 0 0 0 3 1.5V15H1.5zM11 2h.5a.5.5 0 0 1 .5.5V15h-1V2zm-2.5 8c-.276 0-.5-.448-.5-1s.224-1 .5-1 .5.448.5 1-.224 1-.5 1z"/>
-                                        </svg>
-                                        <div>
-                                            <p class="text-large text-grey">Lab Test Preformed</p>
-                                            <span>
-                                                <p id="patientCount" class="text-normal text-grey text-center" style="margin: auto;">{{$roomCount ?? 'Zero'}}</p></span>
-                                        </div>
-                                    </div>
-                                </div>
-                            </div>
-
-                            <div class="col-md-12">
-                                <div class="cardWrapper" style="padding-top:2%;">
-                                    <div class="card">
-                                        <svg xmlns="http://www.w3.org/2000/svg" width="50" height="50" fill="currentColor" class="bi bi-door-open-fill" viewBox="0 0 16 16">
-                                            <path fill="#0052E9" d="M1.5 15a.5.5 0 0 0 0 1h13a.5.5 0 0 0 0-1H13V2.5A1.5 1.5 0 0 0 11.5 1H11V.5a.5.5 0 0 0-.57-.495l-7 1A.5.5 0 0 0 3 1.5V15H1.5zM11 2h.5a.5.5 0 0 1 .5.5V15h-1V2zm-2.5 8c-.276 0-.5-.448-.5-1s.224-1 .5-1 .5.448.5 1-.224 1-.5 1z"/>
-                                        </svg>
-                                        <div>
-                                            <p class="text-large text-grey">Total Rooms</p>
-                                            <span>
-                                                <p id="patientCount" class="text-normal text-grey text-center" style="margin: auto;">{{$roomCount ?? 'Zero'}}</p></span>
-                                        </div>
-                                    </div>
-                                </div>
-                            </div>
-
-                            <div class="col-md-12">
-                                <div class="cardWrapper" style="padding-top:2%;">
-                                    <div class="card">
-                                        <svg xmlns="http://www.w3.org/2000/svg" width="50" height="50" fill="currentColor" class="bi bi-door-open-fill" viewBox="0 0 16 16">
-                                            <path fill="#0052E9" d="M1.5 15a.5.5 0 0 0 0 1h13a.5.5 0 0 0 0-1H13V2.5A1.5 1.5 0 0 0 11.5 1H11V.5a.5.5 0 0 0-.57-.495l-7 1A.5.5 0 0 0 3 1.5V15H1.5zM11 2h.5a.5.5 0 0 1 .5.5V15h-1V2zm-2.5 8c-.276 0-.5-.448-.5-1s.224-1 .5-1 .5.448.5 1-.224 1-.5 1z"/>
-                                        </svg>
-                                        <div>
-                                            <p class="text-large text-grey">Total Rooms</p>
-                                            <span>
-                                                <p id="patientCount" class="text-normal text-grey text-center" style="margin: auto;">{{$roomCount ?? 'Zero'}}</p></span>
-                                        </div>
-                                    </div>
-                                </div>
-                            </div>
-
                         </div>
                     </div>
 
                 </div>
-            </div>
-
-
-
+            </section>
         </div>
 
 @endsection

@@ -188,7 +188,7 @@
                         <!-- row4 -->
                         <div class="row">
                         <div class="col-xs-12 col-sm-12 col-md-12 text-center">
-                            <button type="button" class="btn btn-secondary btn-lg active" onclick="history.back(-1)">Back</button>
+                            <a href="/laravel/public/admin" role="button" class="btn btn-secondary btn-lg active">Back</a>
                             <button type="submit" class="btn btn-primary btn-lg active">Save Record</button>
                         </div>
                     </form>

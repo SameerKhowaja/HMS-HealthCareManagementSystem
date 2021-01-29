@@ -122,8 +122,13 @@ class PatientController extends Controller
 
     // View Doctor List
     function doctorAppointment(){
-        // Complete Data of Hospital Table join with Doctor Table
-        $hospital_data = Hospital_data::join('doctors', 'doctors.primary_id', '=', 'hospital_datas.primary_id')->get(['hospital_datas.*', 'doctors.*']);
+        // joining 3 tables where clause
+        $hospital_data = DB::table('doctors')
+            ->join('hospital_datas', 'hospital_datas.primary_id', '=', 'doctors.primary_id')
+            ->join('doctor_availability', 'doctor_availability.doctor_id', '=', 'doctors.doctor_id')
+            ->select('doctors.specialist','doctors.doctor_id', 'hospital_datas.fname','hospital_datas.lname','hospital_datas.gender','hospital_datas.image', 'doctor_availability.*')
+            ->get();
+
         $rowsReturn = count($hospital_data);
         if($rowsReturn == 0){
             return view('patient.doctorAppointment', ['dataFetched'=>$hospital_data, 'msg'=>'No Records Found']);

@@ -44,6 +44,7 @@ Route::post('/admin/hospital-data/edit-record/{id}','AdminController@editUserDat
 
 // admin doctor-timing routes
 Route::get('/admin/doctor-timing/edit-timing/{id}','AdminController@doctorTimingEditView'); //edit doctor timing view
+Route::post('/admin/doctor-timing/edit-timing/{id}','AdminController@doctorTimingEditSave'); //edit doctor timing save on btn click
 
 // admin room-management routes
 Route::delete('/admin/room-management/bed-delete/{id}','AdminController@deleteBed'); //delete bed on admin modal click

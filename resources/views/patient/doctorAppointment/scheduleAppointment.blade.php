@@ -73,7 +73,7 @@
             <div style='margin-top: 2%; margin-bottom: 3%;'>
                 <div style="display: flex; justify-content: space-between; align-items: center;">
                     <h3 class="text-large text-grey">Patient / Doctor's Appointment / Schedule Appointment</h3>
-                    <button type="button" class="btn btn-primary btn-lg active" onclick="history.back(-2)">Back</button>
+                    <button href="/laravel/public/patient/doctor-appointment" role="button" class="btn btn-secondary btn-lg active">Back</button>
                 </div>
 
                 <br>

@@ -82,82 +82,75 @@
     <div>
         <section id="overview">
             <div style="display: flex; justify-content: space-between; align-items: center;">
-                <h3 class="text-large text-grey">Admin / Room & Bed Management</h3>
+                <h3 class="text-large text-grey">Admin / Rooms & Bed View</h3>
+            </div>
+
+            <div class="cardWrapper">
+                <div class="card" style="box-shadow: 5px 3px 5px 3px #1b99d8;">
+                    <svg xmlns="http://www.w3.org/2000/svg" width="50" height="50" fill="currentColor" class="bi bi-door-open-fill" viewBox="0 0 16 16">
+                        <path fill="#0052E9" d="M1.5 15a.5.5 0 0 0 0 1h13a.5.5 0 0 0 0-1H13V2.5A1.5 1.5 0 0 0 11.5 1H11V.5a.5.5 0 0 0-.57-.495l-7 1A.5.5 0 0 0 3 1.5V15H1.5zM11 2h.5a.5.5 0 0 1 .5.5V15h-1V2zm-2.5 8c-.276 0-.5-.448-.5-1s.224-1 .5-1 .5.448.5 1-.224 1-.5 1z"/>
+                    </svg>
+                    <div>
+                        <p class="text-large text-grey">Total Rooms</p>
+                        <span>
+                            <p id="patientCount" class="text-normal text-grey text-center" style="margin: auto;">{{$roomCount ?? 'Zero'}}</p></span>
+                    </div>
+                </div>
+
+                <div class="card" style="box-shadow: 5px 3px 5px 3px #1b99d8;">
+                    <svg xmlns="http://www.w3.org/2000/svg" width="50" height="50" fill="currentColor" class="bi bi-door-open-fill" viewBox="0 0 16 16">
+                        <path fill="#0052E9" d="M11.5 4a.5.5 0 0 1 .5.5V5h1.02a1.5 1.5 0 0 1 1.17.563l1.481 1.85a1.5 1.5 0 0 1 .329.938V10.5a1.5 1.5 0 0 1-1.5 1.5H14a2 2 0 1 1-4 0H5a2 2 0 1 1-4 0 1 1 0 0 1-1-1v-1h11V4.5a.5.5 0 0 1 .5-.5zM3 11a1 1 0 1 0 0 2 1 1 0 0 0 0-2zm9 0a1 1 0 1 0 0 2 1 1 0 0 0 0-2zm1.732 0h.768a.5.5 0 0 0 .5-.5V8.35a.5.5 0 0 0-.11-.312l-1.48-1.85A.5.5 0 0 0 13.02 6H12v4a2 2 0 0 1 1.732 1z"/>
+                    </svg>
+                    <div>
+                        <p class="text-large text-grey">Total Beds</p>
+                        <span><p class="text-normal text-grey text-center" style="margin: auto;">{{$bedCount ?? 'Zero'}}</span>
+                    </div>
+                </div>
+
+                <div class="card" style="box-shadow: 5px 3px 5px 3px #1b99d8;">
+                    <svg xmlns="http://www.w3.org/2000/svg" width="50" height="50" fill="currentColor" class="bi bi-door-open-fill" viewBox="0 0 16 16">
+                        <path fill="#0052E9" d="M2.97 1.35A1 1 0 0 1 3.73 1h8.54a1 1 0 0 1 .76.35l2.609 3.044A1.5 1.5 0 0 1 16 5.37v.255a2.375 2.375 0 0 1-4.25 1.458A2.371 2.371 0 0 1 9.875 8 2.37 2.37 0 0 1 8 7.083 2.37 2.37 0 0 1 6.125 8a2.37 2.37 0 0 1-1.875-.917A2.375 2.375 0 0 1 0 5.625V5.37a1.5 1.5 0 0 1 .361-.976l2.61-3.045zm1.78 4.275a1.375 1.375 0 0 0 2.75 0 .5.5 0 0 1 1 0 1.375 1.375 0 0 0 2.75 0 .5.5 0 0 1 1 0 1.375 1.375 0 1 0 2.75 0V5.37a.5.5 0 0 0-.12-.325L12.27 2H3.73L1.12 5.045A.5.5 0 0 0 1 5.37v.255a1.375 1.375 0 0 0 2.75 0 .5.5 0 0 1 1 0zM1.5 8.5A.5.5 0 0 1 2 9v6h12V9a.5.5 0 0 1 1 0v6h.5a.5.5 0 0 1 0 1H.5a.5.5 0 0 1 0-1H1V9a.5.5 0 0 1 .5-.5zm2 .5a.5.5 0 0 1 .5.5V13h8V9.5a.5.5 0 0 1 1 0V13a1 1 0 0 1-1 1H4a1 1 0 0 1-1-1V9.5a.5.5 0 0 1 .5-.5z"/>
+                    </svg>
+                    <div>
+                        <p class="text-large text-grey">Available Beds</p>
+                        <span><p class="text-normal text-grey text-center" style="margin: auto;">{{$availableBed ?? 'Zero'}}</p></span>
+                    </div>
+                </div>
             </div>
 
             <div class="row">
-                <div class="col-md-7">
-                    <div class="cardWrapper">
-                        <div class="card">
-                            <div class="btn-group" role="group" aria-label="Basic example" style="float:left;">
-                                <select class="form-select form-select-lg roomID_Select" name="roomID_Select" id="roomID_Select" style="padding:5px; font-size:14px; width:200px;">
-                                    @foreach($roomNumbers as $room)
-                                        <option value="{{$room->room_id}}">{{$room->room_number}}</option>
-                                    @endforeach
-                                </select>
-                                <button type="button" class="btn btn-warning btn-lg editRoom" style="font-size:12px;" data-toggle="modal" data-target="#editRoom_modal"><i class="fa fa-pencil-square-o fa-lg" aria-hidden="true" ></i></button>
-                                <button type="button" class="btn btn-danger btn-lg deleteRoom" style="font-size:12px;" data-toggle="modal" data-target="#deleteRoom_modal"><i class="fa fa-trash fa-lg" aria-hidden="true"></i></button>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-
-                <div class="col-md-5">
-                    <div class="cardWrapper">
-                        <div class="card">
-                            <div class="btn-group" role="group" aria-label="Basic example">
-                                <button type="button" class="btn btn-primary btn-lg active" style="font-size:12px;" data-toggle="modal" data-target="#addNewBed_modal">Add New Bed</button>
-                                <button type="button" class="btn btn-info btn-lg active" style="font-size:12px;" data-toggle="modal" data-target="#addNewRoom_modal">Add New Room</button>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-            </div>
-
-            <div class="row">
-                <div class="col-md-4">
-                    <div class="cardWrapper">
-                        <div class="card">
-                            <svg xmlns="http://www.w3.org/2000/svg" width="50" height="50" fill="currentColor" class="bi bi-door-open-fill" viewBox="0 0 16 16">
-                                <path fill="#0052E9" d="M1.5 15a.5.5 0 0 0 0 1h13a.5.5 0 0 0 0-1H13V2.5A1.5 1.5 0 0 0 11.5 1H11V.5a.5.5 0 0 0-.57-.495l-7 1A.5.5 0 0 0 3 1.5V15H1.5zM11 2h.5a.5.5 0 0 1 .5.5V15h-1V2zm-2.5 8c-.276 0-.5-.448-.5-1s.224-1 .5-1 .5.448.5 1-.224 1-.5 1z"/>
-                            </svg>
-                            <div>
-                                <p class="text-large text-grey">Total Rooms</p>
-                                <span>
-                                    <p id="patientCount" class="text-normal text-grey text-center" style="margin: auto;">{{$roomCount ?? 'Zero'}}</p></span>
-                            </div>
-                        </div>
-
-                        <div class="card">
-                            <svg xmlns="http://www.w3.org/2000/svg" width="50" height="50" fill="currentColor" class="bi bi-door-open-fill" viewBox="0 0 16 16">
-                                <path fill="#0052E9" d="M11.5 4a.5.5 0 0 1 .5.5V5h1.02a1.5 1.5 0 0 1 1.17.563l1.481 1.85a1.5 1.5 0 0 1 .329.938V10.5a1.5 1.5 0 0 1-1.5 1.5H14a2 2 0 1 1-4 0H5a2 2 0 1 1-4 0 1 1 0 0 1-1-1v-1h11V4.5a.5.5 0 0 1 .5-.5zM3 11a1 1 0 1 0 0 2 1 1 0 0 0 0-2zm9 0a1 1 0 1 0 0 2 1 1 0 0 0 0-2zm1.732 0h.768a.5.5 0 0 0 .5-.5V8.35a.5.5 0 0 0-.11-.312l-1.48-1.85A.5.5 0 0 0 13.02 6H12v4a2 2 0 0 1 1.732 1z"/>
-                            </svg>
-                            <div>
-                                <p class="text-large text-grey">Total Beds</p>
-                                <span><p class="text-normal text-grey text-center" style="margin: auto;">{{$bedCount ?? 'Zero'}}</span>
-                            </div>
-                        </div>
-
-                        <div class="card">
-                            <svg xmlns="http://www.w3.org/2000/svg" width="50" height="50" fill="currentColor" class="bi bi-door-open-fill" viewBox="0 0 16 16">
-                                <path fill="#0052E9" d="M2.97 1.35A1 1 0 0 1 3.73 1h8.54a1 1 0 0 1 .76.35l2.609 3.044A1.5 1.5 0 0 1 16 5.37v.255a2.375 2.375 0 0 1-4.25 1.458A2.371 2.371 0 0 1 9.875 8 2.37 2.37 0 0 1 8 7.083 2.37 2.37 0 0 1 6.125 8a2.37 2.37 0 0 1-1.875-.917A2.375 2.375 0 0 1 0 5.625V5.37a1.5 1.5 0 0 1 .361-.976l2.61-3.045zm1.78 4.275a1.375 1.375 0 0 0 2.75 0 .5.5 0 0 1 1 0 1.375 1.375 0 0 0 2.75 0 .5.5 0 0 1 1 0 1.375 1.375 0 1 0 2.75 0V5.37a.5.5 0 0 0-.12-.325L12.27 2H3.73L1.12 5.045A.5.5 0 0 0 1 5.37v.255a1.375 1.375 0 0 0 2.75 0 .5.5 0 0 1 1 0zM1.5 8.5A.5.5 0 0 1 2 9v6h12V9a.5.5 0 0 1 1 0v6h.5a.5.5 0 0 1 0 1H.5a.5.5 0 0 1 0-1H1V9a.5.5 0 0 1 .5-.5zm2 .5a.5.5 0 0 1 .5.5V13h8V9.5a.5.5 0 0 1 1 0V13a1 1 0 0 1-1 1H4a1 1 0 0 1-1-1V9.5a.5.5 0 0 1 .5-.5z"/>
-                            </svg>
-                            <div>
-                                <p class="text-large text-grey">Available Beds</p>
-                                <span><p class="text-normal text-grey text-center" style="margin: auto;">{{$availableBed ?? 'Zero'}}</p></span>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-
-                <div class="col-md-8" style='margin-bottom:2%;'>
+                <div class="col-md-12" style='margin-bottom:2%;'>
                     <!-- Room/Bed table -->
-                    <div class="table-responsive" style='background-color: white; padding: 2%; border-radius: 20px; font-size: 13px;'>
+                    <div class="table-responsive" style='box-shadow: 5px 3px 5px 3px #1b99d8; background-color: white; padding: 2%; border-radius: 20px; font-size: 13px;'>
+
+                        <div class="row">
+                            <div class="col-sm-6">
+                                <div class="btn-group" role="group" aria-label="Basic example" style="float:left;">
+                                    <select class="form-select form-select-lg roomID_Select" name="roomID_Select" id="roomID_Select" style="padding:5px; font-size:14px; width:200px;">
+                                        @foreach($roomNumbers as $room)
+                                            <option value="{{$room->room_id}}">{{$room->room_number}}</option>
+                                        @endforeach
+                                    </select>
+                                    <button type="button" class="btn btn-warning btn-lg editRoom" style="font-size:12px;" data-toggle="modal" data-target="#editRoom_modal"><i class="fa fa-pencil-square-o fa-lg" aria-hidden="true" ></i> Edit Room</button>
+                                    <button type="button" class="btn btn-danger btn-lg deleteRoom" style="font-size:12px;" data-toggle="modal" data-target="#deleteRoom_modal"><i class="fa fa-trash fa-lg" aria-hidden="true"></i> Delete Room</button>
+                                </div>
+                            </div>
+
+                            <div class="col-sm-6">
+                                <div class="btn-group" role="group" aria-label="Basic example" style="float:right;">
+                                    <button type="button" class="btn btn-primary btn-lg active" style="font-size:12px;" data-toggle="modal" data-target="#addNewBed_modal"><i class="fa fa-bed" aria-hidden="true"></i> Add New Bed</button>
+                                    <button type="button" class="btn btn-info btn-lg active" style="font-size:12px;" data-toggle="modal" data-target="#addNewRoom_modal"><i class="fa fa-window-restore" aria-hidden="true"></i> Add New Room</button>
+                                </div>
+                            </div>
+                        </div>
+
+                        <hr style="border-top: 2px dotted #1b99d8;">
+
                         <div class="row">
                             <div class="col-sm-6">
                                     <div class="input-group">
-                                        <span class="input-group-addon form-control form-control-lg col-sm-2"><i class="fa fa-filter fa-lg"></i></span>
-                                        <input type="text" name="searchTable" id="searchData" class="form-control form-control-lg col-sm-10" placeholder="Search Table Records" style="border:1px solid lightblue; color:black;">
+                                        <span class="input-group-addon form-control form-control-lg col-sm-1"><i class="fa fa-filter fa-lg"></i></span>
+                                        <input type="text" name="searchTable" id="searchData" class="form-control form-control-lg col-sm-11" placeholder="Search Table Records" style="border:1px solid lightblue; color:black;">
                                     </div>
                             </div>
                             <div class="col-sm-6">
@@ -176,7 +169,7 @@
                         </div>
 
                         <!-- Room/Bed table Start -->
-                        <div class="table-responsive-sm table-wrapper-scroll-y my-custom-scrollbar">
+                        <div class="table-responsive-sm">
                             <table id="RecordTable" class="table table-hover">
                                 <thead>
                                     <tr>
@@ -228,7 +221,6 @@
             </div>
 
         </section>
-
 
         <!-- Delete Bed Modal -->
         <div class="modal fade" id="deleteBed_modal">
