@@ -25,7 +25,7 @@
                     <img src="{{asset('login-register-form/images/img-03.png')}}" alt="IMG">
                 </div>
 
-                <form method="POST" action="/laravel/public/profile" class="login100-form validate-form">
+                <form method="POST" action="/profile" class="login100-form validate-form">
                 @csrf
                     <span class="login100-form-title fadeIn second">Login Form</span>
 
@@ -75,7 +75,7 @@
                     </div>
 
                     <div class="text-center p-t-12 fadeIn third">
-                        <a class="txt2" href="/laravel/public/patient-registration">Create patient Account<i class="fa fa-long-arrow-right m-l-5" aria-hidden="true"></i></a>
+                        <a class="txt2" href="/patient-registration">Create patient Account<i class="fa fa-long-arrow-right m-l-5" aria-hidden="true"></i></a>
                     </div>
                 </form>
             </div>

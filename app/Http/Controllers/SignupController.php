@@ -85,7 +85,7 @@ class SignupController extends Controller
             $add_data->phone_number = request('phone_number');
             $add_data->password = request('password');
             $add_data->save();
-            $primaryid = $add_data->id; // return currently saved ID
+            $primaryid = $add_data->primary_id; // return currently saved ID
 
             $patient->primary_id = $primaryid;
             $patient->save();

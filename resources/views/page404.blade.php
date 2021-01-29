@@ -132,7 +132,7 @@
         <div class="buttons-con">
             <div class="action-link-wrap">
                 <a onclick="history.back(-1)" class="link-button link-back-button">Go Back</a>
-                <a href="/laravel/public/login" class="link-button">Go to Login Page</a>
+                <a href="/login" class="link-button">Go to Login Page</a>
             </div>
         </div>
     </div>

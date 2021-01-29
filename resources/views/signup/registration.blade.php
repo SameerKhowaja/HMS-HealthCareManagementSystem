@@ -22,7 +22,7 @@
     <div class="limiter">
         <div class="container-login100" style="background-image: url('{{asset('login-register-form/images/bg-01.jpg')}}');">
             <div class="wrap-login100 wrapper fadeInDown">
-                <form method="POST" action="/laravel/public/patient-registration-progress" class="login100-form validate-form">
+                <form method="POST" action="/patient-registration-progress" class="login100-form validate-form">
                 @csrf
                     <span class="login100-form-title fadeIn second">Signup Form</span>
 
@@ -92,7 +92,7 @@
 
                     <div class="text-center p-t-12 fadeIn third">
                         <span class="txt1">Have already an account ?</span>
-                        <a class="txt2" href="/laravel/public/login">Login</a>
+                        <a class="txt2" href="/login">Login</a>
                         <i class="fa fa-long-arrow-right m-l-5" aria-hidden="true"></i>
                     </div>
                 </form>

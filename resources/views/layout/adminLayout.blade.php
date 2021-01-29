@@ -56,11 +56,11 @@
                                     {{session('username')}}
                                 </a>
                                 <div class="dropdown-menu" aria-labelledby="navbarDropdownMenuLink">
-                                    <a class="dropdown-item" href="/laravel/public/admin">Dashboard</a>
+                                    <a class="dropdown-item" href="/admin">Dashboard</a>
                                     <div class="dropdown-divider"></div>
-                                    <a class="dropdown-item" href="/laravel/public/admin/editProfile/{{session('userID')}}">Edit Profile</a>
+                                    <a class="dropdown-item" href="/admin/editProfile/{{session('userID')}}">Edit Profile</a>
                                     <div class="dropdown-divider"></div>
-                                    <a class="dropdown-item" href="/laravel/public/login">Log Out</a>
+                                    <a class="dropdown-item" href="/login">Log Out</a>
                                 </div>
                             </li>
 
@@ -97,7 +97,7 @@
 <!DOCTYPE html>
 <html>
 <head>
-<meta http-equiv="refresh" content="0; url=/laravel/public/error-page" />
+<meta http-equiv="refresh" content="0; url=/error-page" />
 </head>
 <body>
 </body>
