@@ -32,6 +32,11 @@ class AdminController extends Controller
         $patientCount = 0;
         $doctorCount = 0;
         $staffCount = 0;
+        // ali added
+        
+        $patientCount_wrt_days = ['Mon'=>0,'Tue'=>0,'Wed'=>0,'Thu'=>0,'Fri'=>0,'Sat'=>0,'Sun'=>0];
+        $staffCount_wrt_days = ['Mon'=>0,'Tue'=>0,'Wed'=>0,'Thu'=>0,'Fri'=>0,'Sat'=>0,'Sun'=>0];
+
 
         $type_data = Type::all();
         $patient_type_id = 'patient';
@@ -47,19 +52,36 @@ class AdminController extends Controller
 
         $hospital_data = Hospital_data::all();
         forEach($hospital_data as $data){
+            // ali added ---
+            $date = $data->created_at->toDateString();
+            // ---
+
             if($data->type_id == $patient_type_id){
                 $patientCount++;
+                // ali added ----
+                $patientCount_wrt_days[date('D',strtotime($date))] += 1;
+                // ----
             }
             elseif($data->type_id == $doctor_type_id){
                 $doctorCount++;
             }
             else{
                 $staffCount++;
+                // ali added --
+                $staffCount_wrt_days[date('D',strtotime($date))] += 1;
+                // -----
             }
+            
         }
 
+
         $admins_data = DB::table('admins')->get();
-        return view('admin.index', ['data'=>$admins_data, 'patientCount'=>$patientCount, 'doctorCount'=>$doctorCount, 'staffCount'=>$staffCount]);
+        // ali added --
+        return view('admin.index', 
+        ['data'=>$admins_data, 'patientCount'=>$patientCount, 
+        'doctorCount'=>$doctorCount,
+         'staffCount'=>$staffCount,'staffCount_wrt_days'=>$staffCount_wrt_days
+         ,'patientCount_wrt_days'=>$patientCount_wrt_days,"totalUsers"=>count($hospital_data)]);
     }
 
     // Admin Edit Profile
