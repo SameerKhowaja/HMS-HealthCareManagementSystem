@@ -97,7 +97,8 @@
                     <div class="card" style="box-shadow: 5px 3px 5px 3px #1b99d8;">
                         <!-- user progress target canvas -->
                         <div class="progress-hamburger">
-                            <canvas id="userProgress" width="90" height="90"></canvas>
+                         <!-- ali changed -->
+                            <canvas id="patientProgress"  data-patient="{{$patientCount}}"  data-total="{{$totalUsers}}" width="90" height="90"></canvas>
                         </div>
                         <div>
                             <p class="text-large text-grey">Total Patients</p>
@@ -118,7 +119,8 @@
                     <div class="card" style="box-shadow: 5px 3px 5px 3px #1b99d8;">
                         <!-- course progress target canvas -->
                         <div class="progress-hamburger">
-                            <canvas id="courseProgress" width="90" height="90"></canvas>
+                         <!-- ali changed -->
+                            <canvas id="doctorProgress" data-doctor="{{$doctorCount}}" width="90" height="90"></canvas>
                         </div>
                         <div>
                             <p class="text-large text-grey">Total Doctors</p>
@@ -139,7 +141,8 @@
                     <div class="card" style="box-shadow: 5px 3px 5px 3px #1b99d8;">
                         <!-- provider progress target canvas -->
                         <div class="progress-hamburger">
-                            <canvas id="providerProgress" width="90" height="90"></canvas>
+                         <!-- ali changed -->
+                            <canvas id="staffProgress" data-staff="{{$staffCount}}" width="90" height="90"></canvas>
                         </div>
                         <div>
                             <p class="text-large text-grey">Total Staff</p>
@@ -233,8 +236,9 @@
                                 </p> -->
                         </div>
                         <!-- user growth target canvas -->
+                        <!-- ali changed -->
                         <div class="chart">
-                            <canvas id="userGrowth"></canvas>
+                            <canvas id="userGrowth" data-users = "{{json_encode($patientCount_wrt_days)}}"  ></canvas>
                         </div>
                     </div>
 
@@ -251,8 +255,9 @@
                                 </p> -->
                         </div>
                         <!-- tutor growth target canvas -->
+                         <!-- ali changed -->
                         <div class="chart">
-                            <canvas id="tutorGrowth"></canvas>
+                            <canvas id="tutorGrowth" data-staff = "{{json_encode($staffCount_wrt_days)}}" ></canvas>
                         </div>
                     </div>
                 </div>
