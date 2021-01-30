@@ -1,6 +1,15 @@
-const users = document.querySelector('#userProgress').getContext('2d')
-const courses = document.querySelector('#courseProgress').getContext('2d')
-const providers = document.querySelector('#providerProgress').getContext('2d')
+//  ali changed
+const patient = document.querySelector('#patientProgress').getContext('2d')
+const doctor = document.querySelector('#doctorProgress').getContext('2d')
+const staff = document.querySelector('#staffProgress').getContext('2d')
+
+// ali added --
+const patientCount = document.querySelector('#patientProgress').dataset.patient
+const doctorCount = document.querySelector('#doctorProgress').dataset.doctor
+const staffCount = document.querySelector('#staffProgress').dataset.staff
+const totalCount = document.querySelector('#patientProgress').dataset.total
+
+// ----
 
 // chart.js default config
 Chart.defaults.global.defaultFontFamily = 'Montserrat'
@@ -8,12 +17,13 @@ Chart.defaults.global.defaultFontSize = 12
 Chart.defaults.global.defaultFontColor = '#666'
 
 // users progress chart
-const userProgress = new Chart(users, {
+// ali changed
+const patientProgress = new Chart(patient, {
     type: 'doughnut',
     data: {
         datasets: [{
-            label: 'users',
-            percent: 1874,
+            label: 'patients',
+            percent: patientCount,
             backgroundColor: ['#0052E9']
         }]
     },
@@ -21,7 +31,7 @@ const userProgress = new Chart(users, {
             beforeInit: (chart) => {
                 const dataset = chart.data.datasets[0];
                 chart.data.labels = [dataset.label];
-                dataset.data = [dataset.percent, 3000 - (dataset.percent)]; //calculates the dataset as a fraction of 3000, 3000 being the max number of users(just for demo purposes)
+                dataset.data = [dataset.percent, totalCount - (dataset.percent)]; //calculates the dataset as a fraction of 3000, 3000 being the max number of users(just for demo purposes)
             }
         },
         {
@@ -57,12 +67,13 @@ const userProgress = new Chart(users, {
 });
 
 // course progress chart
-const courseProgress = new Chart(courses, {
+// ali changed
+const doctorProgress = new Chart(doctor, {
     type: 'doughnut',
     data: {
         datasets: [{
             label: 'users',
-            percent: 3965,
+            percent: doctorCount,
             backgroundColor: ['#0052E9']
         }]
     },
@@ -70,7 +81,7 @@ const courseProgress = new Chart(courses, {
             beforeInit: (chart) => {
                 const dataset = chart.data.datasets[0];
                 chart.data.labels = [dataset.label];
-                dataset.data = [Math.round(dataset.percent), 5000 - (dataset.percent)];
+                dataset.data = [Math.round(dataset.percent), totalCount - (dataset.percent)];
             }
         },
         {
@@ -106,12 +117,13 @@ const courseProgress = new Chart(courses, {
 });
 
 // provider progress chart
-const providerProgress = new Chart(providers, {
+// ali changed
+const staffProgress = new Chart(staff, {
     type: 'doughnut',
     data: {
         datasets: [{
             label: 'users',
-            percent: 125,
+            percent: staffCount,
             backgroundColor: ['#0052E9']
         }]
     },
@@ -119,7 +131,7 @@ const providerProgress = new Chart(providers, {
             beforeInit: (chart) => {
                 const dataset = chart.data.datasets[0];
                 chart.data.labels = [dataset.label];
-                dataset.data = [dataset.percent, 200 - (dataset.percent)];
+                dataset.data = [dataset.percent, totalCount - (dataset.percent)];
             }
         },
         {
