@@ -33,7 +33,7 @@ class AdminController extends Controller
         $doctorCount = 0;
         $staffCount = 0;
         // ali added
-        
+
         $patientCount_wrt_days = ['Mon'=>0,'Tue'=>0,'Wed'=>0,'Thu'=>0,'Fri'=>0,'Sat'=>0,'Sun'=>0];
         $staffCount_wrt_days = ['Mon'=>0,'Tue'=>0,'Wed'=>0,'Thu'=>0,'Fri'=>0,'Sat'=>0,'Sun'=>0];
 
@@ -64,6 +64,7 @@ class AdminController extends Controller
             }
             elseif($data->type_id == $doctor_type_id){
                 $doctorCount++;
+                $staffCount_wrt_days[date('D',strtotime($date))] += 1;
             }
             else{
                 $staffCount++;
@@ -71,17 +72,17 @@ class AdminController extends Controller
                 $staffCount_wrt_days[date('D',strtotime($date))] += 1;
                 // -----
             }
-            
+
         }
 
 
         $admins_data = DB::table('admins')->get();
         // ali added --
-        return view('admin.index', 
-        ['data'=>$admins_data, 'patientCount'=>$patientCount, 
+        return view('admin.index',
+        ['data'=>$admins_data, 'patientCount'=>$patientCount,
         'doctorCount'=>$doctorCount,
-         'staffCount'=>$staffCount,'staffCount_wrt_days'=>$staffCount_wrt_days
-         ,'patientCount_wrt_days'=>$patientCount_wrt_days,"totalUsers"=>count($hospital_data)]);
+        'staffCount'=>$staffCount,'staffCount_wrt_days'=>$staffCount_wrt_days
+        ,'patientCount_wrt_days'=>$patientCount_wrt_days,"totalUsers"=>count($hospital_data)]);
     }
 
     // Admin Edit Profile

@@ -83,35 +83,22 @@
             <section id="overview">
                 <div style="display: flex; justify-content: space-between; align-items: center;">
                     <h3 class="text-large text-grey">Admin / Dashboard</h3>
-                    <!-- <p class="text-normal text-grey">
-                        Filter
-                        <svg xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" aria-hidden="true" focusable="false" width="1em" height="1em" style="-ms-transform: rotate(360deg); -webkit-transform: rotate(360deg); transform: rotate(360deg);" preserveAspectRatio="xMidYMid meet" viewBox="0 0 32 32">
-                            <g fill="none" stroke="#666666" stroke-linecap="round" stroke-linejoin="round" stroke-width="2">
-                                <path d="M2 5s4-2 14-2s14 2 14 2L19 18v9l-6 3V18L2 5z"/>
-                            </g>
-                        </svg>
-                    </p> -->
                 </div>
 
                 <div class="cardWrapper">
                     <div class="card" style="box-shadow: 5px 3px 5px 3px #1b99d8;">
                         <!-- user progress target canvas -->
                         <div class="progress-hamburger">
-                         <!-- ali changed -->
                             <canvas id="patientProgress"  data-patient="{{$patientCount}}"  data-total="{{$totalUsers}}" width="90" height="90"></canvas>
                         </div>
                         <div>
                             <p class="text-large text-grey">Total Patients</p>
                             <span>
                                 <p id="patientCount" class="text-normal text-grey text-center" style="margin: auto;">
-                                    {{$patientCount ?? 'Zero'}}
-                                    <!-- <svg width="13" height="9" viewBox="0 0 13 9" fill="none" xmlns="http://www.w3.org/2000/svg">
-                                        <path d="M6.49999 0L13 8.25H0L6.49999 0Z" fill="#5DF888"/>
-                                    </svg> -->
+                                <svg xmlns="http://www.w3.org/2000/svg" width="25" height="25" fill="currentColor" class="bi bi-file-person-fill" viewBox="0 0 16 16">
+                                    <path fill="#0052E9" d="M12 0H4a2 2 0 0 0-2 2v12a2 2 0 0 0 2 2h8a2 2 0 0 0 2-2V2a2 2 0 0 0-2-2zm-1 7a3 3 0 1 1-6 0 3 3 0 0 1 6 0zm-3 4c2.623 0 4.146.826 5 1.755V14a1 1 0 0 1-1 1H4a1 1 0 0 1-1-1v-1.245C3.854 11.825 5.377 11 8 11z"/>
+                                </svg>
                                 </p>
-                                <!-- <svg width="63" height="26" viewBox="0 0 63 26" fill="none" xmlns="http://www.w3.org/2000/svg">
-                                    <path fill-rule="evenodd" clip-rule="evenodd" d="M0 26V10.3755L5.60289 18.645L11.8586 14.0553L17.1566 8.95548L22.5442 6.43643L27.8222 8.95548L33.8206 14.6354L39.481 8.95548L45.2619 14.0553L50.9223 3.80797C50.9223 3.80797 52.9538 5.69498 53.7891 7.26675C53.9586 7.58562 62.0776 -1.1916 62.7162 0.137052C63.3548 1.4657 62.7162 26 62.7162 26H0Z" fill="#C2D5FA"/>
-                                </svg> -->
                             </span>
                         </div>
                     </div>
@@ -119,21 +106,16 @@
                     <div class="card" style="box-shadow: 5px 3px 5px 3px #1b99d8;">
                         <!-- course progress target canvas -->
                         <div class="progress-hamburger">
-                         <!-- ali changed -->
                             <canvas id="doctorProgress" data-doctor="{{$doctorCount}}" width="90" height="90"></canvas>
                         </div>
                         <div>
                             <p class="text-large text-grey">Total Doctors</p>
                             <span>
                                 <p class="text-normal text-grey text-center" style="margin: auto;">
-                                    {{$doctorCount ?? 'Zero'}}
-                                    <!-- <svg width="13" height="9" viewBox="0 0 13 9" fill="none" xmlns="http://www.w3.org/2000/svg">
-                                        <path d="M6.49999 0L13 8.25H0L6.49999 0Z" fill="#5DF888"/>
-                                    </svg> -->
+                                <svg xmlns="http://www.w3.org/2000/svg" width="25" height="25" fill="currentColor" class="bi bi-person-lines-fill" viewBox="0 0 16 16">
+                                    <path fill="#0052E9" d="M6 8a3 3 0 1 0 0-6 3 3 0 0 0 0 6zm-5 6s-1 0-1-1 1-4 6-4 6 3 6 4-1 1-1 1H1zM11 3.5a.5.5 0 0 1 .5-.5h4a.5.5 0 0 1 0 1h-4a.5.5 0 0 1-.5-.5zm.5 2.5a.5.5 0 0 0 0 1h4a.5.5 0 0 0 0-1h-4zm2 3a.5.5 0 0 0 0 1h2a.5.5 0 0 0 0-1h-2zm0 3a.5.5 0 0 0 0 1h2a.5.5 0 0 0 0-1h-2z"/>
+                                </svg>
                                 </p>
-                                <!-- <svg width="63" height="26" viewBox="0 0 63 26" fill="none" xmlns="http://www.w3.org/2000/svg">
-                                    <path fill-rule="evenodd" clip-rule="evenodd" d="M0 26V10.3755L5.60289 18.645L11.8586 14.0553L17.1566 8.95548L22.5442 6.43643L27.8222 8.95548L33.8206 14.6354L39.481 8.95548L45.2619 14.0553L50.9223 3.80797C50.9223 3.80797 52.9538 5.69498 53.7891 7.26675C53.9586 7.58562 62.0776 -1.1916 62.7162 0.137052C63.3548 1.4657 62.7162 26 62.7162 26H0Z" fill="#C2D5FA"/>
-                                </svg> -->
                             </span>
                         </div>
                     </div>
@@ -141,21 +123,18 @@
                     <div class="card" style="box-shadow: 5px 3px 5px 3px #1b99d8;">
                         <!-- provider progress target canvas -->
                         <div class="progress-hamburger">
-                         <!-- ali changed -->
                             <canvas id="staffProgress" data-staff="{{$staffCount}}" width="90" height="90"></canvas>
                         </div>
                         <div>
                             <p class="text-large text-grey">Total Staff</p>
                             <span>
                                 <p class="text-normal text-grey text-center" style="margin: auto;">
-                                    {{$staffCount ?? 'Zero'}}
-                                    <!-- <svg width="13" height="9" viewBox="0 0 13 9" fill="none" xmlns="http://www.w3.org/2000/svg">
-                                        <path d="M6.49999 0L13 8.25H0L6.49999 0Z" fill="#5DF888"/>
-                                    </svg> -->
+                                <svg xmlns="http://www.w3.org/2000/svg" width="25" height="25" fill="currentColor" class="bi bi-people-fill" viewBox="0 0 16 16">
+                                    <path fill="#0052E9" d="M7 14s-1 0-1-1 1-4 5-4 5 3 5 4-1 1-1 1H7zm4-6a3 3 0 1 0 0-6 3 3 0 0 0 0 6z"/>
+                                    <path fill="#0052E9" fill-rule="evenodd" d="M5.216 14A2.238 2.238 0 0 1 5 13c0-1.355.68-2.75 1.936-3.72A6.325 6.325 0 0 0 5 9c-4 0-5 3-5 4s1 1 1 1h4.216z"/>
+                                    <path fill="#0052E9" d="M4.5 8a2.5 2.5 0 1 0 0-5 2.5 2.5 0 0 0 0 5z"/>
+                                </svg>
                                 </p>
-                                    <!-- <svg width="63" height="26" viewBox="0 0 63 26" fill="none" xmlns="http://www.w3.org/2000/svg">
-                                        <path fill-rule="evenodd" clip-rule="evenodd" d="M0 26V10.3755L5.60289 18.645L11.8586 14.0553L17.1566 8.95548L22.5442 6.43643L27.8222 8.95548L33.8206 14.6354L39.481 8.95548L45.2619 14.0553L50.9223 3.80797C50.9223 3.80797 52.9538 5.69498 53.7891 7.26675C53.9586 7.58562 62.0776 -1.1916 62.7162 0.137052C63.3548 1.4657 62.7162 26 62.7162 26H0Z" fill="#C2D5FA"/>
-                                    </svg> -->
                             </span>
                         </div>
                     </div>
@@ -165,14 +144,6 @@
             <section id="users">
                 <div style="display: flex; justify-content: space-between; align-items: center;">
                     <h3 class="text-large text-grey">Dashboard / Admins View</h3>
-                    <!-- <p class="text-normal text-grey">
-                        Filter
-                        <svg xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" aria-hidden="true" focusable="false" width="1em" height="1em" style="-ms-transform: rotate(360deg); -webkit-transform: rotate(360deg); transform: rotate(360deg);" preserveAspectRatio="xMidYMid meet" viewBox="0 0 32 32">
-                            <g fill="none" stroke="#666666" stroke-linecap="round" stroke-linejoin="round" stroke-width="2">
-                                <path d="M2 5s4-2 14-2s14 2 14 2L19 18v9l-6 3V18L2 5z"/>
-                            </g>
-                        </svg>
-                    </p> -->
                 </div>
                 <!-- user table -->
                 <div class="card" style="box-shadow: 5px 3px 5px 3px #1b99d8;">
@@ -183,12 +154,6 @@
                         </button>
                     </div>
 
-                    <!-- <div class="heading">
-                        <li class="text-normal text-grey text-bold text-center" style="margin: 0 10%;">Image</li>
-                        <li class="text-normal text-grey text-bold text-center" style="margin: 0 0;">Full Name</li>
-                        <li class="text-normal text-grey text-bold text-center" style="margin: 0 0;">Email Address</li>
-                        <li class="text-normal text-grey text-bold text-center" style="margin: 0 0;">Updated Data</li>
-                    </div> -->
                     @foreach($data as $d)
                         <div class="row">
                             @if($d->image=='')
@@ -223,7 +188,7 @@
             <section id="statistics">
                 <h3 class="text-large text-grey">Dashboard / Statistics</h3>
                 <div class="cardWrapper">
-                    <div class="card m-2 my-3">
+                    <div class="card m-2 my-3" style="box-shadow: 5px 3px 5px 3px #1b99d8;">
                         <div class="card-title">
                             <h3 class="text-normal text-bold text-grey">Patient Registered</h3>
                                 <!-- <p class="text-normal text-grey">
@@ -236,26 +201,16 @@
                                 </p> -->
                         </div>
                         <!-- user growth target canvas -->
-                        <!-- ali changed -->
                         <div class="chart">
                             <canvas id="userGrowth" data-users = "{{json_encode($patientCount_wrt_days)}}"  ></canvas>
                         </div>
                     </div>
 
-                    <div class="card m-2 my-3">
+                    <div class="card m-2 my-3" style="box-shadow: 5px 3px 5px 3px #1b99d8;">
                         <div class="card-title">
-                            <h3 class="text-normal text-bold text-grey">Staff Registered</h3>
-                                <!-- <p class="text-normal text-grey">
-                                    Filter
-                                    <svg xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" aria-hidden="true" focusable="false" width="1em" height="1em" style="-ms-transform: rotate(360deg); -webkit-transform: rotate(360deg); transform: rotate(360deg);" preserveAspectRatio="xMidYMid meet" viewBox="0 0 32 32">
-                                        <g fill="none" stroke="#666666" stroke-linecap="round" stroke-linejoin="round" stroke-width="2">
-                                            <path d="M2 5s4-2 14-2s14 2 14 2L19 18v9l-6 3V18L2 5z"/>
-                                        </g>
-                                    </svg>
-                                </p> -->
+                            <h3 class="text-normal text-bold text-grey">Doctor/Staff Registered</h3>
                         </div>
                         <!-- tutor growth target canvas -->
-                         <!-- ali changed -->
                         <div class="chart">
                             <canvas id="tutorGrowth" data-staff = "{{json_encode($staffCount_wrt_days)}}" ></canvas>
                         </div>
