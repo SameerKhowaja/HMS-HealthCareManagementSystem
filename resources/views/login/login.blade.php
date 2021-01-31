@@ -6,7 +6,7 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1">
 
-    <link rel="icon" type="image/png" href="{{asset('login-register-form/images/icons/login-register.ico')}}" />
+    <link rel="icon" type="image/png" href="{{asset('hms/icons/login-register.ico')}}"/>
     <link rel="stylesheet" type="text/css" href="{{asset('login-register-form/vendor/bootstrap/css/bootstrap.min.css')}}">
     <link rel="stylesheet" type="text/css" href="{{asset('login-register-form/fonts/font-awesome-4.7.0/css/font-awesome.min.css')}}">
     <link rel="stylesheet" type="text/css" href="{{asset('login-register-form/vendor/animate/animate.css')}}">
@@ -18,8 +18,19 @@
 </head>
 
 <body>
+    <!-- ======= Header ======= -->
+    <header id="header" class="fixed-top">
+        <div class="container d-flex align-items-center">
+            <!-- <h1 class="logo mr-auto"><a href="index.html">Medilab</a></h1> -->
+            <!-- Uncomment below if you prefer to use an image logo -->
+            <a href="/" class="logo mr-auto"><img src="{{asset('hms/images/hms_logo.png')}}" alt="logo" class="img-fluid"></a>
+            <a href="/" class="appointment-btn scrollto">Home Page</a>
+        </div>
+    </header>
+    <!-- End Header -->
+
     <div class="limiter">
-        <div class="container-login100" style="background-image: url('{{asset('login-register-form/images/bg-01.jpg')}}');">
+        <div class="container-login100 top-Login" style="background-image: url('{{asset('hms/images/bg-01.jpg')}}');">
             <div class="wrap-login100 wrapper fadeInDown">
                 <div class="login100-pic js-tilt" data-tilt>
                     <img src="{{asset('login-register-form/images/img-03.png')}}" alt="IMG">

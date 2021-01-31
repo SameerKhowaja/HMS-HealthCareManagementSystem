@@ -6,7 +6,7 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1">
 
-    <link rel="icon" type="image/png" href="{{asset('login-register-form/images/icons/login-register.ico')}}" />
+    <link rel="icon" type="image/png" href="{{asset('hms/icons/login-register.ico')}}" />
     <link rel="stylesheet" type="text/css" href="{{asset('register-check/vendor/bootstrap/css/bootstrap.min.css')}}">
     <link rel="stylesheet" type="text/css" href="{{asset('register-check/fonts/font-awesome-4.7.0/css/font-awesome.min.css')}}">
     <link rel="stylesheet" type="text/css" href="{{asset('register-check/fonts/iconic/css/material-design-iconic-font.min.css')}}">
@@ -17,12 +17,11 @@
     <link rel="stylesheet" type="text/css" href="{{asset('register-check/vendor/daterangepicker/daterangepicker.css')}}">
     <link rel="stylesheet" type="text/css" href="{{asset('register-check/css/util.css')}}">
     <link rel="stylesheet" type="text/css" href="{{asset('register-check/css/main.css')}}">
-
 </head>
 
 <body>
     <div class="limiter">
-        <div class="container-login100" style="background-image: url('{{asset('login-register-form/images/bg-01.jpg')}}');">
+        <div class="container-login100" style="background-image: url('{{asset('hms/images/bg-01.jpg')}}');">
             <div class="wrap-login100 fadeIn first">
                 <form method="GET" action="/login" class="login100-form">
 

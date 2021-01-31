@@ -2,6 +2,11 @@
 
 use Illuminate\Support\Facades\Route;
 
+// Home Page
+Route::get('/','HomepageController@index');     //Home Page View
+Route::post('/contact-us','HomepageController@contactUs');     //Contact us post
+Route::get('/view-doctors-list','HomepageController@viewDoctorsList');   //Doctor List
+
 // Login and Registration
 Route::get('/login','LoginController@login');   //login form
 Route::post('/profile','LoginController@profile');  //login submit click
