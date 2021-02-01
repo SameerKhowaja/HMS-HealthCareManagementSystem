@@ -14,9 +14,10 @@ class CreateBedsTable extends Migration
     public function up()
     {
         Schema::create('beds', function (Blueprint $table) {
-            $table->increments('bed_id');
-            $table->string('bed_number');
-            $table->integer('room_id');
+            $table->integer('bed_id', 11);
+            $table->string('bed_number', 50);
+            $table->boolean('available')->default(1);
+            $table->integer('room_id')->length(11)->unsigned();
         });
     }
 

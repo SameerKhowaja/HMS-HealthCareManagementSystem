@@ -4,7 +4,7 @@ use Illuminate\Database\Migrations\Migration;
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Support\Facades\Schema;
 
-class CreateLabTestNamesTable extends Migration
+class CreateRoomsTable extends Migration
 {
     /**
      * Run the migrations.
@@ -13,9 +13,9 @@ class CreateLabTestNamesTable extends Migration
      */
     public function up()
     {
-        Schema::create('lab_test_names', function (Blueprint $table) {
-            $table->increments('test_id');
-            $table->string('test_name');
+        Schema::create('rooms', function (Blueprint $table) {
+            $table->integer('room_id', 11);
+            $table->string('room_number', 50)->unique();
         });
     }
 
@@ -26,6 +26,6 @@ class CreateLabTestNamesTable extends Migration
      */
     public function down()
     {
-        Schema::dropIfExists('lab_test_names');
+        Schema::dropIfExists('rooms');
     }
 }

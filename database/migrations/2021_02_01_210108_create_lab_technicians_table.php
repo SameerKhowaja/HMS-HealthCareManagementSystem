@@ -4,7 +4,7 @@ use Illuminate\Database\Migrations\Migration;
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Support\Facades\Schema;
 
-class CreateReceptionistsTable extends Migration
+class CreateLabTechniciansTable extends Migration
 {
     /**
      * Run the migrations.
@@ -13,9 +13,9 @@ class CreateReceptionistsTable extends Migration
      */
     public function up()
     {
-        Schema::create('receptionists', function (Blueprint $table) {
-            $table->increments('receptionist_id');
-            $table->integer('primary_id');
+        Schema::create('lab_technicians', function (Blueprint $table) {
+            $table->bigIncrements('technician_id', 20);
+            $table->bigInteger('primary_id')->length(20)->unsigned()->unique();
         });
     }
 
@@ -26,6 +26,6 @@ class CreateReceptionistsTable extends Migration
      */
     public function down()
     {
-        Schema::dropIfExists('receptionists');
+        Schema::dropIfExists('lab_technicians');
     }
 }

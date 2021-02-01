@@ -14,9 +14,21 @@ class CreateTypesTable extends Migration
     public function up()
     {
         Schema::create('types', function (Blueprint $table) {
-            $table->increments('type_id');
-            $table->string('type_name');
+            $table->integer('type_id', 11);
+            $table->string('type_name', 100)->unique();
         });
+
+        // Insert some stuff
+        DB::table('types')->insert(
+            array(
+                ['type_name'=>'Admin'],
+                ['type_name'=>'Patient'],
+                ['type_name'=>'Doctor'],
+                ['type_name'=>'Receptionist'],
+                ['type_name'=>'Lab Technician'],
+                ['type_name'=>'Other']
+            ),
+        );
     }
 
     /**
