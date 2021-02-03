@@ -13,6 +13,9 @@ use App\Doctor_availability;
 use App\Hospital_data;
 use App\Lab_technician;
 use App\Lab_test_name;
+// ali added--
+use App\Lab_test_parameter;
+//----
 use App\Lab_test_report;
 use App\Lab_test;
 use App\Patient_addmission;
@@ -806,10 +809,217 @@ class AdminController extends Controller
     function appointment(){
         return view('admin.appointment');
     }
+	
+	// ali-added -----
 
-    function labTest(){
-        return view('admin.labTest');
+     function labTest(){
+        $testTypes = Lab_test_name::pluck('test_type');
+        $testTypes = $testTypes->unique();
+        $msg = "";
+
+        $tests = Lab_test_name::all();
+        $params = Lab_test_parameter::all();
+
+        $labTests = [];
+        if($tests->count() > 0){
+        foreach($tests as $data){
+            $tmp = [];
+            foreach($params as $p){
+                if($data->test_id == $p->test_id){
+                    array_push($tmp,$p);
+                }
+            }
+            array_push($labTests,["test"=>$data,"params"=>$tmp]);
+        }
+
+    }else{
+        $msg = "No Record Found";
     }
+
+        return view('admin.labTest',compact('labTests','testTypes','msg'));
+    }
+
+
+    function searchTest(Request $req, $id){
+        $testTypes = Lab_test_name::pluck('test_type');
+        $testTypes = $testTypes->unique();
+        $type = request('testType'); 
+        $tests = Lab_test_name::where('test_type',request('testSection'))->get();
+        $msg = '';
+        $params = Lab_test_parameter::all();
+        $labTests = [];
+
+        if($tests->count() > 0){
+            foreach($tests as $data){
+                $tmp = [];
+                foreach($params as $p){
+                    if($data->test_id == $p->test_id){
+                        array_push($tmp,$p);
+                    }
+                }
+                array_push($labTests,["test"=>$data,"params"=>$tmp]);
+            }
+        }else{
+            $msg="No Lab Test Found";
+
+        }
+        return view('admin.labTest', ['labTests'=>$labTests,'testTypes'=>$testTypes,'msg'=>$msg]);
+    }
+
+
+    function deleteLabData($id){
+        $LabData = Lab_test_name::where('test_id',$id)->get();
+        $test_id = $LabData[0]->test_id;  
+
+        try{
+            if($LabData->count() > 0){
+                Lab_test_parameter::where('test_id',$id)->delete();
+                Lab_test_name::where('test_id',$id)->delete();
+            }
+        }catch (Throwable $e) {
+            // ------
+        }
+
+        return redirect("/admin/lab-test")->with('msg','Successfully Deleted');
+    }
+
+
+    function addTest(){
+        
+        return view('admin.manageLab.addTest');
+    }
+
+
+    function addTestSave(Request $req){
+        $msg='';
+
+        $req->validate([
+            'test_name' => 'required',
+            'test_type' => 'required|max:100',
+            'test_sample' => 'required|max:100',
+            'methodology' => 'required|max:100',
+        ]);
+
+        $testExist = Lab_test_name::where('test_name',$req->test_name)->get();
+
+        if($testExist->count() == 0){
+            $newTest = new Lab_test_name;
+            $newTest->test_name = $req->test_name;
+            $newTest->test_type = $req->test_type;
+            $newTest->test_sample = $req->test_sample;
+            $newTest->methodology = $req->methodology;
+            $newTest->save();
+
+            $addedTest = Lab_test_name::where('test_name',$req->test_name)->get();
+
+            foreach($req->params as $parameter){
+                $newParam = new Lab_test_parameter;
+                $newParam->param = $parameter['param'];
+                $newParam->unit = $parameter['unit'];
+                $newParam->test_id = $addedTest[0]->test_id;
+                $newParam->save();
+            }
+            $msg ="Success !";
+
+            return view('admin.manageLab.addTest', ['msg'=>$msg, 'long_msg'=>"Added New ".$req->test_name." Test to database"]);
+    
+        }else{
+            $msg = "Laboratory Test With Same Name Already Exist";
+            return view('admin.manageLab.addTest', ['msg'=>$msg, 'long_msg'=>"Failed to add ".$req->test_name." Test to database"]);
+    
+
+        }
+
+        return view('admin.manageLab.addTest', ['msg'=>"Failure", 'long_msg'=>"Failed to add ".$req->test_name." Test to database"]);
+    
+
+    }
+
+    function editTestData($id){
+        $testData = Lab_test_name::where("test_id",$id)->get();
+
+        $params = Lab_test_parameter::all();
+
+        $labTest = [];
+       
+        $tmp = [];
+        foreach($params as $p){
+            if($testData[0]->test_id == $p->test_id){
+                array_push($tmp,$p);
+            }
+        }
+        $labTest["test"]=$testData[0];
+        $labTest["params"]=$tmp;
+
+        return view('admin.manageLab.editTest',['labTest'=>$labTest ]);
+    }
+
+
+    function editLabDataSave($id, Request $req){
+        $test = Lab_test_name::findOrFail($id);
+
+        $msg='';
+
+        $req->validate([
+            'test_name' => 'required',
+            'test_type' => 'required|max:100',
+            'test_sample' => 'required|max:100',
+            'methodology' => 'required|max:100',
+        ]);
+
+        $test->test_name = $req->test_name;
+        $test->test_type = $req->test_type;
+        $test->test_sample = $req->test_sample;
+        $test->methodology = $req->methodology;
+        $test->save();
+
+        foreach($req->del as $del_param_id){
+            Lab_test_parameter::where('param_id',$del_param_id)->delete();
+        }
+
+
+        foreach($req->params as $parameter){
+
+            if ( array_key_exists("param_id",$parameter) ){
+                $changedParam = Lab_test_parameter::findOrFail($parameter['param_id']);
+                $changedParam->param = $parameter['param'];
+                $changedParam->unit = $parameter['unit'];
+                $changedParam->save();
+
+            }else{
+                $newParam = new Lab_test_parameter;
+                $newParam->param = $parameter['param'];
+                $newParam->unit = $parameter['unit'];
+                $newParam->test_id = $test->test_id;
+                $newParam->save();
+            }
+            
+        }
+
+
+        $msg ="Success !";
+
+        $testData = Lab_test_name::where("test_id",$id)->get();
+        $params = Lab_test_parameter::all();
+        $labTest = [];
+       
+        $tmp = [];
+        foreach($params as $p){
+            if($testData[0]->test_id == $p->test_id){
+                array_push($tmp,$p);
+            }
+        }
+        $labTest["test"]=$testData[0];
+        $labTest["params"]=$tmp;
+
+        return view('admin.manageLab.editTest', ['labTest'=>$labTest,'msg'=>$msg, 'long_msg'=>"Edited ".$req->test_name." Laboratory Test"]);
+    
+    }
+	// ----- end-ali-added
+
+
+
+
 
 
 }

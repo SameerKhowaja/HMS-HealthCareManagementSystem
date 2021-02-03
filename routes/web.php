@@ -60,6 +60,16 @@ Route::post('/admin/room-management/{id}','AdminController@searchAvailable');   
 Route::post('/admin/room-management/room-edit/{id}','AdminController@editRoomNumber');    //edit room number on admin modal click
 Route::post('/admin/room-management/bed-edit/{id}','AdminController@editBedNumber');    //edit bed number on admin modal click
 
+
+// ali added
+// admin lab-management routes
+Route::get('/admin/lab-test/addTest','AdminController@addTest');    //add Test record view
+Route::post('/admin/lab-test/addTest','AdminController@addTestSave');    //add patient record view on btn click
+Route::post('/admin/lab-test/{id}','AdminController@searchTest');    //search-test
+Route::delete('/admin/lab-test/delete-record/{id}','AdminController@deleteLabData');    //delete Lab Test Data when modal btn clicks
+Route::get('/admin/lab-test/edit-test/{id}','AdminController@editTestData');    //edit lab view
+Route::post('/admin/lab-test/edit-test/{id}','AdminController@editLabDataSave');    //edit lab data on btn click
+
 //======================================================
 //                 Admin Module ENDS
 //=======================================================

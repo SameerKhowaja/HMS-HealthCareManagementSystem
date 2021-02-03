@@ -80,6 +80,253 @@
 
 @section('content')
     <div>
-        <h1>Patient Management<h1>
+
+        <div style='margin-top:2%; margin-bottom:2%;'>
+            <div style="display: flex; justify-content: space-between; align-items: center;">
+                <h3 class="text-large text-grey">Admin / Laboratory-Test</h3>
+                <a href="/admin/lab-test/addTest/" class="btn btn-primary btn-lg active" role="button" aria-pressed="true"><i class="fa fa-plus-circle"> </i>  Add Test</a>
+            </div>
+
+            <br>
+
+            <!-- Lab Test table -->
+            <div class="table-responsive" style='box-shadow: 5px 3px 5px 3px #1b99d8; background-color: white; padding: 2%; border-radius: 10px; font-size: 13px;'>
+                <div class="row">
+                    <div class="col-sm-6">
+                            <div class="input-group">
+                                <span class="input-group-addon form-control form-control-lg col-sm-1"><i class="fa fa-filter fa-lg"></i></span>
+                                <input type="text" name="searchTable" id="searchData" class="form-control form-control-lg col-sm-11" placeholder="Search Table Records" style="border:1px solid lightblue; color:black;">
+                            </div>
+                    </div>
+                    <div class="col-sm-6">
+                        <form action="/admin/lab-test/{id}" method="POST">
+                        @csrf
+                            <div class="form-group" style="float:right;">
+                                <select class="form-select" name="testSection" id="testSection" style="height:30px; width:200px; padding:4px;">
+                                    <option value="0">All Lab Tests</option>
+                                    @foreach($testTypes as $data)
+                                        <option value="{{$data}}">{{$data}}</option>
+                                    @endforeach
+                                </select>
+                                <button type="submit" class="btn btn-primary btn-lg"><i class="fa fa-search"> </i> Search</button>
+                            </div>
+                        </form>
+                    </div>
+                </div>
+
+                <!-- Lab Test table Start -->
+                <div class="table-responsive-sm">
+                    <table id="RecordTable" class="table table-hover">
+                        <thead>
+                            <tr>
+                                <th scope="col" style="text-align:center"></th>
+                                <th scope="col" style="text-align:center">Test Name</th>
+                                <th scope="col" style="text-align:center">Test Type</th>
+                                <th scope="col" style="text-align:center">Test Sample</th>
+                                <th scope="col" style="text-align:center">Methodology</th>
+                            </tr>
+                        </thead>
+
+                        <tbody id="myTable">
+                        @if($labTests != 'none')
+                            <!-- Complete Data Fetched -->
+                            <div class="AllData" id="{{json_encode($labTests)}}"></div>
+
+                            @foreach($labTests as $data)
+                            <tr>
+                                <td style="text-align:center">
+                                <img class="labsvg" src="{{asset('resources/images/lab.svg')}}" width="30px" height="30px" alt="test tube">
+                                </td>
+                                <td style="text-align:center">{{$data["test"]->test_name}}</td>
+                                <td style="text-align:center">{{$data["test"]->test_type}}</td>
+                                <td style="text-align:center">{{$data['test']->test_sample}}</td>
+                                <td style="text-align:center">{{$data['test']->methodology}}</td>
+
+                                <td style="text-align:center">
+                                    <div class="btn-group" role="group">
+                                        <!-- View - Edit - Delete -->
+                                        <a id='{{$data["test"]->test_id}}' style='font-size:13px;' class="btn btn-info btn-lg viewUser" role="button" aria-pressed="true" data-toggle="modal" data-target="#viewUser_modal"><i class="fa fa-database fa-lg" aria-hidden="true"></i></a>
+                                        <a class="btn btn-warning btn-lg" style='font-size: 13px;' href="/admin/lab-test/edit-test/{{$data['test']->test_id}}"><i class="fa fa-pencil-square-o fa-lg" aria-hidden="true"></i></a>
+                                        <a id='{{$data["test"]->test_id}}' style='font-size:13px;' class="btn btn-danger btn-lg deleteUser" role="button" aria-pressed="true" data-toggle="modal" data-target="#deleteUser_modal"><i class="fa fa-trash fa-lg" aria-hidden="true"></i></a>
+                                    </div>
+                                </td>
+                            </tr>
+                            @endforeach
+                        @endif
+                        </tbody>
+                    </table>
+
+                    <!-- Alert if Zero Result Retrieved -->
+                    @if($msg??''!='')
+                    <div class="row">
+                        <div class="col-sm-12">
+                            <h1 class="display-3 text-center">{{$msg}}</h1>
+                        </div>
+                    </div>
+                    @endif
+
+                </div>
+            </div>
+            <!-- Lab test Table end -->
+        </div>
+
+        <!-- Delete Modal -->
+        <div class="modal fade" id="deleteUser_modal">
+            <div class="modal-dialog modal-dialog-centered modal-sm">
+                <div class="modal-content">
+                    <!-- Modal Header -->
+                    <div class="modal-header">
+                        <h2 id="modal-heading" class="modal-title" style="margin:auto;">Are You Sure?</h2>
+                    </div>
+
+                    <form id="ok_delete" action="#" method="POST">
+                    @csrf
+                    @method('DELETE')
+                        <!-- Modal footer -->
+                        <div class="modal-footer">
+                            <button type="button" class="btn btn-secondary btn-lg" data-dismiss="modal">Close</button>
+                            <button type="submit" class="btn btn-danger btn-lg">Delete Test</button>
+                        </div>
+                    </form>
+                </div>
+            </div>
+        </div>
+        <!-- Delete Modal Ends-->
+
+        <!-- View Modal -->
+        <div class="modal fade" id="viewUser_modal">
+            <div class="modal-dialog modal-dialog-centered">
+                <div class="modal-content">
+                    <div class="modal-body">
+                        <!-- Photo and Name -->
+                        <div class="row">
+                            <div class="col-lg-4 m-auto">
+                            <svg version="1.1" id="Icons" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" x="0px" y="0px"
+	 viewBox="0 0 32 32" style="enable-background:new 0 0 32 32;" xml:space="preserve">
+<style type="text/css">
+	.st0{fill:none;stroke:#000000;stroke-width:2;stroke-linecap:round;stroke-linejoin:round;stroke-miterlimit:10;}
+</style>
+<path class="st0" d="M18,8c0-0.6,0.4-1,1-1h0c0.6,0,1-0.4,1-1V4c0-0.6-0.4-1-1-1h-6c-0.6,0-1,0.4-1,1v2c0,0.6,0.4,1,1,1h0
+	c0.6,0,1,0.4,1,1v4.7c0,0.8-0.3,1.7-0.8,2.4l-6.9,9.4C6.1,24.8,6,25.2,6,25.7V27c0,1.1,0.9,2,2,2h16c1.1,0,2-0.9,2-2v-1.3
+	c0-0.4-0.1-0.8-0.4-1.2l-6.9-9.4c-0.5-0.7-0.8-1.5-0.8-2.4V8"/>
+<line class="st0" x1="8" y1="23" x2="24" y2="23"/>
+</svg>
+
+                            </div>
+                            <div class="col-lg-12">
+                                <h1 id="testName" class="media-heading display-5 text-center"></h1>
+                            </div>
+
+                            <table class="table table-hover" style="padding-left:2%;">
+                                <tr>
+                                    <td><h4 class="display-6"><strong>Test Type: </strong></h4></td>
+                                    <td><h4 id="testType" class="display-6"></h4></td>
+                                </tr>
+                                <tr>
+                                    <td><h4 class="display-6"><strong>Test Sample: </strong></h4></td>
+                                    <td><h4 id="testSample" class="display-6"></h4></td>
+                                </tr>
+                                <tr>
+                                    <td><h4 class="display-6"><strong>Methodology: </strong></h4></td>
+                                    <td><h4 id="methodology" class="display-6"></h4></td>
+                                </tr>
+                            </table>
+
+                        </div>
+                        <hr>
+                        <!-- Main Data -->
+                        <div class="row" style="padding-left:2%;">
+                            <div class="col-lg-12">
+                                <h4 class="text-center"><span  class="display-5 text-center">Parameters</span></h4>
+                            </div>
+                            <table id="test_params" class="table table-hover" style="padding-left:2%;">
+                                
+                            </table>
+                            <div class="col-lg-12">
+                                <button type="button" class="btn btn-primary btn-lg btn-block" data-dismiss="modal" style="font-size:15px;">Close</button>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <!-- View Modal Ends-->
+
     </div>
+
+    <script>
+        $(document).ready(function(){
+            $("#searchData").on("keyup", function() {
+                var value = $(this).val().toLowerCase();
+                $("#myTable tr").filter(function() {
+                $(this).toggle($(this).text().toLowerCase().indexOf(value) > -1)
+                });
+            });
+        });
+    </script>
+
+    <script>
+        var user_id;
+        $(document).ready(function(){
+            $(".deleteUser").click(function(){
+                test_id = $(this).attr('id');
+                $("#ok_delete").attr("action","/admin/lab-test/delete-record/"+test_id);
+                $('#deleteAdmin_modal').modal('show');
+            });
+
+            $("#ok_delete").click(function(){
+                $('#deleteAdmin_modal').modal('hide');
+            });
+        });
+    </script>
+
+    <script>
+        var testId;
+        var allData;
+        
+        $(document).ready(function(){
+            $(".viewUser").click(function(){
+                testId = $(this).attr('id');   // current id
+
+                allData = $('.AllData').attr('id'); // all records
+                
+                var obj = JSON.parse(allData);
+                
+                var test_params = '<tr><th><h5 class="display-6"><strong>Name</strong></h5></th><th><h5 class="display-6"><strong>Unit</strong></h5></td></tr>';
+
+
+                
+
+            
+
+                for(var i=0;i<obj.length;i++){
+                    if(testId == obj[i].test.test_id){
+                        // alert(obj[i].fname);
+                        $("#testName").html(obj[i].test.test_name);
+                        $("#testType").html(obj[i].test.test_type);
+                        $("#testSample").html(obj[i].test.test_sample);
+                        $("#methodology").html(obj[i].test.methodology);
+
+                        if(obj[i].params.length > 0){
+                       
+
+                        for(var j=0;j<obj[i].params.length;j++){
+
+                            test_params +='<tr><td><h5 id="param"'+obj[i].params[j].param_id+'class="display-6"><strong>'+obj[i].params[j].param+'</strong></h5></td><td><h5 id="unit"'+obj[i].params[j].param_id+'class="display-6">'+obj[i].params[j].unit+'</h5></td></tr>';
+
+
+                        }
+
+                        }else{
+                            test_params += '<h5>No Parameters</h5>'
+                        }
+
+                        $("#test_params").html(test_params);
+                    
+                    }
+                }
+            });
+        });
+    </script>
+
 @endsection
