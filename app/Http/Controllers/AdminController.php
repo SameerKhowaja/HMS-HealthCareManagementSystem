@@ -809,7 +809,7 @@ class AdminController extends Controller
     function appointment(){
         return view('admin.appointment');
     }
-	
+
 	// ali-added -----
 
      function labTest(){
@@ -843,7 +843,7 @@ class AdminController extends Controller
     function searchTest(Request $req, $id){
         $testTypes = Lab_test_name::pluck('test_type');
         $testTypes = $testTypes->unique();
-        $type = request('testType'); 
+        $type = request('testType');
         $tests = Lab_test_name::where('test_type',request('testSection'))->get();
         $msg = '';
         $params = Lab_test_parameter::all();
@@ -869,7 +869,7 @@ class AdminController extends Controller
 
     function deleteLabData($id){
         $LabData = Lab_test_name::where('test_id',$id)->get();
-        $test_id = $LabData[0]->test_id;  
+        $test_id = $LabData[0]->test_id;
 
         try{
             if($LabData->count() > 0){
@@ -885,7 +885,7 @@ class AdminController extends Controller
 
 
     function addTest(){
-        
+
         return view('admin.manageLab.addTest');
     }
 
@@ -922,16 +922,16 @@ class AdminController extends Controller
             $msg ="Success !";
 
             return view('admin.manageLab.addTest', ['msg'=>$msg, 'long_msg'=>"Added New ".$req->test_name." Test to database"]);
-    
+
         }else{
             $msg = "Laboratory Test With Same Name Already Exist";
             return view('admin.manageLab.addTest', ['msg'=>$msg, 'long_msg'=>"Failed to add ".$req->test_name." Test to database"]);
-    
+
 
         }
 
         return view('admin.manageLab.addTest', ['msg'=>"Failure", 'long_msg'=>"Failed to add ".$req->test_name." Test to database"]);
-    
+
 
     }
 
@@ -941,7 +941,7 @@ class AdminController extends Controller
         $params = Lab_test_parameter::all();
 
         $labTest = [];
-       
+
         $tmp = [];
         foreach($params as $p){
             if($testData[0]->test_id == $p->test_id){
@@ -973,13 +973,13 @@ class AdminController extends Controller
         $test->methodology = $req->methodology;
         $test->save();
 
-        foreach($req->del as $del_param_id){
-            Lab_test_parameter::where('param_id',$del_param_id)->delete();
+        if($req->del){
+            foreach($req->del as $del_param_id){
+                Lab_test_parameter::where('param_id',$del_param_id)->delete();
+            }
         }
 
-
         foreach($req->params as $parameter){
-
             if ( array_key_exists("param_id",$parameter) ){
                 $changedParam = Lab_test_parameter::findOrFail($parameter['param_id']);
                 $changedParam->param = $parameter['param'];
@@ -993,7 +993,7 @@ class AdminController extends Controller
                 $newParam->test_id = $test->test_id;
                 $newParam->save();
             }
-            
+
         }
 
 
@@ -1002,7 +1002,7 @@ class AdminController extends Controller
         $testData = Lab_test_name::where("test_id",$id)->get();
         $params = Lab_test_parameter::all();
         $labTest = [];
-       
+
         $tmp = [];
         foreach($params as $p){
             if($testData[0]->test_id == $p->test_id){
@@ -1013,7 +1013,7 @@ class AdminController extends Controller
         $labTest["params"]=$tmp;
 
         return view('admin.manageLab.editTest', ['labTest'=>$labTest,'msg'=>$msg, 'long_msg'=>"Edited ".$req->test_name." Laboratory Test"]);
-    
+
     }
 	// ----- end-ali-added
 
