@@ -3,9 +3,9 @@
 -- https://www.phpmyadmin.net/
 --
 -- Host: 127.0.0.1
--- Generation Time: Jan 31, 2021 at 08:05 PM
+-- Generation Time: Feb 03, 2021 at 10:25 AM
 -- Server version: 10.4.14-MariaDB
--- PHP Version: 7.4.11
+-- PHP Version: 7.2.34
 
 SET SQL_MODE = "NO_AUTO_VALUE_ON_ZERO";
 START TRANSACTION;
@@ -277,9 +277,47 @@ CREATE TABLE `lab_tests` (
 --
 
 CREATE TABLE `lab_test_names` (
-  `test_id` int(15) NOT NULL,
-  `test_name` varchar(100) NOT NULL
+  `test_id` int(11) NOT NULL,
+  `test_name` varchar(255) NOT NULL,
+  `test_type` varchar(255) DEFAULT NULL,
+  `test_sample` varchar(255) DEFAULT NULL,
+  `methodology` varchar(255) DEFAULT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
+
+--
+-- Dumping data for table `lab_test_names`
+--
+
+INSERT INTO `lab_test_names` (`test_id`, `test_name`, `test_type`, `test_sample`, `methodology`) VALUES
+(8, '17 KETOSTEROIDS', 'BIOCHEMISTRY', 'Urine', 'COLOROMETRIC'),
+(9, 'complete blood count-cbc', 'Blood Bank', 'blood', 'Manual');
+
+-- --------------------------------------------------------
+
+--
+-- Table structure for table `lab_test_parameters`
+--
+
+CREATE TABLE `lab_test_parameters` (
+  `param_id` int(11) NOT NULL,
+  `param` varchar(255) NOT NULL,
+  `unit` varchar(255) DEFAULT NULL,
+  `test_id` int(11) NOT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
+
+--
+-- Dumping data for table `lab_test_parameters`
+--
+
+INSERT INTO `lab_test_parameters` (`param_id`, `param`, `unit`, `test_id`) VALUES
+(6, 'Ketophasgen', 'dl', 8),
+(7, 'hemoglobin', 'ml', 8),
+(8, 'KETOSTEROID', 'mg/dl', 8),
+(9, 'Red blood cell (RBC)', 'count', 9),
+(10, 'hemoglobin', 'g/dl', 9),
+(11, 'Hematocrit', 'volume%', 9),
+(12, 'White blood cell', 'count', 9),
+(13, 'platelet', 'count', 9);
 
 -- --------------------------------------------------------
 
@@ -477,7 +515,14 @@ ALTER TABLE `lab_tests`
 -- Indexes for table `lab_test_names`
 --
 ALTER TABLE `lab_test_names`
-  ADD PRIMARY KEY (`test_id`);
+  ADD UNIQUE KEY `test_id` (`test_id`);
+
+--
+-- Indexes for table `lab_test_parameters`
+--
+ALTER TABLE `lab_test_parameters`
+  ADD UNIQUE KEY `param_id` (`param_id`),
+  ADD KEY `test_id` (`test_id`);
 
 --
 -- Indexes for table `lab_test_reports`
@@ -593,7 +638,13 @@ ALTER TABLE `lab_tests`
 -- AUTO_INCREMENT for table `lab_test_names`
 --
 ALTER TABLE `lab_test_names`
-  MODIFY `test_id` int(15) NOT NULL AUTO_INCREMENT;
+  MODIFY `test_id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=10;
+
+--
+-- AUTO_INCREMENT for table `lab_test_parameters`
+--
+ALTER TABLE `lab_test_parameters`
+  MODIFY `param_id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=14;
 
 --
 -- AUTO_INCREMENT for table `lab_test_reports`
@@ -636,6 +687,16 @@ ALTER TABLE `rooms`
 --
 ALTER TABLE `types`
   MODIFY `type_id` int(15) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=8;
+
+--
+-- Constraints for dumped tables
+--
+
+--
+-- Constraints for table `lab_test_parameters`
+--
+ALTER TABLE `lab_test_parameters`
+  ADD CONSTRAINT `lab_test_parameters_ibfk_1` FOREIGN KEY (`test_id`) REFERENCES `lab_test_names` (`test_id`);
 COMMIT;
 
 /*!40101 SET CHARACTER_SET_CLIENT=@OLD_CHARACTER_SET_CLIENT */;
