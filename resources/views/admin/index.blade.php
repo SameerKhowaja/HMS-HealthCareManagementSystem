@@ -3,7 +3,7 @@
 @section('navSection')
         <!-- Brand Image is in adminLayout -->
             <ul class="navLists">
-                <a href="/admin">
+                <a href="/admin" class="row ">
                     <li class="active text-normal">
                         <svg xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" aria-hidden="true" focusable="false" width="1em" height="1em" fill="#0052E9" style="-ms-transform: rotate(360deg); -webkit-transform: rotate(360deg); transform: rotate(360deg);" preserveAspectRatio="xMidYMid meet" viewBox="0 0 16 16">
                             <path fill-rule="evenodd" d="M2 13.5V7h1v6.5a.5.5 0 0 0 .5.5h9a.5.5 0 0 0 .5-.5V7h1v6.5a1.5 1.5 0 0 1-1.5 1.5h-9A1.5 1.5 0 0 1 2 13.5zm11-11V6l-2-2V2.5a.5.5 0 0 1 .5-.5h1a.5.5 0 0 1 .5.5z"/>
@@ -11,6 +11,25 @@
                         </svg> Dashboard
                     </li>
                 </a>
+                <!-- ali added start -->
+                
+                <span aria-controls="collapseExample" data-target="#collapseExample" data-toggle="collapse" aria-haspopup="true" aria-expanded="false">
+                <li>
+                    <div>
+                        <svg xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" aria-hidden="true" focusable="false" width="1em" height="1em" fill="#0052E9" style="-ms-transform: rotate(360deg); -webkit-transform: rotate(360deg); transform: rotate(360deg);" preserveAspectRatio="xMidYMid meet" viewBox="0 0 16 16">
+                            <path fill-rule="evenodd" d="M2 13.5V7h1v6.5a.5.5 0 0 0 .5.5h9a.5.5 0 0 0 .5-.5V7h1v6.5a1.5 1.5 0 0 1-1.5 1.5h-9A1.5 1.5 0 0 1 2 13.5zm11-11V6l-2-2V2.5a.5.5 0 0 1 .5-.5h1a.5.5 0 0 1 .5.5z"/>
+                            <path fill-rule="evenodd" d="M7.293 1.5a1 1 0 0 1 1.414 0l6.647 6.646a.5.5 0 0 1-.708.708L8 2.207 1.354 8.854a.5.5 0 1 1-.708-.708L7.293 1.5z"/>
+                        </svg>Dropdown button <svg style="width:20px" viewBox="0 0 32 32" class="icon icon-caret-bottom" viewBox="0 0 32 32" aria-hidden="true"><path d="M24 11.305l-7.997 11.39L8 11.305z"/></svg>
+                        
+                        <div class="collapse" id="collapseExample">
+                            <a class="dropdown-item" href="#" >Action</a>
+                            <a class="dropdown-item" href="#">Another action</a>
+                            <a class="dropdown-item" href="#">Something else here</a>
+                        </div>
+                    </div>
+                </li>
+                </span>
+                <!-- ali added ends -->
 
                 <a href="/admin/hospital-data">
                     <li class="text-normal">
@@ -20,7 +39,7 @@
                     </li>
                 </a>
 
-                <a href="/admin/doctor-timing">
+                <a href="/admin/doctor-timing" >
                     <li class="text-normal">
                         <svg xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" aria-hidden="true" focusable="false" width="1em" height="1em" fill="#0052E9" style="-ms-transform: rotate(360deg); -webkit-transform: rotate(360deg); transform: rotate(360deg);" preserveAspectRatio="xMidYMid meet" viewBox="0 0 16 16">
                             <path d="M8.5 5.5a.5.5 0 0 0-1 0v3.362l-1.429 2.38a.5.5 0 1 0 .858.515l1.5-2.5A.5.5 0 0 0 8.5 9V5.5z"/>
@@ -65,7 +84,7 @@
                     </li>
                 </a>
 
-                <a href="/admin/lab-test">
+                <a href="/admin/lab-test" >
                     <li class="text-normal">
                         <svg xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" aria-hidden="true" focusable="false" width="1em" height="1em" fill="#0052E9" style="-ms-transform: rotate(360deg); -webkit-transform: rotate(360deg); transform: rotate(360deg);" preserveAspectRatio="xMidYMid meet" viewBox="0 0 16 16">
                             <g>
@@ -86,7 +105,7 @@
                 </div>
 
                 <div class="cardWrapper">
-                    <div class="card">
+                    <div class="card" style="box-shadow: 5px 3px 5px 3px #1b99d8;">
                         <!-- user progress target canvas -->
                         <div class="progress-hamburger">
                             <canvas id="patientProgress"  data-patient="{{$patientCount}}"  data-total="{{$totalUsers}}" width="90" height="90"></canvas>
@@ -103,7 +122,7 @@
                         </div>
                     </div>
 
-                    <div class="card">
+                    <div class="card" style="box-shadow: 5px 3px 5px 3px #1b99d8;">
                         <!-- course progress target canvas -->
                         <div class="progress-hamburger">
                             <canvas id="doctorProgress" data-doctor="{{$doctorCount}}" width="90" height="90"></canvas>
@@ -120,7 +139,7 @@
                         </div>
                     </div>
 
-                    <div class="card">
+                    <div class="card" style="box-shadow: 5px 3px 5px 3px #1b99d8;">
                         <!-- provider progress target canvas -->
                         <div class="progress-hamburger">
                             <canvas id="staffProgress" data-staff="{{$staffCount}}" width="90" height="90"></canvas>
@@ -141,86 +160,78 @@
                 </div>
             </section>
 
-            <div class="row">
-                <div class="col-md-12">
-                    <section id="users">
-                        <div style="display: flex; justify-content: space-between; align-items: center;">
-                            <h3 class="text-large text-grey">Dashboard / Admins View</h3>
-                        </div>
-                        <!-- user table -->
-                        <div class="card">
-                            <div class="table-responsive" style='background-color: white; padding: 2%; border-radius: 10px; font-size: 13px;'>
-                                <!-- Patient table Start -->
-                                <div class="table-responsive-sm">
-                                    <table id="RecordTable" class="table table-hover table-borderless">
-                                        <tbody id="myTable">
-                                            <div class="alert alert-lg btn-block alert-primary alert-dismissible fade show text-center text-grey text-large" role="alert">
-                                                {{$msg ?? 'Admin View'}}
-                                                <button type="button" class="close" data-dismiss="alert" aria-label="Close">
-                                                    <span aria-hidden="true">&times;</span>
-                                                </button>
-                                            </div>
-
-                                            @foreach($data as $d)
-                                            <tr>
-                                                <td style="text-align:center">
-                                                    @if($d->image == '')
-                                                        <img class="profile" src="{{asset('resources/images/profile.png')}}" alt="profile">
-                                                    @else
-                                                        <img class="profile" src='{{"data:image/*;base64,".$d->image}}' alt="profile">
-                                                    @endif
-                                                </td>
-
-                                                <td style="text-align:center">{{$d->fname.' '.$d->lname}}</td>
-                                                <td style="text-align:center">{{$d->email_id}}</td>
-                                                <td style="text-align:center">{{$d->created_at}}</td>
-
-                                                <td class="usernameCell text-normal text-grey text-center" style="margin: 0 100%;">
-                                                    <a id="{{$d->admin_id}}" class="btn btn-danger btn-lg deleteAdmin" role="button" aria-pressed="true" data-toggle="modal" data-target="#deleteAdmin_modal"><i class="fa fa-trash fa-lg"></i></a>
-                                                    <!-- <a id="{{$d->admin_id}}" href="/admin/delete-record/{{$d->admin_id}}" class="btn btn-danger btn-lg active" role="button" aria-pressed="true" data-toggle="modal" data-target="#exampleModalCenter">Delete Record</a> -->
-                                                </td>
-                                            </tr>
-                                            @endforeach
-                                        </tbody>
-                                    </table>
-
-                                </div>
-                            </div>
-
-                            <a href="/admin/add-record/" class="btn btn-primary btn-lg active" role="button" aria-pressed="true">Add Admin</a>
-
-                        </div>
-                    </section>
+            <section id="users">
+                <div style="display: flex; justify-content: space-between; align-items: center;">
+                    <h3 class="text-large text-grey">Dashboard / Admins View</h3>
                 </div>
+                <!-- user table -->
+                <div class="card" style="box-shadow: 5px 3px 5px 3px #1b99d8;">
+                    <div class="alert alert-lg btn-block alert-primary alert-dismissible fade show text-center text-grey text-large" role="alert">
+                        {{$msg ?? 'Admin View'}}
+                        <button type="button" class="close" data-dismiss="alert" aria-label="Close">
+                            <span aria-hidden="true">&times;</span>
+                        </button>
+                    </div>
 
-            </div>
+                    @foreach($data as $d)
+                        <div class="row">
+                            @if($d->image=='')
+                            <li class="usernameCell text-normal text-grey text-center" style="margin: 0 0;">
+                                <img class="profile" src="{{asset('resources/images/profile.png')}}" alt="profile">
+                            </li>
+                            @else
+                            <li class="usernameCell text-normal text-grey text-center" style="margin: 0 0;">
+                                <img class="profile" src='{{"data:image/*;base64,".$d->image}}' alt="profile">
+                            </li>
+                            @endif
+                            <li class="usernameCell text-normal text-grey text-center" style="margin: 0 0;">{{$d->fname.' '.$d->lname}}</li>
+                            <li class="usernameCell text-normal text-grey text-center" style="margin: 0 0;">{{$d->email_id}}</li>
+                            <li class="usernameCell text-normal text-grey text-center" style="margin: 0 0;">{{$d->created_at.' '}}</li>
+                            <!-- @if($d->updated_at=='')
+                            <li class="usernameCell text-normal text-grey text-center" style="margin: 0 100%;">{{$d->created_at.' '}}</li>
+                            @else
+                            <li class="usernameCell text-normal text-grey text-center" style="margin: 0 100%;">{{$d->updated_at.' '}}</li>
+                            @endif -->
+                            <li class="usernameCell text-normal text-grey text-center" style="margin: 0 100%;">
+                                <a id="{{$d->admin_id}}" class="btn btn-danger btn-lg deleteAdmin" role="button" aria-pressed="true" data-toggle="modal" data-target="#deleteAdmin_modal">Delete Admin</a>
+                                <!-- <a id="{{$d->admin_id}}" href="/admin/delete-record/{{$d->admin_id}}" class="btn btn-danger btn-lg active" role="button" aria-pressed="true" data-toggle="modal" data-target="#exampleModalCenter">Delete Record</a> -->
+                            </li>
+                        </div>
+                    @endforeach
+
+                    <a href="/admin/add-record/" class="btn btn-primary btn-lg active" role="button" aria-pressed="true">Add Admin</a>
+
+                </div>
+            </section>
 
             <section id="statistics">
                 <h3 class="text-large text-grey">Dashboard / Statistics</h3>
                 <div class="cardWrapper">
-                    <div class="row">
-                        <div class="col-md-6">
-                            <div class="card m-2 my-3">
-                                <div class="card-title">
-                                    <h3 class="text-normal text-bold text-grey">Patient Registered</h3>
-                                </div>
-                                <!-- user growth target canvas -->
-                                <div class="chart">
-                                    <canvas id="userGrowth" data-users = "{{json_encode($patientCount_wrt_days)}}"  ></canvas>
-                                </div>
-                            </div>
+                    <div class="card m-2 my-3" style="box-shadow: 5px 3px 5px 3px #1b99d8;">
+                        <div class="card-title">
+                            <h3 class="text-normal text-bold text-grey">Patient Registered</h3>
+                                <!-- <p class="text-normal text-grey">
+                                    Filter
+                                    <svg xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" aria-hidden="true" focusable="false" width="1em" height="1em" style="-ms-transform: rotate(360deg); -webkit-transform: rotate(360deg); transform: rotate(360deg);" preserveAspectRatio="xMidYMid meet" viewBox="0 0 32 32">
+                                        <g fill="none" stroke="#666666" stroke-linecap="round" stroke-linejoin="round" stroke-width="2">
+                                            <path d="M2 5s4-2 14-2s14 2 14 2L19 18v9l-6 3V18L2 5z"/>
+                                        </g>
+                                    </svg>
+                                </p> -->
                         </div>
+                        <!-- user growth target canvas -->
+                        <div class="chart">
+                            <canvas id="userGrowth" data-users = "{{json_encode($patientCount_wrt_days)}}"  ></canvas>
+                        </div>
+                    </div>
 
-                        <div class="col-md-6">
-                            <div class="card m-2 my-3">
-                                <div class="card-title">
-                                    <h3 class="text-normal text-bold text-grey">Doctor/Staff Registered</h3>
-                                </div>
-                                <!-- tutor growth target canvas -->
-                                <div class="chart">
-                                    <canvas id="tutorGrowth" data-staff = "{{json_encode($staffCount_wrt_days)}}" ></canvas>
-                                </div>
-                            </div>
+                    <div class="card m-2 my-3" style="box-shadow: 5px 3px 5px 3px #1b99d8;">
+                        <div class="card-title">
+                            <h3 class="text-normal text-bold text-grey">Doctor/Staff Registered</h3>
+                        </div>
+                        <!-- tutor growth target canvas -->
+                        <div class="chart">
+                            <canvas id="tutorGrowth" data-staff = "{{json_encode($staffCount_wrt_days)}}" ></canvas>
                         </div>
                     </div>
                 </div>
