@@ -916,8 +916,13 @@ class AdminController extends Controller
     function searchTest(Request $req, $id){
         $testTypes = Lab_test_name::pluck('test_type');
         $testTypes = $testTypes->unique();
-        $type = request('testType');
-        $tests = Lab_test_name::where('test_type',request('testSection'))->get();
+        $tests = NULL;
+        if(request('testSection') == "All Lab Tests"){
+            $tests = Lab_test_name::all();
+        }else{
+            $tests = Lab_test_name::where('test_type',request('testSection'))->get();
+        } 
+        
         $msg = '';
         $params = Lab_test_parameter::all();
         $labTests = [];
