@@ -297,10 +297,9 @@ class AdminController extends Controller
     // Add Record Save to database according to account type
     function addRecordSave(Request $req){
         $req->validate([
-            'accountType' => 'required',
             'fname' => 'required|max:100',
             'lname' => 'required|max:100',
-            'email_id' => 'required|max:200',
+            'email_id' => 'required|max:200|email',
             'cnic' => 'required|max:100',
             'phone_number' => 'required|max:30',
             'gender' => 'required|max:10',
@@ -364,19 +363,18 @@ class AdminController extends Controller
         $add_patient->save();
         $primaryid = $add_patient->primary_id;  // return currently saved ID
 
+        $originalTypeName = $dataType_value;    // used in if condition without 's'
         $dataType_value = $dataType_value.'s';  // Table name concat with 's' in end
         DB::table($dataType_value)->insert([
             'primary_id' => $primaryid,
         ]);
 
         // Now find doctor id if type is doctor
-        try{
+        if($originalTypeName == 'doctor' || $originalTypeName == 'Doctor'){
             $doctorsList = DB::table($dataType_value)->select('doctor_id')->where('primary_id', $primaryid)->get();
             $doctorAvailability = new Doctor_availability; // add doctor id to this table
             $doctorAvailability->doctor_id = $doctorsList[0]->doctor_id;
             $doctorAvailability->save();
-        }catch (Throwable $e) {
-            // is not doctor type
         }
 
         return view('admin.hospitalData.addRecord', ['typesList'=>$dataType, 'msg'=>'Success! ', 'long_msg'=>"Added New ".$nameOfType." Record to database"]);
@@ -424,14 +422,13 @@ class AdminController extends Controller
         $getType_name = strtolower($getType_name); // lower case string
         $getType_name = ucwords(str_replace(" ", "_", $getType_name));  // capital first letter and replace space with underscore
 
+        $originalTypeName = $getType_name;    // used in if condition without 's'
         $getType_name = $getType_name.'s';    // Table name concat with 's' in end
 
         // Now find doctor id if type is doctor delete doctor data from doctor_availability table
-        try{
+        if($originalTypeName == 'doctor' || $originalTypeName == 'Doctor'){
             $doctorsList = DB::table($getType_name)->select('doctor_id')->where('primary_id', $primary_id)->get();
             DB::table('doctor_availability')->where('doctor_id', $doctorsList[0]->doctor_id)->delete();
-        }catch (Throwable $e) {
-            // is not doctor type
         }
 
         DB::table($getType_name)->where('primary_id', $primary_id)->delete();
@@ -473,7 +470,7 @@ class AdminController extends Controller
         $req->validate([
             'fname' => 'required|max:100',
             'lname' => 'required|max:100',
-            'email_id' => 'required|max:200',
+            'email_id' => 'required|max:200|email',
             'cnic' => 'required|max:100',
             'phone_number' => 'required|max:30',
             'gender' => 'required|max:10',
