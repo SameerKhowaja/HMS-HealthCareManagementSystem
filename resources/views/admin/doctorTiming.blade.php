@@ -89,7 +89,7 @@
             <!-- Hospital table -->
             <div class="table-responsive" style='box-shadow: 5px 3px 5px 3px #1b99d8; background-color: white; padding: 2%; border-radius: 10px; font-size: 13px;'>
                 <div class="row">
-                    <div class="col-sm-12">
+                    <div class="col-lg-12">
                             <div class="input-group">
                                 <span class="input-group-addon form-control form-control-lg col-sm-1"><i class="fa fa-filter fa-lg"></i></span>
                                 <input type="text" name="searchTable" id="searchData" class="form-control form-control-lg col-sm-11" placeholder="Search Table Records" style="border:1px solid lightblue; color:black;">
