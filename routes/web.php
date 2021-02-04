@@ -25,11 +25,12 @@ Route::get('/admin','AdminController@dashboard');   //dashboard
 Route::get('/admin/message','AdminController@messages');   //Messages
 Route::get('/admin/hospital-data','AdminController@hospitalData');    //hospital-data
 Route::get('/admin/doctor-timing','AdminController@doctorTiming');    //doctor-timing
+Route::get('/admin/patient-admitted','AdminController@admittedPatient');  //patient admitted
+Route::get('/admin/patient-appointment','AdminController@appointmentPatient'); //patient appointment
+Route::get('/admin/patient-lab-test','AdminController@labTestPatient'); //patient lab tests
 Route::get('/admin/room-management','AdminController@roomManagement');  //room-management
-Route::get('/admin/account-type','AdminController@accountType');    //account-type
-Route::get('/admin/admitted-patient','AdminController@admittedPatient');  //admitted-patient
-Route::get('/admin/appointment','AdminController@appointment'); //appointment
 Route::get('/admin/lab-test','AdminController@labTest');    //lab-test
+Route::get('/admin/account-type','AdminController@accountType');    //account-type
 // ---------------------------------------------------------------------
 
 // admin dashboard routes

@@ -29,7 +29,9 @@
             <div class="brand">
                 <img width="185" height="50" src="{{asset('hms/hms_logo.png')}}" alt="brand">
             </div>
-        @yield('navSection')
+            <!-- Side navbar -->
+            @yield('navSection')
+        </nav>
     </header>
 
     <main class="mainWrapper">

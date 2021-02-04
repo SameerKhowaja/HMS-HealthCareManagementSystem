@@ -879,8 +879,12 @@ class AdminController extends Controller
         return view('admin.admittedPatient');
     }
 
-    function appointment(){
-        return view('admin.appointment');
+    function appointmentPatient(){
+        return view('admin.appointmentPatient');
+    }
+
+    function labTestPatient(){
+        return view('admin.labTestPatient');
     }
 
 	// ali-added -----
@@ -921,8 +925,8 @@ class AdminController extends Controller
             $tests = Lab_test_name::all();
         }else{
             $tests = Lab_test_name::where('test_type',request('testSection'))->get();
-        } 
-        
+        }
+
         $msg = '';
         $params = Lab_test_parameter::all();
         $labTests = [];
