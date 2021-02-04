@@ -33,7 +33,7 @@ class SignupController extends Controller
             'fname' => 'required|max:100',
             'lname' => 'required|max:100',
             'cnic' => 'required|max:100',
-            'email_id' => 'required|max:200',
+            'email_id' => 'required|max:200|email',
             'phone_number' => 'required|max:30',
             'password' => 'required|max:100',
         ]);

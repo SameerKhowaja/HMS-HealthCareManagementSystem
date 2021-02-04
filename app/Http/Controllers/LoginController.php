@@ -36,6 +36,11 @@ class LoginController extends Controller
 
     // Dashboards Navigation
     function profile(Request $req){
+        $req->validate([
+            'email_id' => 'required|max:200',
+            'password' => 'required|max:100',
+        ]);
+
         $getType = Type::all();
         $selectedType = request('LoginAs');
         $type_name = 'none';

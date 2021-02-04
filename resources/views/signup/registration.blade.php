@@ -37,40 +37,65 @@
                 @csrf
                     <span class="login100-form-title fadeIn second">Signup Form</span>
 
+                    @error('fname')
+                    <div class="text-danger text-center text-large fade show">
+                        {{$message}}
+                    </div>
+                    @enderror
                     <div class="wrap-input100 validate-input fadeIn second" data-validate="First name is required: firstname">
-                        <input class="input100" type="text" name="fname" placeholder="First Name">
+                        <input class="input100" type="text" name="fname" placeholder="First Name" value="{{old('fname')}}">
                         <span class="focus-input100"></span>
                         <span class="symbol-input100">
                             <i class="fa fa-user" aria-hidden="true"></i>
                         </span>
                     </div>
 
+                    @error('lname')
+                    <div class="text-danger text-center text-large fade show">
+                        {{$message}}
+                    </div>
+                    @enderror
                     <div class="wrap-input100 validate-input fadeIn second" data-validate="Last name is required: lastname">
-                        <input class="input100" type="text" name="lname" placeholder="Last Name">
+                        <input class="input100" type="text" name="lname" placeholder="Last Name" value="{{old('lname')}}">
                         <span class="focus-input100"></span>
                         <span class="symbol-input100">
                             <i class="fa fa-user" aria-hidden="true"></i>
                         </span>
                     </div>
 
+                    @error('email_id')
+                    <div class="text-danger text-center text-large fade show">
+                        {{$message}}
+                    </div>
+                    @enderror
                     <div class="wrap-input100 validate-input fadeIn second" data-validate="Valid email is required: ex@abc.xyz">
-                        <input class="input100" type="text" name="email_id" placeholder="Email">
+                        <input class="input100" type="text" name="email_id" placeholder="Email" value="{{old('email_id')}}">
                         <span class="focus-input100"></span>
                         <span class="symbol-input100">
                             <i class="fa fa-envelope" aria-hidden="true"></i>
                         </span>
                     </div>
 
+                    @error('cnic')
+                    <div class="text-danger text-center text-large fade show">
+                        {{$message}}
+                    </div>
+                    @enderror
                     <div class="wrap-input100 validate-input fadeIn second" data-validate="Valid cnic is required: 41303XXXXXXXX">
-                        <input class="input100" type="text" name="cnic" placeholder="41303XXXXXXXX" onkeypress="return isNumberKey(event)">
+                        <input class="input100" type="text" name="cnic" placeholder="41303XXXXXXXX" value="{{old('cnic')}}" onkeypress="return isNumberKey(event)">
                         <span class="focus-input100"></span>
                         <span class="symbol-input100">
                             <i class="fa fa-id-card" aria-hidden="true"></i>
                         </span>
                     </div>
 
+                    @error('phone_number')
+                    <div class="text-danger text-center text-large fade show">
+                        {{$message}}
+                    </div>
+                    @enderror
                     <div class="wrap-input100 validate-input fadeIn second" data-validate="Valid phone number is required: 923332134598">
-                        <input class="input100" class="number-only" type="text" name="phone_number" placeholder="923332134598" onkeypress="return isNumberKey(event)">
+                        <input class="input100" class="number-only" type="text" name="phone_number" placeholder="923332134598" value="{{old('phone_number')}}" onkeypress="return isNumberKey(event)">
                         <span class="focus-input100"></span>
                         <span class="symbol-input100">
                             <i class="fa fa-phone" aria-hidden="true"></i>
@@ -89,6 +114,11 @@
                         </span>
                     </div>
 
+                    @error('password')
+                    <div class="text-danger text-center text-large fade show">
+                        {{$message}}
+                    </div>
+                    @enderror
                     <div class="wrap-input100 validate-input fadeIn second" data-validate="Password is required">
                         <input class="input100" type="password" name="password" placeholder="Password">
                         <span class="focus-input100"></span>

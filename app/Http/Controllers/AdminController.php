@@ -75,9 +75,7 @@ class AdminController extends Controller
                 $staffCount_wrt_days[date('D',strtotime($date))] += 1;
                 // -----
             }
-
         }
-
 
         $admins_data = DB::table('admins')->get();
         // ali added --

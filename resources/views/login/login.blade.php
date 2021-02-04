@@ -40,14 +40,24 @@
                 @csrf
                     <span class="login100-form-title fadeIn second">Login Form</span>
 
+                    @error('email_id')
+                    <div class="text-danger text-center text-large fade show">
+                        {{$message}}
+                    </div>
+                    @enderror
                     <div class="wrap-input100 validate-input fadeIn second" data-validate="Valid email is required: ex@abc.xyz">
-                        <input class="input100" type="text" name="email_id" placeholder="Email or CNIC">
+                        <input class="input100" type="text" name="email_id" placeholder="Email or CNIC" value="{{old('email_id')}}">
                         <span class="focus-input100"></span>
                         <span class="symbol-input100">
                             <i class="fa fa-envelope" aria-hidden="true"></i>
                         </span>
                     </div>
 
+                    @error('password')
+                    <div class="text-danger text-center text-large fade show">
+                        {{$message}}
+                    </div>
+                    @enderror
                     <div class="wrap-input100 validate-input fadeIn second" data-validate="Password is required">
                         <input class="input100" type="password" name="password" placeholder="Password">
                         <span class="focus-input100"></span>
