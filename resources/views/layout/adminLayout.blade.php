@@ -74,9 +74,6 @@
                                     <a class="dropdown-item" href="/login">Log Out</a>
                                 </div>
                             </li>
-
-                            <li class="nav-item">
-                            <li>
                         </ul>
                     </div>
             </div>

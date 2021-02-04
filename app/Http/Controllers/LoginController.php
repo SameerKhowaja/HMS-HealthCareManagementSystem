@@ -61,7 +61,6 @@ class LoginController extends Controller
             $admins = Admin::all();
             forEach ($admins as $admin) {
                 if((request('email_id')==$admin->email_id && request('password')==$admin->password) || request('email_id')==$admin->cnic && request('password')==$admin->password){
-                    $page = 'admin.index';
                     $req->session()->put('userID',$admin->admin_id);
                     $req->session()->put('username',$admin->fname.' '.$admin->lname);
                     $req->session()->put('userType', strtolower($type_val));
@@ -90,7 +89,7 @@ class LoginController extends Controller
                 if($data->type_name == $type_val){
                     if((request('email_id')==$data->email_id && request('password')==$data->password) || request('email_id')==$data->cnic && request('password')==$data->password){
                         $lowercase_type_val = strtolower($data->type_name); //lowercase type value
-                        $page = $lowercase_type_val.'.index';   //set page view
+                        $lowercase_type_val = str_replace(" ", "", $lowercase_type_val);   // remove space
                         $req->session()->put('userID',$data->primary_id);
                         $req->session()->put('username',$data->fname.' '.$data->lname);
                         $req->session()->put('userType',$lowercase_type_val);
@@ -98,6 +97,8 @@ class LoginController extends Controller
                         // also send image if exist ----
                         $req->session()->put('image',$data->image);
                         $flag = true;
+
+                        $type_val = str_replace(" ", "", $type_val);   // remove space
 
                         return redirect('/'.strtolower($type_val)); // patient, doctor, etc dashboard
                     }

@@ -1,4 +1,4 @@
-@if(session('userID')!==NULL && session('userType')=='doctor')
+@if(session('userID')!==NULL && session('userType')=='labtechnician')
 <!DOCTYPE html>
 <html lang="en">
 
@@ -20,7 +20,7 @@
     <script src="{{asset('external-libraries/js/codejquery-3.5.1.js')}}"></script>
     <!-- charts.js -->
     <script src="{{asset('external-libraries/js/cloudflareChart.min.js')}}"></script>
-    <title>Doctor</title>
+    <title>Lab Technician</title>
 </head>
 
 <body style='background-color: #D1DADC;'>

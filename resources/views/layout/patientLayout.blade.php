@@ -29,7 +29,9 @@
             <div class="brand">
                 <img width="185" height="50" src="{{asset('hms/hms_logo.png')}}" alt="brand">
             </div>
-        @yield('navSection')
+            <!-- Side navbar -->
+            @yield('navSection')
+        </nav>
     </header>
 
     <main class="mainWrapper">
@@ -45,7 +47,6 @@
                 <div class="topNav-btnWrapper"> </div>
                     <div class="profile-wrapper">
                         <ul class="navbar-nav">
-
                             <li class="nav-item dropdown">
                                 <a style='font-size: 15px;' class="nav-link dropdown-toggle" href="#" id="navbarDropdownMenuLink" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
                                     @if(session("image") != '')
