@@ -80,72 +80,12 @@
 
 @section('content')
         <div>
-            <section id="overview">
-                <div style="display: flex; justify-content: space-between; align-items: center;">
-                    <h3 class="text-large text-grey">Admin / Dashboard</h3>
-                </div>
-
-                <div class="cardWrapper">
-                    <div class="card">
-                        <!-- user progress target canvas -->
-                        <div class="progress-hamburger">
-                            <canvas id="patientProgress"  data-patient="{{$patientCount}}"  data-total="{{$totalUsers}}" width="90" height="90"></canvas>
-                        </div>
-                        <div>
-                            <p class="text-large text-grey">Total Patients</p>
-                            <span>
-                                <p id="patientCount" class="text-normal text-grey text-center" style="margin: auto;">
-                                <svg xmlns="http://www.w3.org/2000/svg" width="25" height="25" fill="currentColor" class="bi bi-file-person-fill" viewBox="0 0 16 16">
-                                    <path fill="#0052E9" d="M12 0H4a2 2 0 0 0-2 2v12a2 2 0 0 0 2 2h8a2 2 0 0 0 2-2V2a2 2 0 0 0-2-2zm-1 7a3 3 0 1 1-6 0 3 3 0 0 1 6 0zm-3 4c2.623 0 4.146.826 5 1.755V14a1 1 0 0 1-1 1H4a1 1 0 0 1-1-1v-1.245C3.854 11.825 5.377 11 8 11z"/>
-                                </svg>
-                                </p>
-                            </span>
-                        </div>
-                    </div>
-
-                    <div class="card">
-                        <!-- course progress target canvas -->
-                        <div class="progress-hamburger">
-                            <canvas id="doctorProgress" data-doctor="{{$doctorCount}}" width="90" height="90"></canvas>
-                        </div>
-                        <div>
-                            <p class="text-large text-grey">Total Doctors</p>
-                            <span>
-                                <p class="text-normal text-grey text-center" style="margin: auto;">
-                                <svg xmlns="http://www.w3.org/2000/svg" width="25" height="25" fill="currentColor" class="bi bi-person-lines-fill" viewBox="0 0 16 16">
-                                    <path fill="#0052E9" d="M6 8a3 3 0 1 0 0-6 3 3 0 0 0 0 6zm-5 6s-1 0-1-1 1-4 6-4 6 3 6 4-1 1-1 1H1zM11 3.5a.5.5 0 0 1 .5-.5h4a.5.5 0 0 1 0 1h-4a.5.5 0 0 1-.5-.5zm.5 2.5a.5.5 0 0 0 0 1h4a.5.5 0 0 0 0-1h-4zm2 3a.5.5 0 0 0 0 1h2a.5.5 0 0 0 0-1h-2zm0 3a.5.5 0 0 0 0 1h2a.5.5 0 0 0 0-1h-2z"/>
-                                </svg>
-                                </p>
-                            </span>
-                        </div>
-                    </div>
-
-                    <div class="card">
-                        <!-- provider progress target canvas -->
-                        <div class="progress-hamburger">
-                            <canvas id="staffProgress" data-staff="{{$staffCount}}" width="90" height="90"></canvas>
-                        </div>
-                        <div>
-                            <p class="text-large text-grey">Total Staff</p>
-                            <span>
-                                <p class="text-normal text-grey text-center" style="margin: auto;">
-                                <svg xmlns="http://www.w3.org/2000/svg" width="25" height="25" fill="currentColor" class="bi bi-people-fill" viewBox="0 0 16 16">
-                                    <path fill="#0052E9" d="M7 14s-1 0-1-1 1-4 5-4 5 3 5 4-1 1-1 1H7zm4-6a3 3 0 1 0 0-6 3 3 0 0 0 0 6z"/>
-                                    <path fill="#0052E9" fill-rule="evenodd" d="M5.216 14A2.238 2.238 0 0 1 5 13c0-1.355.68-2.75 1.936-3.72A6.325 6.325 0 0 0 5 9c-4 0-5 3-5 4s1 1 1 1h4.216z"/>
-                                    <path fill="#0052E9" d="M4.5 8a2.5 2.5 0 1 0 0-5 2.5 2.5 0 0 0 0 5z"/>
-                                </svg>
-                                </p>
-                            </span>
-                        </div>
-                    </div>
-                </div>
-            </section>
-
             <div class="row">
-                <div class="col-md-12">
+                <div class="col-lg-7">
                     <section id="users">
                         <div style="display: flex; justify-content: space-between; align-items: center;">
-                            <h3 class="text-large text-grey">Dashboard / Admins View</h3>
+                            <h3 class="text-large text-grey">Contacts - Queries - Feedback</h3>
+                            <a style='font-size:13px;' class="btn btn-danger btn-lg deleteContacts" role="button" aria-pressed="true" data-toggle="modal" data-target="#deleteAllContacts_modal"><i class="fa fa-trash fa-lg" aria-hidden="true"></i> Delete All Contacts</a>
                         </div>
                         <!-- user table -->
                         <div class="card">
@@ -153,81 +93,104 @@
                                 <!-- Patient table Start -->
                                 <div class="table-responsive-sm">
                                     <table id="RecordTable" class="table table-hover table-borderless">
-                                        <tbody id="myTable">
-                                            <div class="alert alert-lg btn-block alert-primary alert-dismissible fade show text-center text-grey text-large" role="alert">
-                                                {{$msg ?? 'Admin View'}}
-                                                <button type="button" class="close" data-dismiss="alert" aria-label="Close">
-                                                    <span aria-hidden="true">&times;</span>
-                                                </button>
-                                            </div>
 
-                                            @foreach($data as $d)
+                                        <div class="alert alert-lg btn-block alert-primary alert-dismissible fade show text-center text-grey text-large" role="alert">
+                                            {{'Total Messages: '.$countContacts ?? '0'}}
+                                            <button type="button" class="close" data-dismiss="alert" aria-label="Close">
+                                                <span aria-hidden="true">&times;</span>
+                                            </button>
+                                        </div>
+                                        <thead>
                                             <tr>
-                                                <td style="text-align:center">
-                                                    @if($d->image == '')
-                                                        <img class="profile" src="{{asset('resources/images/profile.png')}}" alt="profile">
-                                                    @else
-                                                        <img class="profile" src='{{"data:image/*;base64,".$d->image}}' alt="profile">
-                                                    @endif
-                                                </td>
-
-                                                <td style="text-align:center">{{$d->fname.' '.$d->lname}}</td>
-                                                <td style="text-align:center">{{$d->email_id}}</td>
-                                                <td style="text-align:center">{{$d->created_at}}</td>
-
-                                                <td class="usernameCell text-normal text-grey text-center" style="margin: 0 100%;">
-                                                    <a id="{{$d->admin_id}}" class="btn btn-danger btn-lg deleteAdmin" role="button" aria-pressed="true" data-toggle="modal" data-target="#deleteAdmin_modal"><i class="fa fa-trash fa-lg"></i></a>
-                                                    <!-- <a id="{{$d->admin_id}}" href="/admin/delete-record/{{$d->admin_id}}" class="btn btn-danger btn-lg active" role="button" aria-pressed="true" data-toggle="modal" data-target="#exampleModalCenter">Delete Record</a> -->
-                                                </td>
+                                                <th scope="col" style="text-align:center">Full Name</th>
+                                                <th scope="col" style="text-align:center">Date/Time</th>
+                                                <th scope="col" style="text-align:center">Action</th>
                                             </tr>
-                                            @endforeach
+                                        </thead>
+                                        <tbody id="myTable">
+                                            @if($dataFetched != 'none')
+                                                <!-- Complete Data Fetched -->
+                                                <div class="AllData" id="{{$dataFetched}}"></div>
+                                                @foreach($dataFetched as $data)
+                                                <tr>
+                                                    <td style="text-align:center">{{$data->fullname}}</td>
+                                                    <td style="text-align:center">{{$data->created_at}}</td>
+
+                                                    <td style="text-align:center">
+                                                        <div class="btn-group" role="group">
+                                                            <!-- View -  Delete -->
+                                                            <form action="/admin/message/delete-contact/{{$data->contact_id}}" method="POST">
+                                                            @csrf
+                                                            @method('DELETE')
+                                                                <a id='{{$data->contact_id}}' style='font-size:13px;' class="btn btn-info btn-lg viewData" role="button" aria-pressed="true" data-toggle="modal" data-target="#viewContact_modal"><i class="fa fa-database fa-lg" aria-hidden="true"></i></a>
+                                                                <button style='font-size:13px;' class="btn btn-danger btn-lg" type="submit"><i class="fa fa-trash fa-lg" aria-hidden="true"></i></button>
+                                                            </form>
+                                                        </div>
+                                                    </td>
+                                                </tr>
+                                                @endforeach
+                                            @endif
                                         </tbody>
                                     </table>
-
                                 </div>
                             </div>
-
-                            <a href="/admin/add-record/" class="btn btn-primary btn-lg active" role="button" aria-pressed="true">Add Admin</a>
-
                         </div>
                     </section>
                 </div>
 
+                <!-- Announcements -->
+                <div class="col-lg-5">
+                    <section id="users">
+                        <div style="display: flex; justify-content: space-between; align-items: center;">
+                            <h3 class="text-large text-grey">New Announcements</h3>
+                            <a href="/admin/message/manage-announcement" class="btn btn-primary btn-lg" role="button" aria-pressed="true"><i class="fa fa-gear"> </i>  Manage</a>
+                        </div>
+
+                        <div class="card">
+                            <div>
+                                <p class="text-larger text-grey">Announcement Posted</p>
+                                <span>
+                                    <h3 id="patientCount" class="text-grey text-center" style="margin: auto;">
+                                    {{$countAnnouncement ?? '0'}}
+                                    </h3>
+                                </span>
+                            </div>
+                        </div>
+                        <br> <br>
+                        <div class="card">
+                            <div class="alert alert-lg btn-block alert-primary alert-dismissible fade show text-center text-grey text-large" role="alert">
+                                Create New Announcement
+                                <button type="button" class="close" data-dismiss="alert" aria-label="Close">
+                                    <span aria-hidden="true">&times;</span>
+                                </button>
+                            </div>
+
+                            <form action="/admin/message/create-announcement" method="POST">
+                            @csrf
+                                <div class="form-group">
+                                    <h4>Announcement: </h4>
+                                    <textarea name="announcement_message" id="announcement_message" cols="40" rows="4" class="form-control form-control-lg text-gray"></textarea>
+                                </div>
+
+                                @error('announcement_message')
+                                <div class="alert alert-lg btn-block alert-danger alert-dismissible fade show text-center text-grey" role="alert">
+                                    {{$message}}
+                                    <button type="button" class="close" data-dismiss="alert" aria-label="Close">
+                                        <span aria-hidden="true">&times;</span>
+                                    </button>
+                                </div>
+                                @enderror
+
+                                <button type="submit" class="btn btn-primary btn-lg" style="float:right;">Save Announcement</button>
+                            </form>
+                        </div>
+                    </section>
+                </div>
             </div>
 
-            <section id="statistics">
-                <h3 class="text-large text-grey">Dashboard / Statistics</h3>
-                <div class="cardWrapper">
-                    <div class="row">
-                        <div class="col-md-6">
-                            <div class="card m-2 my-3">
-                                <div class="card-title">
-                                    <h3 class="text-normal text-bold text-grey">Patient Registered</h3>
-                                </div>
-                                <!-- user growth target canvas -->
-                                <div class="chart">
-                                    <canvas id="userGrowth" data-users = "{{json_encode($patientCount_wrt_days)}}"  ></canvas>
-                                </div>
-                            </div>
-                        </div>
-
-                        <div class="col-md-6">
-                            <div class="card m-2 my-3">
-                                <div class="card-title">
-                                    <h3 class="text-normal text-bold text-grey">Doctor/Staff Registered</h3>
-                                </div>
-                                <!-- tutor growth target canvas -->
-                                <div class="chart">
-                                    <canvas id="tutorGrowth" data-staff = "{{json_encode($staffCount_wrt_days)}}" ></canvas>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-            </section>
 
             <!-- Delete Modal -->
-            <div class="modal fade" id="deleteAdmin_modal">
+            <div class="modal fade" id="deleteAllContacts_modal">
                 <div class="modal-dialog modal-dialog-centered modal-sm">
                     <div class="modal-content">
                         <!-- Modal Header -->
@@ -241,7 +204,7 @@
                             <!-- Modal footer -->
                             <div class="modal-footer">
                                 <button type="button" class="btn btn-secondary btn-lg" data-dismiss="modal">Close</button>
-                                <button type="submit" class="btn btn-danger btn-lg">Remove Admin</button>
+                                <button type="submit" class="btn btn-danger btn-lg">Delete</button>
                             </div>
                         </form>
                     </div>
@@ -249,21 +212,79 @@
             </div>
             <!-- Delete Modal Ends-->
 
+            <!-- View Modal -->
+            <div class="modal fade" id="viewContact_modal">
+                <div class="modal-dialog modal-dialog-centered">
+                    <div class="modal-content">
+                        <div class="modal-body">
+                            <!-- Photo and Name -->
+                            <div class="row">
+                                <div class="col-lg-12">
+                                    <h1 id="fullName" class="media-heading display-5 text-center">-</h1>
+                                </div>
+                                <div class="col-lg-12">
+                                    <h3 id="email_id" class="media-heading display-5 text-center">-</h3>
+                                </div>
+                                <div class="col-lg-12">
+                                    <h3 class="text-center"><span id="date_time" class="badge badge-pill badge-dark">-</span></h3>
+                                </div>
+                            </div>
+                            <hr>
+                            <!-- Main Data -->
+                            <div class="row" style="padding-left:2%;">
+                                <table class="table table-hover table-borderless" style="padding-left:2%;">
+                                    <tr>
+                                        <td><h4 id="message" class="display-6">-</h4></td>
+                                    </tr>
+                                </table>
+                                <div class="col-lg-12">
+                                    <button type="button" class="btn btn-primary btn-lg btn-block" data-dismiss="modal" style="font-size:15px;">Close</button>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <!-- View Modal Ends-->
+
         </div>
 
-        <script>
-            var user_id;
-            $(document).ready(function(){
-                $(".deleteAdmin").click(function(){
-                    user_id = $(this).attr('id');
-                    $("#ok_delete").attr("action","/admin/delete-record/"+user_id);
-                    $('#deleteAdmin_modal').modal('show');
-                });
-
-                $("#ok_delete").click(function(){
-                    $('#deleteAdmin_modal').modal('hide');
-                });
+    <script>
+        var user_id;
+        $(document).ready(function(){
+            $(".deleteContacts").click(function(){
+                user_id = $(this).attr('id');
+                $("#ok_delete").attr("action","/admin/message/delete-all-contacts/");
+                $('#deleteAllContacts_modal').modal('show');
             });
-        </script>
+
+            $("#ok_delete").click(function(){
+                $('#deleteAllContacts_modal').modal('hide');
+            });
+        });
+    </script>
+
+    <script>
+        var user_id;
+        var allData;
+        $(document).ready(function(){
+            $(".viewData").click(function(){
+                user_id = $(this).attr('id');   // current id
+
+                allData = $('.AllData').attr('id'); // all records
+                var obj = JSON.parse(allData);
+
+                for(var i=0;i<obj.length;i++){
+                    if(user_id == obj[i].contact_id){
+                        // alert(obj[i].fname);
+                        $("#fullName").html(obj[i].fullname);
+                        $("#email_id").html(obj[i].email_id);
+                        $("#date_time").html(obj[i].created_at);
+                        $("#message").html(obj[i].message);
+                    }
+                }
+            });
+        });
+    </script>
 
 @endsection

@@ -84,7 +84,7 @@
             <div style='margin-top: 3%; margin-bottom: 4%;'>
                 <div style="display: flex; justify-content: space-between; align-items: center;">
                     <h3 class="text-large text-grey">Admin / Doctor Timings Manager / Edit Timing</h3>
-                    <a href="/admin/doctor-timing" role="button" class="btn btn-secondary btn-lg active">Back</a>
+                    <a href="/admin/doctor-timing" role="button" class="btn btn-secondary btn-lg">Back</a>
                 </div>
 
                 <br>

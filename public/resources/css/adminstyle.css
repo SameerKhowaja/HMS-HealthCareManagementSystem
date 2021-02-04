@@ -258,7 +258,7 @@ figure+div {
     padding: 1.5rem;
     background-color: #fff;
     border-radius: 1.5rem;
-    box-shadow: 0px 8px 24px rgba(0, 0, 0, 0.06), 0px -4px 6px rgba(0, 0, 0, 0.04), 0px 0px 1px rgba(0, 0, 0, 0.04);
+    box-shadow: 5px 3px 5px 3px #1b99d8;
 }
 
 .cardWrapper .card span {
@@ -276,7 +276,7 @@ figure+div {
 
 .row {
     width: 100%;
-    border-radius: 4rem;
+    border-radius: 1rem;
     cursor: pointer;
 }
 
@@ -333,4 +333,11 @@ button.viewAll-btn.btn-light {
     opacity: .5;
     height: 100vh;
     overflow: hidden;
+}
+
+.topbar-divider {
+    width: 0;
+    border-right: 1px solid #7a96f1;
+    height: calc(4.375rem - 2rem);
+    margin: auto 1rem;
 }

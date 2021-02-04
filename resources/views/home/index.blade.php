@@ -230,22 +230,23 @@
                 </div>
 
                 <div class="owl-carousel testimonials-carousel">
-                    <!-- Messages -->
+                @if($dataFetched??''!='none')
+                    @foreach($dataFetched as $data)
                     <div class="testimonial-wrap">
                         <div class="testimonial-item">
                             <img src="{{asset('home-page/img/quotation.png')}}" class="testimonial-img" alt="">
-                            <h3>Admin Name</h3>
+                            <h3>{{$data->fname.' '.$data->lname}}</h3>
                             <h4>Administration</h4>
                             <p>
                                 <i class="bx bxs-quote-alt-left quote-icon-left"></i>
-                                Proin iaculis purus consequat sem cure digni ssim donec porttitora entum suscipit rhoncus. Accusantium quam, ultricies eget id, aliquam eget nibh et. Maecen aliquam,
-                                risus at semper.
+                                {{$data->message}}
                                 <i class="bx bxs-quote-alt-right quote-icon-right"></i>
                             </p>
                         </div>
                     </div>
+                    @endforeach
+                @endif
                 </div>
-
             </div>
         </section>
         <!-- End News/Updates Section -->

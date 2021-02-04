@@ -13,9 +13,9 @@ use App\Doctor_availability;
 use App\Hospital_data;
 use App\Lab_technician;
 use App\Lab_test_name;
-// ali added--
+use App\Announcement;
+use App\Contact_table;
 use App\Lab_test_parameter;
-//----
 use App\Lab_test_report;
 use App\Lab_test;
 use App\Patient_addmission;
@@ -196,6 +196,79 @@ class AdminController extends Controller
         $data = Admin::findOrFail($id);
         $data->delete();
         return redirect("/admin")->with('msg','success');
+    }
+
+    // view all contacts
+    function messages(){
+        $announcement = Announcement::all();
+        $countAnnouncement = count($announcement);  // Announcements Count
+
+        $contactTable = Contact_table::all();
+        $countContactTable = count($contactTable);
+        if($countContactTable < 0){
+            return view("admin.messageBox", ['countAnnouncement'=>$countAnnouncement, 'countContacts'=>$countContactTable, 'dataFetched'=>'none']);
+        }
+        return view("admin.messageBox", ['countAnnouncement'=>$countAnnouncement, 'countContacts'=>$countContactTable, 'dataFetched'=>$contactTable]);
+    }
+
+    // delete contact data
+    function deleteContactData($id){
+        $contactTable = Contact_table::findOrFail($id);
+        $contactTable->delete();
+        return redirect("/admin/message")->with('msg','success');
+    }
+
+    // delete all contact data
+    function deleteAllContactData(){
+        DB::table('contact_table')->truncate();
+        return redirect("/admin/message")->with('msg','success');
+    }
+
+    // creating new announcements
+    function createAnnouncement(Request $req){
+        $req->validate([
+            'announcement_message' => 'required|min:4|max:500',
+        ]);
+
+        $newAnnouncement = new Announcement;
+        $newAnnouncement->admin_id = session('userID'); // current admin id
+        $newAnnouncement->message = $req->announcement_message;
+        $newAnnouncement->save();
+
+        return redirect("/admin/message")->with('msg','success');
+    }
+
+    // manage announcements view
+    function manageAnnouncement(){
+        $announcement = Announcement::all();
+        $countAnnouncement= count($announcement);
+        if($countAnnouncement < 0){
+            return view("admin.messageBox.manageAnnouncement", ['countAnnouncement'=>$countAnnouncement, 'dataFetched'=>'none']);
+        }
+        else{
+            $dataFetched = Announcement::join('admins', 'admins.admin_id', '=', 'announcements.admin_id')->get(['announcements.*', 'admins.fname', 'admins.lname', 'admins.email_id', 'admins.image']);
+            return view("admin.messageBox.manageAnnouncement", ['countAnnouncement'=>$countAnnouncement, 'dataFetched'=>$dataFetched]);
+        }
+        return view("page404", ['msg'=>"Error", 'msg_long'=>'Something Got...!']);
+    }
+
+    // delete announcement
+    function deleteAnnouncement($id){
+        $announcement = Announcement::findOrFail($id);
+        $announcement->delete();
+        return redirect("/admin/message/manage-announcement")->with('msg','success');
+    }
+
+    // edit announcement
+    function editAnnouncement(Request $req, $id){
+        $req->validate([
+            'new_announcement' => 'required|min:4|max:500',
+        ]);
+        $announcement = Announcement::findOrFail($id);
+        $announcement->admin_id = session("userID");    // current admin id
+        $announcement->message = $req->new_announcement;
+        $announcement->save();
+        return redirect("/admin/message/manage-announcement")->with('msg','success');
     }
 
 // Admin Dashboard ENDS ---------------------------------
@@ -812,7 +885,7 @@ class AdminController extends Controller
 
 	// ali-added -----
 
-     function labTest(){
+    function labTest(){
         $testTypes = Lab_test_name::pluck('test_type');
         $testTypes = $testTypes->unique();
         $msg = "";

@@ -20,6 +20,7 @@ use App\Room;
 use App\Type;
 use App\Other;
 use App\Contact_table;
+use App\Announcement;
 use App\User;
 
 class HomepageController extends Controller
@@ -32,7 +33,13 @@ class HomepageController extends Controller
         $beds = Bed::all();
         $bedCount = count($beds);   // bed count
 
-        return view("home.index", ['doctorCount'=>$doctorCount, 'patientCount'=>$patientCount, 'bedCount'=>$bedCount]);
+        $dataFetched = Announcement::join('admins', 'admins.admin_id', '=', 'announcements.admin_id')->get(['announcements.*', 'admins.fname', 'admins.lname']);
+        $dataFetchedCount = count($dataFetched);
+        if($dataFetchedCount <= 0){
+            return view("home.index", ['doctorCount'=>$doctorCount, 'patientCount'=>$patientCount, 'bedCount'=>$bedCount, 'dataFetched'=>'none']);
+        }
+
+        return view("home.index", ['doctorCount'=>$doctorCount, 'patientCount'=>$patientCount, 'bedCount'=>$bedCount, 'dataFetched'=>$dataFetched]);
     }
 
     function contactUs(Request $req){

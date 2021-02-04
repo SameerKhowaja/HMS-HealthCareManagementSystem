@@ -25,7 +25,7 @@
 
 <body style='background-color: #D1DADC;'>
     <header>
-        <nav class="sideNav">
+        <nav class="sideNav sidebar-wrapper">
             <div class="brand">
                 <img width="185" height="50" src="{{asset('hms/hms_logo.png')}}" alt="brand">
             </div>
@@ -36,7 +36,8 @@
         <section class="topNav" style='border-bottom: 0.5px solid #88B0B9;'>
             <div class="hamburger">
                 <svg xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" aria-hidden="true" focusable="false" width="1em" height="1em" style="-ms-transform: rotate(360deg); -webkit-transform: rotate(360deg); transform: rotate(360deg);" preserveAspectRatio="xMidYMid meet" viewBox="0 0 24 24">
-                    <g fill="none"><path d="M4 6h16M4 12h16M4 18h7" stroke="#0052E9" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+                    <g fill="none">
+                        <path d="M4 6h16M4 12h16M4 18h7" stroke="#0052E9" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
                     </g>
                 </svg>
             </div>
@@ -44,8 +45,16 @@
             <div>
                 <div class="topNav-btnWrapper"> </div>
                     <div class="profile-wrapper">
+                        <li class="text-normal" style="margin-right:4px;">
+                            <a href="/admin/message">
+                                <svg xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" aria-hidden="true" focusable="false" width="2em" height="2em" style="-ms-transform: rotate(360deg); -webkit-transform: rotate(360deg); transform: rotate(360deg);" preserveAspectRatio="xMidYMid meet" viewBox="0 0 24 24">
+                                    <path d="M4 18h2v4.081L11.101 18H16c1.103 0 2-.897 2-2V8c0-1.103-.897-2-2-2H4c-1.103 0-2 .897-2 2v8c0 1.103.897 2 2 2z" fill="#0052E9"/>
+                                    <path d="M20 2H8c-1.103 0-2 .897-2 2h12c1.103 0 2 .897 2 2v8c1.103 0 2-.897 2-2V4c0-1.103-.897-2-2-2z" fill="#0052E9"/>
+                                </svg>
+                            </a>
+                        </li>
+                        <div class="topbar-divider d-none d-sm-block"></div>
                         <ul class="navbar-nav">
-
                             <li class="nav-item dropdown">
                                 <a style='font-size: 15px;' class="nav-link dropdown-toggle" href="#" id="navbarDropdownMenuLink" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
                                     @if(session("image") != '')

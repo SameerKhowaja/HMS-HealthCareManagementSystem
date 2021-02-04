@@ -22,6 +22,7 @@ Route::get('/error-page','ErrorController@index');  //error page
 
 // navbar routes   -----------------------------------------------------
 Route::get('/admin','AdminController@dashboard');   //dashboard
+Route::get('/admin/message','AdminController@messages');   //Messages
 Route::get('/admin/hospital-data','AdminController@hospitalData');    //hospital-data
 Route::get('/admin/doctor-timing','AdminController@doctorTiming');    //doctor-timing
 Route::get('/admin/room-management','AdminController@roomManagement');  //room-management
@@ -38,6 +39,14 @@ Route::post('/admin/editProfile/editPassword/{id}','AdminController@updatePasswo
 Route::get('/admin/add-record','AdminController@addAdminRecord'); //add admin view
 Route::post('/admin/add-record','AdminController@addAdminRecordSave'); //add admin btn click
 Route::delete('/admin/delete-record/{id}','AdminController@deleteAdminData'); //delete admin data which click
+
+// Announcement & Messages
+Route::post('/admin/message/create-announcement', 'AdminController@createAnnouncement');  //create new announcement
+Route::get('/admin/message/manage-announcement', 'AdminController@manageAnnouncement');  //manage announcement view
+Route::delete('/admin/message/manage-announcement/delete-announcement/{id}','AdminController@deleteAnnouncement'); //delete announcement
+Route::post('/admin/message/manage-announcement/edit-announcement/{id}', 'AdminController@editAnnouncement');    //edit announcement message
+Route::delete('/admin/message/delete-contact/{id}','AdminController@deleteContactData'); // delete contacts
+Route::delete('/admin/message/delete-all-contacts','AdminController@deleteAllContactData'); // delete all contacts
 
 // admin hospital-data routes
 Route::get('/admin/hospital-data/addRecord','AdminController@addRecord');    //add patient record view
