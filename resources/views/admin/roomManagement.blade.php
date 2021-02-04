@@ -2,6 +2,8 @@
 
 @section('navSection')
         <!-- Brand Image is in adminLayout -->
+            
+            <link rel="stylesheet" href="{{asset('resources/sass/css/roomStyle.css')}}">
             <ul class="navLists">
                 <a href="/admin">
                     <li class="text-normal">
@@ -117,32 +119,41 @@
                     </div>
                 </div>
             </div>
-
+            <!-- ali change -->
             <div class="row">
                 <div class="col-md-12" style='margin-bottom:2%;'>
                     <!-- Room/Bed table -->
                     <div class="table-responsive" style='box-shadow: 5px 3px 5px 3px #1b99d8; background-color: white; padding: 2%; border-radius: 20px; font-size: 13px;'>
 
-                        <div class="row">
-                            <div class="col-sm-6">
-                                <div class="btn-group" role="group" aria-label="Basic example" style="float:left;">
+                        <div class="btn-row">
+                                <div>
                                     <select class="form-select form-select-lg roomID_Select" name="roomID_Select" id="roomID_Select" style="padding:5px; font-size:14px; width:200px;">
                                         @foreach($roomNumbers as $room)
                                             <option value="{{$room->room_id}}">{{$room->room_number}}</option>
                                         @endforeach
                                     </select>
-                                    <button type="button" class="btn btn-warning btn-lg editRoom" style="font-size:12px;" data-toggle="modal" data-target="#editRoom_modal"><i class="fa fa-pencil-square-o fa-lg" aria-hidden="true" ></i> Edit Room</button>
-                                    <button type="button" class="btn btn-danger btn-lg deleteRoom" style="font-size:12px;" data-toggle="modal" data-target="#deleteRoom_modal"><i class="fa fa-trash fa-lg" aria-hidden="true"></i> Delete Room</button>
-                                </div>
-                            </div>
+                                    </div>
+                                <div class="btn-group button_grp1" role="group" aria-label="Basic example" style="float:left;">
+                                    <div>
+                                        <button type="button" class="btn btn-warning btn-lg editRoom" style="font-size:12px;" data-toggle="modal" data-target="#editRoom_modal"><i class="fa fa-pencil-square-o fa-lg" aria-hidden="true" ></i> Edit Room</button>
+                                    </div>
+                                    <div>
+                                        <button type="button" class="btn btn-danger btn-lg deleteRoom" style="font-size:12px;" data-toggle="modal" data-target="#deleteRoom_modal"><i class="fa fa-trash fa-lg" aria-hidden="true"></i> Delete Room</button>
+                                    </div>
+                                   </div>
 
-                            <div class="col-sm-6">
-                                <div class="btn-group" role="group" aria-label="Basic example" style="float:right;">
-                                    <button type="button" class="btn btn-primary btn-lg active" style="font-size:12px;" data-toggle="modal" data-target="#addNewBed_modal"><i class="fa fa-bed" aria-hidden="true"></i> Add New Bed</button>
-                                    <button type="button" class="btn btn-info btn-lg active" style="font-size:12px;" data-toggle="modal" data-target="#addNewRoom_modal"><i class="fa fa-window-restore" aria-hidden="true"></i> Add New Room</button>
-                                </div>
+                            
+                            <div class="btn-group button_grp2" role="group" aria-label="Basic example" style="float:right;">
+                                    <div>
+                                        <button type="button" class="btn btn-primary btn-lg active" style="font-size:12px;" data-toggle="modal" data-target="#addNewBed_modal"><i class="fa fa-bed" aria-hidden="true"></i> Add New Bed</button>
+                                    </div>
+                                    <div>
+                                        <button type="button" class="btn btn-info btn-lg active" style="font-size:12px;" data-toggle="modal" data-target="#addNewRoom_modal"><i class="fa fa-window-restore" aria-hidden="true"></i> Add New Room</button>
+                                    </div>
+                                    
                             </div>
                         </div>
+                        <!-- ali-changed ends -->
 
                         <hr style="border-top: 2px dotted #1b99d8;">
 

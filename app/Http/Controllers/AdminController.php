@@ -944,7 +944,6 @@ class AdminController extends Controller
         return view('admin.labTest', ['labTests'=>$labTests,'testTypes'=>$testTypes,'msg'=>$msg]);
     }
 
-
     function deleteLabData($id){
         $LabData = Lab_test_name::where('test_id',$id)->get();
         $test_id = $LabData[0]->test_id;
