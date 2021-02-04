@@ -230,7 +230,7 @@
                 </div>
 
                 <div class="owl-carousel testimonials-carousel">
-                @if($dataFetched??''!='none')
+                @if($dataFetched!='none')
                     @foreach($dataFetched as $data)
                     <div class="testimonial-wrap">
                         <div class="testimonial-item">

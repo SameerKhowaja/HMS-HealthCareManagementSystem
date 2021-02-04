@@ -8,10 +8,6 @@ INSERT INTO `beds` (`bed_id`, `bed_number`, `available`, `room_id`) VALUES
 (12, 'bed-2', 1, 5),
 (14, 'bed-6', 1, 2);
 
-INSERT INTO `contact_table` (`contact_id`, `fullname`, `email_id`, `message`, `message_at`) VALUES
-(8, 'Sameer', 'sameerkhowaja@gmail.com', 'asdasd', '2021-01-31 17:10:31'),
-(9, 'Sameer', 'aslamaman@gmail.com', 'sdasd', '2021-01-31 17:57:17');
-
 INSERT INTO `doctors` (`doctor_id`, `primary_id`, `specialist`) VALUES
 (1, 9, 'Chest Surgon'),
 (4, 15, 'Bones and Lungs'),
@@ -62,3 +58,25 @@ INSERT INTO `rooms` (`room_id`, `room_number`) VALUES
 (5, 'Room4'),
 (7, 'Room5'),
 (8, 'Room 1');
+
+INSERT INTO `announcements` (`announcement_id`, `admin_id`, `message`, `created_at`) VALUES
+(1, 1, 'Wah Bhai Wah', '2021-02-03 21:08:20'),
+(3, 1, 'Have a great day...!', '2021-02-03 22:04:03');
+
+INSERT INTO `contact_table` (`contact_id`, `fullname`, `email_id`, `message`, `created_at`) VALUES
+(1, 'Hammad', 'hammadkhan@asd.com', 'Hello', '2021-02-03 20:28:03'),
+(2, 'Sameer', 'sameerkhowaja@gmail.com', 'Nice Software', '2021-02-03 20:28:24');
+
+INSERT INTO `lab_test_names` (`test_id`, `test_name`, `test_type`, `test_sample`, `methodology`) VALUES
+(8, '17 KETOSTEROIDS', 'BIOCHEMISTRY', 'Urine2', 'COLOROMETRIC'),
+(9, 'complete blood count-cbc', 'Blood Bank', 'blood', 'Manual');
+
+INSERT INTO `lab_test_parameters` (`param_id`, `param`, `unit`, `test_id`) VALUES
+(6, 'Ketophasgen', 'dl', 8),
+(7, 'hemoglobin', 'ml', 8),
+(8, 'KETOSTEROID', 'mg/dl', 8),
+(9, 'Red blood cell (RBC)', 'count', 9),
+(10, 'hemoglobin', 'g/dl', 9),
+(11, 'Hematocrit', 'volume%', 9),
+(12, 'White blood cell', 'count', 9),
+(13, 'platelet', 'count', 9);

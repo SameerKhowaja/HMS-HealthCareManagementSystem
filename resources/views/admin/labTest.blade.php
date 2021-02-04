@@ -240,7 +240,7 @@
                                 <h4 class="text-center"><span  class="display-5 text-center">Parameters</span></h4>
                             </div>
                             <table id="test_params" class="table table-hover" style="padding-left:2%;">
-                                
+
                             </table>
                             <div class="col-lg-12">
                                 <button type="button" class="btn btn-primary btn-lg btn-block" data-dismiss="modal" style="font-size:15px;">Close</button>
@@ -283,21 +283,21 @@
     <script>
         var testId;
         var allData;
-        
+
         $(document).ready(function(){
             $(".viewUser").click(function(){
                 testId = $(this).attr('id');   // current id
 
                 allData = $('.AllData').attr('id'); // all records
-                
+
                 var obj = JSON.parse(allData);
-                
+
                 var test_params = '<tr><th><h5 class="display-6"><strong>Name</strong></h5></th><th><h5 class="display-6"><strong>Unit</strong></h5></td></tr>';
 
 
-                
 
-            
+
+
 
                 for(var i=0;i<obj.length;i++){
                     if(testId == obj[i].test.test_id){
@@ -308,7 +308,7 @@
                         $("#methodology").html(obj[i].test.methodology);
 
                         if(obj[i].params.length > 0){
-                       
+
 
                         for(var j=0;j<obj[i].params.length;j++){
 
@@ -322,7 +322,7 @@
                         }
 
                         $("#test_params").html(test_params);
-                    
+
                     }
                 }
             });

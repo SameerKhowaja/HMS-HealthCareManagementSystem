@@ -967,10 +967,10 @@ class AdminController extends Controller
         $msg='';
 
         $req->validate([
-            'test_name' => 'required',
-            'test_type' => 'required|max:100',
-            'test_sample' => 'required|max:100',
-            'methodology' => 'required|max:100',
+            'test_name' => 'required|max:200',
+            'test_type' => 'required|max:200',
+            'test_sample' => 'required|max:200',
+            'methodology' => 'required|max:200',
         ]);
 
         $testExist = Lab_test_name::where('test_name',$req->test_name)->get();
@@ -1034,10 +1034,10 @@ class AdminController extends Controller
         $msg='';
 
         $req->validate([
-            'test_name' => 'required',
-            'test_type' => 'required|max:100',
-            'test_sample' => 'required|max:100',
-            'methodology' => 'required|max:100',
+            'test_name' => 'required|max:200',
+            'test_type' => 'required|max:200',
+            'test_sample' => 'required|max:200',
+            'methodology' => 'required|max:200',
         ]);
 
         $test->test_name = $req->test_name;
