@@ -9,7 +9,7 @@ Route::get('/view-doctors-list','HomepageController@viewDoctorsList');   //Docto
 
 // Login and Registration
 Route::get('/login','LoginController@login');   //login form
-Route::post('/profile','LoginController@profile');  //login submit click
+Route::post('/login','LoginController@profile');  //login submit click
 Route::get('/patient-registration','SignupController@signup');  //registration form
 Route::post('/patient-registration-progress','SignupController@register');  //registration submit click
 
