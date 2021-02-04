@@ -1,0 +1,48 @@
+.btn-row {
+    display: grid;
+    grid-template-columns: 1fr 1fr 1fr;
+    gap: 20%;
+    margin: auto;
+}
+
+.button_grp1 {
+    display: grid;
+    grid-template-columns: 2fr 1fr 1fr;
+    gap: 1%;
+}
+
+.button_grp2 {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 1%;
+}
+
+.button_grp1 button,
+.button_grp2 button {
+    width: 80%;
+}
+
+@media(max-width:1500px) {
+    .button_grp1 {
+        grid-template-columns: 1fr;
+        grid-template-rows: auto;
+        margin-left: 0;
+    }
+    .button_grp2 {
+        grid-template-columns: 1fr;
+        grid-template-rows: auto;
+    }
+}
+
+@media(max-width:1300px) {
+    .btn-row {
+        grid-template-columns: 1fr;
+        grid-template-rows: auto;
+        gap: 1%;
+        margin: auto;
+        text-align: center;
+    }
+    .btn-row button {
+        width: 100%;
+    }
+}
