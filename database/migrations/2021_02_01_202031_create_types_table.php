@@ -27,7 +27,7 @@ class CreateTypesTable extends Migration
                 ['type_name'=>'Receptionist'],
                 ['type_name'=>'Lab Technician'],
                 ['type_name'=>'Other']
-            ),
+            )
         );
     }
 
