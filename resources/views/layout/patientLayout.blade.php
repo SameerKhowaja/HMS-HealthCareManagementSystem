@@ -22,7 +22,7 @@
     <link rel="stylesheet" href="{{asset('external-libraries/css/jquery-ui.theme.min.css')}}">
     <link rel="stylesheet" href="{{asset('resources/sass/css/datepicker_style.css')}}">
     <script src="{{asset('external-libraries/js/ajax-jquery.min.js')}}"></script>
-    <!-- <script src="{{asset('external-libraries/js/codejquery-3.5.1.js')}}"></script> -->
+    <script src="{{asset('external-libraries/js/codejquery-3.5.1.js')}}"></script>
     
     <script src="{{asset('external-libraries/js/jquery-ui.min.js')}}"></script>
     
