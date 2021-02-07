@@ -23,6 +23,9 @@ use App\Room;
 use App\Type;
 use App\Other;
 use App\User;
+// ali added
+use App\Appointment_request;
+// ----
 
 class PatientController extends Controller
 {
@@ -137,17 +140,54 @@ class PatientController extends Controller
         }
     }
 
-    // Schedule Appointment View
-    function scheduleAppointmentView($id){
-        // Hospital Table join with Doctor Table where doctor id = id
-        $data = Hospital_data::join('doctors', 'doctors.primary_id', '=', 'hospital_datas.primary_id')->where('doctors.doctor_id', $id)->get(['hospital_datas.*', 'doctors.*']);
-        $rowsReturn = count($data);
-        if($rowsReturn == 0){
-            return view('page404', ['msg'=>'Error', 'msg_long'=>' Doctor do not exist...!']);
+    // // Schedule Appointment View
+    // function scheduleAppointmentView($id){
+    //     // Hospital Table join with Doctor Table where doctor id = id
+    //     $data = Hospital_data::join('doctors', 'doctors.primary_id', '=', 'hospital_datas.primary_id')->where('doctors.doctor_id', $id)->get(['hospital_datas.*', 'doctors.*']);
+    //     $rowsReturn = count($data);
+    //     if($rowsReturn == 0){
+    //         return view('page404', ['msg'=>'Error', 'msg_long'=>' Doctor do not exist...!']);
+    //     }
+
+    //     $doctorData = $data[0];  // First Doctor Retrieved
+    //     return view('patient.doctorAppointment.scheduleAppointment', ['doctorData'=>$doctorData]);
+    // }
+
+    function requestAppointment(Request $req){
+        $req->validate([
+            'appointment_date' => 'required|max:100',
+            'primary_id' => 'required|max:20',
+            'doctor_id' => 'required|max:20'
+        ]);
+
+        $dtArray = explode('/', $req->appointment_date);
+        $dt = $dtArray[2].'-'.$dtArray[0].'-'.$dtArray[1];
+
+        $patient_data = Patient::where('primary_id',$req->primary_id)->get();
+        $doctor_data = Doctor::where('doctor_id',$req->doctor_id)->get();
+
+        if($patient_data->count() > 0){
+
+        $app_req = new Appointment_request;
+        $app_req->appointment_date = $dt;
+        $app_req->description = $req->description;
+
+        if($doctor_data->count() > 0 ){
+            $app_req->doctor_id = $req->doctor_id;
+        }else{
+            return redirect()->back()->with('msg','Doctor does not exist!');
+
+        }
+        $app_req->patient_id = $patient_data[0]->patient_id;
+        $app_req->day = date('D',strtotime($req->appointment_date));
+        $app_req->save();
+
+        }else{
+            return redirect()->back()->with('msg','Patient is not authorized!');
         }
 
-        $doctorData = $data[0];  // First Doctor Retrieved
-        return view('patient.doctorAppointment.scheduleAppointment', ['doctorData'=>$doctorData]);
+        return redirect()->back()->with('msg','Appointment Request Sent!');
+
     }
 
 }
