@@ -105,8 +105,9 @@ Route::get('/patient/editPatientProfile/{id}','PatientController@editProfile'); 
 Route::post('/patient/editPatientProfile/{id}','PatientController@editProfileSave');   //edit patient profile data save on btn click
 Route::post('/patient/editPatientProfile/editPassword/{id}','PatientController@editProfilePassword');   //edit patient profile password modal save on btn click
 
-Route::get('/patient/doctor-appointment/schedule-appointment/{id}','PatientController@scheduleAppointmentView');   //schedule appointment view
-
+// ali changed ------
+Route::post('/patient/doctor-appointment','PatientController@requestAppointment');   //schedule appointment request
+// -----
 //======================================================
 //                 Patient Module ENDS
 //=======================================================
