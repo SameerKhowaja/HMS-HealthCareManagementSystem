@@ -74,8 +74,8 @@
                 <h3 class="text-large text-grey">Admin / Doctor's Appointment</h3>
             </div>
 
-            
-            <!-- Hospital table -->
+
+            <!-- Doctor Appointment Table -->
             <div class="table-responsive" style='box-shadow: 5px 3px 5px 3px #1b99d8; background-color: white; padding: 2%; border-radius: 10px; font-size: 13px;'>
                 <div class="row">
                     <div class="col-sm-12">
@@ -95,11 +95,10 @@
                                 <span aria-hidden="true">&times;</span>
                             </button>
                         </div>
-                   </div>
+                    </div>
                 </div>
                 @endif
 
-                <!-- Patient table Start -->
                 <div class="table-responsive-sm">
                     <table id="RecordTable" class="table table-hover">
                         <thead>
@@ -135,7 +134,7 @@
                                     <div class="btn-group" role="group">
                                         <!-- View - Edit - Delete -->
                                         <a id='{{$data->doctor_available_id}}' style='font-size:13px;' class="btn btn-info btn-lg viewDoctor" role="button" aria-pressed="true" data-toggle="modal" data-target="#viewDoctor_modal"><i class="fa fa-clock-o fa-lg" aria-hidden="true"></i> View Timings</a>
-                                        <a id='{{"appointment".$data->doctor_available_id}}' style='font-size:13px;' class="btn btn-info btn-lg viewAppointment" role="button" aria-pressed="true" data-toggle="modal" data-target="#viewAppointment_modal"><i class="fa fa-calendar fa-lg" aria-hidden="true"></i>Appointment</a>
+                                        <a id='{{"appointment".$data->doctor_available_id}}' style='font-size:13px;' class="btn btn-primary btn-lg viewAppointment" role="button" aria-pressed="true" data-toggle="modal" data-target="#viewAppointment_modal"><i class="fa fa-calendar fa-lg" aria-hidden="true"></i> Appointment</a>
                                     </div>
                                 </td>
                             </tr>
@@ -145,7 +144,7 @@
                         </tbody>
                     </table>
 
-      
+
                     <!-- Alert if Zero Result Retrieved -->
                     @if($msg??''!='')
                     <div class="row">
@@ -157,7 +156,7 @@
 
                 </div>
             </div>
-            <!-- Hospital Table end -->
+            <!-- Doctor Appointment Table end -->
         </div>
 
         <!-- View Modal -->
@@ -223,7 +222,7 @@
         </div>
         <!-- View Modal Ends-->
 
-                      <!-- View Modal -->
+        <!-- View Modal -->
         <div class="modal fade" id="viewAppointment_modal">
             <div class="modal-dialog modal-dialog-centered">
                 <div class="modal-content">
@@ -231,43 +230,43 @@
                                 <form action="/patient/doctor-appointment" id="requestForm" autocomplete="off" method="POST">
                                     @csrf
                                     <!-- Head Row -->
+                                    <br>
                                     <div class="row" style="margin:auto;">
                                         <div class="col-sm-12" style="text-align:center;">
                                             <div class="form-group">
-                                                <h3 class="text-info text-bold">Select Appointment Date</h3>
+                                                <h3 class="text-primary text-bold">Select Appointment Date*</h3>
                                             </div>
                                         </div>
                                     </div>
 
-                                    <input type="hidden" name="primary_id" value="{{session('userID')}}" /> 
-                                    <hr>
-                                    
+                                    <input type="hidden" name="primary_id" value="{{session('userID')}}" />
+
                                     <div class="row">
-                                        <div class='col-sm-10 text-center m-auto'>
+                                        <div class='col-sm-12 text-center m-auto'>
                                             <div class="form-group">
-                                                <input type="text" id="datepicker" name='appointment_date' size='9' value=""  class="input-control text-bold p-3 rounded m-auto col-sm-10" style="font-size:1.3em" placeholder="select date" required /> 
+                                                <input type="text" id="datepicker" name='appointment_date' size='9' value=""  class="input-control text-bold p-3 rounded m-auto col-sm-10" style="font-size:1.3em" placeholder="Select Date" required />
                                             </div>
                                         </div>
                                     </div>
 
-                                    <br><br>
-
+                                    <br><hr>
 
                                     <div class="row">
-                                        <div class="form-group col-sm-10 m-auto text-center">
+                                        <div class="form-group col-sm-12 m-auto text-center">
                                             <div>
-                                                <label for="description" class="text-info h4 text-bold">Description</label>
+                                                <label for="description" class="text-primary h4 text-bold">Description (if any)</label>
                                             </div>
-                                            <textarea rows="4" cols="50" id="description" name='description'   class="input-control" style="font-size:1.3em" placeholder="State your health issues"></textarea> 
+                                            <textarea rows="4" cols="50" id="description" name='description' class="input-control" style="font-size:1.3em" placeholder="State your health issues"></textarea>
                                         </div>
                                     </div>
 
                                     <br>
-                                    
+
                                     <div class="row" >
-                                        <div class="col-sm-6 m-auto text-center" >
+                                        <div class="col-sm-12 text-center" >
                                             <div class="form-group">
-                                                <input type="submit" class="btn btn-info btn-lg btn-block" name="Request" value="Request Appointment">
+                                                <button type="button" class="btn btn-secondary btn-lg" data-dismiss="modal" style="font-size:15px;">Close</button>
+                                                <input type="submit" class="btn btn-primary btn-lg" name="Request" value="Request Appointment" style="font-size:15px;">
                                             </div>
                                         </div>
                                     </div>
@@ -282,10 +281,10 @@
 
 
     </div>
-    
+
 
     <script>
-    
+
         $(document).ready(function(){
             $("#searchData").on("keyup", function() {
                 var value = $(this).val().toLowerCase();
@@ -307,7 +306,7 @@
                 event.preventDefault();
                 $("#datepicker").val("");
                 uid = $(this).attr('id');   // current id
-                // uid= appointment+doctor_available_id 
+                // uid= appointment+doctor_available_id
                 uid = uid.substring(11,uid.length);
                 dataAll = $('.AllData').attr('id'); // all records
                 var req = JSON.parse(dataAll);
@@ -323,12 +322,12 @@
         });
 
         $("#datepicker").datepicker("destroy");
-    
-        $("#datepicker").datepicker({       
+
+        $("#datepicker").datepicker({
                 changeMonth:true,
                 changeYear:true,
                 minDate:0,
-                beforeShowDay:function(date) {                    
+                beforeShowDay:function(date) {
                                     if(current_object){
                                         if(date.getDay() == 1 && (current_object.monday_start==null)){
                                                 return [false,"","unavailable"];
@@ -352,7 +351,7 @@
         $(".ui-datepicker-prev, .ui-datepicker-next").remove();
         $("#icon").click(function() { $("#datepicker").datepicker( "show" );});
 
-        
+
     </script>
 
 
@@ -374,11 +373,11 @@
         $(document).ready(function(){
             $(".viewDoctor").click(function(){
                 user_id = $(this).attr('id');   // current id
-                
+
 
                 allData = $('.AllData').attr('id'); // all records
                 var obj = JSON.parse(allData);
-                
+
                 for(var i=0;i<obj.length;i++){
                     if(user_id == obj[i].doctor_available_id){
                         $("#fullName").html(obj[i].fname+' '+obj[i].lname);
