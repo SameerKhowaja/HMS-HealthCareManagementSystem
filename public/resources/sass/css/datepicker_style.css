@@ -1,0 +1,107 @@
+.ui-datepicker {
+    height: 300px;
+    width: 300px;
+    font: 12pt Arial, sans-serif;
+    margin: 5px auto 0;
+}
+
+.ui-datepicker table {
+    width: 100%;
+}
+
+.ui-datepicker-header {
+    background: #084c91;
+    color: #ffffff;
+    font-family: sans-serif, 'Times New Roman';
+    border-width: 1% 0 0 0;
+    border-style: solid;
+    border-color: rgb(42, 112, 145);
+}
+
+.ui-datepicker-title {
+    text-align: center;
+    font-size: 1.4em;
+}
+
+.ui-datepicker-prev {
+    cursor: pointer;
+    float: left;
+    background-position: center -31px;
+}
+
+.ui-datepicker-next {
+    background-position: center 0px;
+    cursor: pointer;
+    float: right;
+}
+
+.ui-datepicker thead {
+    background-color: #047083;
+}
+
+.ui-datepicker th {
+    background-color: #808080;
+    text-transform: uppercase;
+    font-size: 1.2em;
+    color: #ffffff;
+}
+
+.ui-datepicker tbody td {
+    padding: 0;
+}
+
+.ui-datepicker tbody td:last-child {
+    border-right: 0px;
+}
+
+.ui-datepicker tbody tr {
+    border-bottom: 1px solid #bbb;
+}
+
+.ui-datepicker tbody tr:last-child {
+    border-bottom: 0px;
+}
+
+.ui-datepicker a {
+    text-decoration: none;
+}
+
+.ui-datepicker td span,
+.ui-datepicker td a {
+    display: inline-block;
+    text-align: center;
+    width: 25px;
+    height: 25px;
+    line-height: 25px;
+    color: #ffffff;
+}
+
+.ui-datepicker-calendar .ui-state-default {
+    background: linear-gradient(#999999, #737373);
+    color: #ffffff;
+    font-weight: bold;
+    height: 100%;
+    width: 100%;
+}
+
+.ui-datepicker-calendar .ui-state-hover {
+    background: #f1f3f5;
+    color: #111111;
+}
+
+.ui-datepicker-calendar .ui-state-active {
+    -webkit-box-shadow: inset 0px 0px 10px 0px rgba(0, 0, 0, .1);
+    -moz-box-shadow: inset 0px 0px 10px 0px rgba(0, 0, 0, .1);
+    box-shadow: inset 0px 0px 10px 0px rgba(0, 0, 0, .1);
+    text-shadow: 0px 1px 0px #4d7a85;
+    position: relative;
+    background: #46a4e2;
+    color: #e0e0e0;
+    border: 1px solid #55838f;
+    margin: -1px;
+}
+
+.ui-datepicker-unselectable .ui-state-default {
+    color: #000;
+    background: #D6E4BE;
+}

@@ -74,6 +74,7 @@
                 <h3 class="text-large text-grey">Admin / Doctor's Appointment</h3>
             </div>
 
+            
             <!-- Hospital table -->
             <div class="table-responsive" style='box-shadow: 5px 3px 5px 3px #1b99d8; background-color: white; padding: 2%; border-radius: 10px; font-size: 13px;'>
                 <div class="row">
@@ -84,6 +85,19 @@
                             </div>
                     </div>
                 </div>
+
+                @if(session()->has('msg'))
+                <div class="row">
+                    <div class="col-sm-12">
+                        <div class="alert alert-warning alert-dismissible fade show text-center" role="alert">
+                            <strong>{{ session()->get('msg') }}</strong>
+                            <button type="button" class="close" data-dismiss="alert" aria-label="Close">
+                                <span aria-hidden="true">&times;</span>
+                            </button>
+                        </div>
+                   </div>
+                </div>
+                @endif
 
                 <!-- Patient table Start -->
                 <div class="table-responsive-sm">
@@ -121,7 +135,7 @@
                                     <div class="btn-group" role="group">
                                         <!-- View - Edit - Delete -->
                                         <a id='{{$data->doctor_available_id}}' style='font-size:13px;' class="btn btn-info btn-lg viewDoctor" role="button" aria-pressed="true" data-toggle="modal" data-target="#viewDoctor_modal"><i class="fa fa-clock-o fa-lg" aria-hidden="true"></i> View Timings</a>
-                                        <a href='/patient/doctor-appointment/schedule-appointment/{{$data->doctor_id}}' style='font-size:13px;' class="btn btn-primary btn-lg active bookAppointment" role="button" aria-pressed="true"><i class="fa fa-calendar fa-lg" aria-hidden="true"></i> Appointment</a>
+                                        <a id='{{"appointment".$data->doctor_available_id}}' style='font-size:13px;' class="btn btn-info btn-lg viewAppointment" role="button" aria-pressed="true" data-toggle="modal" data-target="#viewAppointment_modal"><i class="fa fa-calendar fa-lg" aria-hidden="true"></i>Appointment</a>
                                     </div>
                                 </td>
                             </tr>
@@ -131,6 +145,7 @@
                         </tbody>
                     </table>
 
+      
                     <!-- Alert if Zero Result Retrieved -->
                     @if($msg??''!='')
                     <div class="row">
@@ -208,9 +223,69 @@
         </div>
         <!-- View Modal Ends-->
 
+                      <!-- View Modal -->
+        <div class="modal fade" id="viewAppointment_modal">
+            <div class="modal-dialog modal-dialog-centered">
+                <div class="modal-content">
+                    <div class="modal-body">
+                                <form action="/patient/doctor-appointment" id="requestForm" autocomplete="off" method="POST">
+                                    @csrf
+                                    <!-- Head Row -->
+                                    <div class="row" style="margin:auto;">
+                                        <div class="col-sm-12" style="text-align:center;">
+                                            <div class="form-group">
+                                                <h3 class="text-info text-bold">Select Appointment Date</h3>
+                                            </div>
+                                        </div>
+                                    </div>
+
+                                    <input type="hidden" name="primary_id" value="{{session('userID')}}" /> 
+                                    <hr>
+                                    
+                                    <div class="row">
+                                        <div class='col-sm-10 text-center m-auto'>
+                                            <div class="form-group">
+                                                <input type="text" id="datepicker" name='appointment_date' size='9' value=""  class="input-control text-bold p-3 rounded m-auto col-sm-10" style="font-size:1.3em" placeholder="select date" required /> 
+                                            </div>
+                                        </div>
+                                    </div>
+
+                                    <br><br>
+
+
+                                    <div class="row">
+                                        <div class="form-group col-sm-10 m-auto text-center">
+                                            <div>
+                                                <label for="description" class="text-info h4 text-bold">Description</label>
+                                            </div>
+                                            <textarea rows="4" cols="50" id="description" name='description'   class="input-control" style="font-size:1.3em" placeholder="State your health issues"></textarea> 
+                                        </div>
+                                    </div>
+
+                                    <br>
+                                    
+                                    <div class="row" >
+                                        <div class="col-sm-6 m-auto text-center" >
+                                            <div class="form-group">
+                                                <input type="submit" class="btn btn-info btn-lg btn-block" name="Request" value="Request Appointment">
+                                            </div>
+                                        </div>
+                                    </div>
+
+
+                                </form>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <!-- View Modal Ends-->
+
+
     </div>
+    
 
     <script>
+    
         $(document).ready(function(){
             $("#searchData").on("keyup", function() {
                 var value = $(this).val().toLowerCase();
@@ -219,7 +294,67 @@
                 });
             });
         });
+
+        </script>
+
+<script>
+        var uid;
+        var dataAll;
+        var current_object;
+        $("#datepicker").keydown(function (event) { event.preventDefault(); });
+        $(document).ready(function(){
+            $(".viewAppointment").click(function(event){
+                event.preventDefault();
+                $("#datepicker").val("");
+                uid = $(this).attr('id');   // current id
+                // uid= appointment+doctor_available_id 
+                uid = uid.substring(11,uid.length);
+                dataAll = $('.AllData').attr('id'); // all records
+                var req = JSON.parse(dataAll);
+
+                for(var i=0;i<req.length;i++){
+                    if(uid == req[i].doctor_available_id){
+                        $("#requestForm").append('<input type="hidden" name="doctor_id" value='+req[i].doctor_id+' >');
+                        current_object = req[i];
+                    }
+                }
+            });
+
+        });
+
+        $("#datepicker").datepicker("destroy");
+    
+        $("#datepicker").datepicker({       
+                changeMonth:true,
+                changeYear:true,
+                minDate:0,
+                beforeShowDay:function(date) {                    
+                                    if(current_object){
+                                        if(date.getDay() == 1 && (current_object.monday_start==null)){
+                                                return [false,"","unavailable"];
+                                        }else if(date.getDay() == 2 && (current_object.tuesday_start ==null)){
+                                                return [false,"","unavailable"];
+                                        }else if(date.getDay() == 3 && (current_object.wednesday_start ==null)){
+                                                return [false,"","unavailable"];
+                                        }else if(date.getDay() == 4 && (current_object.thursday_start ==null)){
+                                                return [false,"","unavailable"];
+                                        }else if(date.getDay() == 5 && (current_object.friday_start ==null)){
+                                                return [false,"","unavailable"];
+                                        }else if(date.getDay() == 6 && (current_object.saturday_start ==null)){
+                                                return [false,"","unavailable"];
+                                        }else if(date.getDay() == 0 && (current_object.sunday_start ==null)){
+                                                return [false,"","unavailable"];
+                                        }
+                                    }
+                                    return [true,""];
+                            }
+                });
+        $(".ui-datepicker-prev, .ui-datepicker-next").remove();
+        $("#icon").click(function() { $("#datepicker").datepicker( "show" );});
+
+        
     </script>
+
 
     <script>
         // function convert 24hr time to 12hr
@@ -239,10 +374,11 @@
         $(document).ready(function(){
             $(".viewDoctor").click(function(){
                 user_id = $(this).attr('id');   // current id
+                
 
                 allData = $('.AllData').attr('id'); // all records
                 var obj = JSON.parse(allData);
-
+                
                 for(var i=0;i<obj.length;i++){
                     if(user_id == obj[i].doctor_available_id){
                         $("#fullName").html(obj[i].fname+' '+obj[i].lname);
@@ -319,3 +455,5 @@
     </script>
 
 @endsection
+
+
