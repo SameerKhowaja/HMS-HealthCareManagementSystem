@@ -11,4 +11,10 @@ class Doctor extends Model
 
     // no need to insert time if not there
     public $timestamps = false;
+
+    public function appointment_requests()
+    {
+        return $this->hasMany('App\Appointment_request');
+    }
+    
 }
