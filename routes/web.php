@@ -134,6 +134,13 @@ Route::get('/doctor','DoctorController@index');   //dashboard
 
 // navbar routes   -----------------------------------------------------
 Route::get('/receptionist','ReceptionistController@index');   //dashboard
+Route::get('/receptionist/doctor-view','ReceptionistController@doctorView');   //doctor view
+Route::get('/receptionist/doctor-timing','ReceptionistController@doctorTiming');   //doctor timing
+Route::get('/receptionist/patient-view','ReceptionistController@patientView');   //patient view
+Route::get('/receptionist/patient-admission','ReceptionistController@patientAdmission');   //patient admission
+Route::get('/receptionist/patient-appointment','ReceptionistController@patientAppointment');   //patient appointment
+Route::get('/receptionist/patient-lab-test','ReceptionistController@patientLabTest');   //patient lab test
+Route::get('/receptionist/room-bed','ReceptionistController@viewRoomBed');   //room bed view
 // ---------------------------------------------------------------------
 
 Route::get('/receptionist/editReceptionistProfile/{id}','ReceptionistController@editProfile');   //edit profile view
