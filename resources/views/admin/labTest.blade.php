@@ -82,7 +82,7 @@
 
         <div style='margin-top:2%; margin-bottom:2%;'>
             <div style="display: flex; justify-content: space-between; align-items: center;">
-                <h3 class="text-large text-grey">Admin / Laboratory-Test</h3>
+                <h3 class="text-large text-grey">Admin / Laboratory Test</h3>
                 <a href="/admin/lab-test/addTest/" class="btn btn-primary btn-lg active" role="button" aria-pressed="true"><i class="fa fa-plus-circle"> </i>  Add Test</a>
             </div>
 
@@ -118,11 +118,11 @@
                     <table id="RecordTable" class="table table-hover">
                         <thead>
                             <tr>
-                                <th scope="col" style="text-align:center"></th>
                                 <th scope="col" style="text-align:center">Test Name</th>
                                 <th scope="col" style="text-align:center">Test Type</th>
                                 <th scope="col" style="text-align:center">Test Sample</th>
                                 <th scope="col" style="text-align:center">Methodology</th>
+                                <th scope="col" style="text-align:center">Action</th>
                             </tr>
                         </thead>
 
@@ -133,9 +133,6 @@
 
                             @foreach($labTests as $data)
                             <tr>
-                                <td style="text-align:center">
-                                <img class="labsvg" src="{{asset('resources/images/lab.svg')}}" width="30px" height="30px" alt="test tube">
-                                </td>
                                 <td style="text-align:center">{{$data["test"]->test_name}}</td>
                                 <td style="text-align:center">{{$data["test"]->test_type}}</td>
                                 <td style="text-align:center">{{$data['test']->test_sample}}</td>
@@ -199,7 +196,6 @@
                     <div class="modal-body">
                         <!-- Photo and Name -->
                         <div class="row">
-
                             <div class="col-lg-12">
                                 <h1 id="testName" class="media-heading display-5 text-center"></h1>
                             </div>

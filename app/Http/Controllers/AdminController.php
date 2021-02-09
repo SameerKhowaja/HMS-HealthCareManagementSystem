@@ -413,27 +413,7 @@ class AdminController extends Controller
     // Delete User in hospital data using modal
     function deleteUserData($id){
         $userData = Hospital_data::findOrFail($id);
-        $primary_id = $userData->primary_id;    // primary_id of hospital data table
-        $getType_id = $userData->type_id;       // type is also fetched
-
-        $userTypeData = Type::findOrFail($getType_id);
-        $getType_name = $userTypeData->type_name;   // type name fetched
-
-        $getType_name = strtolower($getType_name); // lower case string
-        $getType_name = ucwords(str_replace(" ", "_", $getType_name));  // capital first letter and replace space with underscore
-
-        $originalTypeName = $getType_name;    // used in if condition without 's'
-        $getType_name = $getType_name.'s';    // Table name concat with 's' in end
-
-        // Now find doctor id if type is doctor delete doctor data from doctor_availability table
-        if($originalTypeName == 'doctor' || $originalTypeName == 'Doctor'){
-            $doctorsList = DB::table($getType_name)->select('doctor_id')->where('primary_id', $primary_id)->get();
-            DB::table('doctor_availability')->where('doctor_id', $doctorsList[0]->doctor_id)->delete();
-        }
-
-        DB::table($getType_name)->where('primary_id', $primary_id)->delete();
-        $userData->delete();    // Delete from hospital table
-
+        $userData->delete();
         return redirect("/admin/hospital-data")->with('msg','Successfully Deleted');
     }
 
@@ -871,8 +851,8 @@ class AdminController extends Controller
         return view('admin.labTestPatient');
     }
 
-	// ali-added -----
 
+	// Lab-Test Functions -----
     function labTest(){
         $testTypes = Lab_test_name::pluck('test_type');
         $testTypes = $testTypes->unique();
@@ -933,24 +913,12 @@ class AdminController extends Controller
     }
 
     function deleteLabData($id){
-        $LabData = Lab_test_name::where('test_id',$id)->get();
-        $test_id = $LabData[0]->test_id;
-
-        try{
-            if($LabData->count() > 0){
-                Lab_test_parameter::where('test_id',$id)->delete();
-                Lab_test_name::where('test_id',$id)->delete();
-            }
-        }catch (Throwable $e) {
-            // ------
-        }
-
+        $LabData = Lab_test_name::findOrFail($id);
+        $LabData->delete();
         return redirect("/admin/lab-test")->with('msg','Successfully Deleted');
     }
 
-
     function addTest(){
-
         return view('admin.manageLab.addTest');
     }
 
@@ -996,17 +964,12 @@ class AdminController extends Controller
         }
 
         return view('admin.manageLab.addTest', ['msg'=>"Failure", 'long_msg'=>"Failed to add ".$req->test_name." Test to database"]);
-
-
     }
 
     function editTestData($id){
         $testData = Lab_test_name::where("test_id",$id)->get();
-
         $params = Lab_test_parameter::all();
-
         $labTest = [];
-
         $tmp = [];
         foreach($params as $p){
             if($testData[0]->test_id == $p->test_id){
