@@ -15,7 +15,7 @@ class CreateHospitalDatasTable extends Migration
     {
         Schema::create('hospital_datas', function (Blueprint $table) {
             $table->bigIncrements("primary_id", 20);
-            $table->integer('type_id')->length(11)->unsigned();
+            $table->integer('type_id')->length(11);
             $table->string("fname", 100);
             $table->string("lname", 100);
             $table->string("cnic", 100);
@@ -29,6 +29,7 @@ class CreateHospitalDatasTable extends Migration
             $table->binary("image")->nullable();    // Change blob to longblob from database
             $table->timestamp('created_at')->default(\DB::raw('CURRENT_TIMESTAMP'));
             $table->timestamp('updated_at')->nullable();
+            $table->foreign('type_id')->references('type_id')->on('types')->onDelete('cascade');
         });
     }
 

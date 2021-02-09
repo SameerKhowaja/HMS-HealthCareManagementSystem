@@ -13,11 +13,13 @@ class CreateLabTestParametersTable extends Migration
      */
     public function up()
     {
+        Schema::enableForeignKeyConstraints();
         Schema::create('lab_test_parameters', function (Blueprint $table) {
             $table->bigIncrements('param_id', 20);
             $table->string("param", 200);
             $table->string("unit", 200)->nullable();
-            $table->integer('test_id')->length(11)->unsigned();
+            $table->bigInteger('test_id')->length(20)->unsigned();
+            $table->foreign('test_id')->references('test_id')->on('lab_test_names')->onDelete('cascade');
         });
     }
 

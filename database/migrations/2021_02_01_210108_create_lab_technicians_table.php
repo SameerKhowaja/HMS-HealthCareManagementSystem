@@ -16,6 +16,7 @@ class CreateLabTechniciansTable extends Migration
         Schema::create('lab_technicians', function (Blueprint $table) {
             $table->bigIncrements('technician_id', 20);
             $table->bigInteger('primary_id')->length(20)->unsigned()->unique();
+            $table->foreign('primary_id')->references('primary_id')->on('hospital_datas')->onDelete('cascade');
         });
     }
 

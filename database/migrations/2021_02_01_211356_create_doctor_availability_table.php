@@ -30,6 +30,7 @@ class CreateDoctorAvailabilityTable extends Migration
             $table->time('saturday_end')->nullable();
             $table->time('sunday_start')->nullable();
             $table->time('sunday_end')->nullable();
+            $table->foreign('doctor_id')->references('doctor_id')->on('doctors')->onDelete('cascade');
         });
     }
 

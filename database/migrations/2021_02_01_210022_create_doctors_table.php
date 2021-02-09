@@ -17,6 +17,7 @@ class CreateDoctorsTable extends Migration
             $table->bigIncrements('doctor_id', 20);
             $table->bigInteger('primary_id')->length(20)->unsigned()->unique();
             $table->string("specialist", 100)->nullable();
+            $table->foreign('primary_id')->references('primary_id')->on('hospital_datas')->onDelete('cascade');
         });
     }
 

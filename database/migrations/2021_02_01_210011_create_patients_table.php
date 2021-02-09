@@ -16,6 +16,7 @@ class CreatePatientsTable extends Migration
         Schema::create('patients', function (Blueprint $table) {
             $table->bigIncrements('patient_id', 20);
             $table->bigInteger('primary_id')->length(20)->unsigned()->unique();
+            $table->foreign('primary_id')->references('primary_id')->on('hospital_datas')->onDelete('cascade');
         });
     }
 

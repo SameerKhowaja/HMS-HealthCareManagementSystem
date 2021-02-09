@@ -740,20 +740,6 @@ class AdminController extends Controller
     function deleteRoom($id){
         $rooms = Room::with('bed')->where('room_number', '=', $id)->firstOrFail();
         $rooms->delete();
-        // // id is room number
-        // $rooms = Room::where('room_number', '=', $id)->firstOrFail();
-        // $roomID = $rooms->room_id;
-
-        // // First Delete All Beds
-        // $beds = Bed::all();
-        // forEach($beds as $b){
-        //     if($b->room_id == $roomID){
-        //         $b->delete();
-        //     }
-        // }
-
-        // // Then Delete Bed
-        // $rooms->delete();
         return redirect("/admin/room-management/")->with('msg','success');
     }
 
