@@ -11,4 +11,8 @@ class Room extends Model
 
     // no need to insert time if not there
     public $timestamps = false;
+
+    public function bed(){
+        return $this->hasMany(Bed::class, 'room_id');
+    }
 }

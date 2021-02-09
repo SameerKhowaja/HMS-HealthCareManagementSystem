@@ -652,6 +652,7 @@ class AdminController extends Controller
 
     // room management view
     function roomManagement(){
+        //return Room::with('bed')->get();
         $roomCount = Room::count(); // Room Count
         $bedCount = Bed::count(); // Bed Count
 
@@ -666,7 +667,7 @@ class AdminController extends Controller
         $rooms = Room::all();
         $room_nums = array();   // total rooms
         forEach($rooms as $data){
-            array_push($room_nums,$data->room_number);  // Add all rooms to array
+            array_push($room_nums, $data->room_number);  // Add all rooms to array
         }
 
         // joining room and bed table using room id
@@ -737,20 +738,22 @@ class AdminController extends Controller
     }
 
     function deleteRoom($id){
-        // id is room number
-        $rooms = Room::where('room_number', '=', $id)->firstOrFail();
-        $roomID = $rooms->room_id;
-
-        // First Delete All Beds
-        $beds = Bed::all();
-        forEach($beds as $b){
-            if($b->room_id == $roomID){
-                $b->delete();
-            }
-        }
-
-        // Then Delete Bed
+        $rooms = Room::with('bed')->where('room_number', '=', $id)->firstOrFail();
         $rooms->delete();
+        // // id is room number
+        // $rooms = Room::where('room_number', '=', $id)->firstOrFail();
+        // $roomID = $rooms->room_id;
+
+        // // First Delete All Beds
+        // $beds = Bed::all();
+        // forEach($beds as $b){
+        //     if($b->room_id == $roomID){
+        //         $b->delete();
+        //     }
+        // }
+
+        // // Then Delete Bed
+        // $rooms->delete();
         return redirect("/admin/room-management/")->with('msg','success');
     }
 

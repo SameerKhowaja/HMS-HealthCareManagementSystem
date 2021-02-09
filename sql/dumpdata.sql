@@ -35,6 +35,12 @@ INSERT INTO `patients` (`patient_id`, `primary_id`) VALUES
 INSERT INTO `receptionists` (`receptionist_id`, `primary_id`) VALUES
 (1, 7);
 
+INSERT INTO `rooms` (`room_id`, `room_number`) VALUES
+(2, 'Room 44'),
+(3, 'Room3'),
+(5, 'Room4'),
+(7, 'Room5'),
+(8, 'Room 1');
 
 INSERT INTO `beds` (`bed_id`, `bed_number`, `available`, `room_id`) VALUES
 (4, 'bed-1', 1, 2),
@@ -44,12 +50,6 @@ INSERT INTO `beds` (`bed_id`, `bed_number`, `available`, `room_id`) VALUES
 (12, 'bed-2', 1, 5),
 (14, 'bed-6', 1, 2);
 
-INSERT INTO `rooms` (`room_id`, `room_number`) VALUES
-(2, 'Room 44'),
-(3, 'Room3'),
-(5, 'Room4'),
-(7, 'Room5'),
-(8, 'Room 1');
 
 INSERT INTO `announcements` (`announcement_id`, `admin_id`, `message`, `created_at`) VALUES
 (1, 1, 'Wah Bhai Wah', '2021-02-03 21:08:20'),

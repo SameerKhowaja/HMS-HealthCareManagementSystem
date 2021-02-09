@@ -17,7 +17,8 @@ class CreateBedsTable extends Migration
             $table->integer('bed_id', 11);
             $table->string('bed_number', 50);
             $table->boolean('available')->default(1);
-            $table->integer('room_id')->length(11)->unsigned();
+            $table->integer('room_id')->length(11);
+            $table->foreign('room_id')->references('room_id')->on('rooms')->onDelete('cascade');
         });
     }
 

@@ -11,4 +11,8 @@ class Bed extends Model
 
     // no need to insert time if not there
     public $timestamps = false;
+
+    public function room(){
+        return $this->belongsTo(Room::class);
+    }
 }
