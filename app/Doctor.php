@@ -16,5 +16,5 @@ class Doctor extends Model
     {
         return $this->hasMany('App\Appointment_request');
     }
-    
+
 }

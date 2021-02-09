@@ -23,9 +23,7 @@ use App\Room;
 use App\Type;
 use App\Other;
 use App\User;
-// ali added
 use App\Appointment_request;
-// ----
 
 class PatientController extends Controller
 {
@@ -112,7 +110,7 @@ class PatientController extends Controller
         // check for old password
         $oldPassword = request("current_pass");
         if($oldPassword != $hospital_data->password){
-            return view("page404", ['msg'=>"Error", 'msg_long'=>' Invalid Old Password']);
+            return view('patient.editProfile', ['hospital_data'=>$hospital_data, 'msg'=>'Error! ', 'long_msg'=>"Invalid Old Password...!"]);
         }
         else{   // old password is same
             $hospital_data->password = request("new_pass");
@@ -140,19 +138,7 @@ class PatientController extends Controller
         }
     }
 
-    // // Schedule Appointment View
-    // function scheduleAppointmentView($id){
-    //     // Hospital Table join with Doctor Table where doctor id = id
-    //     $data = Hospital_data::join('doctors', 'doctors.primary_id', '=', 'hospital_datas.primary_id')->where('doctors.doctor_id', $id)->get(['hospital_datas.*', 'doctors.*']);
-    //     $rowsReturn = count($data);
-    //     if($rowsReturn == 0){
-    //         return view('page404', ['msg'=>'Error', 'msg_long'=>' Doctor do not exist...!']);
-    //     }
-
-    //     $doctorData = $data[0];  // First Doctor Retrieved
-    //     return view('patient.doctorAppointment.scheduleAppointment', ['doctorData'=>$doctorData]);
-    // }
-
+    // request for appointment patient side
     function requestAppointment(Request $req){
         $req->validate([
             'appointment_date' => 'required|max:100',

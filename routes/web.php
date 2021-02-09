@@ -136,6 +136,11 @@ Route::get('/doctor','DoctorController@index');   //dashboard
 Route::get('/receptionist','ReceptionistController@index');   //dashboard
 // ---------------------------------------------------------------------
 
+Route::get('/receptionist/editReceptionistProfile/{id}','ReceptionistController@editProfile');   //edit profile view
+Route::post('/receptionist/editReceptionistProfile/{id}','ReceptionistController@editProfileSave');   //edit profile save btn click
+Route::post('/receptionist/editReceptionistProfile/editPassword/{id}','ReceptionistController@editProfilePassword');   //edit patient profile password modal save on btn click
+
+
 //======================================================
 //                 Receptionist Module ENDS
 //=======================================================
