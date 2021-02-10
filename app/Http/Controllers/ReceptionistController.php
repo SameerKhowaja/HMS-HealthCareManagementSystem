@@ -519,7 +519,7 @@ class ReceptionistController extends Controller
             ->select('doctors.*', 'hospital_datas.*', 'doctor_availability.*')
             ->get();
 
-        return view("admin.doctorTiming", ['dataFetched'=>$dataFetched]);
+        return view("receptionist.doctorDetail.doctorTiming", ['dataFetched'=>$dataFetched]);
     }
 
     //edit doctor timings view
@@ -532,7 +532,7 @@ class ReceptionistController extends Controller
             ->where('doctor_available_id', $id)->get();
 
         $dataFetched = $data[0]; // first index fetched
-        return view("admin.doctorTiming.editTiming", ['dataFetched'=>$dataFetched]);
+        return view("receptionist.doctorDetail.doctorTiming.editTiming", ['dataFetched'=>$dataFetched]);
     }
 
     //edit doctor timings on button click
@@ -611,10 +611,8 @@ class ReceptionistController extends Controller
             ->where('doctor_available_id', $id)->get();
 
         $dataFetched = $data[0]; // first index fetched
-        return view("admin.doctorTiming.editTiming", ['dataFetched'=>$dataFetched, 'msg'=>'Success!', 'long_msg'=>' Timings Updated...!']);
+        return view("receptionist.doctorDetail.doctorTiming.editTiming", ['dataFetched'=>$dataFetched, 'msg'=>'Success!', 'long_msg'=>' Timings Updated...!']);
     }
-
-
 
     // Doctor Timings ENDS -----------------------------------------
 
