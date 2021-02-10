@@ -623,8 +623,6 @@ class AdminController extends Controller
         return view("admin.doctorTiming.editTiming", ['dataFetched'=>$dataFetched, 'msg'=>'Success!', 'long_msg'=>' Timings Updated...!']);
     }
 
-
-
 // Admin / Doctor Timings ENDS -----------------------------------------
 
 

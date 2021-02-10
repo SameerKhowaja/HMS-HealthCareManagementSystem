@@ -145,6 +145,17 @@ Route::get('/receptionist/editReceptionistProfile/{id}','ReceptionistController@
 Route::post('/receptionist/editReceptionistProfile/{id}','ReceptionistController@editProfileSave');   //edit profile save btn click
 Route::post('/receptionist/editReceptionistProfile/editPassword/{id}','ReceptionistController@editProfilePassword');   //edit patient profile password modal save on btn click
 
+// receptionist doctor-view routes
+Route::get('/receptionist/doctor-view/addRecord','ReceptionistController@addDoctorRecord');    //add record view
+Route::post('/receptionist/doctor-view/addRecord','ReceptionistController@addDoctorRecordSave');    //add record on btn click
+Route::delete('/receptionist/doctor-view/delete-record/{id}','ReceptionistController@deleteDoctorData');    //delete User when modal btn clicks
+Route::get('/receptionist/doctor-view/edit-record/{id}','ReceptionistController@editDoctorData');    //edit User view
+Route::post('/receptionist/doctor-view/edit-record/{id}','ReceptionistController@editDoctorDataSave');    //edit User data on btn click
+
+// receptionist doctor-timing routes
+Route::get('/receptionist/doctor-timing/edit-timing/{id}','ReceptionistController@doctorTimingEditView'); //edit doctor timing view
+Route::post('/receptionist/doctor-timing/edit-timing/{id}','ReceptionistController@doctorTimingEditSave'); //edit doctor timing save on btn click
+
 // receptionist room-bed management routes
 Route::delete('/receptionist/room-bed/bed-delete/{id}','ReceptionistController@deleteBed'); //delete bed on admin modal click
 Route::post('/receptionist/room-bed/add-new-room','ReceptionistController@addNewRoom');   //add new room on modal btn click
