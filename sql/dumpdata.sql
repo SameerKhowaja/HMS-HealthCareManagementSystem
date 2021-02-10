@@ -36,7 +36,7 @@ INSERT INTO `receptionists` (`receptionist_id`, `primary_id`) VALUES
 (1, 7);
 
 INSERT INTO `rooms` (`room_id`, `room_number`) VALUES
-(2, 'Room 44'),
+(2, 'Room 2'),
 (3, 'Room3'),
 (5, 'Room4'),
 (7, 'Room5'),

@@ -71,8 +71,6 @@ Route::post('/admin/room-management/{id}','AdminController@searchAvailable');   
 Route::post('/admin/room-management/room-edit/{id}','AdminController@editRoomNumber');    //edit room number on admin modal click
 Route::post('/admin/room-management/bed-edit/{id}','AdminController@editBedNumber');    //edit bed number on admin modal click
 
-
-// ali added
 // admin lab-management routes
 Route::get('/admin/lab-test/addTest','AdminController@addTest');    //add Test record view
 Route::post('/admin/lab-test/addTest','AdminController@addTestSave');    //add patient record view on btn click
@@ -146,6 +144,16 @@ Route::get('/receptionist/room-bed','ReceptionistController@viewRoomBed');   //r
 Route::get('/receptionist/editReceptionistProfile/{id}','ReceptionistController@editProfile');   //edit profile view
 Route::post('/receptionist/editReceptionistProfile/{id}','ReceptionistController@editProfileSave');   //edit profile save btn click
 Route::post('/receptionist/editReceptionistProfile/editPassword/{id}','ReceptionistController@editProfilePassword');   //edit patient profile password modal save on btn click
+
+// receptionist room-bed management routes
+Route::delete('/receptionist/room-bed/bed-delete/{id}','ReceptionistController@deleteBed'); //delete bed on admin modal click
+Route::post('/receptionist/room-bed/add-new-room','ReceptionistController@addNewRoom');   //add new room on modal btn click
+Route::post('/receptionist/room-bed/add-new-bed','ReceptionistController@addNewBed');   //add new bed on modal btn click
+Route::delete('/receptionist/room-bed/room-delete/{id}','ReceptionistController@deleteRoom'); //delete room on admin modal click
+Route::post('/receptionist/room-bed/{id}','ReceptionistController@searchAvailable');    //search Room and Bed According to Availability on click
+Route::post('/receptionist/room-bed/room-edit/{id}','ReceptionistController@editRoomNumber');    //edit room number on admin modal click
+Route::post('/receptionist/room-bed/bed-edit/{id}','ReceptionistController@editBedNumber');    //edit bed number on admin modal click
+
 
 
 //======================================================
