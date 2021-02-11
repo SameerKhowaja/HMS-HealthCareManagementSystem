@@ -39,7 +39,7 @@
 
                         <div class="collapse" id="collapseExample">
                             <div class="dropdown-divider"></div>
-                            <a class="dropdown-item text-normal" href="/admin/patient-admitted" > Patient Admissions</a>
+                            <a class="dropdown-item text-normal" href="/admin/patient-admitted" > Patient Admitted</a>
                             <a class="dropdown-item text-normal" href="/admin/patient-appointment"> Patient Appointments</a>
                             <a class="dropdown-item text-normal" href="/admin/patient-lab-test"> Patient Lab Tests</a>
                         </div>
@@ -98,6 +98,12 @@
                                             <button type="button" class="close" data-dismiss="alert" aria-label="Close">
                                                 <span aria-hidden="true">&times;</span>
                                             </button>
+                                        </div>
+                                        <div class="col-lg-12">
+                                            <div class="input-group">
+                                                <span class="input-group-addon form-control form-control-lg col-sm-1"><i class="fa fa-filter fa-lg"></i></span>
+                                                <input type="text" name="searchTable" id="searchData" class="form-control form-control-lg col-sm-11" placeholder="Search Table Records" style="border:1px solid lightblue; color:black;">
+                                            </div>
                                         </div>
                                         <thead>
                                             <tr>
@@ -247,6 +253,17 @@
             <!-- View Modal Ends-->
 
         </div>
+
+    <script>
+        $(document).ready(function(){
+            $("#searchData").on("keyup", function() {
+                var value = $(this).val().toLowerCase();
+                $("#myTable tr").filter(function() {
+                $(this).toggle($(this).text().toLowerCase().indexOf(value) > -1)
+                });
+            });
+        });
+    </script>
 
     <script>
         var user_id;

@@ -13,7 +13,7 @@
             </a>
 
             <span aria-controls="collapseExample1" data-target="#collapseExample1" data-toggle="collapse" aria-haspopup="true" aria-expanded="false">
-                <li class="active">
+                <li>
                     <div class="text-normal">
                     <svg xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" aria-hidden="true" focusable="false" width="1em" height="1em" fill="#0052E9" style="-ms-transform: rotate(360deg); -webkit-transform: rotate(360deg); transform: rotate(360deg);" preserveAspectRatio="xMidYMid meet" viewBox="0 0 16 16">
                         <path d="M15 14s1 0 1-1-1-4-5-4-5 3-5 4 1 1 1 1h8zm-7.978-1A.261.261 0 0 1 7 12.996c.001-.264.167-1.03.76-1.72C8.312 10.629 9.282 10 11 10c1.717 0 2.687.63 3.24 1.276.593.69.758 1.457.76 1.72l-.008.002a.274.274 0 0 1-.014.002H7.022zM11 7a2 2 0 1 0 0-4 2 2 0 0 0 0 4zm3-2a3 3 0 1 1-6 0 3 3 0 0 1 6 0zM6.936 9.28a5.88 5.88 0 0 0-1.23-.247A7.35 7.35 0 0 0 5 9c-4 0-5 3-5 4 0 .667.333 1 1 1h4.216A2.238 2.238 0 0 1 5 13c0-1.01.377-2.042 1.09-2.904.243-.294.526-.569.846-.816zM4.92 10A5.493 5.493 0 0 0 4 13H1c0-.26.164-1.03.76-1.724.545-.636 1.492-1.256 3.16-1.275zM1.5 5.5a3 3 0 1 1 6 0 3 3 0 0 1-6 0zm3-2a2 2 0 1 0 0 4 2 2 0 0 0 0-4z"/>
@@ -21,7 +21,7 @@
 
                         <div class="collapse" id="collapseExample1">
                             <div class="dropdown-divider"></div>
-                            <a class="dropdown-item text-normal active" href="/receptionist/doctor-view" > Doctor View</a>
+                            <a class="dropdown-item text-normal" href="/receptionist/doctor-view" > Doctor View</a>
                             <a class="dropdown-item text-normal" href="/receptionist/doctor-timing"> Doctor Timing</a>
                         </div>
                     </div>
@@ -29,7 +29,7 @@
             </span>
 
             <span aria-controls="collapseExample2" data-target="#collapseExample2" data-toggle="collapse" aria-haspopup="true" aria-expanded="false">
-                <li>
+                <li class="active">
                     <div class="text-normal">
                     <svg xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" aria-hidden="true" focusable="false" fill="#0052E9" width="1em" height="1em" style="-ms-transform: rotate(360deg); -webkit-transform: rotate(360deg); transform: rotate(360deg);" preserveAspectRatio="xMidYMid meet" viewBox="0 0 24 24">
                         <circle cx="18" cy="4" r="2"/>
@@ -38,7 +38,7 @@
 
                         <div class="collapse" id="collapseExample2">
                             <div class="dropdown-divider"></div>
-                            <a class="dropdown-item text-normal" href="/receptionist/patient-view" > Patient View</a>
+                            <a class="dropdown-item text-normal active" href="/receptionist/patient-view" > Patient View</a>
                             <a class="dropdown-item text-normal" href="/receptionist/patient-admission"> Patient Admitted</a>
                             <a class="dropdown-item text-normal" href="/receptionist/patient-appointment"> Patient Appointments</a>
                             <a class="dropdown-item text-normal" href="/receptionist/patient-lab-test"> Patient Lab Tests</a>
@@ -63,19 +63,19 @@
         <div>
             <div style='margin-top: 2%; margin-bottom: 3%;'>
                 <div style="display: flex; justify-content: space-between; align-items: center;">
-                    <h3 class="text-large text-grey">Doctor Details / Doctor View / Edit Record</h3>
+                    <h3 class="text-large text-grey">Patient Details / Patient View / Edit Record</h3>
                 </div>
 
                 <!-- Table -->
                 <div class="table-responsive" style='box-shadow: 5px 3px 5px 3px #1b99d8; background-color: white; padding: 2%; border-radius: 10px; font-size: 13px;'>
 
-                    <form action="/receptionist/doctor-view/edit-record/{{$hospitalData->primary_id}}" method="POST" enctype="multipart/form-data">
+                    <form action="/receptionist/patient-view/edit-record/{{$hospitalData->primary_id}}" method="POST" enctype="multipart/form-data">
                         @csrf
                         <!-- Head Row -->
                         <div class="row" style="margin:auto;">
                             <div class="col-sm-12" style="text-align:center;">
                                 <div class="form-group">
-                                    <h1 class="display-4">Edit Doctor Record</h1>
+                                    <h1 class="display-4">Edit Patient Record</h1>
                                 </div>
                             </div>
                         <hr>
@@ -139,15 +139,6 @@
                                 </div>
                             </div>
                         </div>
-                        <!-- Specialist Row -->
-                        <div class="row">
-                            <div class="col-sm-12">
-                                <div class="form-group">
-                                    <strong>Doctor Specialist</strong>
-                                    <input type="text" name="specialist" class="form-control form-control-lg" placeholder="Doctor Specialist" value="{{$hospitalData->specialist ?? ''}}">
-                                </div>
-                            </div>
-                        </div>
                         <!-- row4 -->
                         <div class="row">
                             <div class="col-sm-6">
@@ -207,11 +198,10 @@
                                 </div>
                             </div>
                         </div>
-
                         <!-- row8 -->
                         <div class="row">
                             <div class="col-xs-12 col-sm-12 col-md-12 text-center">
-                                <a href="/receptionist/doctor-view" role="button" class="btn btn-secondary btn-lg active">Back</a>
+                                <a href="/receptionist/patient-view" role="button" class="btn btn-secondary btn-lg active">Back</a>
                                 <button type="submit" class="btn btn-primary btn-lg active">Save Record</button>
                             </div>
                         </div>

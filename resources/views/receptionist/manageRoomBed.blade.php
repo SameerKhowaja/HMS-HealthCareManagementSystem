@@ -39,7 +39,7 @@
                         <div class="collapse" id="collapseExample2">
                             <div class="dropdown-divider"></div>
                             <a class="dropdown-item text-normal" href="/receptionist/patient-view" > Patient View</a>
-                            <a class="dropdown-item text-normal" href="/receptionist/patient-admission"> Patient Admissions</a>
+                            <a class="dropdown-item text-normal" href="/receptionist/patient-admission"> Patient Admitted</a>
                             <a class="dropdown-item text-normal" href="/receptionist/patient-appointment"> Patient Appointments</a>
                             <a class="dropdown-item text-normal" href="/receptionist/patient-lab-test"> Patient Lab Tests</a>
                         </div>
