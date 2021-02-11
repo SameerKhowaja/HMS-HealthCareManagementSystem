@@ -153,6 +153,15 @@
                             <div class="alert alert-lg btn-block alert-primary alert-dismissible fade show text-center text-grey text-large" role="alert">
                                 {{$msg ?? 'Admin View'}}
                             </div>
+                            <!-- Session Message -->
+                            @if(session()->has('msg'))
+                                <div class="alert alert-lg btn-block alert-warning alert-dismissible fade show text-center text-grey text-large" role="alert">
+                                    <strong>{{ session()->get('msg') }}</strong>
+                                    <button type="button" class="close" data-dismiss="alert" aria-label="Close">
+                                        <span aria-hidden="true">&times;</span>
+                                    </button>
+                                </div>
+                            @endif
 
                             <tbody id="myTable">
                             @if($data != 'none')

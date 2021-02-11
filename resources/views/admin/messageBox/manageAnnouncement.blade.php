@@ -95,10 +95,16 @@
                                     <table id="RecordTable" class="table table-hover table-borderless">
                                         <div class="alert alert-lg btn-block alert-primary alert-dismissible fade show text-center text-grey text-large" role="alert">
                                             {{'Total Announcement Count: '.$countAnnouncement ?? '0'}}
+                                        </div>
+
+                                        @if(session()->has('msg'))
+                                        <div class="alert alert-lg btn-block alert-warning alert-dismissible fade show text-center text-grey text-large" role="alert">
+                                            {{ session()->get('msg') }}
                                             <button type="button" class="close" data-dismiss="alert" aria-label="Close">
                                                 <span aria-hidden="true">&times;</span>
                                             </button>
                                         </div>
+                                        @endif
 
                                         <thead>
                                             <tr>

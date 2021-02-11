@@ -121,7 +121,7 @@
                                 <td style="text-align:center">{{$data->specialist}}</td>
 
                                 <td style="text-align:center">{{$data->appointment_date."  ".$data->day}}</td>
-                                
+
                                 <td style="text-align:center">{{date("h:i a", strtotime($data->start_time))." - ".date("h:i a", strtotime($data->end_time))}}</td>
 
                                 <td style="text-align:center">
@@ -130,13 +130,13 @@
                                             @method('delete')
                                             @csrf
                                             <input type="hidden" name="appointment_id" value="{{$data->appointment_id}}" >
-                                            <input type="submit" name="" value="X" id="{{$data->appointment_id}}" class="btn btn-danger btn-lg deleteAdmin fa fa-trash fa-lg" role="button" aria-pressed="true">
+                                            <input type="submit" name="" value="Cancel" id="{{$data->appointment_id}}" class="btn btn-danger btn-lg deleteAdmin fa fa-trash fa-lg" role="button" aria-pressed="true">
                                         </form>
-                                        
+
                                     </div>
                                 </td>
                             </tr>
-                            
+
                             @endforeach
                         @endif
                         </tbody>

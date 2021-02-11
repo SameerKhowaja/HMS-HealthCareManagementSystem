@@ -186,9 +186,8 @@ class PatientController extends Controller
         $app_req->patient_id = $patient_data[0]->patient_id;
         $app_req->day = strtolower( date('l',strtotime($req->appointment_date)) );
 
-        $doc_availability = Doctor_availability::where("doctor_id",$req->doctor_id)
-                               ->select($app_req->day."_start as start_time",$app_req->day."_end as end_time")->get();
-        
+        $doc_availability = Doctor_availability::where("doctor_id",$req->doctor_id)->select($app_req->day."_start as start_time",$app_req->day."_end as end_time")->get();
+
         if($doc_availability->count() > 0){
 
             $app_req->start_time = $doc_availability[0]->start_time;
@@ -241,12 +240,12 @@ class PatientController extends Controller
             ->select("appointment_requests.*","doctors.specialist","hospital_datas.fname","hospital_datas.lname")
             ->get();
 
-       
+
 
         //   dd($appointments);
 
         // dd( date('l',strtotime("Mon"))  );
-        
+
         // dd(date("g:i a", strtotime("11:30 am")) > date('g:i a'));
 
         if($appointments->count() == 0){
@@ -260,7 +259,7 @@ class PatientController extends Controller
 
 
     function delAppointment(Request $req){
-        
+
         Appointment_request::findOrFail($req->appointment_id)->delete();
 
         return redirect()->back()->with('msg','Appointment Request Deleted!');

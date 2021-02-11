@@ -95,9 +95,6 @@
 
                                         <div class="alert alert-lg btn-block alert-primary alert-dismissible fade show text-center text-grey text-large" role="alert">
                                             {{'Total Messages: '.$countContacts ?? '0'}}
-                                            <button type="button" class="close" data-dismiss="alert" aria-label="Close">
-                                                <span aria-hidden="true">&times;</span>
-                                            </button>
                                         </div>
                                         <div class="col-lg-12">
                                             <div class="input-group">
@@ -105,6 +102,17 @@
                                                 <input type="text" name="searchTable" id="searchData" class="form-control form-control-lg col-sm-11" placeholder="Search Table Records" style="border:1px solid lightblue; color:black;">
                                             </div>
                                         </div>
+
+                                        @if(session()->has('msg'))
+                                        <br>
+                                        <div class="alert alert-lg btn-block alert-warning alert-dismissible fade show text-center text-grey text-large" role="alert">
+                                            {{ session()->get('msg') }}
+                                            <button type="button" class="close" data-dismiss="alert" aria-label="Close">
+                                                <span aria-hidden="true">&times;</span>
+                                            </button>
+                                        </div>
+                                        @endif
+
                                         <thead>
                                             <tr>
                                                 <th scope="col" style="text-align:center">Full Name</th>
@@ -137,6 +145,12 @@
                                             @endif
                                         </tbody>
                                     </table>
+
+                                    <!-- Alert if Zero Result Retrieved -->
+                                    @if($msg??''!='')
+                                    <h3 class="display-4 text-center">{{$msg}}</h3>
+                                    @endif
+
                                 </div>
                             </div>
                         </div>
@@ -177,9 +191,18 @@
                                     <textarea name="announcement_message" id="announcement_message" cols="40" rows="4" class="form-control form-control-lg text-gray"></textarea>
                                 </div>
 
+                                @if(session()->has('msg2'))
+                                <div class="alert alert-lg btn-block alert-warning alert-dismissible fade show text-center text-grey text-large" role="alert">
+                                    {{ session()->get('msg2') }}
+                                    <button type="button" class="close" data-dismiss="alert" aria-label="Close">
+                                        <span aria-hidden="true">&times;</span>
+                                    </button>
+                                </div>
+                                @endif
+
                                 @error('announcement_message')
                                 <div class="alert alert-lg btn-block alert-danger alert-dismissible fade show text-center text-grey" role="alert">
-                                    {{$message}}
+                                    <strong>{{$message}}</strong>
                                     <button type="button" class="close" data-dismiss="alert" aria-label="Close">
                                         <span aria-hidden="true">&times;</span>
                                     </button>

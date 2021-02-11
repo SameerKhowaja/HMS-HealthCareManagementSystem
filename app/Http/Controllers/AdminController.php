@@ -110,7 +110,7 @@ class AdminController extends Controller
             $admin_data->image = $img;
         }
         $admin_data->save();
-        return redirect('/admin/editProfile/'.$id)->with('msg','success');
+        return redirect('/admin/editProfile/'.$id)->with('msg','Profile Updated...!');
     }
 
     // Admin Edit Password
@@ -122,9 +122,9 @@ class AdminController extends Controller
         if($admin_data->password == $cur_pass){
             $admin_data->password = $new_pass;
             $admin_data->save();
-            return redirect('/admin/editProfile/'.$id)->with('msg','success');
+            return redirect('/admin/editProfile/'.$id)->with('msg','Profile Password Changed Successfully...!');
         }
-        return redirect('/admin/editProfile/'.$id)->with('msg','failed');
+        return redirect('/admin/editProfile/'.$id)->with('msg','Profile Password NOT Changed...!');
     }
 
     // Add admin view
@@ -192,7 +192,7 @@ class AdminController extends Controller
         // if everything fine then delete admin
         $data = Admin::findOrFail($id);
         $data->delete();
-        return redirect("/admin")->with('msg','success');
+        return redirect("/admin")->with('msg','Admin Deleted Successfully...!');
     }
 
     // view all contacts
@@ -202,8 +202,8 @@ class AdminController extends Controller
 
         $contactTable = Contact_table::all();
         $countContactTable = count($contactTable);
-        if($countContactTable < 0){
-            return view("admin.messageBox", ['countAnnouncement'=>$countAnnouncement, 'countContacts'=>$countContactTable, 'dataFetched'=>'none']);
+        if($countContactTable <= 0){
+            return view("admin.messageBox", ['countAnnouncement'=>$countAnnouncement, 'countContacts'=>$countContactTable, 'dataFetched'=>'none', 'msg'=>'No Data...!']);
         }
         return view("admin.messageBox", ['countAnnouncement'=>$countAnnouncement, 'countContacts'=>$countContactTable, 'dataFetched'=>$contactTable]);
     }
@@ -212,13 +212,13 @@ class AdminController extends Controller
     function deleteContactData($id){
         $contactTable = Contact_table::findOrFail($id);
         $contactTable->delete();
-        return redirect("/admin/message")->with('msg','success');
+        return redirect("/admin/message")->with('msg','Data Deleted...!');
     }
 
     // delete all contact data
     function deleteAllContactData(){
         DB::table('contact_table')->truncate();
-        return redirect("/admin/message")->with('msg','success');
+        return redirect("/admin/message")->with('msg','All Data Deleted...!');
     }
 
     // creating new announcements
@@ -232,7 +232,7 @@ class AdminController extends Controller
         $newAnnouncement->message = $req->announcement_message;
         $newAnnouncement->save();
 
-        return redirect("/admin/message")->with('msg','success');
+        return redirect("/admin/message")->with('msg2','New Announcement Posted...!');
     }
 
     // manage announcements view
@@ -253,7 +253,7 @@ class AdminController extends Controller
     function deleteAnnouncement($id){
         $announcement = Announcement::findOrFail($id);
         $announcement->delete();
-        return redirect("/admin/message/manage-announcement")->with('msg','success');
+        return redirect("/admin/message/manage-announcement")->with('msg','Announcement Deleted Successfully...!');
     }
 
     // edit announcement
@@ -265,7 +265,7 @@ class AdminController extends Controller
         $announcement->admin_id = session("userID");    // current admin id
         $announcement->message = $req->new_announcement;
         $announcement->save();
-        return redirect("/admin/message/manage-announcement")->with('msg','success');
+        return redirect("/admin/message/manage-announcement")->with('msg','Announcement Edited Successfully...!');
     }
 
     // Past Event View
@@ -285,13 +285,13 @@ class AdminController extends Controller
     function deleteEvent($id){
         $event = Past_event::findOrFail($id);
         $event->delete();
-        return redirect("/admin/past-event")->with('msg','success');
+        return redirect("/admin/past-event")->with('msg','Event Deleted Successfully...!');
     }
 
     // Delete All Events
     function deleteAllEvent(){
         DB::table('past_events')->truncate();
-        return redirect("/admin/past-event")->with('msg','success');
+        return redirect("/admin/past-event")->with('msg','All Event Deleted Successfully...!');
     }
 
     // Event Search By Event Type Btn Click
@@ -434,7 +434,7 @@ class AdminController extends Controller
         return view('admin.hospitalData.addRecord', ['typesList'=>$dataType, 'msg'=>'Success! ', 'long_msg'=>"Added New ".$nameOfType." Record to database"]);
     }
 
-    function searchRecord(Request $req, $id){
+    function searchRecord(Request $req){
         $getType = Type::all();
         $doctorList = Doctor::all();
         $type_id = request('accountType'); // All Record
@@ -468,7 +468,7 @@ class AdminController extends Controller
     function deleteUserData($id){
         $userData = Hospital_data::findOrFail($id);
         $userData->delete();
-        return redirect("/admin/hospital-data")->with('msg','Successfully Deleted');
+        return redirect("/admin/hospital-data")->with('msg','Successfully Deleted...!');
     }
 
     // Edit User Data View
@@ -721,7 +721,7 @@ class AdminController extends Controller
     function deleteBed($id){
         $data = Bed::findOrFail($id);
         $data->delete();
-        return redirect("/admin/room-management/")->with('msg','success');
+        return redirect("/admin/room-management/")->with('msg','Bed Deleted Successfully...!');
     }
 
     // Add new room to DB on btn click
@@ -732,7 +732,7 @@ class AdminController extends Controller
         forEach($rooms as $r){
             if($newRoomNumber == $r->room_number){
                 $flag = 0;  // Means Room Already Exist
-                return view("page404", ['msg'=>"Error", 'msg_long'=>'Room # '.$newRoomNumber.' Already Exist']);
+                return redirect("/admin/room-management/")->with('msg','ERROR! '.$newRoomNumber.' Already Exist');
             }
         }
 
@@ -741,7 +741,7 @@ class AdminController extends Controller
             $newRoom = new Room;
             $newRoom->room_number = $newRoomNumber;
             $newRoom->save();
-            return redirect("/admin/room-management/")->with('msg','success');
+            return redirect("/admin/room-management/")->with('msg','New Room Added Successfully...!');
         }
     }
 
@@ -755,7 +755,7 @@ class AdminController extends Controller
         forEach($room_data as $data){
             if($data->room_id == $roomID && $data->bed_number == $newBedNumber){
                 $flag = 0;  // Means Room Already Exist
-                return view("page404", ['msg'=>"Error", 'msg_long'=>$newBedNumber.' Already Exist in Room # '.$data->room_number]);
+                return redirect("/admin/room-management/")->with('msg','ERROR! '.$newBedNumber.' Already Exist in '.$data->room_number);
             }
         }
 
@@ -765,18 +765,18 @@ class AdminController extends Controller
             $newBed->bed_number = $newBedNumber;
             $newBed->room_id = $roomID;
             $newBed->save();
-            return redirect("/admin/room-management/")->with('msg','success');
+            return redirect("/admin/room-management/")->with('msg','New Bed Added Successfully...!');
         }
     }
 
     function deleteRoom($id){
         $rooms = Room::with('bed')->where('room_number', '=', $id)->firstOrFail();
         $rooms->delete();
-        return redirect("/admin/room-management/")->with('msg','success');
+        return redirect("/admin/room-management/")->with('msg','Room Deleted Successfully...!');
     }
 
     // Search Room and Bed According to Availability
-    function searchAvailable(Request $req, $id){
+    function searchAvailable(Request $req){
         $searchType = request("searchType");
         // 0=All Record, 1=Available Beds, 2=Occupied Beds
 
@@ -836,14 +836,14 @@ class AdminController extends Controller
 
         // If both Number are Same
         if($newRoomNumber == $id){
-            return view("page404", ['msg'=>"Error", 'msg_long'=>'Entered Same Room Number']);
+            return redirect("/admin/room-management/")->with('msg','ERROR! Entered Same Room Number');
         }
 
         $rooms = Room::all();
         forEach($rooms as $r){
             if($r->room_number == $newRoomNumber && $newRoomNumber != $id){
                 // Room Exist
-                return view("page404", ['msg'=>"Error", 'msg_long'=>$newRoomNumber.' Already Exist']);
+                return redirect("/admin/room-management/")->with('msg','ERROR! '.$newRoomNumber.' Already Exist');
             }
         }
 
@@ -852,7 +852,7 @@ class AdminController extends Controller
         $room_edit->room_number = $newRoomNumber;
         $room_edit->save();
 
-        return redirect("/admin/room-management/");
+        return redirect("/admin/room-management/")->with('msg','Room Updated Successfully...!');
     }
 
     // Edit Bed Number on modal btn click
@@ -862,7 +862,7 @@ class AdminController extends Controller
 
         // If both Number are Same
         if($newBedNumber == $bed_data->bed_number){
-            return view("page404", ['msg'=>"Error", 'msg_long'=>'Entered Same Bed Number']);
+            return redirect("/admin/room-management/")->with('msg','ERROR! Entered Same Bed Number');
         }
 
         // Check if bed number is not same in that room
@@ -870,7 +870,7 @@ class AdminController extends Controller
         forEach($beds as $b){
             if($b->room_id == $bed_data->room_id && $b->bed_number == $newBedNumber){
                 // Fail to enter
-                return view("page404", ['msg'=>"Error", 'msg_long'=>$newBedNumber.' Already Exist in Room']);
+                return redirect("/admin/room-management/")->with('msg','ERROR! '.$newBedNumber.' Already Exist in Room');
             }
         }
 
@@ -878,7 +878,7 @@ class AdminController extends Controller
         $bed_data->bed_number = $newBedNumber;
         $bed_data->save();
 
-        return redirect("/admin/room-management/");
+        return redirect("/admin/room-management/")->with('msg','Bed Updated Successfully...!');
     }
 
 
@@ -916,7 +916,7 @@ class AdminController extends Controller
     }
 
 
-    function searchTest(Request $req, $id){
+    function searchTest(Request $req){
         $testTypes = Lab_test_name::pluck('test_type');
         $testTypes = $testTypes->unique();
         $tests = NULL;

@@ -142,6 +142,14 @@
                         <!-- ali-changed ends -->
 
                         <hr style="border-top: 2px dotted #1b99d8;">
+                        @if(session()->has('msg'))
+                        <div class="alert alert-lg btn-block alert-warning alert-dismissible fade show text-center text-grey text-large" role="alert">
+                            {{ session()->get('msg') }}
+                            <button type="button" class="close" data-dismiss="alert" aria-label="Close">
+                                <span aria-hidden="true">&times;</span>
+                            </button>
+                        </div>
+                        @endif
 
                         <div class="row">
                             <div class="col-lg-6">
@@ -151,7 +159,7 @@
                                     </div>
                             </div>
                             <div class="col-lg-6">
-                                <form action="/admin/room-management/{id}" method="POST">
+                                <form action="/admin/room-management" method="POST">
                                 @csrf
                                     <div class="form-group" style="float:right;">
                                         <select class="form-select" name="searchType" id="searchType" style="width:200px; padding:4px;">

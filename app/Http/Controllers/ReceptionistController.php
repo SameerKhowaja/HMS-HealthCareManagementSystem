@@ -181,7 +181,7 @@ class ReceptionistController extends Controller
         $newEvent->description = "Deleted Bed (".$bedNumber.")";
         $newEvent->save();
 
-        return redirect("receptionist/room-bed/")->with('msg','success');
+        return redirect("receptionist/room-bed/")->with('msg','Bed Deleted Successfully...!');
     }
 
     // Add new room to DB on btn click
@@ -192,7 +192,7 @@ class ReceptionistController extends Controller
         forEach($rooms as $r){
             if($newRoomNumber == $r->room_number){
                 $flag = 0;  // Means Room Already Exist
-                return view("page404", ['msg'=>"Error", 'msg_long'=>'Room # '.$newRoomNumber.' Already Exist']);
+                return redirect("/receptionist/room-bed/")->with('msg','ERROR! '.$newRoomNumber.' Already Exist');
             }
         }
 
@@ -210,7 +210,7 @@ class ReceptionistController extends Controller
             $newEvent->description = "Added New Room (".$newRoomNumber.")";
             $newEvent->save();
 
-            return redirect("/receptionist/room-bed/")->with('msg','success');
+            return redirect("/receptionist/room-bed/")->with('msg','New Room Added Successfully...!');
         }
     }
 
@@ -224,7 +224,7 @@ class ReceptionistController extends Controller
         forEach($room_data as $data){
             if($data->room_id == $roomID && $data->bed_number == $newBedNumber){
                 $flag = 0;  // Means Room Already Exist
-                return view("page404", ['msg'=>"Error", 'msg_long'=>$newBedNumber.' Already Exist in Room # '.$data->room_number]);
+                return redirect("/receptionist/room-bed/")->with('msg','ERROR! '.$newBedNumber.' Already Exist in '.$data->room_number);
             }
         }
 
@@ -243,7 +243,7 @@ class ReceptionistController extends Controller
             $newEvent->description = "Added New Bed (".$newBedNumber.")";
             $newEvent->save();
 
-            return redirect("/receptionist/room-bed/")->with('msg','success');
+            return redirect("/receptionist/room-bed/")->with('msg','New Bed Added Successfully...!');
         }
     }
 
@@ -260,11 +260,11 @@ class ReceptionistController extends Controller
         $newEvent->description = "Deleted Room (".$roomNumber.")";
         $newEvent->save();
 
-        return redirect("/receptionist/room-bed/")->with('msg','success');
+        return redirect("/receptionist/room-bed/")->with('msg','Room Deleted Successfully...!');
     }
 
     // Search Room and Bed According to Availability
-    function searchAvailable(Request $req, $id){
+    function searchAvailable(Request $req){
         $searchType = request("searchType");
         // 0=All Record, 1=Available Beds, 2=Occupied Beds
 
@@ -324,14 +324,14 @@ class ReceptionistController extends Controller
 
         // If both Number are Same
         if($newRoomNumber == $id){
-            return view("page404", ['msg'=>"Error", 'msg_long'=>'Entered Same Room Number']);
+            return redirect("/receptionist/room-bed/")->with('msg','ERROR! Entered Same Room Number');
         }
 
         $rooms = Room::all();
         forEach($rooms as $r){
             if($r->room_number == $newRoomNumber && $newRoomNumber != $id){
                 // Room Exist
-                return view("page404", ['msg'=>"Error", 'msg_long'=>$newRoomNumber.' Already Exist']);
+                return redirect("/receptionist/room-bed/")->with('msg','ERROR! '.$newRoomNumber.' Already Exist');
             }
         }
 
@@ -349,7 +349,7 @@ class ReceptionistController extends Controller
         $newEvent->description = "Updated Room (".$oldRoomNumber.") to (".$newRoomNumber.")";
         $newEvent->save();
 
-        return redirect("/receptionist/room-bed/");
+        return redirect("/receptionist/room-bed/")->with('msg','Room Updated Successfully...!');;
     }
 
     // Edit Bed Number on modal btn click
@@ -360,7 +360,7 @@ class ReceptionistController extends Controller
 
         // If both Number are Same
         if($newBedNumber == $bed_data->bed_number){
-            return view("page404", ['msg'=>"Error", 'msg_long'=>'Entered Same Bed Number']);
+            return redirect("/receptionist/room-bed/")->with('msg','ERROR! Entered Same Bed Number');
         }
 
         // Check if bed number is not same in that room
@@ -368,7 +368,7 @@ class ReceptionistController extends Controller
         forEach($beds as $b){
             if($b->room_id == $bed_data->room_id && $b->bed_number == $newBedNumber){
                 // Fail to enter
-                return view("page404", ['msg'=>"Error", 'msg_long'=>$newBedNumber.' Already Exist in Room']);
+                return redirect("/receptionist/room-bed/")->with('msg','ERROR! '.$newBedNumber.' Already Exist in Room');
             }
         }
 
@@ -384,7 +384,7 @@ class ReceptionistController extends Controller
         $newEvent->description = "Updated Bed (".$oldBedNumber.") to (".$newBedNumber.")";
         $newEvent->save();
 
-        return redirect("/receptionist/room-bed/");
+        return redirect("/receptionist/room-bed/")->with('msg','Bed Updated Successfully...!');
     }
 
     //  Room Bed Management ENDS ------------------------------------------
@@ -518,7 +518,7 @@ class ReceptionistController extends Controller
         $newEvent->description = "Deleted Doctor (".$doctorName.")";
         $newEvent->save();
 
-        return redirect("/receptionist/doctor-view")->with('msg','Successfully Deleted');
+        return redirect("/receptionist/doctor-view")->with('msg','Successfully Deleted Doctor...!');
     }
 
     // Edit User Data View

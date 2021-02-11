@@ -98,7 +98,7 @@
                             </div>
                     </div>
                     <div class="col-lg-6">
-                        <form action="/admin/lab-test/{id}" method="POST">
+                        <form action="/admin/lab-test" method="POST">
                         @csrf
                             <div class="form-group" style="float:right;">
                                 <select class="form-select" name="testSection" id="testSection" style="height:30px; width:200px; padding:4px;">

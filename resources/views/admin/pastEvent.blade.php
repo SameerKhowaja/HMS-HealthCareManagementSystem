@@ -111,6 +111,15 @@
                     </div>
                 </div>
 
+                @if(session()->has('msg'))
+                <div class="alert alert-lg btn-block alert-warning alert-dismissible fade show text-center text-grey text-large" role="alert">
+                    {{ session()->get('msg') }}
+                    <button type="button" class="close" data-dismiss="alert" aria-label="Close">
+                        <span aria-hidden="true">&times;</span>
+                    </button>
+                </div>
+                @endif
+
                 <div class="table-responsive-sm">
                     <table id="RecordTable" class="table table-hover">
                         <thead>

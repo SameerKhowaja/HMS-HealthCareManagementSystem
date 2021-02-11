@@ -59,7 +59,7 @@ Route::delete('/admin/past-event/delete-all-event','AdminController@deleteAllEve
 // admin hospital-data routes
 Route::get('/admin/hospital-data/addRecord','AdminController@addRecord');    //add patient record view
 Route::post('/admin/hospital-data/addRecord','AdminController@addRecordSave');    //add patient record on btn click
-Route::post('/admin/hospital-data/{id}','AdminController@searchRecord');    //search account type data using select box on button click
+Route::post('/admin/hospital-data','AdminController@searchRecord');    //search account type data using select box on button click
 Route::delete('/admin/hospital-data/delete-record/{id}','AdminController@deleteUserData');    //delete User when modal btn clicks
 Route::get('/admin/hospital-data/edit-record/{id}','AdminController@editUserData');    //edit User view
 Route::post('/admin/hospital-data/edit-record/{id}','AdminController@editUserDataSave');    //edit User data on btn click
@@ -73,14 +73,14 @@ Route::delete('/admin/room-management/bed-delete/{id}','AdminController@deleteBe
 Route::post('/admin/room-management/add-new-room','AdminController@addNewRoom');   //add new room on modal btn click
 Route::post('/admin/room-management/add-new-bed','AdminController@addNewBed');   //add new bed on modal btn click
 Route::delete('/admin/room-management/room-delete/{id}','AdminController@deleteRoom'); //delete room on admin modal click
-Route::post('/admin/room-management/{id}','AdminController@searchAvailable');    //search Room and Bed According to Availability on click
+Route::post('/admin/room-management','AdminController@searchAvailable');    //search Room and Bed According to Availability on click
 Route::post('/admin/room-management/room-edit/{id}','AdminController@editRoomNumber');    //edit room number on admin modal click
 Route::post('/admin/room-management/bed-edit/{id}','AdminController@editBedNumber');    //edit bed number on admin modal click
 
 // admin lab-management routes
 Route::get('/admin/lab-test/addTest','AdminController@addTest');    //add Test record view
 Route::post('/admin/lab-test/addTest','AdminController@addTestSave');    //add patient record view on btn click
-Route::post('/admin/lab-test/{id}','AdminController@searchTest');    //search-test
+Route::post('/admin/lab-test','AdminController@searchTest');    //search-test
 Route::delete('/admin/lab-test/delete-record/{id}','AdminController@deleteLabData');    //delete Lab Test Data when modal btn clicks
 Route::get('/admin/lab-test/edit-test/{id}','AdminController@editTestData');    //edit lab view
 Route::post('/admin/lab-test/edit-test/{id}','AdminController@editLabDataSave');    //edit lab data on btn click
@@ -169,7 +169,7 @@ Route::delete('/receptionist/room-bed/bed-delete/{id}','ReceptionistController@d
 Route::post('/receptionist/room-bed/add-new-room','ReceptionistController@addNewRoom');   //add new room on modal btn click
 Route::post('/receptionist/room-bed/add-new-bed','ReceptionistController@addNewBed');   //add new bed on modal btn click
 Route::delete('/receptionist/room-bed/room-delete/{id}','ReceptionistController@deleteRoom'); //delete room on admin modal click
-Route::post('/receptionist/room-bed/{id}','ReceptionistController@searchAvailable');    //search Room and Bed According to Availability on click
+Route::post('/receptionist/room-bed','ReceptionistController@searchAvailable');    //search Room and Bed According to Availability on click
 Route::post('/receptionist/room-bed/room-edit/{id}','ReceptionistController@editRoomNumber');    //edit room number on admin modal click
 Route::post('/receptionist/room-bed/bed-edit/{id}','ReceptionistController@editBedNumber');    //edit bed number on admin modal click
 
