@@ -3,6 +3,7 @@
 namespace App;
 
 use Illuminate\Database\Eloquent\Model;
+use App\Appointment_request;
 
 class Doctor extends Model
 {
@@ -14,7 +15,7 @@ class Doctor extends Model
 
     public function appointment_requests()
     {
-        return $this->hasMany('App\Appointment_request');
+        return $this->hasMany(Appointment_request::class);
     }
 
 }

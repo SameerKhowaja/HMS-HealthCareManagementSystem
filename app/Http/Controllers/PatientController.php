@@ -25,6 +25,7 @@ use App\Other;
 use App\Past_event;
 use App\User;
 use App\Appointment_request;
+use App\Current_appointment;
 
 class PatientController extends Controller
 {
@@ -183,7 +184,20 @@ class PatientController extends Controller
 
         }
         $app_req->patient_id = $patient_data[0]->patient_id;
-        $app_req->day = date('D',strtotime($req->appointment_date));
+        $app_req->day = strtolower( date('l',strtotime($req->appointment_date)) );
+
+        $doc_availability = Doctor_availability::where("doctor_id",$req->doctor_id)
+                               ->select($app_req->day."_start as start_time",$app_req->day."_end as end_time")->get();
+        
+        if($doc_availability->count() > 0){
+
+            $app_req->start_time = $doc_availability[0]->start_time;
+            $app_req->end_time = $doc_availability[0]->end_time;
+
+        }else{
+            return redirect()->back()->with('msg','Doctor does not exist!');
+        }
+
         $app_req->save();
 
         $doctor_FullData = Hospital_data::findOrFail($doctor_data);
@@ -202,5 +216,60 @@ class PatientController extends Controller
         return redirect()->back()->with('msg','Appointment Request Sent!');
 
     }
+
+    // this will display the current appointments of patient
+    function currentAppointment($id,Request $req){
+        date_default_timezone_set('Asia/Karachi');
+
+        $patient =Patient::where("primary_id",$id)->get();
+        $appointments = Appointment_request::where("patient_id",$patient[0]->patient_id)
+            ->join("doctors","appointment_requests.doctor_id","=","doctors.doctor_id")
+            ->join("hospital_datas","doctors.primary_id","=","hospital_datas.primary_id")
+            ->join("doctor_availability","appointment_requests.doctor_id","=","doctor_availability.doctor_id")
+            ->where("confrim",1)
+            ->where(
+                function($query){
+                    $query->where("appointment_date",'>',date("Y-m-d"))
+                    ->orWhere(
+                        function($query2){
+                            $query2->where("appointment_date",'=',date("Y-m-d"))
+                            ->where( strtolower(date('l'))."_end" , '>' , date("H:i:s") );
+
+                        });
+
+                })
+            ->select("appointment_requests.*","doctors.specialist","hospital_datas.fname","hospital_datas.lname")
+            ->get();
+
+       
+
+        //   dd($appointments);
+
+        // dd( date('l',strtotime("Mon"))  );
+        
+        // dd(date("g:i a", strtotime("11:30 am")) > date('g:i a'));
+
+        if($appointments->count() == 0){
+            return view("patient.currentAppointment",['dataFetched'=>$appointments, 'msg'=>'No Current Appointments']);
+
+        }else{
+            return view("patient.currentAppointment",['dataFetched'=>$appointments]);
+        }
+
+    }
+
+
+    function delAppointment(Request $req){
+        
+        Appointment_request::findOrFail($req->appointment_id)->delete();
+
+        return redirect()->back()->with('msg','Appointment Request Deleted!');
+
+    }
+
+
+
+
+
 
 }
