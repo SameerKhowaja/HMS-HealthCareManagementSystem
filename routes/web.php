@@ -24,6 +24,7 @@ Route::get('/error-page','ErrorController@index');  //error page
 // navbar routes   -----------------------------------------------------
 Route::get('/admin','AdminController@dashboard');   //dashboard
 Route::get('/admin/message','AdminController@messages');   //Messages
+Route::get('/admin/past-event','AdminController@pastEvent');   //Past Event
 Route::get('/admin/hospital-data','AdminController@hospitalData');    //hospital-data
 Route::get('/admin/doctor-timing','AdminController@doctorTiming');    //doctor-timing
 Route::get('/admin/patient-admitted','AdminController@admittedPatient');  //patient admitted

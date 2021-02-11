@@ -267,6 +267,10 @@ class AdminController extends Controller
         return redirect("/admin/message/manage-announcement")->with('msg','success');
     }
 
+    function pastEvent(){
+        return view("admin.pastEvent");
+    }
+
 // Admin Dashboard ENDS ---------------------------------
 
 
