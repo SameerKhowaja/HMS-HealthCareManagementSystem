@@ -74,6 +74,23 @@
                     </svg> Account Types
                 </li>
             </a>
+
+            <span aria-controls="collapseExample2" data-target="#collapseExample2" data-toggle="collapse" aria-haspopup="true" aria-expanded="false">
+                <li>
+                    <div class="text-normal">
+                    <svg xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" aria-hidden="true" focusable="false" width="1em" height="1em" fill="#0052E9" style="-ms-transform: rotate(360deg); -webkit-transform: rotate(360deg); transform: rotate(360deg);" preserveAspectRatio="xMidYMid meet" viewBox="0 0 24 24">
+                        <path d="M20 11V5c0-1.103-.897-2-2-2h-3a1 1 0 0 0-1-1H8a1 1 0 0 0-1 1H4c-1.103 0-2 .897-2 2v13c0 1.103.897 2 2 2h7c0 1.103.897 2 2 2h7c1.103 0 2-.897 2-2v-7c0-1.103-.897-2-2-2zm-9 2v5H4V5h3v2h8V5h3v6h-5c-1.103 0-2 .897-2 2zm2 7v-7h7l.001 7H13z"/>
+                    </svg>Past Events
+
+                        <div class="collapse" id="collapseExample2">
+                            <div class="dropdown-divider"></div>
+                            <a class="dropdown-item text-normal" href="/admin/past-event/data-added" > Data Added</a>
+                            <a class="dropdown-item text-normal" href="/admin/past-event/data-modified"> Data Modified</a>
+                            <a class="dropdown-item text-normal" href="/admin/past-event/data-deleted"> Data Deleted</a>
+                        </div>
+                    </div>
+                </li>
+            </span>
         </ul>
 @endsection
 
