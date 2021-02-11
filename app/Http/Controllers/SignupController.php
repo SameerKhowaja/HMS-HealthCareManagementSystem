@@ -18,6 +18,7 @@ use App\Patient;
 use App\Receptionist;
 use App\Room;
 use App\Type;
+use App\Past_event;
 use App\User;
 
 class SignupController extends Controller
@@ -89,6 +90,13 @@ class SignupController extends Controller
 
             $patient->primary_id = $primaryid;
             $patient->save();
+
+            // Event Update
+            $newEvent = new Past_event;
+            $newEvent->event_type = "Added";
+            $newEvent->primary_id = $primaryid;
+            $newEvent->description = "Self Registered Patient (".$username.")";
+            $newEvent->save();
 
             return view('signup.afterregistration', ['User'=>$username, 'msg'=>'Congratulation! ', 'msg_more'=>'Your Account is Successfully Created...Login to Continue.']);
         }

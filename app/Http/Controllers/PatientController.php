@@ -22,6 +22,7 @@ use App\Receptionist;
 use App\Room;
 use App\Type;
 use App\Other;
+use App\Past_event;
 use App\User;
 use App\Appointment_request;
 
@@ -92,6 +93,14 @@ class PatientController extends Controller
         }
         $hospitalData->save();
 
+        // Event Update
+        $primaryID = session()->get('userID');
+        $newEvent = new Past_event;
+        $newEvent->event_type = "Modified";
+        $newEvent->primary_id = $primaryID;
+        $newEvent->description = "Self Profile Updated";
+        $newEvent->save();
+
         session(['username'=>$hospitalData->fname.' '.$hospitalData->lname]);   //update session username
         session(['image'=>$hospitalData->image]);   //update session image
 
@@ -115,6 +124,15 @@ class PatientController extends Controller
         else{   // old password is same
             $hospital_data->password = request("new_pass");
             $hospital_data->save();
+
+            // Event Update
+            $primaryID = session()->get('userID');
+            $newEvent = new Past_event;
+            $newEvent->event_type = "Modified";
+            $newEvent->primary_id = $primaryID;
+            $newEvent->description = "Self Profile Password Updated";
+            $newEvent->save();
+
             return view('patient.editProfile', ['hospital_data'=>$hospital_data, 'msg'=>'Success! ', 'long_msg'=>"Password Updated...!"]);
         }
 
@@ -167,6 +185,15 @@ class PatientController extends Controller
         $app_req->patient_id = $patient_data[0]->patient_id;
         $app_req->day = date('D',strtotime($req->appointment_date));
         $app_req->save();
+
+        $doctor_FullData = Hospital_data::findOrFail($doctor_data);
+        // Event Update
+        $primaryID = session()->get('userID');
+        $newEvent = new Past_event;
+        $newEvent->event_type = "Added";
+        $newEvent->primary_id = $primaryID;
+        $newEvent->description = "Requested Appointment of Doctor (".$doctor_FullData[0]->fname." ".$doctor_FullData[0]->lname.")";
+        $newEvent->save();
 
         }else{
             return redirect()->back()->with('msg','Patient is not authorized!');
