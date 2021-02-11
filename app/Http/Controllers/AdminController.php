@@ -35,11 +35,9 @@ class AdminController extends Controller
         $patientCount = 0;
         $doctorCount = 0;
         $staffCount = 0;
-        // ali added
 
         $patientCount_wrt_days = ['Mon'=>0,'Tue'=>0,'Wed'=>0,'Thu'=>0,'Fri'=>0,'Sat'=>0,'Sun'=>0];
         $staffCount_wrt_days = ['Mon'=>0,'Tue'=>0,'Wed'=>0,'Thu'=>0,'Fri'=>0,'Sat'=>0,'Sun'=>0];
-
 
         $type_data = Type::all();
         $patient_type_id = 'patient';
@@ -831,24 +829,7 @@ class AdminController extends Controller
 
 // Admin / Room Management ENDS ----------------------------------------
 
-
-
-    function accountType(){
-        return view('admin.accountType');
-    }
-
-    function admittedPatient(){
-        return view('admin.admittedPatient');
-    }
-
-    function appointmentPatient(){
-        return view('admin.appointmentPatient');
-    }
-
-    function labTestPatient(){
-        return view('admin.labTestPatient');
-    }
-
+// Admin / Manage Lab Test STARTS ----------------------------------------
 
 	// Lab-Test Functions -----
     function labTest(){
@@ -1041,8 +1022,25 @@ class AdminController extends Controller
         return view('admin.manageLab.editTest', ['labTest'=>$labTest,'msg'=>$msg, 'long_msg'=>"Edited ".$req->test_name." Laboratory Test"]);
 
     }
-	// ----- end-ali-added
 
+// Admin / Manage Lab Test ENDS ----------------------------------------
+
+
+    function accountType(){
+        return view('admin.accountType');
+    }
+
+    function admittedPatient(){
+        return view('admin.patientDetail.admittedPatient');
+    }
+
+    function appointmentPatient(){
+        return view('admin.patientDetail.appointmentPatient');
+    }
+
+    function labTestPatient(){
+        return view('admin.patientDetail.labTestPatient');
+    }
 
 
 
