@@ -79,6 +79,285 @@
 
 @section('content')
     <div>
-        <h1 class="display-3 text-center">Past Events<h1>
+        <div style='margin-top:2%; margin-bottom:2%;'>
+            <div style="display: flex; justify-content: space-between; align-items: center;">
+                <h3 class="text-large text-grey">Admin / Past Events History</h3>
+                <a style='font-size:13px;' class="btn btn-danger btn-lg deleteAllEvent" role="button" aria-pressed="true" data-toggle="modal" data-target="#deleteAllEvent_modal"><i class="fa fa-trash fa-lg"> </i>  Clear All Events</a>
+            </div>
+            <br>
+            <!-- Event table -->
+            <div class="table-responsive" style='box-shadow: 5px 3px 5px 3px #1b99d8; background-color: white; padding: 2%; border-radius: 10px; font-size: 13px;'>
+                <div class="row">
+                    <div class="col-lg-6">
+                        <div class="input-group">
+                            <span class="input-group-addon form-control form-control-lg col-sm-1"><i class="fa fa-filter fa-lg"></i></span>
+                            <input type="text" name="searchTable" id="searchData" class="form-control form-control-lg col-sm-11" placeholder="Search Table Records" style="border:1px solid lightblue; color:black;">
+                        </div>
+                    </div>
+
+                    <div class="col-lg-6">
+                        <form action="/admin/past-event" method="POST">
+                        @csrf
+                            <div class="form-group" style="float:right;">
+                                <select class="form-select" name="eventType" id="eventType" style="height:30px; width:200px; padding:4px;">
+                                    <option value="All">All Records</option>
+                                    <option value="Added">Added Records</option>
+                                    <option value="Modified">Modified Records</option>
+                                    <option value="Deleted">Deleted Records</option>
+                                </select>
+                                <button type="submit" class="btn btn-primary btn-lg"><i class="fa fa-search"> </i> Search</button>
+                            </div>
+                        </form>
+                    </div>
+                </div>
+
+                <div class="table-responsive-sm">
+                    <table id="RecordTable" class="table table-hover">
+                        <thead>
+                            <tr>
+                                <th scope="col" style="text-align:center">Event Type</th>
+                                <th scope="col" style="text-align:center">Performed By</th>
+                                <th scope="col" style="text-align:center">Role</th>
+                                <th scope="col" style="text-align:center">Description</th>
+                                <th scope="col" style="text-align:center">Date</th>
+                                <th scope="col" style="text-align:center">Time</th>
+                                <th scope="col" style="text-align:center">More</th>
+                            </tr>
+                        </thead>
+
+                        <tbody id="myTable">
+                        @if($dataFetched != 'none')
+                            <!-- Complete Data Fetched -->
+                            <div class="AllData" id="{{$dataFetched}}"></div>
+                            @if($doctorList != 'none')
+                            <!-- Complete Doctor Fetched -->
+                            <div class="DoctorData" id="{{$doctorList}}"></div>
+                            @endif
+                            @foreach($dataFetched as $data)
+                            <tr>
+                                <td style="text-align:center">{{$data->event_type}}</td>
+                                <td style="text-align:center">{{$data->fname.' '.$data->lname}}</td>
+                                <td style="text-align:center">{{$data->type_name}}</td>
+                                <td style="text-align:center">{{$data->description}}</td>
+                                <td style="text-align:center">{{$data->event_date}}</td>
+                                <td style="text-align:center">{{$data->event_time}}</td>
+                                <td style="text-align:center">
+                                    <div class="btn-group" role="group">
+                                        <!-- View - Delete -->
+                                        <a id='{{$data->primary_id}}' style='font-size:13px;' class="btn btn-info btn-lg viewUser" role="button" aria-pressed="true" data-toggle="modal" data-target="#viewUser_modal"><i class="fa fa-database fa-lg" aria-hidden="true"></i></a>
+                                        <a id='{{$data->event_id}}' style='font-size:13px;' class="btn btn-danger btn-lg deleteEvent" role="button" aria-pressed="true" data-toggle="modal" data-target="#deleteEvent_modal"><i class="fa fa-trash fa-lg" aria-hidden="true"></i></a>
+                                    </div>
+                                </td>
+                            </tr>
+                            @endforeach
+                        @endif
+                        </tbody>
+                    </table>
+
+                    <!-- Alert if Zero Result Retrieved -->
+                    @if($msg??''!='')
+                    <div class="row">
+                        <div class="col-sm-12">
+                            <h1 class="display-3 text-center">{{$msg}}</h1>
+                        </div>
+                    </div>
+                    @endif
+
+                </div>
+            </div>
+            <!-- Event Table end -->
+        </div>
+
+        <!-- Delete Single Event Modal -->
+        <div class="modal fade" id="deleteEvent_modal">
+            <div class="modal-dialog modal-dialog-centered modal-sm">
+                <div class="modal-content">
+                    <!-- Modal Header -->
+                    <div class="modal-header">
+                        <h2 id="modal-heading" class="modal-title" style="margin:auto;">Are You Sure?</h2>
+                    </div>
+
+                    <form id="ok_deleteEvent" action="#" method="POST">
+                    @csrf
+                    @method('DELETE')
+                        <!-- Modal footer -->
+                        <div class="modal-footer">
+                            <button type="button" class="btn btn-secondary btn-lg" data-dismiss="modal">Close</button>
+                            <button type="submit" class="btn btn-danger btn-lg">Delete Event</button>
+                        </div>
+                    </form>
+                </div>
+            </div>
+        </div>
+        <!-- Delete Single Event Modal Ends-->
+
+        <!-- Delete All Event Modal -->
+        <div class="modal fade" id="deleteAllEvent_modal">
+            <div class="modal-dialog modal-dialog-centered modal-sm">
+                <div class="modal-content">
+                    <!-- Modal Header -->
+                    <div class="modal-header">
+                        <h2 id="modal-heading" class="modal-title" style="margin:auto;">Are You Sure?</h2>
+                    </div>
+
+                    <div class="modal-body">
+                        <h3 id="modal-heading" class="modal-title text-center" style="margin:auto;">All Past Events will be deleted</h3>
+                    </div>
+
+                    <form id="ok_deleteEvent" action="/admin/past-event/delete-all-event" method="POST">
+                    @csrf
+                    @method('DELETE')
+                        <!-- Modal footer -->
+                        <div class="modal-footer">
+                            <button type="button" class="btn btn-secondary btn-lg" data-dismiss="modal">Close</button>
+                            <button type="submit" class="btn btn-danger btn-lg">Delete All Events</button>
+                        </div>
+                    </form>
+                </div>
+            </div>
+        </div>
+        <!-- Delete All Event Modal Ends-->
+
+        <!-- View Modal -->
+        <div class="modal fade" id="viewUser_modal">
+            <div class="modal-dialog modal-dialog-centered">
+                <div class="modal-content">
+                    <div class="modal-body">
+                        <!-- Photo and Name -->
+                        <div class="row">
+                            <div class="col-lg-12">
+                                <img id="image" class="img-fluid rounded img-thumbnail mx-auto d-block rounded-circle" src="{{asset('resources/images/profile.png')}}" alt="profile" width="140" height="140">
+                            </div>
+                            <div class="col-lg-12">
+                                <h1 id="fullName" class="media-heading display-5 text-center">Joe Sixpack</h1>
+                            </div>
+                            <div class="col-lg-12">
+                                <h4 class="text-center"><span id="typeName" class="badge badge-pill badge-dark">Patient</span></h4>
+                            </div>
+                            <div class="col-lg-12 checkDoctor">
+                                <h3 class="text-center"><span id="doctorSpecialist" class="badge badge-pill badge-primary">Heart Surgery</span></h3>
+                            </div>
+                        </div>
+                        <hr>
+                        <!-- Main Data -->
+                        <div class="row" style="padding-left:2%;">
+                            <table class="table table-hover" style="padding-left:2%;">
+                                <tr>
+                                    <td><h4 class="display-6"><strong>Email Address: </strong></h4></td>
+                                    <td><h4 id="emailID" class="display-6">alikhan@gmail.com</h4></td>
+                                </tr>
+                                <tr>
+                                    <td><h4 class="display-6"><strong>CNIC Number: </strong></h4></td>
+                                    <td><h4 id="cnic_no" class="display-6">41303XXXXXXXX</h4></td>
+                                </tr>
+                                <tr>
+                                    <td><h4 class="display-6"><strong>Phone Number: </strong></h4></td>
+                                    <td><h4 id="phone_no" class="display-6">92333XXXXXXX</h4></td>
+                                </tr>
+                                <tr>
+                                    <td><h4 class="display-6"><strong>Gender: </strong></h4></td>
+                                    <td><h4 id="gender" class="display-6">Male</h4></td>
+                                </tr>
+                                <tr>
+                                    <td><h4 class="display-6"><strong>City: </strong></h4></td>
+                                    <td><h4 id="city" class="display-6">Karachi</h4></td>
+                                </tr>
+                                <tr>
+                                    <td><h4 class="display-6"><strong>Description: </strong></h4></td>
+                                    <td><h4 id="description" class="display-6">Description</h4></td>
+                                </tr>
+                                <tr>
+                                    <td><h4 class="display-6"><strong>Date/TIme: </strong></h4></td>
+                                    <td><h4 id="dateTime" class="display-6">--/--</h4></td>
+                                </tr>
+                            </table>
+                            <div class="col-lg-12">
+                                <button type="button" class="btn btn-primary btn-lg btn-block" data-dismiss="modal" style="font-size:15px;">Close</button>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <!-- View Modal Ends-->
+
     </div>
+
+    <script>
+        $(document).ready(function(){
+            $("#searchData").on("keyup", function() {
+                var value = $(this).val().toLowerCase();
+                $("#myTable tr").filter(function() {
+                $(this).toggle($(this).text().toLowerCase().indexOf(value) > -1)
+                });
+            });
+        });
+    </script>
+
+    <script>
+        var event_id;
+        $(document).ready(function(){
+            $(".deleteEvent").click(function(){
+                event_id = $(this).attr('id');
+                $("#ok_deleteEvent").attr("action","/admin/past-event/delete-event/"+event_id);
+                $('#deleteEvent_modal').modal('show');
+            });
+
+            $("#ok_deleteEvent").click(function(){
+                $('#deleteEvent_modal').modal('hide');
+            });
+        });
+    </script>
+
+    <script>
+        var user_id;
+        var allData;
+        var doctorData;
+        $(document).ready(function(){
+            $(".viewUser").click(function(){
+                user_id = $(this).attr('id');   // current id
+
+                allData = $('.AllData').attr('id'); // all records
+                var obj = JSON.parse(allData);
+
+                doctorData = $('.DoctorData').attr('id');   // doctor records
+                var objDoc = JSON.parse(doctorData);
+
+                for(var i=0;i<obj.length;i++){
+                    if(user_id == obj[i].primary_id){
+                        // alert(obj[i].fname);
+                        $("#fullName").html(obj[i].fname+' '+obj[i].lname);
+                        $("#typeName").html(obj[i].type_name);
+                        $("#emailID").html(obj[i].email_id);
+                        $("#cnic_no").html(obj[i].cnic);
+                        $("#phone_no").html(obj[i].phone_number);
+                        $("#gender").html(obj[i].gender);
+                        $("#city").html(obj[i].city);
+                        $("#description").html(obj[i].description);
+                        $("#dateTime").html(obj[i].event_date+' - '+obj[i].event_time);
+
+                        if(obj[i].image != null){
+                            $('#image').attr("src", 'data:image/*;base64,'+obj[i].image);
+                        }
+                        else{
+                            $('#image').attr('src', 'https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcRCU4AoQASk65ZwYPHbNqQvYp5pwbhS-tOLbg&usqp=CAU');
+                        }
+
+                        if(obj[i].type_name != "Doctor" && obj[i].type_name != "doctor"){
+                            $(".checkDoctor").hide();
+                        }
+                        else{
+                            $(".checkDoctor").show();
+                            for(var j=0;j<objDoc.length;j++){
+                                if(user_id == objDoc[j].primary_id){
+                                    $("#doctorSpecialist").html(objDoc[j].specialist);
+                                }
+                            }
+                        }
+                    }
+                }
+            });
+        });
+    </script>
+
 @endsection

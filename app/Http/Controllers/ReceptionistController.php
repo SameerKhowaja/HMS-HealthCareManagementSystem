@@ -13,6 +13,7 @@ use App\Type;
 use App\Doctor;
 use App\Doctor_availability;
 use App\Patient;
+use App\Past_event;
 
 class ReceptionistController extends Controller
 {
@@ -83,6 +84,14 @@ class ReceptionistController extends Controller
             $hospitalData->image = $img;
         }
         $hospitalData->save();
+        $primaryID = $hospitalData->primary_id;
+
+        // Event Update
+        $newEvent = new Past_event;
+        $newEvent->event_type = "Modified";
+        $newEvent->primary_id = $primaryID;
+        $newEvent->description = "Self Profile Updated";
+        $newEvent->save();
 
         session(['username'=>$hospitalData->fname.' '.$hospitalData->lname]);   //update session username
         session(['image'=>$hospitalData->image]);   //update session image

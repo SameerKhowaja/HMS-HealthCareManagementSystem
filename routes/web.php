@@ -51,6 +51,11 @@ Route::post('/admin/message/manage-announcement/edit-announcement/{id}', 'AdminC
 Route::delete('/admin/message/delete-contact/{id}','AdminController@deleteContactData'); // delete contacts
 Route::delete('/admin/message/delete-all-contacts','AdminController@deleteAllContactData'); // delete all contacts
 
+// Past Events Routes
+Route::post('/admin/past-event','AdminController@searchEventType'); //Event Search By Event Type Btn Click
+Route::delete('/admin/past-event/delete-event/{id}','AdminController@deleteEvent'); //delete single event
+Route::delete('/admin/past-event/delete-all-event','AdminController@deleteAllEvent'); //delete all events
+
 // admin hospital-data routes
 Route::get('/admin/hospital-data/addRecord','AdminController@addRecord');    //add patient record view
 Route::post('/admin/hospital-data/addRecord','AdminController@addRecordSave');    //add patient record on btn click

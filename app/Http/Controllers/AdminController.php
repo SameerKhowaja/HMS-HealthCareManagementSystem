@@ -24,6 +24,7 @@ use App\Receptionist;
 use App\Room;
 use App\Type;
 use App\Other;
+use App\Past_event;
 use App\User;
 
 class AdminController extends Controller
@@ -267,11 +268,62 @@ class AdminController extends Controller
         return redirect("/admin/message/manage-announcement")->with('msg','success');
     }
 
+    // Past Event View
     function pastEvent(){
-        return view("admin.pastEvent");
+        $events = Hospital_data::join('past_events', 'past_events.primary_id', '=', 'hospital_datas.primary_id')
+                ->join('types', 'types.type_id', '=', 'hospital_datas.type_id')
+                ->get(['hospital_datas.*', 'past_events.*', 'types.type_name']);
+        $eventCount = count($events);
+        $doctorList = Doctor::all();
+        if($eventCount <= 0){
+            return view("admin.pastEvent", ['dataFetched'=>$events, 'doctorList'=>'none', 'msg'=>'Data Not Found...!']);
+        }
+        return view("admin.pastEvent", ['dataFetched'=>$events, 'doctorList'=>$doctorList]);
     }
 
-// Admin Dashboard ENDS ---------------------------------
+    // Delete Single Event
+    function deleteEvent($id){
+        $event = Past_event::findOrFail($id);
+        $event->delete();
+        return redirect("/admin/past-event")->with('msg','success');
+    }
+
+    // Delete All Events
+    function deleteAllEvent(){
+        DB::table('past_events')->truncate();
+        return redirect("/admin/past-event")->with('msg','success');
+    }
+
+    // Event Search By Event Type Btn Click
+    function searchEventType(){
+        $eventType = request('eventType');
+        if($eventType == "All"){
+            $events = Hospital_data::join('past_events', 'past_events.primary_id', '=', 'hospital_datas.primary_id')
+                    ->join('types', 'types.type_id', '=', 'hospital_datas.type_id')
+                    ->get(['hospital_datas.*', 'past_events.*', 'types.type_name']);
+            $eventCount = count($events);
+            $doctorList = Doctor::all();
+            if($eventCount <= 0){
+                return view("admin.pastEvent", ['dataFetched'=>$events, 'doctorList'=>'none', 'msg'=>'Data Not Found...!']);
+            }
+            return view("admin.pastEvent", ['dataFetched'=>$events, 'doctorList'=>$doctorList]);
+        }
+        else{
+            $events = Hospital_data::join('past_events', 'past_events.primary_id', '=', 'hospital_datas.primary_id')
+                    ->join('types', 'types.type_id', '=', 'hospital_datas.type_id')
+                    ->where("past_events.event_type", $eventType)
+                    ->get(['hospital_datas.*', 'past_events.*', 'types.type_name']);
+            $eventCount = count($events);
+            $doctorList = Doctor::all();
+            if($eventCount <= 0){
+                return view("admin.pastEvent", ['dataFetched'=>$events, 'doctorList'=>'none', 'msg'=>'Data Not Found...!']);
+            }
+            return view("admin.pastEvent", ['dataFetched'=>$events, 'doctorList'=>$doctorList]);
+        }
+    }
+
+
+// Admin Dashboard ENDS ----------------------------------------------------
 
 
 // Admin / Hospital Data Management STARTS ---------------------------------
