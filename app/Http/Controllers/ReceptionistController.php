@@ -84,9 +84,9 @@ class ReceptionistController extends Controller
             $hospitalData->image = $img;
         }
         $hospitalData->save();
-        $primaryID = $hospitalData->primary_id;
 
         // Event Update
+        $primaryID = session()->get('userID');
         $newEvent = new Past_event;
         $newEvent->event_type = "Modified";
         $newEvent->primary_id = $primaryID;
@@ -115,6 +115,14 @@ class ReceptionistController extends Controller
         else{   // old password is same
             $hospital_data->password = request("new_pass");
             $hospital_data->save();
+
+            // Event Update
+            $primaryID = session()->get('userID');
+            $newEvent = new Past_event;
+            $newEvent->event_type = "Modified";
+            $newEvent->primary_id = $primaryID;
+            $newEvent->description = "Self Profile Password Updated";
+            $newEvent->save();
             return view('receptionist.editProfile', ['hospital_data'=>$hospital_data, 'msg'=>'Success! ', 'long_msg'=>"Password Updated...!"]);
         }
 
@@ -159,11 +167,20 @@ class ReceptionistController extends Controller
         return view('receptionist.manageRoomBed', ['roomCount'=>$roomCount, 'bedCount'=>$bedCount, 'availableBed'=>$availableBed, 'room_data'=>$room_data, 'roomNumbers'=>$rooms]);
     }
 
-    // Delete Room on click
+    // Delete Bed on click
     function deleteBed($id){
-        return 1;
         $data = Bed::findOrFail($id);
+        $bedNumber = $data->bed_number;
         $data->delete();
+
+        // Event Update
+        $primaryID = session()->get('userID');
+        $newEvent = new Past_event;
+        $newEvent->event_type = "Deleted";
+        $newEvent->primary_id = $primaryID;
+        $newEvent->description = "Deleted Bed (".$bedNumber.")";
+        $newEvent->save();
+
         return redirect("receptionist/room-bed/")->with('msg','success');
     }
 
@@ -184,6 +201,15 @@ class ReceptionistController extends Controller
             $newRoom = new Room;
             $newRoom->room_number = $newRoomNumber;
             $newRoom->save();
+
+            // Event Update
+            $primaryID = session()->get('userID');
+            $newEvent = new Past_event;
+            $newEvent->event_type = "Added";
+            $newEvent->primary_id = $primaryID;
+            $newEvent->description = "Added New Room (".$newRoomNumber.")";
+            $newEvent->save();
+
             return redirect("/receptionist/room-bed/")->with('msg','success');
         }
     }
@@ -208,13 +234,32 @@ class ReceptionistController extends Controller
             $newBed->bed_number = $newBedNumber;
             $newBed->room_id = $roomID;
             $newBed->save();
+
+            // Event Update
+            $primaryID = session()->get('userID');
+            $newEvent = new Past_event;
+            $newEvent->event_type = "Added";
+            $newEvent->primary_id = $primaryID;
+            $newEvent->description = "Added New Bed (".$newBedNumber.")";
+            $newEvent->save();
+
             return redirect("/receptionist/room-bed/")->with('msg','success');
         }
     }
 
     function deleteRoom($id){
         $rooms = Room::with('bed')->where('room_number', '=', $id)->firstOrFail();
+        $roomNumber = $rooms->room_number;
         $rooms->delete();
+
+        // Event Update
+        $primaryID = session()->get('userID');
+        $newEvent = new Past_event;
+        $newEvent->event_type = "Deleted";
+        $newEvent->primary_id = $primaryID;
+        $newEvent->description = "Deleted Room (".$roomNumber.")";
+        $newEvent->save();
+
         return redirect("/receptionist/room-bed/")->with('msg','success');
     }
 
@@ -292,8 +337,17 @@ class ReceptionistController extends Controller
 
         // If everything is good
         $room_edit = Room::where('room_number', '=', $id)->firstOrFail();
+        $oldRoomNumber = $room_edit->room_number; // old room
         $room_edit->room_number = $newRoomNumber;
         $room_edit->save();
+
+        // Event Update
+        $primaryID = session()->get('userID');
+        $newEvent = new Past_event;
+        $newEvent->event_type = "Modified";
+        $newEvent->primary_id = $primaryID;
+        $newEvent->description = "Updated Room (".$oldRoomNumber.") to (".$newRoomNumber.")";
+        $newEvent->save();
 
         return redirect("/receptionist/room-bed/");
     }
@@ -301,6 +355,7 @@ class ReceptionistController extends Controller
     // Edit Bed Number on modal btn click
     function editBedNumber(Request $req, $id){
         $bed_data = Bed::findOrFail($id);
+        $oldBedNumber = $bed_data->bed_number; // old bed
         $newBedNumber = request("newBedNumber");
 
         // If both Number are Same
@@ -320,6 +375,14 @@ class ReceptionistController extends Controller
         // if everything is good
         $bed_data->bed_number = $newBedNumber;
         $bed_data->save();
+
+        // Event Update
+        $primaryID = session()->get('userID');
+        $newEvent = new Past_event;
+        $newEvent->event_type = "Modified";
+        $newEvent->primary_id = $primaryID;
+        $newEvent->description = "Updated Bed (".$oldBedNumber.") to (".$newBedNumber.")";
+        $newEvent->save();
 
         return redirect("/receptionist/room-bed/");
     }
