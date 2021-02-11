@@ -493,13 +493,31 @@ class ReceptionistController extends Controller
         $doctorAvailability->doctor_id = $doctor_id;
         $doctorAvailability->save();
 
+        // Event Update
+        $primaryID = session()->get('userID');
+        $newEvent = new Past_event;
+        $newEvent->event_type = "Added";
+        $newEvent->primary_id = $primaryID;
+        $newEvent->description = "Added New Doctor (".request('fname')." ".request('lname').")";
+        $newEvent->save();
+
         return view('receptionist.doctorDetail.doctorData.addRecord', ['msg'=>'Success! ', 'long_msg'=>"Added New Doctor Record to database"]);
     }
 
     // Delete User in hospital data using modal
     function deleteDoctorData($id){
         $userData = Hospital_data::findOrFail($id);
+        $doctorName = $userData->fname." ".$userData->lname;
         $userData->delete();
+
+        // Event Update
+        $primaryID = session()->get('userID');
+        $newEvent = new Past_event;
+        $newEvent->event_type = "Deleted";
+        $newEvent->primary_id = $primaryID;
+        $newEvent->description = "Deleted Doctor (".$doctorName.")";
+        $newEvent->save();
+
         return redirect("/receptionist/doctor-view")->with('msg','Successfully Deleted');
     }
 
@@ -572,6 +590,14 @@ class ReceptionistController extends Controller
         $doctor_data->specialist = request('specialist');
         $doctor_data->save();
 
+        // Event Update
+        $primaryID = session()->get('userID');
+        $newEvent = new Past_event;
+        $newEvent->event_type = "Modified";
+        $newEvent->primary_id = $primaryID;
+        $newEvent->description = "Updated Doctor (".request('fname')." ".request('lname').")";
+        $newEvent->save();
+
         $hospital_data = Hospital_data::join('doctors', 'doctors.primary_id', '=', 'hospital_datas.primary_id')->findOrFail($id);
         return view("receptionist.doctorDetail.doctorData.editRecord", ['hospitalData'=>$hospital_data, 'msg'=>'Success! ', 'long_msg'=>"Record Updated...!"]);
     }
@@ -609,6 +635,8 @@ class ReceptionistController extends Controller
     //edit doctor timings on button click
     function doctorTimingEditSave($id){
         $doctorTiming = Doctor_availability::findOrFail($id);   // find in availability table
+        $doctor_id = $doctorTiming->doctor_id;
+        $doctorData = DB::table('doctors')->join('hospital_datas', 'hospital_datas.primary_id', '=', 'doctors.primary_id')->where("doctor_id", $doctor_id)->get();
 
         // days mon-sun
         $monday_start = request("monday_start");
@@ -673,6 +701,14 @@ class ReceptionistController extends Controller
 
         // update data
         $doctorTiming->save();
+
+        // Event Update
+        $primaryID = session()->get('userID');
+        $newEvent = new Past_event;
+        $newEvent->event_type = "Modified";
+        $newEvent->primary_id = $primaryID;
+        $newEvent->description = "Updated Doctor Timing (".$doctorData[0]->fname." ".$doctorData[0]->lname.")";
+        $newEvent->save();
 
         // joining 3 tables where clause
         $data = DB::table('doctors')
@@ -783,6 +819,14 @@ class ReceptionistController extends Controller
         $add_dataDoctor->primary_id = $primaryid;
         $add_dataDoctor->save();
 
+        // Event Update
+        $primaryID = session()->get('userID');
+        $newEvent = new Past_event;
+        $newEvent->event_type = "Added";
+        $newEvent->primary_id = $primaryID;
+        $newEvent->description = "Added New Patient (".request('fname')." ".request('lname').")";
+        $newEvent->save();
+
         return view('receptionist.patientDetail.patientData.addRecord', ['msg'=>'Success! ', 'long_msg'=>"Added New Patient Record to database"]);
     }
 
@@ -849,6 +893,14 @@ class ReceptionistController extends Controller
             $hospitalData->image = $img;
         }
         $hospitalData->save();
+
+        // Event Update
+        $primaryID = session()->get('userID');
+        $newEvent = new Past_event;
+        $newEvent->event_type = "Modified";
+        $newEvent->primary_id = $primaryID;
+        $newEvent->description = "Update Patient (".request('fname')." ".request('lname').")";
+        $newEvent->save();
 
         $hospital_data = Hospital_data::join('patients', 'patients.primary_id', '=', 'hospital_datas.primary_id')->findOrFail($id);
         return view("receptionist.patientDetail.patientData.editRecord", ['hospitalData'=>$hospital_data, 'msg'=>'Success! ', 'long_msg'=>"Record Updated...!"]);
