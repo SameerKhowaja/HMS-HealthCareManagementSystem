@@ -165,6 +165,11 @@ Route::post('/receptionist/room-bed/{id}','ReceptionistController@searchAvailabl
 Route::post('/receptionist/room-bed/room-edit/{id}','ReceptionistController@editRoomNumber');    //edit room number on admin modal click
 Route::post('/receptionist/room-bed/bed-edit/{id}','ReceptionistController@editBedNumber');    //edit bed number on admin modal click
 
+// receptionist patient-view routes
+Route::get('/receptionist/patient-view/addRecord','ReceptionistController@addPatientRecord');    //add record view
+Route::post('/receptionist/patient-view/addRecord','ReceptionistController@addPatientRecordSave');    //add record on btn click
+Route::get('/receptionist/patient-view/edit-record/{id}','ReceptionistController@editPatientData');    //edit User view
+Route::post('/receptionist/patient-view/edit-record/{id}','ReceptionistController@editPatientDataSave');    //edit User data on btn click
 
 
 //======================================================

@@ -13,7 +13,7 @@
             </a>
 
             <span aria-controls="collapseExample1" data-target="#collapseExample1" data-toggle="collapse" aria-haspopup="true" aria-expanded="false">
-                <li class="active">
+                <li>
                     <div class="text-normal">
                     <svg xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" aria-hidden="true" focusable="false" width="1em" height="1em" fill="#0052E9" style="-ms-transform: rotate(360deg); -webkit-transform: rotate(360deg); transform: rotate(360deg);" preserveAspectRatio="xMidYMid meet" viewBox="0 0 16 16">
                         <path d="M15 14s1 0 1-1-1-4-5-4-5 3-5 4 1 1 1 1h8zm-7.978-1A.261.261 0 0 1 7 12.996c.001-.264.167-1.03.76-1.72C8.312 10.629 9.282 10 11 10c1.717 0 2.687.63 3.24 1.276.593.69.758 1.457.76 1.72l-.008.002a.274.274 0 0 1-.014.002H7.022zM11 7a2 2 0 1 0 0-4 2 2 0 0 0 0 4zm3-2a3 3 0 1 1-6 0 3 3 0 0 1 6 0zM6.936 9.28a5.88 5.88 0 0 0-1.23-.247A7.35 7.35 0 0 0 5 9c-4 0-5 3-5 4 0 .667.333 1 1 1h4.216A2.238 2.238 0 0 1 5 13c0-1.01.377-2.042 1.09-2.904.243-.294.526-.569.846-.816zM4.92 10A5.493 5.493 0 0 0 4 13H1c0-.26.164-1.03.76-1.724.545-.636 1.492-1.256 3.16-1.275zM1.5 5.5a3 3 0 1 1 6 0 3 3 0 0 1-6 0zm3-2a2 2 0 1 0 0 4 2 2 0 0 0 0-4z"/>
@@ -22,14 +22,14 @@
                         <div class="collapse" id="collapseExample1">
                             <div class="dropdown-divider"></div>
                             <a class="dropdown-item text-normal" href="/receptionist/doctor-view" > Doctor View</a>
-                            <a class="dropdown-item text-normal active" href="/receptionist/doctor-timing"> Doctor Timing</a>
+                            <a class="dropdown-item text-normal" href="/receptionist/doctor-timing"> Doctor Timing</a>
                         </div>
                     </div>
                 </li>
             </span>
 
             <span aria-controls="collapseExample2" data-target="#collapseExample2" data-toggle="collapse" aria-haspopup="true" aria-expanded="false">
-                <li>
+                <li class="active">
                     <div class="text-normal">
                     <svg xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" aria-hidden="true" focusable="false" fill="#0052E9" width="1em" height="1em" style="-ms-transform: rotate(360deg); -webkit-transform: rotate(360deg); transform: rotate(360deg);" preserveAspectRatio="xMidYMid meet" viewBox="0 0 24 24">
                         <circle cx="18" cy="4" r="2"/>
@@ -38,7 +38,7 @@
 
                         <div class="collapse" id="collapseExample2">
                             <div class="dropdown-divider"></div>
-                            <a class="dropdown-item text-normal" href="/receptionist/patient-view" > Patient View</a>
+                            <a class="dropdown-item text-normal active" href="/receptionist/patient-view" > Patient View</a>
                             <a class="dropdown-item text-normal" href="/receptionist/patient-admission"> Patient Admitted</a>
                             <a class="dropdown-item text-normal" href="/receptionist/patient-appointment"> Patient Appointments</a>
                             <a class="dropdown-item text-normal" href="/receptionist/patient-lab-test"> Patient Lab Tests</a>
@@ -63,10 +63,13 @@
 
         <div style='margin-top:2%; margin-bottom:2%;'>
             <div style="display: flex; justify-content: space-between; align-items: center;">
-                <h3 class="text-large text-grey">Doctor Details / Doctor Timing</h3>
+                <h3 class="text-large text-grey">Patient Details / Patient View</h3>
+                <a href="/receptionist/patient-view/addRecord/" class="btn btn-primary btn-lg active" role="button" aria-pressed="true"><i class="fa fa-plus-circle"> </i>  Add New Patient</a>
             </div>
 
-            <!-- Doctor Data table -->
+            <br>
+
+            <!-- doctor table -->
             <div class="table-responsive" style='box-shadow: 5px 3px 5px 3px #1b99d8; background-color: white; padding: 2%; border-radius: 10px; font-size: 13px;'>
                 <div class="row">
                     <div class="col-lg-12">
@@ -77,18 +80,17 @@
                     </div>
                 </div>
 
+                <!-- Patient table Start -->
                 <div class="table-responsive-sm">
                     <table id="RecordTable" class="table table-hover">
                         <thead>
                             <tr>
-                                <th scope="col" style="text-align:center">Doctor Name</th>
-                                <th scope="col" style="text-align:center">Monday</th>
-                                <th scope="col" style="text-align:center">Tuesday</th>
-                                <th scope="col" style="text-align:center">Wednesday</th>
-                                <th scope="col" style="text-align:center">Thursday</th>
-                                <th scope="col" style="text-align:center">Friday</th>
-                                <th scope="col" style="text-align:center">Saturday</th>
-                                <th scope="col" style="text-align:center">Sunday</th>
+                                <th scope="col" style="text-align:center">Image</th>
+                                <th scope="col" style="text-align:center">Full Name</th>
+                                <th scope="col" style="text-align:center">CNIC #</th>
+                                <th scope="col" style="text-align:center">Email ID</th>
+                                <th scope="col" style="text-align:center">Phone #</th>
+                                <th scope="col" style="text-align:center">Gender</th>
                                 <th scope="col" style="text-align:center">Action</th>
                             </tr>
                         </thead>
@@ -97,58 +99,27 @@
                         @if($dataFetched != 'none')
                             <!-- Complete Data Fetched -->
                             <div class="AllData" id="{{$dataFetched}}"></div>
-
                             @foreach($dataFetched as $data)
                             <tr>
+                                <td style="text-align:center">
+                                    @if($data->image == '')
+                                        <img class="profile" src="{{asset('resources/images/profile.png')}}" alt="profile">
+                                    @else
+                                        <img class="profile" src='{{"data:image/*;base64,".$data->image}}' alt="profile">
+                                    @endif
+                                </td>
+
                                 <td style="text-align:center">{{$data->fname.' '.$data->lname}}</td>
-                                <!-- Monday -->
-                                @if($data->monday_start!='' && $data->monday_end!='')
-                                    <td style="text-align:center">{{date("g:i a", strtotime($data->monday_start)).' - '.date("g:i a", strtotime($data->monday_end))}}</td>
-                                @else
-                                <td style="text-align:center">N/A</td>
-                                @endif
-                                <!-- Tuesday -->
-                                @if($data->tuesday_start!='' && $data->tuesday_end!='')
-                                    <td style="text-align:center">{{date("g:i a", strtotime($data->tuesday_start)).' - '.date("g:i a", strtotime($data->tuesday_end))}}</td>
-                                @else
-                                <td style="text-align:center">N/A</td>
-                                @endif
-                                <!-- Wednesday -->
-                                @if($data->wednesday_start!='' && $data->wednesday_end!='')
-                                    <td style="text-align:center">{{date("g:i a", strtotime($data->wednesday_start)).' - '.date("g:i a", strtotime($data->wednesday_end))}}</td>
-                                @else
-                                <td style="text-align:center">N/A</td>
-                                @endif
-                                <!-- Thursday -->
-                                @if($data->thursday_start!='' && $data->thursday_end!='')
-                                    <td style="text-align:center">{{date("g:i a", strtotime($data->thursday_start)).' - '.date("g:i a", strtotime($data->thursday_end))}}</td>
-                                @else
-                                <td style="text-align:center">N/A</td>
-                                @endif
-                                <!-- Friday -->
-                                @if($data->friday_start!='' && $data->friday_end!='')
-                                    <td style="text-align:center">{{date("g:i a", strtotime($data->friday_start)).' - '.date("g:i a", strtotime($data->friday_end))}}</td>
-                                @else
-                                <td style="text-align:center">N/A</td>
-                                @endif
-                                <!-- Saturday -->
-                                @if($data->saturday_start!='' && $data->saturday_end!='')
-                                    <td style="text-align:center">{{date("g:i a", strtotime($data->saturday_start)).' - '.date("g:i a", strtotime($data->saturday_end))}}</td>
-                                @else
-                                <td style="text-align:center">N/A</td>
-                                @endif
-                                <!-- Sunday -->
-                                @if($data->sunday_start!='' && $data->sunday_end!='')
-                                    <td style="text-align:center">{{date("g:i a", strtotime($data->sunday_start)).' - '.date("g:i a", strtotime($data->sunday_end))}}</td>
-                                @else
-                                <td style="text-align:center">N/A</td>
-                                @endif
+                                <td style="text-align:center">{{$data->cnic}}</td>
+                                <td style="text-align:center">{{$data->email_id}}</td>
+                                <td style="text-align:center">{{$data->phone_number}}</td>
+                                <td style="text-align:center">{{$data->gender}}</td>
 
                                 <td style="text-align:center">
                                     <div class="btn-group" role="group">
-                                        <!-- View - Edit -->
-                                        <a id='{{$data->primary_id}}' style='font-size:13px;' class="btn btn-info btn-lg viewDoctor" role="button" aria-pressed="true" data-toggle="modal" data-target="#viewDoctor_modal"><i class="fa fa-database fa-lg" aria-hidden="true"></i></a>
-                                        <a class="btn btn-warning btn-lg" style='font-size: 13px;' href="/receptionist/doctor-timing/edit-timing/{{$data->doctor_available_id}}"><i class="fa fa-pencil-square-o fa-lg" aria-hidden="true"></i></a>
+                                        <!-- View - Edit - Delete -->
+                                        <a id='{{$data->primary_id}}' style='font-size:13px;' class="btn btn-info btn-lg viewUser" role="button" aria-pressed="true" data-toggle="modal" data-target="#viewUser_modal"><i class="fa fa-database fa-lg" aria-hidden="true"></i></a>
+                                        <a class="btn btn-warning btn-lg" style='font-size: 13px;' href="/receptionist/patient-view/edit-record/{{$data->primary_id}}"><i class="fa fa-pencil-square-o fa-lg" aria-hidden="true"></i></a>
                                     </div>
                                 </td>
                             </tr>
@@ -168,11 +139,11 @@
 
                 </div>
             </div>
-            <!-- Doctor Data Table end -->
+            <!-- doctor Table end -->
         </div>
 
         <!-- View Modal -->
-        <div class="modal fade" id="viewDoctor_modal">
+        <div class="modal fade" id="viewUser_modal">
             <div class="modal-dialog modal-dialog-centered">
                 <div class="modal-content">
                     <div class="modal-body">
@@ -185,10 +156,7 @@
                                 <h1 id="fullName" class="media-heading display-5 text-center">Joe Sixpack</h1>
                             </div>
                             <div class="col-lg-12">
-                                <h4 class="text-center"><span id="typeName" class="badge badge-pill badge-dark">Doctor</span></h4>
-                            </div>
-                            <div class="col-lg-12 checkDoctor">
-                                <h3 class="text-center"><span id="doctorSpecialist" class="badge badge-pill badge-primary">Heart Surgery</span></h3>
+                                <h4 class="text-center"><span id="typeName" class="badge badge-pill badge-dark">Patient</span></h4>
                             </div>
                         </div>
                         <hr>
@@ -258,8 +226,9 @@
     <script>
         var user_id;
         var allData;
+        var doctorData;
         $(document).ready(function(){
-            $(".viewDoctor").click(function(){
+            $(".viewUser").click(function(){
                 user_id = $(this).attr('id');   // current id
 
                 allData = $('.AllData').attr('id'); // all records
@@ -269,7 +238,6 @@
                     if(user_id == obj[i].primary_id){
                         // alert(obj[i].fname);
                         $("#fullName").html(obj[i].fname+' '+obj[i].lname);
-                        $("#doctorSpecialist").html(obj[i].specialist);
                         $("#emailID").html(obj[i].email_id);
                         $("#cnic_no").html(obj[i].cnic);
                         $("#phone_no").html(obj[i].phone_number);
@@ -277,8 +245,20 @@
                         $("#city").html(obj[i].city);
                         $("#dob").html(obj[i].dob);
                         $("#address").html(obj[i].address);
-                        $("#createdAt").html(obj[i].created_at);
-                        $("#updatedAt").html(obj[i].updated_at);
+
+                        var temp = obj[i].created_at;
+                        created_array = temp.split("T");
+                        var createdDate = created_array[0]; // Created Date
+                        created_array = created_array[1].split(".");
+                        var createdTime = created_array[0]; // time
+                        $("#createdAt").html(createdDate+' - '+createdTime);
+
+                        var temp = obj[i].updated_at;
+                        updated_array = temp.split("T");
+                        var UpdatedDate = updated_array[0]; // Created Date
+                        updated_array = updated_array[1].split(".");
+                        var updatedTime = updated_array[0]; // time
+                        $("#updatedAt").html(UpdatedDate+' - '+updatedTime);
 
                         if(obj[i].image != null){
                             $('#image').attr("src", 'data:image/*;base64,'+obj[i].image);

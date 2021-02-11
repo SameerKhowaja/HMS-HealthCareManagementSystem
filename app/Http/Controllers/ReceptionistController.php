@@ -12,6 +12,7 @@ use App\Bed;
 use App\Type;
 use App\Doctor;
 use App\Doctor_availability;
+use App\Patient;
 
 class ReceptionistController extends Controller
 {
@@ -329,7 +330,7 @@ class ReceptionistController extends Controller
             }
         }
         if($doctorID == 0){
-            return view("page404", ['msg'=>"Error", 'msg_long'=>$newBedNumber.' Doctor Type Not Exist...!']);
+            return view("page404", ['msg'=>"Error", 'msg_long'=>' Doctor Type Not Exist...!']);
         }
         $doctorList = Doctor::all();
         // Complete Data of Hospital Table join with Types Table
@@ -377,7 +378,7 @@ class ReceptionistController extends Controller
             }
         }
         if($doctorID == 0){
-            return view("page404", ['msg'=>"Error", 'msg_long'=>$newBedNumber.' Doctor Type Not Exist...!']);
+            return view("page404", ['msg'=>"Error", 'msg_long'=>' Doctor Type Not Exist...!']);
         }
 
         // Check if same email-cnic not exits for patient type
@@ -451,7 +452,6 @@ class ReceptionistController extends Controller
             'city' => 'max:100',
             'address' => 'max:500',
             'specialist' => 'max:300',
-            'password1' => 'required|max:100',
             'image' => 'mimes:jpeg,png,jpg|max:25',  // image size less than 25KB
         ]);
 
@@ -464,7 +464,7 @@ class ReceptionistController extends Controller
             }
         }
         if($doctorID == 0){
-            return view("page404", ['msg'=>"Error", 'msg_long'=>$newBedNumber.' Doctor Type Not Exist...!']);
+            return view("page404", ['msg'=>"Error", 'msg_long'=>' Doctor Type Not Exist...!']);
         }
 
         //Check for email not in use in hospital data table
@@ -489,7 +489,6 @@ class ReceptionistController extends Controller
         $hospitalData->city = request('city');
         $hospitalData->address = request('address');
         $hospitalData->dob = request('dob');
-        $hospitalData->password = request('password1');
         if($req->hasFile('image')){
             $img = base64_encode(file_get_contents($req->file('image')->path()));
             $hospitalData->image = $img;
@@ -615,5 +614,174 @@ class ReceptionistController extends Controller
     }
 
     // Doctor Timings ENDS -----------------------------------------
+
+
+    // Patient Vew STARTS -------------------------------------------
+
+    // View All Records Show
+    function patientView(){
+        $getType = Type::all();
+        $patientID = 0;
+        foreach($getType as $type){
+            if($type->type_name == 'patient' || $type->type_name == 'Patient'){
+                $patientID = $type->type_id;
+            }
+        }
+        if($patientID == 0){
+            return view("page404", ['msg'=>"Error", 'msg_long'=>' Doctor Type Not Exist...!']);
+        }
+        // Complete Data of Hospital Table join with patient Table
+        $hospital_data = Hospital_data::join('patients', 'patients.primary_id', '=', 'hospital_datas.primary_id')->get(['hospital_datas.*', 'patients.patient_id']);
+        $rowsReturn = count($hospital_data);
+        if($rowsReturn == 0){
+            return view('receptionist.patientDetail.patientData', ['dataFetched'=>$hospital_data, 'msg'=>'No Records Found']);
+        }else{
+            return view('receptionist.patientDetail.patientData', ['dataFetched'=>$hospital_data]);
+        }
+    }
+
+    // Add Record View btn click view
+    function addPatientRecord(){
+        return view('receptionist.patientDetail.patientData.addRecord');
+    }
+
+    // Add Record Save to database according to account type
+    function addPatientRecordSave(Request $req){
+        $req->validate([
+            'fname' => 'required|max:100',
+            'lname' => 'required|max:100',
+            'email_id' => 'required|max:200|email',
+            'cnic' => 'required|max:100',
+            'phone_number' => 'required|max:30',
+            'gender' => 'required|max:10',
+            'city' => 'max:100',
+            'address' => 'max:500',
+            'password1' => 'required|max:100',
+            'image' => 'mimes:jpeg,png,jpg|max:25',  // image size less than 25KB
+        ]);
+
+        // Check Password1 and Password2 Matched
+        if(request('password1') != request('password2')){
+            return view('receptionist.patientDetail.patientData.addRecord', ['msg'=>'Error! ', 'long_msg'=>"Password Not Matched"]);
+        }
+
+        // Getting Doctor ID
+        $getType = Type::all();
+        $patientID = 0;
+        foreach($getType as $type){
+            if($type->type_name == 'patient' || $type->type_name == 'Patient'){
+                $patientID = $type->type_id; // doctor_id which is really type_id
+            }
+        }
+        if($patientID == 0){
+            return view("page404", ['msg'=>"Error", 'msg_long'=>' Patient Type Not Exist...!']);
+        }
+
+        // Check if same email-cnic not exits for patient type
+        $email_check = request('email_id');
+        $cnic_check = request('cnic');
+        $Hospital_data = Hospital_data::where('type_id', $patientID)->get();
+        forEach($Hospital_data as $d){
+            if(($d->email_id == $email_check) || ($d->cnic == $cnic_check) || ($patientID == 0)){
+                return view('receptionist.patientDetail.patientData.addRecord', ['msg'=>'Error! ', 'long_msg'=>"Email/CNIC Already Present"]);
+            }
+        }
+
+        // if all fine add Data as Doctor
+        $add_data = new Hospital_data;
+        $add_data->type_id = $patientID;
+        $add_data->fname = request('fname');
+        $add_data->lname = request('lname');
+        $add_data->cnic = request('cnic');
+        $add_data->email_id = request('email_id');
+        $add_data->phone_number = request('phone_number');
+        $add_data->gender = request('gender');
+        $add_data->city = request('city');
+        $add_data->address = request('address');
+        $add_data->dob = request('dob');
+        $add_data->password = request('password1');
+        if($req->hasFile('image')){
+            $img = base64_encode(file_get_contents($req->file('image')->path()));
+            $add_data->image = $img;
+        }
+        $add_data->save();
+        $primaryid = $add_data->primary_id;  // return currently saved ID
+
+        $add_dataDoctor = new Patient;
+        $add_dataDoctor->primary_id = $primaryid;
+        $add_dataDoctor->save();
+
+        return view('receptionist.patientDetail.patientData.addRecord', ['msg'=>'Success! ', 'long_msg'=>"Added New Patient Record to database"]);
+    }
+
+    // Edit User Data View
+    function editPatientData($id){
+        $hospital_data = Hospital_data::join('patients', 'patients.primary_id', '=', 'hospital_datas.primary_id')->findOrFail($id);
+        return view("receptionist.patientDetail.patientData.editRecord", ['hospitalData'=>$hospital_data]);
+    }
+
+    // Edit User Data on btn click save to DB
+    function editPatientDataSave($id, Request $req){
+        $hospitalData = Hospital_data::findOrFail($id);
+
+        $req->validate([
+            'fname' => 'required|max:100',
+            'lname' => 'required|max:100',
+            'specialist' => 'max:100',
+            'email_id' => 'required|max:200|email',
+            'cnic' => 'required|max:100',
+            'phone_number' => 'required|max:30',
+            'gender' => 'required|max:10',
+            'city' => 'max:100',
+            'address' => 'max:500',
+            'specialist' => 'max:300',
+            'image' => 'mimes:jpeg,png,jpg|max:25',  // image size less than 25KB
+        ]);
+
+        // Getting Doctor ID
+        $getType = Type::all();
+        $patientID = 0;
+        foreach($getType as $type){
+            if($type->type_name == 'patient' || $type->type_name == 'Patient'){
+                $patientID = $type->type_id;
+            }
+        }
+        if($patientID == 0){
+            return view("page404", ['msg'=>"Error", 'msg_long'=>' Patient Type Not Exist...!']);
+        }
+
+        //Check for email not in use in hospital data table
+        $email_id = request('email_id');    // input box mail
+        $cnic_no = request('cnic');    // input box cnic
+        $hospital_data = Hospital_data::where('type_id', $patientID)->get();
+        forEach($hospital_data as $data){
+            // check if updated email does not exist in db with same account type
+            if(($hospitalData->email_id != $email_id && $email_id == $data->email_id) || $hospitalData->cnic != $cnic_no && $cnic_no == $data->cnic){
+                // email present in db so return error msg
+                return view("receptionist.patientDetail.patientData.editRecord", ['hospitalData'=>$hospitalData, 'msg'=>'Error! ', 'long_msg'=>"Email/CNIC Already Exists...!"]);
+            }
+        }
+
+        // If everything is OK update Data
+        $hospitalData->fname = request('fname');
+        $hospitalData->lname = request('lname');
+        $hospitalData->cnic = request('cnic');
+        $hospitalData->email_id = request('email_id');
+        $hospitalData->phone_number = request('phone_number');
+        $hospitalData->gender = request('gender');
+        $hospitalData->city = request('city');
+        $hospitalData->address = request('address');
+        $hospitalData->dob = request('dob');
+        if($req->hasFile('image')){
+            $img = base64_encode(file_get_contents($req->file('image')->path()));
+            $hospitalData->image = $img;
+        }
+        $hospitalData->save();
+
+        $hospital_data = Hospital_data::join('patients', 'patients.primary_id', '=', 'hospital_datas.primary_id')->findOrFail($id);
+        return view("receptionist.patientDetail.patientData.editRecord", ['hospitalData'=>$hospital_data, 'msg'=>'Success! ', 'long_msg'=>"Record Updated...!"]);
+    }
+
+    // Patient Vew ENDS ---------------------------------------------
 
 }
