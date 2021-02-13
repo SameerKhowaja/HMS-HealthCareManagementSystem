@@ -101,7 +101,7 @@ Route::get('/patient/doctor-appointment','PatientController@doctorAppointment');
 // changed by ali
 Route::get('/patient/current-appointment/{id}','PatientController@currentAppointment');   //request-appointment
 Route::delete('/patient/current-appointment','PatientController@delAppointment');   // delete confirmed appointment
-Route::get('/patient/appointments-detail','PatientController@appointmentsDetail');   //appointments-detail
+Route::get('/patient/appointments-detail/{id}','PatientController@appointmentsDetail');   //appointments-detail
 Route::get('/patient/lab-test','PatientController@labTest');   //lab-test
 Route::get('/patient/admissions-detail','PatientController@admissionsDetail');   //admissions-detail
 Route::get('/patient/contact-us','PatientController@index');   //contact-us  NOT SET
