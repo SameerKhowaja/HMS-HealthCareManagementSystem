@@ -21,7 +21,7 @@
             </a>
 
             <a href="/patient/current-appointment/{{session('userID')}}">
-                <li class="active  text-normal">
+                <li class="text-normal">
                 <svg xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" aria-hidden="true" focusable="false" width="1em" height="1em" fill="#0052E9" style="-ms-transform: rotate(360deg); -webkit-transform: rotate(360deg); transform: rotate(360deg);" preserveAspectRatio="xMidYMid meet" viewBox="0 0 16 16">
                     <path d="M13 2.5a1.5 1.5 0 0 1 3 0v11a1.5 1.5 0 0 1-3 0v-.214c-2.162-1.241-4.49-1.843-6.912-2.083l.405 2.712A1 1 0 0 1 5.51 15.1h-.548a1 1 0 0 1-.916-.599l-1.85-3.49a68.14 68.14 0 0 0-.202-.003A2.014 2.014 0 0 1 0 9V7a2.02 2.02 0 0 1 1.992-2.013 74.663 74.663 0 0 0 2.483-.075c3.043-.154 6.148-.849 8.525-2.199V2.5zm1 0v11a.5.5 0 0 0 1 0v-11a.5.5 0 0 0-1 0zm-1 1.35c-2.344 1.205-5.209 1.842-8 2.033v4.233c.18.01.359.022.537.036 2.568.189 5.093.744 7.463 1.993V3.85zm-9 6.215v-4.13a95.09 95.09 0 0 1-1.992.052A1.02 1.02 0 0 0 1 7v2c0 .55.448 1.002 1.006 1.009A60.49 60.49 0 0 1 4 10.065zm-.657.975l1.609 3.037.01.024h.548l-.002-.014-.443-2.966a68.019 68.019 0 0 0-1.722-.082z"/>
                 </svg> Current Appointment
@@ -29,7 +29,7 @@
             </a>
 
             <a href="/patient/appointments-detail/{{session('userID')}}">
-                <li class="text-normal">
+                <li class="active text-normal">
                     <svg xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" aria-hidden="true" focusable="false" width="1em" height="1em" fill="#0052E9" style="-ms-transform: rotate(360deg); -webkit-transform: rotate(360deg); transform: rotate(360deg);" preserveAspectRatio="xMidYMid meet" viewBox="0 0 16 16">
                         <path d="M7.646.146a.5.5 0 0 1 .708 0L10.207 2H14a2 2 0 0 1 2 2v9a2 2 0 0 1-2 2H2a2 2 0 0 1-2-2V4a2 2 0 0 1 2-2h3.793L7.646.146zM1 7v3h14V7H1zm14-1V4a1 1 0 0 0-1-1h-3.793a1 1 0 0 1-.707-.293L8 1.207l-1.5 1.5A1 1 0 0 1 5.793 3H2a1 1 0 0 0-1 1v2h14zm0 5H1v2a1 1 0 0 0 1 1h12a1 1 0 0 0 1-1v-2zM2 4.5a.5.5 0 0 1 .5-.5h8a.5.5 0 0 1 0 1h-8a.5.5 0 0 1-.5-.5zm0 4a.5.5 0 0 1 .5-.5h11a.5.5 0 0 1 0 1h-11a.5.5 0 0 1-.5-.5zm0 4a.5.5 0 0 1 .5-.5h6a.5.5 0 0 1 0 1h-6a.5.5 0 0 1-.5-.5z"/>
                     </svg> Appointments Detail
@@ -71,16 +71,23 @@
 
         <div style='margin-top:2%; margin-bottom:2%;'>
             <div style="display: flex; justify-content: space-between; align-items: center;">
-                <h3 class="text-large text-grey">Patient / Current Appointments</h3>
+                <h3 class="text-large text-grey">Patient / Appointment Details</h3>
             </div>
 
             <!-- Doctor Appointment Table -->
             <div class="table-responsive" style='box-shadow: 5px 3px 5px 3px #1b99d8; background-color: white; padding: 2%; border-radius: 10px; font-size: 13px;'>
                 <div class="row">
-                    <div class="col-sm-12">
+                    <div class="col-sm-6">
                             <div class="input-group">
                                 <span class="input-group-addon form-control form-control-lg col-sm-1"><i class="fa fa-filter fa-lg"></i></span>
                                 <input type="text" name="searchTable" id="searchData" class="form-control form-control-lg col-sm-11" placeholder="Search Table Records" style="border:1px solid lightblue; color:black;">
+                            </div>
+                    </div>
+                    <div class="col-sm-6">
+                            <div class="input-group">
+                                <label for="searchByDate" class="text-grey pr-4 text-bold m-auto ">Search By Date : </label>
+
+                                <input type="date" id="searchByDate" name="searchByDate" class="form-control form-control-lg col-sm-11" placeholder="Search Table By Date" style="border:1px solid lightblue; color:black;">
                             </div>
                     </div>
                 </div>
@@ -107,7 +114,6 @@
                                 <th scope="col" style="text-align:center">Appointment Date</th>
                                 <th scope="col" style="text-align:center">Timings</th>
                                 <th scope="col" style="text-align:center">Status</th>
-                                <th scope="col" style="text-align:center">Action</th>
                             </tr>
                         </thead>
 
@@ -118,30 +124,14 @@
                             @foreach($dataFetched as $data)
                            <tr>
                                 <td style="text-align:center">{{$data->fname.' '.$data->lname}}</td>
-                                <!-- <td style="text-align:center">{{$data->gender}}</td> -->
+                                
                                 <td style="text-align:center">{{$data->specialist}}</td>
 
                                 <td style="text-align:center">{{$data->appointment_date."  ".$data->day}}</td>
 
                                 <td style="text-align:center">{{date("h:i a", strtotime($data->start_time))." - ".date("h:i a", strtotime($data->end_time))}}</td>
 
-                                @if($data->confirm == 1)
-                                <td style="text-align:center">confirmed</td>
-                                @else
-                                <td style="text-align:center">request pending</td>
-                                @endif
-
-                                <td style="text-align:center">
-                                    <div class="btn-group" role="group">
-                                        <form action="/patient/current-appointment" method="post">
-                                            @method('delete')
-                                            @csrf
-                                            <input type="hidden" name="appointment_id" value="{{$data->appointment_id}}" >
-                                            <input type="submit" name="" value="Cancel" id="{{$data->appointment_id}}" class="btn btn-danger btn-lg deleteAdmin fa fa-trash fa-lg" role="button" aria-pressed="true">
-                                        </form>
-
-                                    </div>
-                                </td>
+                                <td style="text-align:center">{{$data->status}}</td>
                             </tr>
 
                             @endforeach
@@ -175,6 +165,18 @@
                 $(this).toggle($(this).text().toLowerCase().indexOf(value) > -1)
                 });
             });
+
+            $("#searchByDate").on("change", function(event) {
+                event.preventDefault();
+                var value = $(this).val().toLowerCase();
+                $("#myTable tr").filter(function() {
+                $(this).toggle($(this).text().toLowerCase().indexOf(value) > -1)
+                });
+            });
+
+
+
+
         });
 
         </script>

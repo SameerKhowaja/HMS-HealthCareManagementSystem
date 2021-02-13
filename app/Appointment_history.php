@@ -1,17 +1,16 @@
 <?php
 
 namespace App;
+use App\Patient;
+use App\Doctor;
+use App\Appointment_request;
 
 use Illuminate\Database\Eloquent\Model;
-use App\Doctor;
-use App\Patient;
-use App\Appointment_histories;
 
-class Appointment_request extends Model
+class Appointment_history extends Model
 {
-    //
     // Set primary key for easy access
-    protected $primaryKey = 'appointment_id';
+    protected $primaryKey = 'appointment_history_id';
     protected $fillable = ['doctor_id', 'patient_id'];
 
 
@@ -26,9 +25,11 @@ class Appointment_request extends Model
         
     }
 
-    public function appointment_histories()
+
+    public function appointment_request()
     {
-        return $this->hasOne(Appointment_history::class);
+        return $this->belongsTo(Appointment_request::class,'appointment_id');
+        
     }
 
 }

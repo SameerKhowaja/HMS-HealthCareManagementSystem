@@ -25,7 +25,7 @@ use App\Other;
 use App\Past_event;
 use App\User;
 use App\Appointment_request;
-use App\Current_appointment;
+use App\Appointment_history;
 
 class PatientController extends Controller
 {
@@ -171,6 +171,16 @@ class PatientController extends Controller
         $patient_data = Patient::where('primary_id',$req->primary_id)->get();
         $doctor_data = Doctor::where('doctor_id',$req->doctor_id)->get();
 
+        if($patient_data->count() && $doctor_data->count()){
+            $requestAlreadySent = Appointment_request::where("patient_id",$patient_data[0]->patient_id)
+                                  ->where("doctor_id",$doctor_data[0]->doctor_id)
+                                  ->where("appointment_date",$dt)->get();
+            
+            if( $requestAlreadySent->count() ){
+                return redirect('patient/doctor-appointment')->with('msg','Appointment Request Already Sent!');
+            }
+        }
+
         if($patient_data->count() > 0){
 
         $app_req = new Appointment_request;
@@ -198,6 +208,23 @@ class PatientController extends Controller
         }
 
         $app_req->save();
+        // appointments that are sent by patient but not confirmed by receptionist
+        // are ADDED as 
+        // "request pending" status in history
+
+        $app_history  = new Appointment_history;
+        $app_history->appointment_date = $app_req->appointment_date;
+        $app_history->day = $app_req->day;
+        $app_history->patient_id = $app_req->patient_id;
+        $app_history->doctor_id = $app_req->doctor_id;
+        $app_history->appointment_id = $app_req->appointment_id;
+        $app_history->Description = $app_req->Description;
+        $app_history->start_time = $app_req->start_time;
+        $app_history->end_time = $app_req->end_time;
+        $app_history->status = "request pending";
+        $app_history->save();
+
+
 
         $doctor_FullData = Hospital_data::findOrFail($doctor_data);
         // Event Update
@@ -225,7 +252,6 @@ class PatientController extends Controller
             ->join("doctors","appointment_requests.doctor_id","=","doctors.doctor_id")
             ->join("hospital_datas","doctors.primary_id","=","hospital_datas.primary_id")
             ->join("doctor_availability","appointment_requests.doctor_id","=","doctor_availability.doctor_id")
-            ->where("confrim",1)
             ->where(
                 function($query){
                     $query->where("appointment_date",'>',date("Y-m-d"))
@@ -240,8 +266,6 @@ class PatientController extends Controller
             ->select("appointment_requests.*","doctors.specialist","hospital_datas.fname","hospital_datas.lname")
             ->get();
 
-
-
         //   dd($appointments);
 
         // dd( date('l',strtotime("Mon"))  );
@@ -249,9 +273,11 @@ class PatientController extends Controller
         // dd(date("g:i a", strtotime("11:30 am")) > date('g:i a'));
 
         if($appointments->count() == 0){
+
             return view("patient.currentAppointment",['dataFetched'=>$appointments, 'msg'=>'No Current Appointments']);
 
         }else{
+
             return view("patient.currentAppointment",['dataFetched'=>$appointments]);
         }
 
@@ -260,10 +286,46 @@ class PatientController extends Controller
 
     function delAppointment(Request $req){
 
+        $a = Appointment_request::findOrFail($req->appointment_id);
+
+        // appointments that are cancelled by patient are changed as
+        // "cancelled by patient" status in history
+
+        if($a){
+
+            $app_history = Appointment_history::where("appointment_id",$a->appointment_id)
+                           ->update(["status"=>"cancelled by patient"]);
+        }
+
         Appointment_request::findOrFail($req->appointment_id)->delete();
 
         return redirect()->back()->with('msg','Appointment Request Deleted!');
 
+    }
+
+
+    function appointmentsDetail($id){
+        $history;
+        $patient = Patient::where("primary_id",$id)->get();
+
+        if($patient->count()){
+            $history = Appointment_history::where("patient_id",$patient[0]->patient_id)
+                       ->join("doctors","appointment_histories.doctor_id","=","doctors.doctor_id")
+                       ->join("hospital_datas","doctors.primary_id","=","hospital_datas.primary_id")
+                       ->select("appointment_histories.*","doctors.specialist","hospital_datas.fname","hospital_datas.lname")
+                       ->orderBy('updated_at', 'desc')
+                       ->get();
+        }
+
+
+        if( $history->count() == 0){
+            return view("patient.appointmentDetails",['dataFetched'=>$history, 'msg'=>'No Appointment Details']);
+        }else{
+            return view("patient.appointmentDetails",['dataFetched'=>$history]);
+        }
+
+
+       
     }
 
 
