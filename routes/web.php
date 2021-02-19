@@ -128,6 +128,10 @@ Route::post('/patient/doctor-appointment','PatientController@requestAppointment'
 Route::get('/doctor','DoctorController@index');   //dashboard
 // ---------------------------------------------------------------------
 
+Route::get('/doctor/editDoctorProfile/{id}','DoctorController@editProfile');   //edit profile view
+Route::post('/doctor/editDoctorProfile/{id}','DoctorController@editProfileSave');  //edit profile save btn click
+Route::post('/doctor/editDoctorProfile/editPassword/{id}','DoctorController@editProfilePassword');   //edit Doctor profile password modal save on btn click
+
 //======================================================
 //                 Doctor Module ENDS
 //=======================================================
