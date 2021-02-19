@@ -46,6 +46,7 @@ return array(
     'App\\Lab_test_name' => $baseDir . '/app/Lab_test_name.php',
     'App\\Lab_test_parameter' => $baseDir . '/app/Lab_test_parameter.php',
     'App\\Lab_test_report' => $baseDir . '/app/Lab_test_report.php',
+    'App\\Medicine' => $baseDir . '/app/Medicine.php',
     'App\\Other' => $baseDir . '/app/Other.php',
     'App\\Past_event' => $baseDir . '/app/Past_event.php',
     'App\\Patient' => $baseDir . '/app/Patient.php',

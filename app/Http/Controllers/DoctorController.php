@@ -5,6 +5,7 @@ use App\Doctor;
 use App\Hospital_data;
 use App\Appointment_request;
 use App\Past_event;
+use App\Medicine;
 
 
 use Illuminate\Http\Request;
@@ -124,6 +125,97 @@ class DoctorController extends Controller
 
         return view("page404", ['msg'=>"Error", 'msg_long'=>' Something got wrong...!']);
     }
+
+
+    // view Medince in HMS
+    function viewMedicine(){
+
+        $meds  = Medicine::all();
+
+        if($meds->count() == 0){
+            return view('doctor.meds.viewMedicine', ['dataFetched'=>$meds, 'msg'=>'No Medicines Found']);
+        }else{
+            return view('doctor.meds.viewMedicine', ['dataFetched'=>$meds]);
+        }
+        
+    }
+
+     // Add Medicie View btn click view
+     function addMedicine(){
+        return view('doctor.meds.addMedicine');
+     }
+
+
+     // Add Record Save to database
+    function saveAddedMedicine(Request $req){
+        $req->validate([
+            'medicine' => 'required|max:400',
+
+        ]);
+
+        $exist = Medicine::where("medicine",$req->medicine);
+
+        if($exist->count() > 0){
+            return redirect()->back()->with("msg","Medicine Already Exists");
+        }
+        // if all fine add Data
+        $add_med = new Medicine;
+        $add_med->medicine= $req->medicine;
+        $add_med->medicine_type= $req->medicine_type;
+        $add_med->drug_use= $req->drug_use;
+        $add_med->save();
+
+
+        return redirect()->back()->with("msg","Medicine Added SuccessFully!");
+    }
+
+     // Add Medicie View btn click view
+     function editMedicine($id){
+        $medicine = Medicine::findOrFail($id);
+        if($medicine->count()){
+            return view('doctor.meds.editMedicine',["medicine"=>$medicine]);
+        }else{
+            return redirect('doctor.meds.viewMedicine')->with("msg","No Record Found");
+        }
+        
+     }
+
+
+      // Edit Record Save to database
+    function editMedicineSave($id,Request $req){
+
+        $req->validate([
+            'medicine' => 'required|max:400',
+        ]);
+
+        $updated = Medicine::where("medicine_id",$id)->update([
+            "medicine"=>$req->medicine,
+            "medicine_type"=>$req->medicine_type,
+            "drug_use"=>$req->drug_use
+        ]);
+
+        if($updated){
+            return redirect()->back()->with("msg","Medicine Updated Successfully! ");
+        }else{
+            return redirect()->back()->with("msg","Medicine Update Failed! ");
+        }
+       
+    }
+
+
+    function delMedicine($id){
+
+        $deleted = Medicine::where("medicine_id",$id)->delete();
+
+        if($deleted){
+            return redirect()->back()->with("msg","Medicine Deleted Successfully! ");
+        }else{
+            return redirect()->back()->with("msg","Medicine Deletion Failed! ");
+        }
+
+    }
+
+
 
 
     

@@ -531,6 +531,7 @@ class ComposerStaticInit118acc1745ad49a06794976db50270bc
         'App\\Lab_test_name' => __DIR__ . '/../..' . '/app/Lab_test_name.php',
         'App\\Lab_test_parameter' => __DIR__ . '/../..' . '/app/Lab_test_parameter.php',
         'App\\Lab_test_report' => __DIR__ . '/../..' . '/app/Lab_test_report.php',
+        'App\\Medicine' => __DIR__ . '/../..' . '/app/Medicine.php',
         'App\\Other' => __DIR__ . '/../..' . '/app/Other.php',
         'App\\Past_event' => __DIR__ . '/../..' . '/app/Past_event.php',
         'App\\Patient' => __DIR__ . '/../..' . '/app/Patient.php',
