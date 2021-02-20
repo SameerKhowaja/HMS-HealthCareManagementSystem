@@ -2,10 +2,14 @@
 
 namespace App\Http\Controllers;
 use App\Doctor;
+use App\Patient;
+use App\Treatment;
+use App\Prescription;
 use App\Hospital_data;
 use App\Appointment_request;
 use App\Past_event;
 use App\Medicine;
+use App\Type;
 
 
 use Illuminate\Http\Request;
@@ -212,6 +216,80 @@ class DoctorController extends Controller
         }else{
             return redirect()->back()->with("msg","Medicine Deletion Failed! ");
         }
+
+    }
+
+    // viewing Patients of hospital with treatment link
+    function viewPatients(){
+
+        $PatientType = Type::where("type_name","Patient")->get();
+        // Complete Data of Hospital Table join with Types Table
+        $hospital_data = Hospital_data::join('types', 'types.type_id', '=', 'hospital_datas.type_id')
+        ->where("hospital_datas.type_id",$PatientType[0]->type_id)
+        ->get(['hospital_datas.*', 'types.type_name']);
+
+        $rowsReturn = count($hospital_data);
+
+        if($rowsReturn == 0){
+            return view('doctor.patients.viewPatients', ['dataFetched'=>$hospital_data, 'msg'=>'No Records Found']);
+        }else{
+            return view('doctor.patients.viewPatients', ['dataFetched'=>$hospital_data]);
+        }
+
+    }
+
+
+
+
+    function patientTreatment($id,Request $req){
+
+        $patient = Hospital_data::findOrFail($id);
+
+        $meds = Medicine::all();
+
+        return view("doctor.patients.addPrescription",["patient"=>$patient,"medicine"=>$meds]);
+
+    }
+
+
+    function patientTreatmentSave($id,Request $req){
+
+        $req->validate([
+            'medical_condition' => 'required|max:400',
+            'patient_primary_id' => 'required|max:20',
+            'doctor_primary_id' => 'required|max:20',
+        ]);
+        
+
+        $patient = Patient::where("primary_id",$req->patient_primary_id)->get();
+        $doctor = Doctor::where("primary_id",$req->doctor_primary_id)->get();
+
+        if($patient->count() && $doctor->count()){
+            $treatment = new Treatment;
+            $treatment->patient_id = $patient[0]->patient_id;
+            $treatment->doctor_id = $doctor[0]->doctor_id;
+            $treatment->medical_condition = $req->medical_condition; 
+            $treatment->comment = $req->comment;
+            $saved= $treatment->save();
+
+            if($saved){
+                foreach($req->medicines as $med){
+                    
+                    if( Medicine::where("medicine_id",$med)->exists() ){
+                        $patient_med = new Prescription;
+                        $patient_med->medicine_id = $med;
+                        $patient_med->treatment()->associate($treatment);
+                        $patient_med->save();
+                    }else{
+                        return redirect()->back()->with("msg","Medicines Prescribed Doesn't Exist! ");
+                    }
+                }
+            }else{
+                return redirect()->back()->with("msg","Medicine Prescription Could Not be Added! ");
+            }
+        }
+
+        return redirect()->back()->with("msg","Prescription Added Successfully! ");
 
     }
 

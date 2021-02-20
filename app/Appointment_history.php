@@ -5,6 +5,7 @@ use App\Patient;
 use App\Doctor;
 use App\Appointment_request;
 
+
 use Illuminate\Database\Eloquent\Model;
 
 class Appointment_history extends Model
@@ -31,5 +32,7 @@ class Appointment_history extends Model
         return $this->belongsTo(Appointment_request::class,'appointment_id');
         
     }
+
+   
 
 }

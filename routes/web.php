@@ -132,6 +132,9 @@ Route::post('/doctor/medicine/addMedicine','DoctorController@saveAddedMedicine')
 Route::get('/doctor/medicine/edit-medicine/{id}','DoctorController@editMedicine');   //edit view Medicines
 Route::put('/doctor/medicine/edit-medicine/{id}','DoctorController@editMedicineSave');   //save edited Medicines
 Route::delete('/doctor/medicine/delete-medicine/{id}','DoctorController@delMedicine');   //save edited Medicines
+Route::get('/doctor/patients','DoctorController@viewPatients');   //view Patients
+Route::get('/doctor/patients/treatment/{id}','DoctorController@patientTreatment');   //Interface of Add  Patient Treatment
+Route::post('/doctor/patients/treatment/{id}','DoctorController@patientTreatmentSave'); 
 
 // ---------------------------------------------------------------------
 

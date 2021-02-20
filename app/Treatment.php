@@ -5,14 +5,14 @@ namespace App;
 use Illuminate\Database\Eloquent\Model;
 use App\Doctor;
 use App\Patient;
-use App\Appointment_histories;
-use App\Treatment;
+use App\Prescription;
+use App\Appointment_request;
 
-class Appointment_request extends Model
+class Treatment extends Model
 {
-    //
+      //
     // Set primary key for easy access
-    protected $primaryKey = 'appointment_id';
+    protected $primaryKey = 'treatment_id';
     protected $fillable = ['doctor_id', 'patient_id'];
 
 
@@ -27,15 +27,20 @@ class Appointment_request extends Model
         
     }
 
-    public function appointment_histories()
+    public function prescription()
     {
-        return $this->hasOne(Appointment_history::class);
-    }
-
-    public function treatment()
-    {
-        return $this->hasOne(Treatment::class,'treatment_id');
+        return $this->hasMany(Prescription::class,'prescription_id');
         
     }
+
+    
+
+
+    public function appointment_request()
+    {
+        return $this->belongsTo(Appointment_request::class,'appointment_id');
+        
+    }
+
 
 }

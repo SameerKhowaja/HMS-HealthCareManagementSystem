@@ -22,7 +22,7 @@
             </a>
 
             <a href="/doctor/patients" >
-                <li class="text-normal">
+                <li class="text-normal active">
                     <svg xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" aria-hidden="true" focusable="false" fill="#0052E9" width="1em" height="1em" style="-ms-transform: rotate(360deg); -webkit-transform: rotate(360deg); transform: rotate(360deg);" preserveAspectRatio="xMidYMid meet" viewBox="0 0 24 24">
                         <circle cx="18" cy="4" r="2"/>
                         <path d="M17.836 12.014l-4.345.725l3.29-4.113a1 1 0 0 0-.227-1.457l-6-4a.999.999 0 0 0-1.262.125l-4 4l1.414 1.414l3.42-3.42l2.584 1.723l-2.681 3.352a5.913 5.913 0 0 0-5.5.752l1.451 1.451A3.972 3.972 0 0 1 8 12c2.206 0 4 1.794 4 4c0 .739-.216 1.425-.566 2.02l1.451 1.451A5.961 5.961 0 0 0 14 16c0-.445-.053-.878-.145-1.295L17 14.181V20h2v-7a.998.998 0 0 0-1.164-.986zM8 20c-2.206 0-4-1.794-4-4c0-.739.216-1.425.566-2.02l-1.451-1.451A5.961 5.961 0 0 0 2 16c0 3.309 2.691 6 6 6c1.294 0 2.49-.416 3.471-1.115l-1.451-1.451A3.972 3.972 0 0 1 8 20z"/>
@@ -39,7 +39,7 @@
             </a>
 
             <a href="/doctor/medicine" >
-                <li class="text-normal active">
+                <li class="text-normal">
                 <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="#0052E9" class="bi bi-droplet-fill" viewBox="0 0 16 16">
                     <path fill-rule="evenodd" d="M8 16a6 6 0 0 0 6-6c0-1.655-1.122-2.904-2.432-4.362C10.254 4.176 8.75 2.503 8 0c0 0-6 5.686-6 10a6 6 0 0 0 6 6zM6.646 4.646c-.376.377-1.272 1.489-2.093 3.13l.894.448c.78-1.559 1.616-2.58 1.907-2.87l-.708-.708z"/>
                 </svg> Medicines
@@ -49,41 +49,24 @@
 @endsection
 
 @section('content')
-
         <div>
-            <div style='margin-top: 2%; margin-bottom: 3%;'>
+            <div style='margin-top: 2%; margin-bottom: 3%; '>
                 <div style="display: flex; justify-content: space-between; align-items: center;">
-                    <h3 class="text-large text-grey">Doctor / Medicine / Edit Medicine Data</h3>
+                    <h3 class="text-large text-grey">Doctor / Patient / Add Medcial Prescription</h3>
                 </div>
 
                 <!-- Table -->
-                <div class="table-responsive" style='box-shadow: 5px 3px 5px 3px #1b99d8; background-color: white; padding: 2%; border-radius: 10px; font-size: 13px;'>
+                <div style='height:auto; box-shadow: 5px 3px 5px 3px #1b99d8; background-color: white; padding: 2%; border-radius: 10px; font-size: 13px;'>
 
-                    <form action="/doctor/medicine/edit-medicine/{{$medicine->medicine_id}}" method="POST">
-                        @method("put")
+                    <form action="/doctor/patients/treatment/{{$patient->primary_id}}" method="POST" enctype='application/json'>
                         @csrf
                         <!-- Head Row -->
                         <div class="row" style="margin:auto;">
                             <div class="col-sm-12" style="text-align:center;">
                                 <div class="form-group">
-                                    <h1 class="display-4">Edit Medicine Record</h1>
+                                    <h1 class="display-4">Medical Prescription</h1>
                                 </div>
                             </div>
-
-                            @if(session()->has('msg'))
-                               <div class="row">
-                                    <div class="col-sm-12">
-                                        <div class="alert alert-warning alert-dismissible fade show text-center" role="alert">
-                                            <strong>{{ session()->get('msg') }}</strong>
-                                            <button type="button" class="close" data-dismiss="alert" aria-label="Close">
-                                                <span aria-hidden="true">&times;</span>
-                                            </button>
-                                        </div>
-                                    </div>
-                                </div>
-                            @endif
-                            
-                            
                         </div>
                         <hr>
                         <!-- row1 - If error occurs -->
@@ -104,56 +87,109 @@
                                 @endif
                             </div>
 
-                            @if($msg??'' != '')
+                            @if(session()->has('msg'))
+                        <div class="row">
                             <div class="col-sm-12">
-                                <div class="form-group">
-                                    <div class="alert alert-warning alert-dismissible fade show text-center" role="alert">
-                                        <strong>{{$msg ?? ''}}</strong> {{$long_msg ?? ''}}
-                                        <button type="button" class="close" data-dismiss="alert" aria-label="Close">
-                                            <span aria-hidden="true">&times;</span>
-                                        </button>
-                                    </div>
+                                <div class="alert alert-warning alert-dismissible fade show text-center" role="alert">
+                                    <strong>{{ session()->get('msg') }}</strong>
+                                    <button type="button" class="close" data-dismiss="alert" aria-label="Close">
+                                        <span aria-hidden="true">&times;</span>
+                                    </button>
                                 </div>
                             </div>
-                            @endif
                         </div>
+                        @endif
+                        </div>
+
+
+                        <div class="row" style="margin:auto;">
+                            <div class="col-sm-6" style="text-align:center;">
+                                <div class="form-group">
+                                    
+                                    <p class="display-6"><strong>Patient : </strong> {{$patient->fname." ".$patient->lname}}</p>
+                                </div>
+                            </div>
+
+                            <div class="col-sm-6" style="text-align:center;">
+                                <div class="form-group">
+                                    <p class="display-6"><strong>Phone : </strong>{{$patient->phone_number}}</p>
+                                </div>
+                            </div>
+
+                        </div>
+                        <hr>
                         <!-- row2 -->
                         <div class="row">
-                            <div class="col-sm-6">
+                            <div class="col-sm-12">
                                 <div class="form-group">
-                                    <strong>Medicine Name*</strong>
-                                    <input type="text" name="medicine" value="{{$medicine->medicine}}" class="form-control form-control-lg" placeholder="Medicine Name" required>
-                                </div>
-                            </div>
-                            <div class="col-sm-6">
-                                <div class="form-group">
-                                    <strong>Medicine Type*</strong>
-                                    <input type="text" name="medicine_type" value="{{$medicine->medicine_type}}" class="form-control form-control-lg" placeholder="Medicine Type" required>
+                                    <strong>Medical Condition*</strong>
+                                    <input type="text" name="medical_condition" class="form-control form-control-lg" placeholder="Disease Or Injury" required>
                                 </div>
                             </div>
                         </div>
-                        <!-- row3 -->
+
+                        <input type="hidden" name="patient_primary_id" value="{{$patient->primary_id}}" >
+
+                        <input type="hidden" name="doctor_primary_id" value="{{session('userID')}}" >
+
+                        <!-- Head Row -->
+                        <div class="row" style="margin:auto;">
+                            <div class="col-sm-12" style="text-align:center;">
+                                <div class="form-group">
+                                    <h1 class="display-6">Add Medicines</h1>
+                                </div>
+                            </div>
+                        </div>
+                        <hr>
+
+                        <div class="m-auto text-center">
+                                @if(count($medicine))
+                                <div>
+                                    <strong> Select Medicine*</strong>
+                                </div>
+                                
+                                <select name="medicines[]" id="medicineMenu" multiple>
+                                
+                                        @foreach($medicine as $med)
+                                            <option value="{{$med->medicine_id}}">{{$med->medicine}}</option>
+                                        @endforeach
+                
+                                </select>
+                                @else
+                                <h3 class="display-6"> No Medicine In Records</h3>
+                                @endif
+                                
+
+                                
+                        </div>
                         
+
+
+                        <!-- row3 -->
                         <div class="row">
                             <div class="col-sm-12">
                                 <div class="form-group">
-                                    <strong>Drug Use</strong>
+                                    <strong>Comment(if any)</strong>
                                     <br>
-                                    <textarea name="drug_use" value="{{$medicine->drug_use}}" id="drug_use" cols="90%" rows="5" placeholder="Drug Use">{{$medicine->drug_use}}</textarea>
+                                    <textarea name="comment" id="comment" style="width:100%" cols="90%" rows="5%" placeholder="Comment"></textarea>
                                 </div>
                             </div>
                         </div>
-                        
+
+                        <!-- row4 -->
                         <div class="row">
                         <div class="col-xs-12 col-sm-12 col-md-12 text-center">
-                            <a href="/doctor/medicine" role="button" class="btn btn-secondary btn-lg active">Back</a>
-                            <button type="submit" class="btn btn-primary btn-lg active">Save Medicine</button>
+                            <a href="/doctor/patients" role="button" class="btn btn-secondary btn-lg active">Back</a>
+                            <button type="submit" class="btn btn-primary btn-lg active">Save Prescription</button>
                         </div>
                     </form>
                 </div>
             </div>
 
         </div>
-
-
+       
+        <script>
+            $('#medicineMenu').picker({search : true});       
+        </script>
 @endsection
+

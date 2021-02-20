@@ -72,3 +72,15 @@ INSERT INTO `lab_test_parameters` (`param_id`, `param`, `unit`, `test_id`) VALUE
 (11, 'Hematocrit', 'volume%', 9),
 (12, 'White blood cell', 'count', 9),
 (13, 'platelet', 'count', 9);
+
+
+
+INSERT INTO `medicines` (`medicine_id`, `medicine`, `medicine_type`, `drug_use`) 
+VALUES(1, 'folic  acid', 'table', 'treat or prevent folate deficiency anaemia'),
+(2, 'Prinivil, Zestril', 'tablet', 'Blood pressure, heart failure'),
+(3, 'Amoxil (amoxicillin)', 'capsule', 'Bacterial infections'),
+(4, 'Synthroid, Levoxyl, Unithroid (levothyroxine)', 'tablet', 'Thyroid deficiency'),
+(5, 'brufen', 'syrup', 'BRUFEN relieves pain and reduces inflammation'),
+(6, 'dabigatran', 'injection', 'used to treat and prevent blood clots (an anticoagulant or blood thinner'),
+(7, 'triazolam (Halcion)', 'tablet', 'used to promote sleep in individuals who have difficulty sleeping (insomnia)'),
+(8, 'Pembrolizumab', 'injection', 'used for the treatment of Cervical cancer and Solid tumors');

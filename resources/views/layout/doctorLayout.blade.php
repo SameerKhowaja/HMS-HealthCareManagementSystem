@@ -5,7 +5,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-
+    
     <link rel="stylesheet" href="{{asset('external-libraries/css/jsdelivrbootstrap.min.css')}}">
     <link rel="stylesheet" href="{{asset('resources/css/adminstyle.css')}}">
     <link rel="stylesheet" href="{{asset('resources/sass/css/profile.css')}}">
@@ -17,9 +17,16 @@
     <link rel="stylesheet" type="text/css" href="{{asset('login-register-form/fonts/font-awesome-4.7.0/css/font-awesome.min.css')}}">
     <link rel="stylesheet" href="{{asset('resources/css/doctorTime.css')}}">
 
+    
     <script src="{{asset('external-libraries/js/codejquery-3.5.1.js')}}"></script>
+    
     <!-- charts.js -->
     <script src="{{asset('external-libraries/js/cloudflareChart.min.js')}}"></script>
+    <link rel="stylesheet" href="{{asset('external-libraries/css/picker.min.css')}}">
+    <script type="text/javascript" src="{{asset('external-libraries/js/picker.min.js')}}"></script>
+
+
+    
     <title>Doctor</title>
 </head>
 
