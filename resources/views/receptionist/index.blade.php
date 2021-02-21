@@ -61,53 +61,11 @@
 @section('content')
         <div>
             <section id="overview">
-                <div style='margin-top: 3%; margin-bottom: 4%;'>
+                <div style='margin-bottom: 4%;'>
                     <div style="display: flex; justify-content: space-between; align-items: center;">
                         <h3 class="text-large text-grey">Receptionist / Profile View</h3>
                     </div>
 
-                    <div class="cardWrapper">
-                        <div class="card">
-                            <svg fill="#0052E9" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" aria-hidden="true" focusable="false" width="5em" height="5em" style="-ms-transform: rotate(360deg); -webkit-transform: rotate(360deg); transform: rotate(360deg);" preserveAspectRatio="xMidYMid meet" viewBox="0 0 24 24">
-                                <path d="M12 22c4.879 0 9-4.121 9-9s-4.121-9-9-9s-9 4.121-9 9s4.121 9 9 9zm0-16c3.794 0 7 3.206 7 7s-3.206 7-7 7s-7-3.206-7-7s3.206-7 7-7z"/>
-                                <path d="M17.284 3.707l1.412-1.416l3.01 3l-1.413 1.417z"/>
-                                <path d="M5.282 2.294L6.7 3.706l-2.99 3l-1.417-1.413z"/>
-                                <path d="M11 9h2v5h-2zm0 6h2v2h-2z"/>
-                            </svg>
-                            <div>
-                                <p class="text-large text-grey">Requested Appointments</p>
-                                <span><p id="patientCount" class="text-normal text-grey text-center" style="margin: auto;">{{$requestedAppointment ?? 'Zero'}}</p></span>
-                            </div>
-                        </div>
-
-                        <div class="card">
-                            <svg fill="#0052E9" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" aria-hidden="true" focusable="false" width="5em" height="5em" style="-ms-transform: rotate(360deg); -webkit-transform: rotate(360deg); transform: rotate(360deg);" preserveAspectRatio="xMidYMid meet" viewBox="0 0 24 24">
-                                <path d="M12 4c-4.879 0-9 4.121-9 9s4.121 9 9 9s9-4.121 9-9s-4.121-9-9-9zm0 16c-3.794 0-7-3.206-7-7s3.206-7 7-7s7 3.206 7 7s-3.206 7-7 7z"/>
-                                <path d="M13 12V8h-2v6h6v-2z"/>
-                                <path d="M17.284 3.707l1.412-1.416l3.01 3l-1.413 1.417z"/>
-                                <path d="M6.698 3.707l-2.99 2.999L2.29 5.294l2.99-3z"/>
-                            </svg>
-                            <div>
-                                <p class="text-large text-grey">Approved Appointments</p>
-                                <span><p class="text-normal text-grey text-center" style="margin: auto;">{{$approvedAppointment ?? 'Zero'}}</span>
-                            </div>
-                        </div>
-
-                        <div class="card">
-                            <svg fill="#0052E9" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" aria-hidden="true" focusable="false" width="5em" height="5em" style="-ms-transform: rotate(360deg); -webkit-transform: rotate(360deg); transform: rotate(360deg);" preserveAspectRatio="xMidYMid meet" viewBox="0 0 24 24">
-                                <path d="M12 4c-4.879 0-9 4.121-9 9s4.121 9 9 9s9-4.121 9-9s-4.121-9-9-9zm0 16c-3.794 0-7-3.206-7-7s3.206-7 7-7s7 3.206 7 7s-3.206 7-7 7z"/>
-                                <path d="M13 8h-2v4H7v2h4v4h2v-4h4v-2h-4z"/>
-                                <path d="M20.292 6.708l-3.01-3l1.412-1.417l3.01 3z"/>
-                                <path d="M5.282 2.294L6.7 3.706l-2.99 3l-1.417-1.413z"/>
-                            </svg>
-                            <div>
-                                <p class="text-large text-grey">Total Appointments</p>
-                                <span><p class="text-normal text-grey text-center" style="margin: auto;">{{$totalAppointment ?? 'Zero'}}</p></span>
-                            </div>
-                        </div>
-                    </div>
-
-                    <br><br>
                     <!-- Table Info -->
                     <div class="table-responsive" style='box-shadow: 5px 3px 5px 3px #1b99d8; background-color: white; padding: 2%; border-radius: 10px; font-size: 13px;'>
                         <!-- Head Row -->

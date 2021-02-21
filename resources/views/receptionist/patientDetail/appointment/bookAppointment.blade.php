@@ -64,42 +64,19 @@
         <div style='margin-top:2%; margin-bottom:2%;'>
             <div style="display: flex; justify-content: space-between; align-items: center;">
                 <h3 class="text-large text-grey">Receptionist / Book Appointment</h3>
+                <a style='font-size:13px;' class="btn btn-primary btn-lg active" role="button" aria-pressed="true" data-toggle="modal" data-target="#viewPatient_modal"><i class="fa fa-database fa-lg" aria-hidden="true"></i> View Selected Patient Detail</a>
             </div>
-
-            <div class="card mb-5">
-                <div class="card-body row">
-                    <h5 class="col-sm-12 card-title text-bold pb-3">Patient Information</h5>
-                    <div class="col-sm-12" style="font-size:1.2em; text-align:left; display:grid; grid-template-columns:1fr 1fr; grid-row-gap:1%; grid-column-gap:10%">
-                        <div>Patient : {{$patient->fname." ".$patient->lname}}</div>
-                        <div>CNIC : {{$patient->cnic}}</div>
-                        <div>Email : {{$patient->email_id}}</div>
-                        <div>Contact : {{$patient->phone_number}}</div>
-                        <div>Gender : {{$patient->gender}}</div>
-                    </div>
-                </div>
-            </div>
-
-
+            <br>
             <!-- Doctor Appointment Table -->
             <div class="table-responsive" style='box-shadow: 5px 3px 5px 3px #1b99d8; background-color: white; padding: 2%; border-radius: 10px; font-size: 13px;'>
                 <div class="row">
                     <div class="col-sm-12">
-                            <div class="input-group">
-                                <span class="input-group-addon form-control form-control-lg col-sm-1"><i class="fa fa-filter fa-lg"></i></span>
-                                <input type="text" name="searchTable" id="searchData" class="form-control form-control-lg col-sm-11" placeholder="Search Table Records" style="border:1px solid lightblue; color:black;">
-                            </div>
-                    </div>
-                </div>
-
-
-                <div class="row">
-                    <div class="col-sm-12">
-                        <div style="display: flex; justify-content: space-between; align-items: center;">
-                            <h3 class="text-large text-grey m-auto">Available Doctors</h3>
+                        <div class="input-group">
+                            <span class="input-group-addon form-control form-control-lg col-sm-1"><i class="fa fa-filter fa-lg"></i></span>
+                            <input type="text" name="searchTable" id="searchData" class="form-control form-control-lg col-sm-11" placeholder="Search Table Records" style="border:1px solid lightblue; color:black;">
                         </div>
                     </div>
                 </div>
-
 
                 @if(session()->has('msg'))
                 <div class="row">
@@ -288,6 +265,58 @@
 
 
                                 </form>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <!-- View Modal Ends-->
+
+        <!-- View Modal -->
+        <div class="modal fade" id="viewPatient_modal">
+            <div class="modal-dialog modal-dialog-centered">
+                <div class="modal-content">
+                    <div class="modal-body">
+                        <!-- Photo and Name -->
+                        <div class="row">
+                            <div class="col-lg-12">
+                                @if($patient->image != null)
+                                    <img id="image" class="img-fluid rounded img-thumbnail mx-auto d-block rounded-circle" src="{{$patient->image}}" alt="profile" width="140" height="140">
+                                @else
+                                    <img id="image" class="img-fluid rounded img-thumbnail mx-auto d-block rounded-circle" src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcRCU4AoQASk65ZwYPHbNqQvYp5pwbhS-tOLbg&usqp=CAU" alt="profile" width="140" height="140">
+                                @endif
+                            </div>
+                            <div class="col-lg-12">
+                                <h1 id="fullName" class="media-heading display-5 text-center">{{$patient->fname." ".$patient->lname}}</h1>
+                            </div>
+                            <div class="col-lg-12">
+                                <h3 class="text-center"><span id="gender" class="badge badge-pill badge-dark">{{$patient->gender}}</span></h3>
+                            </div>
+                        </div>
+                        <hr>
+                        <!-- Main Data -->
+                        <div class="row" style="padding-left:2%;">
+                            <table class="table table-hover" style="padding-left:2%;">
+                                <tr>
+                                    <td><h4 class="display-6"><strong>Email Address: </strong></h4></td>
+                                    <td><h4 class="display-6">{{$patient->email_id}}</h4></td>
+                                </tr>
+                                <tr>
+                                    <td><h4 class="display-6"><strong>CNIC Number: </strong></h4></td>
+                                    <td><h4 class="display-6">{{$patient->cnic}}</h4></td>
+                                </tr>
+                                <tr>
+                                    <td><h4 class="display-6"><strong>Phone Number: </strong></h4></td>
+                                    <td><h4 class="display-6">{{$patient->phone_number}}</h4></td>
+                                </tr>
+                                <tr>
+                                    <td><h4 class="display-6"><strong>Address: </strong></h4></td>
+                                    <td><h4 class="display-6">{{$patient->address}}</h4></td>
+                                </tr>
+                            </table>
+                            <div class="col-lg-12">
+                                <button type="button" class="btn btn-primary btn-lg btn-block" data-dismiss="modal" style="font-size:15px;">Close</button>
+                            </div>
+                        </div>
                     </div>
                 </div>
             </div>

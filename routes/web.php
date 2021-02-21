@@ -95,6 +95,7 @@ Route::post('/admin/lab-test/edit-test/{id}','AdminController@editLabDataSave');
 //                 Patient Module START
 //=======================================================
 
+
 // navbar routes   -----------------------------------------------------
 Route::get('/patient','PatientController@index');   //dashboard
 Route::get('/patient/doctor-appointment','PatientController@doctorAppointment');   //view-doctor
@@ -104,7 +105,7 @@ Route::delete('/patient/current-appointment','PatientController@delAppointment')
 Route::get('/patient/appointments-detail/{id}','PatientController@appointmentsDetail');   //appointments-detail
 Route::get('/patient/lab-test','PatientController@labTest');   //lab-test
 Route::get('/patient/admissions-detail','PatientController@admissionsDetail');   //admissions-detail
-Route::get('/patient/contact-us','PatientController@index');   //contact-us  NOT SET
+Route::get('/patient/contact-us','PatientController@contactUs');   //contact-us  NOT SET
 // ---------------------------------------------------------------------
 
 Route::get('/patient/editPatientProfile/{id}','PatientController@editProfile');   //edit patient profile data
@@ -113,7 +114,6 @@ Route::post('/patient/editPatientProfile/editPassword/{id}','PatientController@e
 
 // ali changed ------
 Route::post('/patient/doctor-appointment','PatientController@requestAppointment');   //schedule appointment request
-// -----
 //======================================================
 //                 Patient Module ENDS
 //=======================================================
@@ -158,12 +158,9 @@ Route::get('/receptionist/doctor-view','ReceptionistController@doctorView');   /
 Route::get('/receptionist/doctor-timing','ReceptionistController@doctorTiming');   //doctor timing
 Route::get('/receptionist/patient-view','ReceptionistController@patientView');   //patient view
 Route::get('/receptionist/patient-view/book-appointment/{id}','ReceptionistController@bookAppointment');   //patient view
-Route::post('/receptionist/patient-view/book-appointment','ReceptionistController@saveAppointment');  // this will save an appoointment for a patient 
+Route::post('/receptionist/patient-view/book-appointment','ReceptionistController@saveAppointment');  // this will save an appoointment for a patient
 Route::get('/receptionist/patient-admission','ReceptionistController@patientAdmission');   //patient admission
 Route::get('/receptionist/patient-appointment','ReceptionistController@patientAppointment');   //patient appointment
-Route::delete('/receptionist/patient-appointment','ReceptionistController@delAppointment');   //delete patient appointment
-Route::get('/receptionist/patient-appointment/request','ReceptionistController@appointmentRequest');   //displays patient appointment
-Route::put('/receptionist/patient-appointment/request','ReceptionistController@acceptAppointment');
 Route::get('/receptionist/patient-lab-test','ReceptionistController@patientLabTest');   //patient lab test
 Route::get('/receptionist/room-bed','ReceptionistController@viewRoomBed');   //room bed view
 // ---------------------------------------------------------------------
@@ -198,6 +195,10 @@ Route::post('/receptionist/patient-view/addRecord','ReceptionistController@addPa
 Route::get('/receptionist/patient-view/edit-record/{id}','ReceptionistController@editPatientData');    //edit User view
 Route::post('/receptionist/patient-view/edit-record/{id}','ReceptionistController@editPatientDataSave');    //edit User data on btn click
 
+//  receptionist patient-appointment routes
+Route::delete('/receptionist/patient-appointment','ReceptionistController@delAppointment');   //delete patient appointment
+Route::get('/receptionist/patient-appointment/request','ReceptionistController@appointmentRequest');   //displays patient appointment
+Route::put('/receptionist/patient-appointment/request','ReceptionistController@acceptAppointment');     //save appointment
 
 //======================================================
 //                 Receptionist Module ENDS

@@ -21,11 +21,7 @@ class ReceptionistController extends Controller
     function index(){
         $primary_ID = session("userID");
         $userData = Hospital_data::findOrFail($primary_ID);
-        $appointmentTable = Appointment_request::all();
-        $totalAppointment = count($appointmentTable);   // total appointments count
-        $requestedAppointment = Appointment_request::where('confirm', '0')->count();   //requested appointments count
-        $approvedAppointment = $totalAppointment - $requestedAppointment;   // approved appointment count
-        return view('receptionist.index', ['userData'=>$userData, 'totalAppointment'=>$totalAppointment, 'requestedAppointment'=>$requestedAppointment, 'approvedAppointment'=>$approvedAppointment]);
+        return view('receptionist.index', ['userData'=>$userData]);
     }
 
     // Edit Profile Page
@@ -912,16 +908,16 @@ class ReceptionistController extends Controller
 
     // Patient Appointment Booking
     function bookAppointment($id){
-        
+
         // joining 3 tables where clause
         $hospital_data = DB::table('doctors')
             ->join('hospital_datas', 'hospital_datas.primary_id', '=', 'doctors.primary_id')
             ->join('doctor_availability', 'doctor_availability.doctor_id', '=', 'doctors.doctor_id')
             ->select('doctors.specialist','doctors.doctor_id', 'hospital_datas.fname','hospital_datas.lname','hospital_datas.gender','hospital_datas.image', 'doctor_availability.*')
             ->get();
-        
+
         $patient=Hospital_data::where("primary_id",$id)->get();
-        
+
         $rowsReturn = count($hospital_data);
         if($rowsReturn == 0 || !$patient){
             return view("receptionist.patientDetail.appointment.bookAppointment", ['dataFetched'=>$hospital_data,'patient'=>$patient[0], 'msg'=>'No Records Found']);
@@ -949,7 +945,7 @@ class ReceptionistController extends Controller
             $requestAlreadySent = Appointment_request::where("patient_id",$patient_data[0]->patient_id)
                                     ->where("doctor_id",$doctor_data[0]->doctor_id)
                                     ->where("appointment_date",$dt)->get();
-            
+
             if( $requestAlreadySent->count() ){
                 return redirect('receptionist/patient-view')->with('msg','Appointment Already Booked!');
             }
@@ -984,7 +980,7 @@ class ReceptionistController extends Controller
         $app_req->confirm = 1;
         $app_req->save();
         // appointments that are sent by patient but not confirmed by receptionist
-        // are ADDED as 
+        // are ADDED as
         // "request pending" status in history
 
         $app_history  = new Appointment_history;
@@ -1015,7 +1011,7 @@ class ReceptionistController extends Controller
             return redirect()->back()->with('msg','Patient does not exist!');
         }
 
-        
+
 
         return redirect("receptionist/patient-view")->with('msg','Appointment Booked!');;
     }
@@ -1071,13 +1067,13 @@ class ReceptionistController extends Controller
         if($appointments->count() == 0){
 
             return view("receptionist.patientDetail.appointment.viewAppointment",['dataFetched'=>$appointments,'request'=>$request_count, 'msg'=>'No Current Appointments']);
-    
+
         }else{
-    
+
             return view("receptionist.patientDetail.appointment.viewAppointment",['dataFetched'=>$appointments,'request'=>$request_count]);
         }
 
-        
+
     }
 
     function delAppointment(Request $req){
@@ -1090,12 +1086,12 @@ class ReceptionistController extends Controller
         if($a){
 
             $app_history = Appointment_history::where("appointment_id",$a->appointment_id)
-                           ->update(["status"=>"cancelled by receptionist"]);
+                        ->update(["status"=>"cancelled by receptionist"]);
         }
 
         Appointment_request::findOrFail($req->appointment_id)->delete();
 
-        return redirect()->back()->with('msg','Appointment Cancelled!');
+        return redirect("/receptionist/patient-appointment")->with('msg','Appointment Cancelled!');
 
     }
 
@@ -1126,7 +1122,7 @@ class ReceptionistController extends Controller
             "doctor_datas.fname as doctor_fname","doctor_datas.lname as doctor_lname"
             )
             ->get();
-        
+
         if($appointments->count() == 0){
             return view("receptionist.patientDetail.appointment.appointmentRequest",['dataFetched'=>$appointments, 'msg'=>'No Appointment Requests']);
         }else{
@@ -1149,8 +1145,8 @@ class ReceptionistController extends Controller
         Appointment_history::where("appointment_id",$req->appointment_id)
         ->update(['confirm'=>1,'status' =>"Appointment Booked"]);
 
-        return redirect()->back()->with('msg','Appointment Booked Successfully!');
-    
+        return redirect("/receptionist/patient-appointment")->with('msg','Appointment Booked Successfully!');
+
     }
 
 

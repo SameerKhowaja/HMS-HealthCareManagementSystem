@@ -175,7 +175,7 @@ class PatientController extends Controller
             $requestAlreadySent = Appointment_request::where("patient_id",$patient_data[0]->patient_id)
                                   ->where("doctor_id",$doctor_data[0]->doctor_id)
                                   ->where("appointment_date",$dt)->get();
-            
+
             if( $requestAlreadySent->count() ){
                 return redirect('patient/doctor-appointment')->with('msg','Appointment Request Already Sent!');
             }
@@ -209,7 +209,7 @@ class PatientController extends Controller
 
         $app_req->save();
         // appointments that are sent by patient but not confirmed by receptionist
-        // are ADDED as 
+        // are ADDED as
         // "request pending" status in history
 
         $app_history  = new Appointment_history;
@@ -325,7 +325,7 @@ class PatientController extends Controller
         }
 
 
-       
+
     }
 
 

@@ -38,9 +38,9 @@
 
                         <div class="collapse" id="collapseExample2">
                             <div class="dropdown-divider"></div>
-                            <a class="dropdown-item text-normal active" href="/receptionist/patient-view" > Patient View</a>
+                            <a class="dropdown-item text-normal" href="/receptionist/patient-view" > Patient View</a>
                             <a class="dropdown-item text-normal" href="/receptionist/patient-admission"> Patient Admitted</a>
-                            <a class="dropdown-item text-normal" href="/receptionist/patient-appointment"> Patient Appointments</a>
+                            <a class="dropdown-item text-normal active" href="/receptionist/patient-appointment"> Patient Appointments</a>
                             <a class="dropdown-item text-normal" href="/receptionist/patient-lab-test"> Patient Lab Tests</a>
                         </div>
                     </div>
@@ -109,17 +109,17 @@
                             <!-- Complete Data Fetched -->
                             <div class="AllData" id="{{$dataFetched}}"></div>
                             @foreach($dataFetched as $data)
-                           <tr>
+                            <tr>
                                 <td style="text-align:center">{{$data->patient_fname.' '.$data->patient_lname}}</td>
-                                
+
                                 <td style="text-align:center">{{$data->doctor_fname.' '.$data->doctor_lname}}</td>
-                                
+
                                 <td style="text-align:center">{{$data->specialist}}</td>
 
                                 <td style="text-align:center">{{$data->appointment_date."  ".$data->day}}</td>
 
                                 <td style="text-align:center">{{date("h:i a", strtotime($data->start_time))." - ".date("h:i a", strtotime($data->end_time))}}</td>
-                                
+
 
                                 <td style="text-align:center">
                                     <div class="btn-group " role="group">
