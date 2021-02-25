@@ -5,6 +5,7 @@ namespace App;
 use Illuminate\Database\Eloquent\Model;
 use App\Appointment_request;
 use App\Treatment;
+use App\Hospital_data;
 
 class Doctor extends Model
 {
@@ -16,13 +17,19 @@ class Doctor extends Model
 
     public function appointment_requests()
     {
-        return $this->hasMany(Appointment_request::class,"appointment_id");
+        return $this->hasMany(Appointment_request::class,"doctor_id");
     }
 
 
     public function treatments()
     {
-        return $this->hasMany(Treatment::class,"treatment_id");
+        return $this->hasMany(Treatment::class,"doctor_id");
+    }
+
+    public function hospital_data()
+    {
+        return $this->belongsTo(Hospital_data::class,'primary_id');
+        
     }
 
 }

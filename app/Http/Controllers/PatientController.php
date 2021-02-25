@@ -26,6 +26,9 @@ use App\Past_event;
 use App\User;
 use App\Appointment_request;
 use App\Appointment_history;
+use App\Treatment;
+use App\Prescription;
+use App\Medicine;
 
 class PatientController extends Controller
 {
@@ -305,6 +308,11 @@ class PatientController extends Controller
 
 
     function appointmentsDetail($id){
+
+        if($id != session("userID")){
+            return view("page404");
+        }
+
         $history;
         $patient = Patient::where("primary_id",$id)->get();
 
@@ -326,6 +334,27 @@ class PatientController extends Controller
 
 
 
+    }
+
+    function medicalHistory($id){
+
+        if($id != session("userID")){
+            return view("page404");
+        }
+
+        $patient_data = Patient::where("patients.primary_id",$id)
+        ->join("hospital_datas","hospital_datas.primary_id","=","patients.primary_id")->get();
+        
+
+        $medical_history = Treatment::where("patient_id",$patient_data[0]->patient_id)
+        ->with(["patient","doctor","doctor.hospital_data","prescription","prescription.medicine"])
+        ->get();
+
+        // dd($medical_history);
+
+        // dd($patient_data);
+        
+        return view("patient.viewMedicalHistory",["patient"=>$patient_data,"medical_history"=>$medical_history]);
     }
 
 

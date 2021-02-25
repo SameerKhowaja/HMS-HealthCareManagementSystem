@@ -114,6 +114,8 @@ Route::post('/patient/editPatientProfile/editPassword/{id}','PatientController@e
 
 // ali changed ------
 Route::post('/patient/doctor-appointment','PatientController@requestAppointment');   //schedule appointment request
+Route::get('/patient/medical-history/{id}','PatientController@medicalHistory'); 
+
 //======================================================
 //                 Patient Module ENDS
 //=======================================================
@@ -135,6 +137,8 @@ Route::delete('/doctor/medicine/delete-medicine/{id}','DoctorController@delMedic
 Route::get('/doctor/patients','DoctorController@viewPatients');   //view Patients
 Route::get('/doctor/patients/treatment/{id}','DoctorController@patientTreatment');   //Interface of Add  Patient Treatment
 Route::post('/doctor/patients/treatment/{id}','DoctorController@patientTreatmentSave'); 
+Route::get('/doctor/patients/medical-history/{id}','DoctorController@patientMedicalHistory');  // This will show patient's complete medical record 
+
 
 // ---------------------------------------------------------------------
 

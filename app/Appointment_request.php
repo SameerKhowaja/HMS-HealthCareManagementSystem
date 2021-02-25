@@ -34,7 +34,7 @@ class Appointment_request extends Model
 
     public function treatment()
     {
-        return $this->hasOne(Treatment::class,'treatment_id');
+        return $this->hasOne(Treatment::class,'appointment_id');
         
     }
 
