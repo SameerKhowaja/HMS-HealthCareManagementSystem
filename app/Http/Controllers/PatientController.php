@@ -348,6 +348,7 @@ class PatientController extends Controller
 
         $medical_history = Treatment::where("patient_id",$patient_data[0]->patient_id)
         ->with(["patient","doctor","doctor.hospital_data","prescription","prescription.medicine"])
+        ->orderBy('created_at', "desc")
         ->get();
 
         // dd($medical_history);

@@ -122,7 +122,7 @@
                         <path fill="rgb(1, 90, 223)" d="M256 8C119 8 8 119 8 256s111 248 248 248 248-111 248-248S393 8 256 8z"></path>
                      </svg>
                   </div>
-                  <div class="tracking-date text-large">{{date('d/M/y',strtotime($hist->created_at))}} <span>{{date('h:s:i A',strtotime($hist->created_at)) }}</span></div>
+                  <div class="tracking-date text-large">{{date('d/M/y',strtotime($hist->created_at))}} <span>{{date('h:i:s A',strtotime($hist->created_at)) }}</span></div>
                   <div class="tracking-content">
                       <div class="text-large"> 
                           Medical Condition : <span class="text-grey"> {{$hist->medical_condition}}</span>
