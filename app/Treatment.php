@@ -29,7 +29,7 @@ class Treatment extends Model
 
     public function prescription()
     {
-        return $this->hasMany(Prescription::class,'prescription_id');
+        return $this->hasMany(Prescription::class,'treatment_id');
         
     }
 

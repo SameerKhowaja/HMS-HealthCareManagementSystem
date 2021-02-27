@@ -16,6 +16,7 @@
     <link rel="stylesheet" href="{{asset('resources/sass/css/responsive.css')}}">
     <link rel="stylesheet" type="text/css" href="{{asset('login-register-form/fonts/font-awesome-4.7.0/css/font-awesome.min.css')}}">
     <link rel="stylesheet" href="{{asset('resources/css/doctorTime.css')}}">
+    <script src="{{asset('external-libraries/js/ajax-jquery.min.js')}}"></script>
 
     
     <script src="{{asset('external-libraries/js/codejquery-3.5.1.js')}}"></script>

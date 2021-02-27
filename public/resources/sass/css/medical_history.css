@@ -1,0 +1,102 @@
+.tracking-detail {
+    padding: 3rem 0
+}
+
+#tracking {
+    margin-bottom: 1rem;
+    width: 100%;
+}
+
+[class*=tracking-status-] h3 {
+    margin: 0;
+    font-size: 1.4rem;
+    color: #fff;
+    text-transform: uppercase;
+    text-align: center
+}
+
+[class*=tracking-status-] {
+    padding: 1.6rem 0
+}
+
+
+/* .tracking-list {
+    border: 1px solid #e5e5e5
+} */
+
+.tracking-item {
+    border-left: 1px solid #e5e5e5;
+    position: relative;
+    padding: 2.2rem 1.6rem .6rem 2.7rem;
+    font-size: .9rem;
+    min-height: 5rem
+}
+
+.tracking-item:last-child {
+    padding-bottom: 4rem
+}
+
+.tracking-item .tracking-date {
+    margin-bottom: .5rem
+}
+
+.tracking-item .tracking-date span {
+    color: #888;
+    font-size: 80%;
+    padding-left: .6rem
+}
+
+.tracking-item .tracking-content {
+    padding: .5rem .8rem;
+    background-color: #f4f4f4;
+    border-radius: .2rem
+}
+
+.tracking-content {
+    margin-left: 5%;
+}
+
+.tracking-item .tracking-icon {
+    line-height: 2.6rem;
+    position: absolute;
+    left: -1.3rem;
+    width: 2.8rem;
+    height: 2.8rem;
+    text-align: center;
+    border-radius: 70%;
+    font-size: 1.3rem;
+    background-color: rgb(1, 90, 223);
+    color: rgb(255, 255, 255)
+}
+
+.tracking-item .tracking-icon.status-intransit {
+    color: #e5e5e5;
+    border: 1px solid #e5e5e5;
+    font-size: .6rem
+}
+
+@media(min-width:992px) {
+    .tracking-item {
+        margin-left: 10rem
+    }
+    .tracking-item .tracking-date {
+        position: absolute;
+        left: -10rem;
+        width: 7.5rem;
+        text-align: right
+    }
+    .tracking-item .tracking-date span {
+        display: block
+    }
+    .tracking-item .tracking-content {
+        padding: 0;
+        background-color: transparent
+    }
+}
+
+@media(max-width:732px) {
+    .tracking-item .tracking-content div span {
+        display: block;
+        white-space: pre-line;
+    }
+}

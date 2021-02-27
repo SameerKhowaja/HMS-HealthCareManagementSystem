@@ -242,6 +242,8 @@ class DoctorController extends Controller
 
 
     function patientTreatment($id,Request $req){
+        date_default_timezone_set('Asia/Karachi');
+
 
         $patient = Hospital_data::findOrFail($id);
 
@@ -253,6 +255,8 @@ class DoctorController extends Controller
 
 
     function patientTreatmentSave($id,Request $req){
+        date_default_timezone_set('Asia/Karachi');
+
 
         $req->validate([
             'medical_condition' => 'required|max:400',
@@ -291,6 +295,24 @@ class DoctorController extends Controller
 
         return redirect()->back()->with("msg","Prescription Added Successfully! ");
 
+    }
+
+    function patientMedicalHistory($id){
+
+        $patient_data = Patient::where("patients.primary_id",$id)
+        ->join("hospital_datas","hospital_datas.primary_id","=","patients.primary_id")->get();
+
+
+        $medical_history = Treatment::where("patient_id",$patient_data[0]->patient_id)
+        ->with(["patient","doctor","doctor.hospital_data","prescription","prescription.medicine"])
+        ->orderBy('created_at', "desc")
+        ->get();
+
+        // dd($medical_history);
+
+        // dd($patient_data);
+
+        return view("doctor.patients.viewMedicalHistory",["patient"=>$patient_data,"medical_history"=>$medical_history]);
     }
 
 
