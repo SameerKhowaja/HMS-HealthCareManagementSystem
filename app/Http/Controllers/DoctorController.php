@@ -10,6 +10,7 @@ use App\Appointment_request;
 use App\Past_event;
 use App\Medicine;
 use App\Type;
+use App\Doctor_availability;
 
 
 use Illuminate\Http\Request;
@@ -19,14 +20,16 @@ class DoctorController extends Controller
     function index(){
         $primary_ID = session("userID");
         $userData = Hospital_data::findOrFail($primary_ID);
-        $approvedAppointment = Appointment_request::join("doctors","doctors.doctor_id","=","appointment_requests.doctor_id")
-        ->where("primary_id",$userData->primary_id)->where('confirm', 1)->count();   //requested appointments count
-        
+        $userDataSpecialist = Doctor::where('primary_id', '=', $primary_ID)->firstOrFail();
+        $doctor_id = $userDataSpecialist->doctor_id;
+        $doctorAvailibility = Doctor_availability::where('doctor_id', '=', $doctor_id)->firstOrFail();
 
-        return view('doctor.index', ['userData'=>$userData,'approvedAppointment'=>$approvedAppointment]);
+        $patientCount_wrt_days = ['Mon'=>0,'Tue'=>0,'Wed'=>0,'Thu'=>0,'Fri'=>0,'Sat'=>0,'Sun'=>0];
+
+        return view('doctor.index', ['userData'=>$userData, "userDataSpecialist"=>$userDataSpecialist, "doctorAvailibility"=>$doctorAvailibility, 'patientCount_wrt_days'=>$patientCount_wrt_days]);
     }
 
-    
+
     // Edit Profile Page
     function editProfile($id){
         // Check for invalid forgery attack
@@ -100,8 +103,8 @@ class DoctorController extends Controller
     }
 
 
-     // Change Profile Password
-     function editProfilePassword($id){
+    // Change Profile Password
+    function editProfilePassword($id){
         // Check for invalid forgery attack
         if(session("userID") != $id){
             return view("page404", ['msg'=>"Error", 'msg_long'=>'Do not try to change URL...!']);
@@ -133,7 +136,6 @@ class DoctorController extends Controller
 
     // view Medince in HMS
     function viewMedicine(){
-
         $meds  = Medicine::all();
 
         if($meds->count() == 0){
@@ -141,7 +143,6 @@ class DoctorController extends Controller
         }else{
             return view('doctor.meds.viewMedicine', ['dataFetched'=>$meds]);
         }
-        
     }
 
      // Add Medicie View btn click view
@@ -181,7 +182,7 @@ class DoctorController extends Controller
         }else{
             return redirect('doctor.meds.viewMedicine')->with("msg","No Record Found");
         }
-        
+
      }
 
 
@@ -203,7 +204,7 @@ class DoctorController extends Controller
         }else{
             return redirect()->back()->with("msg","Medicine Update Failed! ");
         }
-       
+
     }
 
 
@@ -263,7 +264,7 @@ class DoctorController extends Controller
             'patient_primary_id' => 'required|max:20',
             'doctor_primary_id' => 'required|max:20',
         ]);
-        
+
 
         $patient = Patient::where("primary_id",$req->patient_primary_id)->get();
         $doctor = Doctor::where("primary_id",$req->doctor_primary_id)->get();
@@ -272,13 +273,13 @@ class DoctorController extends Controller
             $treatment = new Treatment;
             $treatment->patient_id = $patient[0]->patient_id;
             $treatment->doctor_id = $doctor[0]->doctor_id;
-            $treatment->medical_condition = $req->medical_condition; 
+            $treatment->medical_condition = $req->medical_condition;
             $treatment->comment = $req->comment;
             $saved= $treatment->save();
 
             if($saved){
                 foreach($req->medicines as $med){
-                    
+
                     if( Medicine::where("medicine_id",$med)->exists() ){
                         $patient_med = new Prescription;
                         $patient_med->medicine_id = $med;
@@ -318,5 +319,5 @@ class DoctorController extends Controller
 
 
 
-    
+
 }

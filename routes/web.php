@@ -33,6 +33,7 @@ Route::get('/admin/patient-lab-test','AdminController@labTestPatient'); //patien
 Route::get('/admin/room-management','AdminController@roomManagement');  //room-management
 Route::get('/admin/lab-test','AdminController@labTest');    //lab-test
 Route::get('/admin/account-type','AdminController@accountType');    //account-type
+Route::get('/admin/medicine','AdminController@viewMedicine');   //view Medicines
 // ---------------------------------------------------------------------
 
 // admin dashboard routes
@@ -85,6 +86,12 @@ Route::delete('/admin/lab-test/delete-record/{id}','AdminController@deleteLabDat
 Route::get('/admin/lab-test/edit-test/{id}','AdminController@editTestData');    //edit lab view
 Route::post('/admin/lab-test/edit-test/{id}','AdminController@editLabDataSave');    //edit lab data on btn click
 
+// admin medicine routes
+Route::post('/admin/medicine/addMedicine','AdminController@saveAddedMedicine');   //save added Medicines
+Route::delete('/admin/medicine/delete-medicine/{id}','AdminController@delMedicine');  //delete medicine
+Route::get('/admin/medicine/edit-medicine/{id}','AdminController@editMedicine');   //edit view Medicines
+Route::put('/admin/medicine/edit-medicine/{id}','AdminController@editMedicineSave');   //save edited Medicines
+
 //======================================================
 //                 Admin Module ENDS
 //=======================================================
@@ -114,7 +121,7 @@ Route::post('/patient/editPatientProfile/editPassword/{id}','PatientController@e
 
 // ali changed ------
 Route::post('/patient/doctor-appointment','PatientController@requestAppointment');   //schedule appointment request
-Route::get('/patient/medical-history/{id}','PatientController@medicalHistory'); 
+Route::get('/patient/medical-history/{id}','PatientController@medicalHistory');
 
 //======================================================
 //                 Patient Module ENDS
@@ -136,8 +143,8 @@ Route::put('/doctor/medicine/edit-medicine/{id}','DoctorController@editMedicineS
 Route::delete('/doctor/medicine/delete-medicine/{id}','DoctorController@delMedicine');   //save edited Medicines
 Route::get('/doctor/patients','DoctorController@viewPatients');   //view Patients
 Route::get('/doctor/patients/treatment/{id}','DoctorController@patientTreatment');   //Interface of Add  Patient Treatment
-Route::post('/doctor/patients/treatment/{id}','DoctorController@patientTreatmentSave'); 
-Route::get('/doctor/patients/medical-history/{id}','DoctorController@patientMedicalHistory');  // This will show patient's complete medical record 
+Route::post('/doctor/patients/treatment/{id}','DoctorController@patientTreatmentSave');
+Route::get('/doctor/patients/medical-history/{id}','DoctorController@patientMedicalHistory');  // This will show patient's complete medical record
 
 
 // ---------------------------------------------------------------------

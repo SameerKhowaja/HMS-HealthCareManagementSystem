@@ -25,6 +25,7 @@ use App\Room;
 use App\Type;
 use App\Other;
 use App\Past_event;
+use App\Medicine;
 use App\User;
 
 class AdminController extends Controller
@@ -1080,6 +1081,86 @@ class AdminController extends Controller
     }
 
 // Admin / Manage Lab Test ENDS ----------------------------------------
+
+
+// Admin / Drugs & Medicines START --------------------------------------
+
+    // view Medince in HMS
+    function viewMedicine(){
+        $meds  = Medicine::all();
+
+        if($meds->count() == 0){
+            return view('admin.meds.viewMedicine', ['dataFetched'=>$meds, 'msg'=>'No Medicines Found']);
+        }else{
+            return view('admin.meds.viewMedicine', ['dataFetched'=>$meds]);
+        }
+    }
+
+    // Add New Medicine Record Save to database
+    function saveAddedMedicine(Request $req){
+        $req->validate([
+            'medicine_name' => 'required|max:400',
+            'medicine_type' => 'required|max:400',
+            'medicine_uses' => 'required|max:400'
+        ]);
+
+        $exist = Medicine::where("medicine", $req->medicine_name)->firstOrFail();
+
+        if($exist->count() > 0){
+            return redirect("/admin/medicine")->with("msg","Medicine Already Exists...!");
+        }
+        // if all fine add Data
+        $add_med = new Medicine;
+        $add_med->medicine= $req->medicine_name;
+        $add_med->medicine_type= $req->medicine_type;
+        $add_med->drug_use= $req->medicine_uses;
+        $add_med->save();
+
+        return redirect("/admin/medicine")->with("msg","Medicine Added SuccessFully...!");
+    }
+
+    // Delete Medicine from DB
+    function delMedicine($id){
+        $deleted = Medicine::where("medicine_id", $id)->delete();
+        if($deleted){
+            return redirect("/admin/medicine")->with("msg","Medicine Deleted Successfully...!");
+        }else{
+            return redirect("/admin/medicine")->with("msg","Medicine Deletion Failed...!");
+        }
+    }
+
+    // Add Medicie View btn click view
+    function editMedicine($id){
+        $medicine = Medicine::findOrFail($id);
+        if($medicine->count()){
+            return view('admin.meds.editMedicine',["medicine"=>$medicine]);
+        }else{
+            return redirect('admin.meds.viewMedicine')->with("msg","No Record Found");
+        }
+    }
+
+    // Edit Record Save to database
+    function editMedicineSave($id,Request $req){
+        $req->validate([
+            'medicine_name' => 'required|max:400',
+            'medicine_type' => 'required|max:400',
+            'medicine_uses' => 'required|max:400'
+        ]);
+
+        $updated = Medicine::where("medicine_id",$id)->update([
+            "medicine"=>$req->medicine_name,
+            "medicine_type"=>$req->medicine_type,
+            "drug_use"=>$req->medicine_uses
+        ]);
+
+        if($updated){
+            return redirect()->back()->with("msg","Medicine Updated Successfully...!");
+        }else{
+            return redirect()->back()->with("msg","Medicine Update Failed...!");
+        }
+    }
+
+// Admin / Drugs & Medicines END --------------------------------------
 
 
     function accountType(){

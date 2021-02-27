@@ -78,7 +78,7 @@
 @section('content')
         <div>
             <section id="overview">
-                <div style='margin-top: 3%; margin-bottom: 4%;'>
+                <div style='margin-top: 1%; margin-bottom: 2%;'>
                     <div style="display: flex; justify-content: space-between; align-items: center;">
                         <h3 class="text-large text-grey">Patient / Profile View</h3>
                     </div>
@@ -92,10 +92,10 @@
                                     <h1 class="display-4">Profile Information</h1>
                                 </div>
                             </div>
-                        <hr>
+                        </div>
                         <!-- Photo and file -->
                         <div class="row" style="border:2px solid lightblue;">
-                            <div class="col-lg-4">
+                            <div class="col-lg-5">
                                 <div class="row">
                                     <div class="col-md-12" style="margin-top:3%;">
                                         @if(session("image") == '')
@@ -105,7 +105,7 @@
                                         @endif
                                     </div>
                                     <div class="col-md-12 text-center">
-                                        <h2 class="display-5">{{$userData->fname.' '.$userData->lname}}</h2>
+                                        <h1 class="display-5">{{$userData->fname.' '.$userData->lname}}</h1>
                                     </div>
                                     <div class="col-md-12 text-center">
                                         <h3><span class="badge badge-dark">Patient</span></h3>
@@ -113,7 +113,7 @@
                                 </div>
                             </div>
 
-                            <div class="col-lg-8">
+                            <div class="col-lg-7">
                                 <div class="row">
                                     <div class="col-sm-12">
                                         <table class="table table-hover table-borderless">

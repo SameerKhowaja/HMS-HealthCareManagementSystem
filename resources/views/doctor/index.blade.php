@@ -51,38 +51,13 @@
 @section('content')
         <div>
             <section id="overview">
-                <div style='margin-top: 3%; margin-bottom: 4%;'>
+                <div style='margin-top: 1%; margin-bottom: 2%;'>
                     <div style="display: flex; justify-content: space-between; align-items: center;">
                         <h3 class="text-large text-grey">Doctor's / Profile View</h3>
                     </div>
 
-                    <div class="cardWrapper">
-                        <div class="card">
-                            <svg xmlns="http://www.w3.org/2000/svg" width="5em" height="5em" fill="#0052E9" class="bi bi-calendar-plus"  style="-ms-transform: rotate(360deg); -webkit-transform: rotate(360deg); transform: rotate(360deg);" preserveAspectRatio="xMidYMid meet" viewBox="0 0 16 16">
-                                <path d="M8 7a.5.5 0 0 1 .5.5V9H10a.5.5 0 0 1 0 1H8.5v1.5a.5.5 0 0 1-1 0V10H6a.5.5 0 0 1 0-1h1.5V7.5A.5.5 0 0 1 8 7z"/>
-                                <path d="M3.5 0a.5.5 0 0 1 .5.5V1h8V.5a.5.5 0 0 1 1 0V1h1a2 2 0 0 1 2 2v11a2 2 0 0 1-2 2H2a2 2 0 0 1-2-2V3a2 2 0 0 1 2-2h1V.5a.5.5 0 0 1 .5-.5zM1 4v10a1 1 0 0 0 1 1h12a1 1 0 0 0 1-1V4H1z"/>
-                            </svg>
-                            <div>
-                                <p class="text-large text-grey">Booked Appointments</p>
-                                <span><p id="patientCount" class="text-grey text-center text-large" style="margin: auto;">{{$approvedAppointment ?? 'Zero'}}</p></span>
-                            </div>
-                        </div>
-
-                        <div class="card">
-                            <svg fill="#0052E9" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" aria-hidden="true" focusable="false" width="5em" height="5em" style="-ms-transform: rotate(360deg); -webkit-transform: rotate(360deg); transform: rotate(360deg);" preserveAspectRatio="xMidYMid meet" viewBox="0 0 24 24">
-                                <path fill="#0052E9" d="M12 0H4a2 2 0 0 0-2 2v12a2 2 0 0 0 2 2h8a2 2 0 0 0 2-2V2a2 2 0 0 0-2-2zm-1 7a3 3 0 1 1-6 0 3 3 0 0 1 6 0zm-3 4c2.623 0 4.146.826 5 1.755V14a1 1 0 0 1-1 1H4a1 1 0 0 1-1-1v-1.245C3.854 11.825 5.377 11 8 11z"/>
-                            </svg>
-                            <div>
-                                <p class="text-large text-grey">Patients</p>
-                                <span><p id="patientCount" class="text-large text-grey text-center " style="margin: auto;">{{$patient ?? 0}}</p></span>
-                            </div>
-                        </div>
-                    </div>
-                
-
-                
-                <!-- Table Info -->
-                <div class="table-responsive" style='box-shadow: 5px 3px 5px 3px #1b99d8; background-color: white; padding: 2%; border-radius: 10px; font-size: 13px;'>
+                    <!-- Table Info -->
+                    <div class="table-responsive" style='box-shadow: 5px 3px 5px 3px #1b99d8; margin-top:1%; background-color: white; padding: 2%; border-radius: 10px; font-size: 13px;'>
                         <!-- Head Row -->
                         <div class="row" style="margin:auto;">
                             <div class="col-sm-12" style="text-align:center;">
@@ -90,10 +65,10 @@
                                     <h1 class="display-4">Profile Information</h1>
                                 </div>
                             </div>
-                        <hr>
+                        </div>
                         <!-- Photo and file -->
                         <div class="row" style="border:2px solid lightblue;">
-                            <div class="col-lg-4">
+                            <div class="col-lg-5">
                                 <div class="row">
                                     <div class="col-md-12" style="margin-top:3%;">
                                         @if(session("image") == '')
@@ -103,15 +78,16 @@
                                         @endif
                                     </div>
                                     <div class="col-md-12 text-center">
-                                        <h2 class="display-5">{{$userData->fname.' '.$userData->lname}}</h2>
+                                        <h1 class="display-5">{{$userData->fname.' '.$userData->lname}}</h1>
                                     </div>
                                     <div class="col-md-12 text-center">
-                                        <h3><span class="badge badge-dark">Doctor</span></h3>
+                                        <h3><span class="badge badge-primary">Doctor</span></h3>
+                                        <h3><span class="badge badge-dark">{{$userDataSpecialist->specialist ?? "N/A"}}</span></h3>
                                     </div>
                                 </div>
                             </div>
 
-                            <div class="col-lg-8">
+                            <div class="col-lg-7">
                                 <div class="row">
                                     <div class="col-sm-12">
                                         <table class="table table-hover table-borderless">
@@ -150,6 +126,7 @@
                                 </div>
                             </div>
                         </div>
+
                         <div class="row">
                             <div class="col-xs-12 col-sm-12 col-md-12 text-center">
                                 <!-- Hospital Data Edit Record Link -->
@@ -158,9 +135,133 @@
                         </div>
                     </div>
 
+                    <!-- Timings -->
+                    <div class="table-responsive col-lg-12" style='box-shadow: 5px 3px 5px 3px #1b99d8; margin:2% 0%; background-color: white; padding: 2%; border-radius: 10px; font-size: 13px;'>
+                        <!-- Timings Data-->
+                        <div class="timingDoc" id="{{$doctorAvailibility}}">
+                        </div>
+
+                        <div class="row">
+                            <!-- Timing Table -->
+                            <div class="col-lg-6">
+                                <h1 class="text-center">Timings Information</h1>
+                                <table class="table table-hover table-bordered" style="padding-left:2%;">
+                                    <tr id="Monday">
+                                        <td><h4 class="display-6"><strong>Monday: </strong></h4></td>
+                                        <td><h4 id="monday_time" class="display-6">N/A</h4></td>
+                                    </tr>
+                                    <tr id="Tuesday">
+                                        <td><h4 class="display-6"><strong>Tuesday: </strong></h4></td>
+                                        <td><h4 id="tuesday_time" class="display-6">N/A</h4></td>
+                                    </tr>
+                                    <tr id="Wednesday">
+                                        <td><h4 class="display-6"><strong>Wednesday: </strong></h4></td>
+                                        <td><h4 id="wednesday_time" class="display-6">N/A</h4></td>
+                                    </tr>
+                                    <tr id="Thursday">
+                                        <td><h4 class="display-6"><strong>Thursday: </strong></h4></td>
+                                        <td><h4 id="thursday_time" class="display-6">N/A</h4></td>
+                                    </tr>
+                                    <tr id="Friday">
+                                        <td><h4 class="display-6"><strong>Friday: </strong></h4></td>
+                                        <td><h4 id="friday_time" class="display-6">N/A</h4></td>
+                                    </tr>
+                                    <tr id="Saturday">
+                                        <td><h4 class="display-6"><strong>Saturday: </strong></h4></td>
+                                        <td><h4 id="saturday_time" class="display-6">N/A</h4></td>
+                                    </tr>
+                                    <tr id="Sunday">
+                                        <td><h4 class="display-6"><strong>Sunday: </strong></h4></td>
+                                        <td><h4 id="sunday_time" class="display-6">N/A</h4></td>
+                                    </tr>
+                                </table>
+                            </div>
+
+                            <!-- Cart -->
+                            <div class="chart col-lg-6">
+                                <h1 class="text-center">Appointments</h1>
+                                <canvas id="userGrowth" data-users = "{{json_encode($patientCount_wrt_days)}}"  ></canvas>
+                            </div>
+                        </div>
+                    </div>
                 </div>
             </section>
-            
-
         </div>
+
+    <script>
+        // function convert 24hr time to 12hr
+        function tConv24(time24) {
+            var ts = time24;
+            var H = +ts.substr(0, 2);
+            var h = (H % 12) || 12;
+            h = (h < 10)?("0"+h):h;  // leading 0 at the left for 1 digit hours
+            var ampm = H < 12 ? " AM" : " PM";
+            ts = h + ts.substr(2, 3) + ampm;
+            return ts;
+        }
+        // function ends
+
+        var user_id;
+        var allData;
+        $(document).ready(function(){
+            user_id = $('.timingDoc').attr('id');   // current id
+            var obj = JSON.parse(user_id);
+
+            if(obj.monday_start==null || obj.monday_end==null){
+                $("#monday_time").html('N/A');
+                $("#Monday").hide();
+            }else{
+                $("#Monday").show();
+                $("#monday_time").html(tConv24(obj.monday_start) + ' - ' + tConv24(obj.monday_end));
+            }
+
+            if(obj.tuesday_start==null || obj.tuesday_end==null){
+                $("#tuesday_time").html('N/A');
+                $("#Tuesday").hide();
+            }else{
+                $("#Tuesday").show();
+                $("#tuesday_time").html(tConv24(obj.tuesday_start) + ' - ' + tConv24(obj.tuesday_end));
+            }
+
+            if(obj.wednesday_start==null || obj.wednesday_end==null){
+                $("#wednesday_time").html('N/A');
+                $("#Wednesday").hide();
+            }else{
+                $("#Wednesday").show();
+                $("#wednesday_time").html(tConv24(obj.wednesday_start) + ' - ' + tConv24(obj.wednesday_end));
+            }
+
+            if(obj.thursday_start==null || obj.thursday_end==null){
+                $("#thursday_time").html('N/A');
+                $("#Thursday").hide();
+            }else{
+                $("#Thursday").show();
+                $("#thursday_time").html(tConv24(obj.thursday_start) + ' - ' + tConv24(obj.thursday_end));
+            }
+
+            if(obj.friday_start==null || obj.friday_end==null){
+                $("#friday_time").html('N/A');
+                $("#Friday").hide();
+            }else{
+                $("#Friday").show();
+                $("#friday_time").html(tConv24(obj.friday_start) + ' - ' + tConv24(obj.friday_end));
+            }
+
+            if(obj.saturday_start==null || obj.saturday_end==null){
+                $("#saturday_time").html('N/A');
+                $("#Saturday").hide();
+            }else{
+                $("#Saturday").show();
+                $("#saturday_time").html(tConv24(obj.saturday_start) + ' - ' + tConv24(obj.saturday_end));
+            }
+
+            if(obj.sunday_start==null || obj.sunday_end==null){
+                $("#sunday_time").html('N/A');
+                $("#Sunday").hide();
+            }else{
+                $("#Sunday").show();
+                $("#sunday_time").html(tConv24(obj.sunday_start) + ' - ' + tConv24(obj.sunday_end));
+            }
+        });
+    </script>
 @endsection
