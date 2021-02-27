@@ -86,7 +86,6 @@
 @endsection
 
 @section('content')
-
         <div>
             <div style='margin-top: 2%; margin-bottom: 3%;'>
                 <div style="display: flex; justify-content: space-between; align-items: center;">
@@ -187,8 +186,6 @@
                     </form>
                 </div>
             </div>
-
         </div>
-
 
 @endsection

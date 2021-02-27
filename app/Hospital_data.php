@@ -4,6 +4,7 @@ namespace App;
 
 use Illuminate\Database\Eloquent\Model;
 use App\Doctor;
+use App\Patient;
 
 class Hospital_data extends Model
 {
@@ -15,6 +16,10 @@ class Hospital_data extends Model
         return $this->hasOne(Doctor::class,"primary_id");
     }
 
+    public function patient()
+    {
+        return $this->hasOne(Patient::class,"primary_id");
+    }
 
 
 }

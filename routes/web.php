@@ -133,25 +133,20 @@ Route::get('/patient/medical-history/{id}','PatientController@medicalHistory');
 //                 Doctor Module START
 //=======================================================
 
-// navbar routes   -----------------------------------------------------
-Route::get('/doctor','DoctorController@index');   //dashboard
-Route::get('/doctor/medicine','DoctorController@viewMedicine');   //view Medicines
-Route::get('/doctor/medicine/addMedicine','DoctorController@addMedicine');   //add Medicines
-Route::post('/doctor/medicine/addMedicine','DoctorController@saveAddedMedicine');   //save added Medicines
-Route::get('/doctor/medicine/edit-medicine/{id}','DoctorController@editMedicine');   //edit view Medicines
-Route::put('/doctor/medicine/edit-medicine/{id}','DoctorController@editMedicineSave');   //save edited Medicines
-Route::delete('/doctor/medicine/delete-medicine/{id}','DoctorController@delMedicine');   //save edited Medicines
-Route::get('/doctor/patients','DoctorController@viewPatients');   //view Patients
-Route::get('/doctor/patients/treatment/{id}','DoctorController@patientTreatment');   //Interface of Add  Patient Treatment
-Route::post('/doctor/patients/treatment/{id}','DoctorController@patientTreatmentSave');
-Route::get('/doctor/patients/medical-history/{id}','DoctorController@patientMedicalHistory');  // This will show patient's complete medical record
-
-
 // ---------------------------------------------------------------------
-
+Route::get('/doctor','DoctorController@index');   //dashboard
 Route::get('/doctor/editDoctorProfile/{id}','DoctorController@editProfile');   //edit profile view
 Route::post('/doctor/editDoctorProfile/{id}','DoctorController@editProfileSave');  //edit profile save btn click
 Route::post('/doctor/editDoctorProfile/editPassword/{id}','DoctorController@editProfilePassword');   //edit Doctor profile password modal save on btn click
+
+// Doctor All Appointments
+Route::get('/doctor/patient-future-appointment','DoctorController@patientAllAppointmentView');   //dashboard
+
+// Doctor Patient History routes
+Route::get('/doctor/patients-history','DoctorController@viewPatients');   //view Patients
+Route::get('/doctor/patients/treatment/{id}','DoctorController@patientTreatment');   //Interface of Add  Patient Treatment
+Route::post('/doctor/patients/treatment/{id}','DoctorController@patientTreatmentSave');
+Route::get('/doctor/patients/medical-history/{id}','DoctorController@patientMedicalHistory');  // This will show patient's complete medical record
 
 //======================================================
 //                 Doctor Module ENDS

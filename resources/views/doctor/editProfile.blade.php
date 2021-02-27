@@ -63,7 +63,7 @@
                                     <h1 class="display-4">Edit Profile</h1>
                                 </div>
                             </div>
-                        <hr>
+                        </div>
                         <!-- row1 -->
                         <!-- Photo and file -->
                         <div class="row">

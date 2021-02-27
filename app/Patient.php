@@ -4,6 +4,7 @@ namespace App;
 
 use Illuminate\Database\Eloquent\Model;
 use App\Treatment;
+use App\Hospital_data;
 
 class Patient extends Model
 {
@@ -23,7 +24,10 @@ class Patient extends Model
         return $this->hasMany(Treatment::class,"patient_id");
     }
 
-    
+    public function hospital_data()
+    {
+        return $this->belongsTo(Hospital_data::class,'primary_id');
+    }
 
 
 
