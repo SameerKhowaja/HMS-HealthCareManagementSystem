@@ -50,9 +50,10 @@
                 <div class="row" style="margin:auto;">
                     <div class="col-sm-12" style="text-align:center;">
                         <div class="form-group">
-                            <h1 class="display-5">Future Patient's Appointment</h1>
+                            <h1 class="display-5">Past Patient's Appointment</h1>
                         </div>
                     </div>
+                    
                 </div>
                 <div class="row">
                     <div class="col-lg-6">
@@ -61,11 +62,19 @@
                             <input type="text" name="searchTable" id="searchData" class="form-control form-control-lg col-sm-11" placeholder="Search Table Records" style="border:1px solid lightblue; color:black;">
                         </div>
                     </div>
-                    <div class="col-sm-6">
-                            <div class="input-group">
-                                <label for="searchByDate" class="text-grey pr-4 text-bold m-auto ">Search By Date : </label>
-                                <input type="date" id="searchByDate" name="searchByDate" class="form-control form-control-lg col-sm-11" placeholder="Search Table By Date" style="border:1px solid lightblue; color:black;">
+                    <div class="col-lg-6">
+                                <form action="/doctor/patient-past-appointment" method="POST">
+                                @csrf
+                                <div class="form-group" style="float:right;">
+                                    <select class="form-select" name="statusType" id="statusType" style="height:30px; width:200px; padding:4px;">
+                                        <option value="All Records">All Records</option>
+                                        @foreach($allStatus as $status)
+                                        <option value="{{$status->status}}">{{$status->status}}</option>
+                                        @endforeach
+                                    </select>
+                                <button type="submit" class="btn btn-primary btn-lg"><i class="fa fa-search"> </i> Search</button>
                             </div>
+                        </form>
                     </div>
                 </div>
 
@@ -83,6 +92,7 @@
                                     </button>
                                 </div>
                             </div>
+                            
                         </div>
                         @endif
 
@@ -104,11 +114,7 @@
                                     <td style="text-align:center">{{$data->appointment_date}}</td>
                                     <td style="text-align:center">{{$data->day}}</td>
                                     <td style="text-align:center">{{$data->start_time." - ".$data->end_time}}</td>
-                                    @if($data->confirm == 0)
-                                        <td style="text-align:center">Pending</td>
-                                    @else
-                                        <td style="text-align:center">Confirmed</td>
-                                    @endif
+                                    <td style="text-align:center">{{$data->status}}</td>
                                 </tr>
                             @endforeach
                         @endif
@@ -234,13 +240,7 @@
                 });
             });
 
-            $("#searchByDate").on("change", function(event) {
-                event.preventDefault();
-                var value = $(this).val().toLowerCase();
-                $("#myTable tr").filter(function() {
-                $(this).toggle($(this).text().toLowerCase().indexOf(value) > -1)
-                });
-            });
+            
         });
     </script>
 
@@ -256,6 +256,7 @@
             $("#ok_delete").click(function(){
                 $('#deleteAdmin_modal').modal('hide');
             });
+
         });
     </script>
 

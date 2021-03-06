@@ -51,7 +51,7 @@
                 <!-- Table -->
                 <div style='height:auto; box-shadow: 5px 3px 5px 3px #1b99d8; background-color: white; padding: 2%; border-radius: 10px; font-size: 13px;'>
 
-                    <form action="/doctor/patients/treatment/{{$patient->primary_id}}" method="POST" enctype='application/json'>
+                    <form action="/doctor/patient-current-appointment/treatment/{{$patient->primary_id}}" method="POST" enctype='application/json'>
                         @csrf
                         <!-- Head Row -->
                         <div class="row" style="margin:auto;">
@@ -168,14 +168,15 @@
                                 </div>
                             </div>
                         </div>
+                        <input type="hidden" name="appointment_id" value="{{$appointment_id}}">
 
                         <!-- row4 -->
                         <div class="row">
                         <div class="col-xs-12 col-sm-12 col-md-12 text-center">
-                            <a href="/doctor/patients-history" role="button" class="btn btn-secondary btn-lg active">Back</a>
+                            <a href="/doctor/patient-current-appointment" role="button" class="btn btn-secondary btn-lg active">Back</a>
                             <button type="submit" class="btn btn-primary btn-lg active">Save Prescription</button>
                         </div>
-                    </form>
+                    </form
                 </div>
             </div>
 
