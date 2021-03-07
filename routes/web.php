@@ -237,7 +237,10 @@ Route::get('/labtechnician','LabTechnicianController@index');   //dashboard
 //======================================================
 //                 Other Module START
 //=======================================================
-
+Route::get('/other','OtherController@index');   //dashboard
+Route::get('/other/editOtherProfile/{id}','OtherController@editProfile');   //profile view
+Route::post('/other/editOtherProfile/{id}','OtherController@editProfileSave');   //edit profile save btn click
+Route::post('/other/editOtherProfile/editPassword/{id}','OtherController@editProfilePassword');   //edit profile password modal save on btn click
 
 //======================================================
 //                 Other Module ENDS
