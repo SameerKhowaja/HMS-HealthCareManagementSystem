@@ -316,6 +316,28 @@ class PatientController extends Controller
         $history;
         $patient = Patient::where("primary_id",$id)->get();
 
+        
+
+        Appointment_history::where("patient_id",$patient[0]->patient_id)
+        ->where("appointment_date",'<',date("Y-m-d"))
+        ->where(
+            function($query){
+                $query->where("status","request pending")
+                ->orWhere(
+                    function($query2){
+                        $query2->where("status","Appointment Booked");
+                    });
+            })
+        ->update(["status"=>"Appointment Missed"]);
+
+
+        Appointment_request::where("patient_id",$patient[0]->patient_id)
+        ->where("appointment_date",'<',date("Y-m-d"))
+        ->delete();
+        
+        
+        
+
         if($patient->count()){
             $history = Appointment_history::where("patient_id",$patient[0]->patient_id)
                        ->join("doctors","appointment_histories.doctor_id","=","doctors.doctor_id")

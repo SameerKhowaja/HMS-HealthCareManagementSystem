@@ -141,6 +141,14 @@ Route::post('/doctor/editDoctorProfile/editPassword/{id}','DoctorController@edit
 
 // Doctor All Appointments
 Route::get('/doctor/patient-future-appointment','DoctorController@patientAllAppointmentView');   //dashboard
+Route::get('/doctor/patient-past-appointment','DoctorController@patientPastAppointmentView');   //dashboard
+Route::post('/doctor/patient-past-appointment','DoctorController@patientPastAppointmentSearch');   //status wise seacrh
+Route::get('/doctor/patient-current-appointment','DoctorController@patientCurrentAppointmentView');
+// Doctor treatment and history through appointment
+Route::get('/doctor/patient-current-appointment/treatment/{id}','DoctorController@patientAppointmentTreatment');
+Route::post('/doctor/patient-current-appointment/treatment/{id}','DoctorController@patientAppointmentTreatmentSave');
+Route::get('/doctor/patient-current-appointment/medical-history/{id}','DoctorController@patientAppointmentMedicalHistory');
+
 
 // Doctor Patient History routes
 Route::get('/doctor/patients-history','DoctorController@viewPatients');   //view Patients

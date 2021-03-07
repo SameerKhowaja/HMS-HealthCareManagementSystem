@@ -8,6 +8,7 @@ use App\Treatment;
 use App\Prescription;
 use App\Hospital_data;
 use App\Appointment_request;
+use App\Appointment_history;
 use App\Past_event;
 use App\Medicine;
 use App\Type;
@@ -162,6 +163,7 @@ class DoctorController extends Controller
 
 
     function patientTreatmentSave($id,Request $req){
+
         date_default_timezone_set('Asia/Karachi');
 
         $req->validate([
@@ -223,13 +225,190 @@ class DoctorController extends Controller
 
     // All Patient Appointments View
     function patientAllAppointmentView(){
+        date_default_timezone_set('Asia/Karachi');
         $primaryID = session()->get('userID');
         // joining 3 tables
         $doctorID = Hospital_data::join('doctors', 'hospital_datas.primary_id', '=', 'doctors.primary_id')->where("hospital_datas.primary_id", $primaryID)->get("doctors.doctor_id");
-        $dataFetched = Appointment_request::where("doctor_id", $doctorID[0]->doctor_id)->with(["patient", "patient.hospital_data"])->get();
+        $dataFetched = Appointment_request::where("doctor_id", $doctorID[0]->doctor_id)
+        ->where("appointment_date",'>',date('Y-m-d'))
+        ->with(["patient", "patient.hospital_data"])->get();
 
         return view("doctor.appointment.futureAppointment.viewAppointment", ["dataFetched"=>$dataFetched]);
     }
+
+
+    function patientPastAppointmentView(){
+        date_default_timezone_set('Asia/Karachi');
+        $primaryID = session()->get('userID');
+        // joining 3 tables
+        $doctorID = Hospital_data::join('doctors', 'hospital_datas.primary_id', '=', 'doctors.primary_id')->where("hospital_datas.primary_id", $primaryID)->get("doctors.doctor_id");
+        $dataFetched = Appointment_history::where("doctor_id", $doctorID[0]->doctor_id)
+        ->where("appointment_date",'<',date('Y-m-d'))
+        ->with(["patient", "patient.hospital_data"])->get();
+
+        $allStatus = Appointment_history::select("status")->distinct()->get();
+        // dd($allStatus);
+
+        if($dataFetched->count()){
+            return view("doctor.appointment.pastAppointment.viewAppointment", ["dataFetched"=>$dataFetched,"allStatus"=>$allStatus]);
+        }else{
+            return view("doctor.appointment.pastAppointment.viewAppointment", ["dataFetched"=>$dataFetched,"msg"=>"No Past Appointment","allStatus"=>$allStatus]);
+        }
+
+        
+    }
+
+
+    function patientPastAppointmentSearch(Request $req){
+        date_default_timezone_set('Asia/Karachi');
+
+        $req->validate([
+            'statusType' => 'required',
+        ]);
+
+        
+        $primaryID = session()->get('userID');
+        // joining 3 tables
+        $doctorID = Hospital_data::join('doctors', 'hospital_datas.primary_id', '=', 'doctors.primary_id')->where("hospital_datas.primary_id", $primaryID)->get("doctors.doctor_id");
+        $dataFetched;
+        if($req->statusType ==  "All Records"){
+            $dataFetched = Appointment_history::where("doctor_id", $doctorID[0]->doctor_id)
+            ->where("appointment_date",'<',date('Y-m-d'))
+            ->with(["patient", "patient.hospital_data"])->get();
+        }else{
+            $dataFetched = Appointment_history::where("doctor_id", $doctorID[0]->doctor_id)
+            ->where("appointment_date",'<',date('Y-m-d'))
+            ->where("status",$req->statusType)
+            ->with(["patient", "patient.hospital_data"])->get();
+        }
+        
+
+        $allStatus = Appointment_history::select("status")->distinct()->get();
+        // dd($allStatus);
+
+        if($dataFetched->count()){
+            return view("doctor.appointment.pastAppointment.viewAppointment", ["dataFetched"=>$dataFetched,"allStatus"=>$allStatus]);
+        }else{
+            return view("doctor.appointment.pastAppointment.viewAppointment", ["dataFetched"=>$dataFetched,"msg"=>"No Past Appointment","allStatus"=>$allStatus]);
+        }
+    }
+
+
+    function patientCurrentAppointmentView(){
+        date_default_timezone_set('Asia/Karachi');
+        
+        $primaryID = session()->get('userID');
+        // joining 3 tables
+        $doctorID = Hospital_data::join('doctors', 'hospital_datas.primary_id', '=', 'doctors.primary_id')->where("hospital_datas.primary_id", $primaryID)->get("doctors.doctor_id");
+        $dataFetched = Appointment_history::where("doctor_id", $doctorID[0]->doctor_id)
+        ->where("appointment_date",date('Y-m-d'))
+        ->where("confirm",1)
+        ->where("appointment_id","!=",NULL)
+        ->with(["patient", "patient.hospital_data"])->get();
+
+
+        if($dataFetched->count()){
+            return view("doctor.appointment.todayAppointment.viewAppointment", ["dataFetched"=>$dataFetched]);
+        }else{
+            return view("doctor.appointment.todayAppointment.viewAppointment", ["dataFetched"=>$dataFetched,"msg"=>"No Current Appointment"]);
+        }
+    }
+
+
+
+    function patientAppointmentTreatment($id,Request $req){
+        $req->validate([
+            'appointment_id' => 'required'
+        ]);
+
+        date_default_timezone_set('Asia/Karachi');
+
+        $patient = Hospital_data::findOrFail($id);
+        $meds = Medicine::all();
+
+        return view("doctor.appointment.todayAppointment.addPrescription",["patient"=>$patient,"medicine"=>$meds,"appointment_id"=>$req->appointment_id]);
+    }
+
+
+    function patientAppointmentTreatmentSave($id,Request $req){
+
+        date_default_timezone_set('Asia/Karachi');
+
+        $req->validate([
+            'medical_condition' => 'required|max:400',
+            'patient_primary_id' => 'required|max:20',
+            'doctor_primary_id' => 'required|max:20',
+            'appointment_id' => 'required'
+            
+        ]);
+
+
+        $patient = Patient::where("primary_id",$req->patient_primary_id)->get();
+        $doctor = Doctor::where("primary_id",$req->doctor_primary_id)->get();
+
+        if($patient->count() && $doctor->count()){
+            $treatment = new Treatment;
+            $treatment->patient_id = $patient[0]->patient_id;
+            $treatment->doctor_id = $doctor[0]->doctor_id;
+            $treatment->medical_condition = $req->medical_condition;
+            $treatment->comment = $req->comment;
+
+            if($req->appointment_id){
+                $treatment->appointment_id = $req->appointment_id;
+                
+            }
+
+            $saved = $treatment->save();
+
+            if($req->appointment_id){
+                Appointment_history::where("appointment_id",$req->appointment_id)
+                ->update(["status"=>"Appointment Successful"]);
+
+                Appointment_request::where("appointment_id",$req->appointment_id)
+                ->delete();
+            }
+
+            if($saved){
+                foreach($req->medicines as $med){
+
+                    if( Medicine::where("medicine_id",$med)->exists() ){
+                        $patient_med = new Prescription;
+                        $patient_med->medicine_id = $med;
+                        $patient_med->treatment()->associate($treatment);
+                        $patient_med->save();
+                    }else{
+                        return redirect()->back()->with("msg","Medicines Prescribed Doesn't Exist! ");
+                    }
+                }
+            }else{
+                return redirect()->back()->with("msg","Medicine Prescription Could Not be Added! ");
+            }
+        }
+
+        return redirect()->back()->with("msg","Prescription Added Successfully! ");
+
+    }
+
+    function patientAppointmentMedicalHistory($id){
+
+        $patient_data = Patient::where("patients.primary_id",$id)
+        ->join("hospital_datas","hospital_datas.primary_id","=","patients.primary_id")->get();
+
+
+        $medical_history = Treatment::where("patient_id",$patient_data[0]->patient_id)
+        ->with(["patient","doctor","doctor.hospital_data","prescription","prescription.medicine"])
+        ->orderBy('created_at', "desc")
+        ->get();
+
+        // dd($medical_history);
+
+        // dd($patient_data);
+        
+
+        return view("doctor.appointment.todayAppointment.viewMedicalHistory",["patient"=>$patient_data,"medical_history"=>$medical_history]);
+    }
+
+
 
 
 

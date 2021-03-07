@@ -50,22 +50,16 @@
                 <div class="row" style="margin:auto;">
                     <div class="col-sm-12" style="text-align:center;">
                         <div class="form-group">
-                            <h1 class="display-5">Future Patient's Appointment</h1>
+                            <h1 class="display-5">Today's Appointment</h1>
                         </div>
                     </div>
                 </div>
                 <div class="row">
-                    <div class="col-lg-6">
+                    <div class="col-lg-12">
                         <div class="input-group">
                             <span class="input-group-addon form-control form-control-lg col-sm-1"><i class="fa fa-filter fa-lg"></i></span>
                             <input type="text" name="searchTable" id="searchData" class="form-control form-control-lg col-sm-11" placeholder="Search Table Records" style="border:1px solid lightblue; color:black;">
                         </div>
-                    </div>
-                    <div class="col-sm-6">
-                            <div class="input-group">
-                                <label for="searchByDate" class="text-grey pr-4 text-bold m-auto ">Search By Date : </label>
-                                <input type="date" id="searchByDate" name="searchByDate" class="form-control form-control-lg col-sm-11" placeholder="Search Table By Date" style="border:1px solid lightblue; color:black;">
-                            </div>
                     </div>
                 </div>
 
@@ -93,6 +87,7 @@
                                 <th scope="col" style="text-align:center">Day</th>
                                 <th scope="col" style="text-align:center">Timings</th>
                                 <th scope="col" style="text-align:center">Status</th>
+                                <th scope="col" style="text-align:center">Action</th>
                             </tr>
                         </thead>
 
@@ -109,6 +104,25 @@
                                     @else
                                         <td style="text-align:center">Confirmed</td>
                                     @endif
+                                    <td style="text-align:center">
+                                    <div class="btn-group" role="group">
+                                        <!-- Add Treatment -->
+                                        
+                                        <a class="btn btn-info btn-lg" style='font-size: 13px;' href="/doctor/patient-current-appointment/medical-history/{{$data->patient->primary_id}}">
+                                        <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-file-text" viewBox="0 0 16 16">
+                                            <path d="M5 4a.5.5 0 0 0 0 1h6a.5.5 0 0 0 0-1H5zm-.5 2.5A.5.5 0 0 1 5 6h6a.5.5 0 0 1 0 1H5a.5.5 0 0 1-.5-.5zM5 8a.5.5 0 0 0 0 1h6a.5.5 0 0 0 0-1H5zm0 2a.5.5 0 0 0 0 1h3a.5.5 0 0 0 0-1H5z"/>
+                                            <path d="M2 2a2 2 0 0 1 2-2h8a2 2 0 0 1 2 2v12a2 2 0 0 1-2 2H4a2 2 0 0 1-2-2V2zm10-1H4a1 1 0 0 0-1 1v12a1 1 0 0 0 1 1h8a1 1 0 0 0 1-1V2a1 1 0 0 0-1-1z"/>
+                                        </svg>
+                                        History</a>
+                                        <form action=/doctor/patient-current-appointment/treatment/{{$data->patient->primary_id}}" method="GET">
+                                              @csrf
+                                              <input type="hidden" name="appointment_id" value="{{$data->appointment_id}}">
+                                              <input type="submit" value="Treatment" name="Treatment" class="btn btn-info btn-lg" style='font-size: 13px;'></button>
+                                        </form>
+
+                                        
+                                    </div>
+                                </td>
                                 </tr>
                             @endforeach
                         @endif
