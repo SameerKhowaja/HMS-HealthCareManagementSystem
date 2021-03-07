@@ -92,6 +92,10 @@ Route::delete('/admin/medicine/delete-medicine/{id}','AdminController@delMedicin
 Route::get('/admin/medicine/edit-medicine/{id}','AdminController@editMedicine');   //edit view Medicines
 Route::put('/admin/medicine/edit-medicine/{id}','AdminController@editMedicineSave');   //save edited Medicines
 
+// admin Account Other Privileges
+Route::get('/admin/account-type/edit-privilege/{id}','AdminController@editPrivileges');   //edit privileges view
+Route::post('/admin/account-type/edit-privilege/{id}','AdminController@editPrivilegesSave');   //edit privileges save on btn click
+
 //======================================================
 //                 Admin Module ENDS
 //=======================================================

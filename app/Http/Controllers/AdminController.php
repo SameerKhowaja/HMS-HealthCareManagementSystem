@@ -882,8 +882,6 @@ class AdminController extends Controller
         return redirect("/admin/room-management/")->with('msg','Bed Updated Successfully...!');
     }
 
-
-
 // Admin / Room Management ENDS ----------------------------------------
 
 // Admin / Manage Lab Test STARTS ----------------------------------------
@@ -1162,10 +1160,51 @@ class AdminController extends Controller
 
 // Admin / Drugs & Medicines END --------------------------------------
 
+// Admin / accountType Other Staff Privileges START --------------------------------------
 
+    // View accountType Page
     function accountType(){
-        return view('admin.accountType');
+        // Complete Data of Hospital Table join with Types Table
+        $hospital_data = Hospital_data::join('types', 'types.type_id', '=', 'hospital_datas.type_id')->join('others', 'others.primary_id', '=', 'hospital_datas.primary_id')->where('types.type_name', 'Other')->get(['hospital_datas.primary_id', 'hospital_datas.image', 'hospital_datas.fname', 'hospital_datas.lname', 'hospital_datas.email_id', 'hospital_datas.phone_number', 'others.*']);
+        $rowsReturn = count($hospital_data);
+        if($rowsReturn == 0){
+            return view('admin.accountType', ['dataFetched'=>$hospital_data,'msg'=>'No Records Found']);
+        }else{
+            return view('admin.accountType', ['dataFetched'=>$hospital_data]);
+        }
     }
+
+    // Edit Privileges View
+    function editPrivileges($id){
+        $hospital_data = Hospital_data::join('others', 'others.primary_id', '=', 'hospital_datas.primary_id')->findOrFail($id);
+        return view("admin.accountType.editPrivilege", ['dataFetched'=>$hospital_data]);
+    }
+
+    // Edit Privileges Save
+    function editPrivilegesSave($id){
+        $hospital_data = Hospital_data::join('others', 'others.primary_id', '=', 'hospital_datas.primary_id')->findOrFail($id);
+
+        $otherData = Other::findOrFail($hospital_data->other_id);
+        //Update Privileges
+        $otherData->createPatient = request('cPatient');
+        $otherData->viewPatient = request('vPatient');
+        $otherData->editPatient = request('ePatient');
+        $otherData->deletePatient = request('dPatient');
+        $otherData->createRoomBed = request('cRoomBed');
+        $otherData->viewRoomBed = request('vRoomBed');
+        $otherData->editRoomBed = request('eRoomBed');
+        $otherData->deleteRoomBed = request('dRoomBed');
+        $otherData->viewDocTime = request('vDocTime');
+        $otherData->editDocTime = request('eDocTime');
+        $otherData->createAppointment = request('cAppointment');
+        $otherData->viewAppointment = request('vAppointment');
+        $otherData->deleteAppointment = request('dAppointment');
+        $otherData->save();
+
+        return redirect("/admin/account-type/edit-privilege/".$hospital_data->primary_id)->with('msg', 'Privileges Updated Successfully...!');
+    }
+
+// Admin / accountType Other Staff Privileges ENDS --------------------------------------
 
     function admittedPatient(){
         return view('admin.patientDetail.admittedPatient');

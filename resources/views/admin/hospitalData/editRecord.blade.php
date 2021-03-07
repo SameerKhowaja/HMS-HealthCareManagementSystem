@@ -87,7 +87,6 @@
 
                 <!-- Table -->
                 <div class="table-responsive" style='box-shadow: 5px 3px 5px 3px #1b99d8; background-color: white; padding: 2%; border-radius: 10px; font-size: 13px;'>
-
                     <form action="/admin/hospital-data/edit-record/{{$hospitalData->primary_id}}" method="POST" enctype="multipart/form-data">
                         @csrf
                         <!-- Head Row -->
