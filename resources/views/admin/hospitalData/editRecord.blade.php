@@ -129,11 +129,11 @@
                                 @endif
                             </div>
 
-                            @if($msg??'' != '')
+                            @if(session()->has('msg'))
                             <div class="col-sm-12">
                                 <div class="form-group">
                                     <div class="alert alert-warning alert-dismissible fade show text-center" role="alert">
-                                        <strong>{{$msg ?? ''}}</strong> {{$long_msg ?? ''}}
+                                        <strong>{{ session()->get('msg') }}</strong>
                                         <button type="button" class="close" data-dismiss="alert" aria-label="Close">
                                             <span aria-hidden="true">&times;</span>
                                         </button>
@@ -141,6 +141,7 @@
                                 </div>
                             </div>
                             @endif
+                            
                         </div>
                         <!-- row3 -->
                         <div class="row">
@@ -168,6 +169,24 @@
                             </div>
                         </div>
                         @endif
+
+                        <!-- If Other then is specialist -->
+                        @if($accountTypeName=='Other' || $accountTypeName=='other')
+                        <div class="row">
+                            <div class="col-sm-12">
+                                <div class="form-group">
+                                    <strong>Other Staff Role*</strong>
+                                    <select class="form-control form-control-lg" name="roleType" id="roleType">
+                                        <option value="{{$roleData->role_id}}" selected>{{$roleData->roleName}}</option>
+                                        @foreach($otherRoleType as $role)
+                                            <option value="{{$role->role_id}}">{{$role->roleName}}</option>
+                                        @endforeach
+                                    </select>
+                                </div>
+                            </div>
+                        </div>
+                        @endif
+
                         <!-- row4 -->
                         <div class="row">
                             <div class="col-sm-6">
