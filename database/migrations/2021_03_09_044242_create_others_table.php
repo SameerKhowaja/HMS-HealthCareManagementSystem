@@ -17,6 +17,8 @@ class CreateOthersTable extends Migration
             $table->bigIncrements('other_id', 20);
             $table->bigInteger('primary_id')->length(20)->unsigned()->unique();
             $table->foreign('primary_id')->references('primary_id')->on('hospital_datas')->onDelete('cascade');
+            $table->bigInteger('role_id')->length(20)->unsigned()->unique();
+            $table->foreign('role_id')->references('role_id')->on('other_roles')->onDelete('cascade');
             $table->boolean('createPatient')->default(false);
             $table->boolean('viewPatient')->default(false);
             $table->boolean('editPatient')->default(false);

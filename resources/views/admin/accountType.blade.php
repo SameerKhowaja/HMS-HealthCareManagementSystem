@@ -82,7 +82,9 @@
         <div style='margin-top:2%; margin-bottom:2%;'>
             <div style="display: flex; justify-content: space-between; align-items: center;">
                 <h3 class="text-large text-grey">Admin / Other Privileges</h3>
+                <a href="/admin/account-type/manage-other-role/" class="btn btn-primary btn-lg active" role="button" aria-pressed="true"><i class="fa fa-cog"> </i>  Manage Other Roles</a>
             </div>
+            <br>
 
             <!-- Table -->
             <div class="table-responsive" style='box-shadow: 5px 3px 5px 3px #1b99d8; background-color: white; padding: 2%; border-radius: 10px; font-size: 13px;'>

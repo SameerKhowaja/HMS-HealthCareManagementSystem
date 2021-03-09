@@ -24,6 +24,7 @@ use App\Receptionist;
 use App\Room;
 use App\Type;
 use App\Other;
+use App\Other_role;
 use App\Past_event;
 use App\Medicine;
 use App\User;
@@ -1202,6 +1203,66 @@ class AdminController extends Controller
         $otherData->save();
 
         return redirect("/admin/account-type/edit-privilege/".$hospital_data->primary_id)->with('msg', 'Privileges Updated Successfully...!');
+    }
+
+    // View Roles
+    function manageOtherRoles(){
+        $rolesData = Other_role::all();
+        $rowsReturn = count($rolesData);
+        if($rowsReturn == 0){
+            return view('admin.accountType.manageOtherRole', ['dataFetched'=>$rolesData,'msg'=>'No Data Found']);
+        }else{
+            return view('admin.accountType.manageOtherRole', ['dataFetched'=>$rolesData]);
+        }
+    }
+
+    // Add Role
+    function addNewRole(Request $req){
+        $req->validate([
+            'roleName' => 'required|max:150'
+        ]);
+
+        $roleName = $req->roleName;
+        $data = Other_role::where('roleName', '=', $roleName)->first();
+        if ($data === null) {
+            // user doesn't exist
+            $otherRole = new Other_role;
+            $otherRole->roleName = $roleName;
+            $otherRole->save();
+            return redirect('/admin/account-type/manage-other-role/')->with("msg", "Role Added Successfully...!");
+        }
+        else{
+            return redirect('/admin/account-type/manage-other-role/')->with("msg", "Role Already Present...!");
+        }
+    }
+
+    // Delete Role
+    function deleteRole($id){
+        $deleteRole = Other_role::where("role_id", $id)->delete();
+        if($deleteRole){
+            return redirect("/admin/account-type/manage-other-role/")->with("msg","Role Deleted Successfully...!");
+        }else{
+            return redirect("/admin/account-type/manage-other-role/")->with("msg","Role Deletion Failed...!");
+        }
+    }
+
+    // Edit Role Name
+    function editRole($id, Request $req){
+        $req->validate([
+            'new_roleName' => 'required|max:150'
+        ]);
+
+        $new_roleName = $req->new_roleName;
+        $data = Other_role::where('roleName', '=', $new_roleName)->first();
+        if ($data === null){    // new data
+            $oldData = Other_role::findOrFail($id);
+            $oldData->roleName = $new_roleName;
+            $oldData->save();
+            return redirect("/admin/account-type/manage-other-role/")->with("msg","Role Updated Successfully...!");
+        }
+        else{
+            return redirect("/admin/account-type/manage-other-role/")->with("msg","Role Already Present or Same Naming...!");
+        }
     }
 
 // Admin / accountType Other Staff Privileges ENDS --------------------------------------

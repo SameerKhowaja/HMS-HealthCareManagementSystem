@@ -95,6 +95,10 @@ Route::put('/admin/medicine/edit-medicine/{id}','AdminController@editMedicineSav
 // admin Account Other Privileges
 Route::get('/admin/account-type/edit-privilege/{id}','AdminController@editPrivileges');   //edit privileges view
 Route::post('/admin/account-type/edit-privilege/{id}','AdminController@editPrivilegesSave');   //edit privileges save on btn click
+Route::get('/admin/account-type/manage-other-role','AdminController@manageOtherRoles'); // manage roles
+Route::post('/admin/account-type/manage-other-role/addRole','AdminController@addNewRole');   //add role on btn click
+Route::post('/admin/account-type/manage-other-role/editRole/{id}','AdminController@editRole');   //edit role on btn click
+Route::delete('/admin/account-type/manage-other-role/deleteRole/{id}','AdminController@deleteRole');    //delete role
 
 //======================================================
 //                 Admin Module ENDS
