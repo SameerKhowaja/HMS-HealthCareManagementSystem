@@ -84,7 +84,7 @@
             <h2>Patient / Medical-History</h2>
         </div>
         <div style="display:flex;" >
-            <a class="btn btn-primary btn-md active" role="button" aria-pressed="true" data-toggle="modal" data-target="#viewPatient_modal"><i class="fa fa-database fa-lg" aria-hidden="true"></i> Patient Detail</a>
+            <a class="btn btn-primary btn-lg active" role="button" aria-pressed="true" data-toggle="modal" data-target="#viewPatient_modal"><i class="fa fa-database fa-lg" aria-hidden="true"></i> Patient Detail</a>
         </div>
     </div>
     @if(session()->has('msg'))
@@ -100,7 +100,7 @@
                         </div>
                         @endif
    <div class="row bg-white">
-      
+
       <div class="col-md-12 col-lg-12">
       <div id="tracking-pre"></div>
          <div id="tracking">
@@ -118,10 +118,10 @@
                   </div>
                   <div class="tracking-date text-large">{{date('d/M/y',strtotime($hist->created_at))}} <span>{{date('h:i:s A',strtotime($hist->created_at)) }}</span></div>
                   <div class="tracking-content">
-                      <div class="text-large"> 
+                      <div class="text-large">
                           Medical Condition : <span class="text-grey"> {{$hist->medical_condition}}</span>
                       </div>
-                      <div class="text-large" style="word-wrap: break-word;">Medicines Given : 
+                      <div class="text-large" style="word-wrap: break-word;">Medicines Given :
                       @foreach($hist->prescription as $medicines)
                             <span class="text-grey">{{$medicines->medicine->medicine}},</span>
                       @endforeach
@@ -135,7 +135,7 @@
                           @endif
                       </div>
                       <div class="text-large">
-                          Treating Doctor : 
+                          Treating Doctor :
                           <span class="text-grey" >{{$hist->doctor->hospital_data->fname." ".$hist->doctor->hospital_data->lname."( ".$hist->doctor->specialist." )"}}</span>
                       </div>
                    </div>

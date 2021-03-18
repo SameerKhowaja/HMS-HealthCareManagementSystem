@@ -255,7 +255,7 @@ class DoctorController extends Controller
             return view("doctor.appointment.pastAppointment.viewAppointment", ["dataFetched"=>$dataFetched,"msg"=>"No Past Appointment","allStatus"=>$allStatus]);
         }
 
-        
+
     }
 
 
@@ -266,7 +266,7 @@ class DoctorController extends Controller
             'statusType' => 'required',
         ]);
 
-        
+
         $primaryID = session()->get('userID');
         // joining 3 tables
         $doctorID = Hospital_data::join('doctors', 'hospital_datas.primary_id', '=', 'doctors.primary_id')->where("hospital_datas.primary_id", $primaryID)->get("doctors.doctor_id");
@@ -281,7 +281,7 @@ class DoctorController extends Controller
             ->where("status",$req->statusType)
             ->with(["patient", "patient.hospital_data"])->get();
         }
-        
+
 
         $allStatus = Appointment_history::select("status")->distinct()->get();
         // dd($allStatus);
@@ -296,7 +296,7 @@ class DoctorController extends Controller
 
     function patientCurrentAppointmentView(){
         date_default_timezone_set('Asia/Karachi');
-        
+
         $primaryID = session()->get('userID');
         // joining 3 tables
         $doctorID = Hospital_data::join('doctors', 'hospital_datas.primary_id', '=', 'doctors.primary_id')->where("hospital_datas.primary_id", $primaryID)->get("doctors.doctor_id");
@@ -339,7 +339,7 @@ class DoctorController extends Controller
             'patient_primary_id' => 'required|max:20',
             'doctor_primary_id' => 'required|max:20',
             'appointment_id' => 'required'
-            
+
         ]);
 
 
@@ -355,7 +355,7 @@ class DoctorController extends Controller
 
             if($req->appointment_id){
                 $treatment->appointment_id = $req->appointment_id;
-                
+
             }
 
             $saved = $treatment->save();
@@ -403,7 +403,7 @@ class DoctorController extends Controller
         // dd($medical_history);
 
         // dd($patient_data);
-        
+
 
         return view("doctor.appointment.todayAppointment.viewMedicalHistory",["patient"=>$patient_data,"medical_history"=>$medical_history]);
     }

@@ -228,14 +228,13 @@ class PatientController extends Controller
         $app_history->save();
 
 
-
-        $doctor_FullData = Hospital_data::findOrFail($doctor_data);
+        $doctor_FullData = Hospital_data::findOrFail($doctor_data[0]->doctor_id);
         // Event Update
         $primaryID = session()->get('userID');
         $newEvent = new Past_event;
         $newEvent->event_type = "Added";
         $newEvent->primary_id = $primaryID;
-        $newEvent->description = "Requested Appointment of Doctor (".$doctor_FullData[0]->fname." ".$doctor_FullData[0]->lname.")";
+        $newEvent->description = "Requested Appointment of Doctor (".$doctor_FullData->fname." ".$doctor_FullData->lname.")";
         $newEvent->save();
 
         }else{
@@ -316,7 +315,7 @@ class PatientController extends Controller
         $history;
         $patient = Patient::where("primary_id",$id)->get();
 
-        
+
 
         Appointment_history::where("patient_id",$patient[0]->patient_id)
         ->where("appointment_date",'<',date("Y-m-d"))
@@ -334,9 +333,9 @@ class PatientController extends Controller
         Appointment_request::where("patient_id",$patient[0]->patient_id)
         ->where("appointment_date",'<',date("Y-m-d"))
         ->delete();
-        
-        
-        
+
+
+
 
         if($patient->count()){
             $history = Appointment_history::where("patient_id",$patient[0]->patient_id)
@@ -366,7 +365,7 @@ class PatientController extends Controller
 
         $patient_data = Patient::where("patients.primary_id",$id)
         ->join("hospital_datas","hospital_datas.primary_id","=","patients.primary_id")->get();
-        
+
 
         $medical_history = Treatment::where("patient_id",$patient_data[0]->patient_id)
         ->with(["patient","doctor","doctor.hospital_data","prescription","prescription.medicine"])
@@ -376,7 +375,7 @@ class PatientController extends Controller
         // dd($medical_history);
 
         // dd($patient_data);
-        
+
         return view("patient.viewMedicalHistory",["patient"=>$patient_data,"medical_history"=>$medical_history]);
     }
 

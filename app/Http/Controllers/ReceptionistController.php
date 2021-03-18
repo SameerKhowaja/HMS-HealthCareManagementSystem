@@ -998,13 +998,13 @@ class ReceptionistController extends Controller
 
 
 
-        $doctor_FullData = Hospital_data::findOrFail($doctor_data);
+        $doctor_FullData = Hospital_data::findOrFail($doctor_data[0]->doctor_id);
         // Event Update
         $primaryID = session()->get('userID');
         $newEvent = new Past_event;
         $newEvent->event_type = "Added";
         $newEvent->primary_id = $primaryID;
-        $newEvent->description = "Requested Appointment of Doctor (".$doctor_FullData[0]->fname." ".$doctor_FullData[0]->lname.")";
+        $newEvent->description = "Requested Appointment of Doctor (".$doctor_FullData->fname." ".$doctor_FullData->lname.")";
         $newEvent->save();
 
         }else{

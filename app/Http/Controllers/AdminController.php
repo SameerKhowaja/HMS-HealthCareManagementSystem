@@ -24,6 +24,7 @@ use App\Receptionist;
 use App\Room;
 use App\Type;
 use App\Other;
+use App\Other_role;
 use App\Past_event;
 use App\Medicine;
 use App\User;
@@ -346,7 +347,8 @@ class AdminController extends Controller
     // Add Record View btn click view
     function addRecord(){
         $getType = Type::all();
-        return view('admin.hospitalData.addRecord', ['typesList'=>$getType]);
+        $getRole = Other_role::all();
+        return view('admin.hospitalData.addRecord', ['typesList'=>$getType, 'rolesList'=>$getRole]);
     }
 
     // Add Record Save to database according to account type
@@ -358,6 +360,7 @@ class AdminController extends Controller
             'cnic' => 'required|max:100',
             'phone_number' => 'required|max:30',
             'gender' => 'required|max:10',
+            'specialist' => 'max:100',
             'city' => 'max:100',
             'address' => 'max:500',
             'password1' => 'required|max:100',
@@ -365,10 +368,11 @@ class AdminController extends Controller
         ]);
 
         $dataType = Type::all();    // Type Table Access
+        $roleType = Other_role::all();  // Other Roles
 
         // Check Password1 and Password2 Matched
         if(request('password1') != request('password2')){
-            return view('admin.hospitalData.addRecord', ['typesList'=>$dataType, 'msg'=>'Error! ', 'long_msg'=>"Password Not Matched"]);
+            return view('admin.hospitalData.addRecord', ['typesList'=>$dataType, 'rolesList'=>$roleType, 'msg'=>'Error! ', 'long_msg'=>"Password Not Matched"]);
         }
 
         // Check if same email-cnic not exits for patient type
@@ -378,7 +382,7 @@ class AdminController extends Controller
         $Hospital_data = Hospital_data::all();
         forEach($Hospital_data as $d){
             if(($d->email_id == $email_check && $d->type_id == $userType_id) || ($d->cnic == $cnic_check && $d->type_id == $userType_id) || ($userType_id == 0)){
-                return view('admin.hospitalData.addRecord', ['typesList'=>$dataType, 'msg'=>'Error! ', 'long_msg'=>"Email/CNIC Already Present"]);
+                return view('admin.hospitalData.addRecord', ['typesList'=>$dataType, 'rolesList'=>$roleType, 'msg'=>'Error! ', 'long_msg'=>"Email/CNIC Already Present"]);
             }
         }
 
@@ -395,44 +399,57 @@ class AdminController extends Controller
 
         // If type name not present in database
         if($dataType_value == ''){
-            return view('admin.hospitalData.addRecord', ['typesList'=>$dataType, 'msg'=>'Error! ', 'long_msg'=>"No Account Type Available"]);
+            return view('admin.hospitalData.addRecord', ['typesList'=>$dataType, 'rolesList'=>$roleType, 'msg'=>'Error! ', 'long_msg'=>"No Account Type Available"]);
         }
 
         // if all fine add Data
-        $add_patient = new Hospital_data;
-        $add_patient->type_id = $userType_id;
-        $add_patient->fname = request('fname');
-        $add_patient->lname = request('lname');
-        $add_patient->cnic = request('cnic');
-        $add_patient->email_id = request('email_id');
-        $add_patient->phone_number = request('phone_number');
-        $add_patient->gender = request('gender');
-        $add_patient->city = request('city');
-        $add_patient->address = request('address');
-        $add_patient->dob = request('dob');
-        $add_patient->password = request('password1');
+        $add_HospitalData = new Hospital_data;
+        $add_HospitalData->type_id = $userType_id;
+        $add_HospitalData->fname = request('fname');
+        $add_HospitalData->lname = request('lname');
+        $add_HospitalData->cnic = request('cnic');
+        $add_HospitalData->email_id = request('email_id');
+        $add_HospitalData->phone_number = request('phone_number');
+        $add_HospitalData->gender = request('gender');
+        $add_HospitalData->city = request('city');
+        $add_HospitalData->address = request('address');
+        $add_HospitalData->dob = request('dob');
+        $add_HospitalData->password = request('password1');
         if($req->hasFile('image')){
             $img = base64_encode(file_get_contents($req->file('image')->path()));
-            $add_patient->image = $img;
+            $add_HospitalData->image = $img;
         }
-        $add_patient->save();
-        $primaryid = $add_patient->primary_id;  // return currently saved ID
+        $add_HospitalData->save();
+        $primaryid = $add_HospitalData->primary_id;  // return currently saved ID
 
         $originalTypeName = $dataType_value;    // used in if condition without 's'
         $dataType_value = $dataType_value.'s';  // Table name concat with 's' in end
-        DB::table($dataType_value)->insert([
-            'primary_id' => $primaryid,
-        ]);
-
-        // Now find doctor id if type is doctor
+        
         if($originalTypeName == 'doctor' || $originalTypeName == 'Doctor'){
+            DB::table($dataType_value)->insert([
+                'primary_id' => $primaryid,
+                'specialist' => $req->specialist,
+            ]);
+
+            // Now find doctor id if type is doctor
             $doctorsList = DB::table($dataType_value)->select('doctor_id')->where('primary_id', $primaryid)->get();
             $doctorAvailability = new Doctor_availability; // add doctor id to this table
             $doctorAvailability->doctor_id = $doctorsList[0]->doctor_id;
             $doctorAvailability->save();
         }
+        else if($originalTypeName == 'other' || $originalTypeName == 'Other'){
+            DB::table($dataType_value)->insert([
+                'primary_id' => $primaryid,
+                'role_id' => $req->roleType,
+            ]);
+        }
+        else{
+            DB::table($dataType_value)->insert([
+                'primary_id' => $primaryid,
+            ]);
+        }
 
-        return view('admin.hospitalData.addRecord', ['typesList'=>$dataType, 'msg'=>'Success! ', 'long_msg'=>"Added New ".$nameOfType." Record to database"]);
+        return view('admin.hospitalData.addRecord', ['typesList'=>$dataType, 'rolesList'=>$roleType, 'msg'=>'Success! ', 'long_msg'=>"Added New ".$nameOfType." Record to database"]);
     }
 
     function searchRecord(Request $req){
@@ -475,6 +492,7 @@ class AdminController extends Controller
     // Edit User Data View
     function editUserData($id){
         $hospitalData = Hospital_data::findOrFail($id);
+        $getRole = Other_role::all();
         $getType = Type::all(); // for getting type name
         $typeName_val = '';
         forEach($getType as $typ){
@@ -491,11 +509,19 @@ class AdminController extends Controller
                     $specialist_val = $spec->specialist;
                 }
             }
-            return view("admin.hospitalData.editRecord", ['hospitalData'=>$hospitalData, 'accountTypeName'=>$typeName_val, 'doctorSpecialist'=>$specialist_val]);
+            return view("admin.hospitalData.editRecord", ['hospitalData'=>$hospitalData, 'otherRoleType'=>$getRole, 'accountTypeName'=>$typeName_val, 'doctorSpecialist'=>$specialist_val, 'roleData'=>'']);
         }
 
-        // if type is not doctor
-        return view("admin.hospitalData.editRecord", ['hospitalData'=>$hospitalData, 'accountTypeName'=>$typeName_val, 'doctorSpecialist'=>'']);
+        if($typeName_val == "Other" || $typeName_val=="other"){
+            $getCurrData = Other::join('hospital_datas', 'hospital_datas.primary_id', '=', 'others.primary_id')
+            ->where('hospital_datas.primary_id', $id)->get('others.role_id');
+            $getCurrRole = Other_role::findOrFail($getCurrData[0]->role_id);
+
+            return view("admin.hospitalData.editRecord", ['hospitalData'=>$hospitalData, 'otherRoleType'=>$getRole, 'accountTypeName'=>$typeName_val, 'doctorSpecialist'=>'', 'roleData'=>$getCurrRole]);
+        }
+
+        // else
+        return view("admin.hospitalData.editRecord", ['hospitalData'=>$hospitalData, 'otherRoleType'=>$getRole, 'accountTypeName'=>$typeName_val, 'doctorSpecialist'=>'', 'roleData'=>'']);
     }
 
     // Edit User Data on btn click save to DB
@@ -511,13 +537,14 @@ class AdminController extends Controller
             'gender' => 'required|max:10',
             'city' => 'max:100',
             'address' => 'max:500',
-            'specialist' => 'max:300',
+            'specialist' => 'max:100',
             'password1' => 'required|max:100',
             'image' => 'mimes:jpeg,png,jpg|max:25',  // image size less than 25KB
         ]);
 
         // Getting Type Name
         $getType = Type::all();
+        $getRole = Other_role::all();
         $typeName_val = '';
         forEach($getType as $typ){
             if($typ->type_id == $hospitalData->type_id){
@@ -533,7 +560,7 @@ class AdminController extends Controller
             // check if updated email does not exist in db with same account type
             if(($hospitalData->email_id != $email_id && $email_id == $data->email_id && $hospitalData->type_id == $data->type_id) || $hospitalData->cnic != $cnic_no && $cnic_no == $data->cnic && $hospitalData->type_id == $data->type_id){
                 // email present in db so return error msg
-                return view("admin.hospitalData.editRecord", ['hospitalData'=>$hospitalData, 'accountTypeName'=>$typeName_val, 'msg'=>'Error! ', 'long_msg'=>"Email/CNIC Already Exists...!"]);
+                return redirect()->back()->with("msg", "Email/CNIC Already Exists...!");
             }
         }
 
@@ -555,9 +582,7 @@ class AdminController extends Controller
         $hospitalData->save();
         $primaryID = $hospitalData->primary_id;  // return currently saved ID
 
-        // Check if doctor or not
-        $specialist = request('specialist');
-
+        // Check if doctor/other or not
         $doctor_data = Doctor::all();
         forEach($doctor_data as $data){
             if($data->primary_id == $primaryID){
@@ -566,7 +591,15 @@ class AdminController extends Controller
             }
         }
 
-        return view("admin.hospitalData.editRecord", ['hospitalData'=>$hospitalData, 'accountTypeName'=>$typeName_val, 'doctorSpecialist'=>$specialist, 'msg'=>'Success! ', 'long_msg'=>"Record Updated...!"]);
+        $other_data = Other::all();
+        forEach($other_data as $data){
+            if($data->primary_id == $primaryID){
+                $data->role_id = request('roleType');
+                $data->save();
+            }
+        }
+
+        return redirect()->back()->with("msg", "Record Updated...!");
     }
 
 // Admin / Hospital Data Management ENDS ---------------------------------
@@ -882,8 +915,6 @@ class AdminController extends Controller
         return redirect("/admin/room-management/")->with('msg','Bed Updated Successfully...!');
     }
 
-
-
 // Admin / Room Management ENDS ----------------------------------------
 
 // Admin / Manage Lab Test STARTS ----------------------------------------
@@ -1162,10 +1193,111 @@ class AdminController extends Controller
 
 // Admin / Drugs & Medicines END --------------------------------------
 
+// Admin / accountType Other Staff Privileges START --------------------------------------
 
+    // View accountType Page
     function accountType(){
-        return view('admin.accountType');
+        // Complete Data of Hospital Table join with Types Table
+        $hospital_data = Hospital_data::join('types', 'types.type_id', '=', 'hospital_datas.type_id')->join('others', 'others.primary_id', '=', 'hospital_datas.primary_id')->where('types.type_name', 'Other')->get(['hospital_datas.primary_id', 'hospital_datas.image', 'hospital_datas.fname', 'hospital_datas.lname', 'hospital_datas.email_id', 'hospital_datas.phone_number', 'others.*']);
+        $rowsReturn = count($hospital_data);
+        if($rowsReturn == 0){
+            return view('admin.accountType', ['dataFetched'=>$hospital_data,'msg'=>'No Records Found']);
+        }else{
+            return view('admin.accountType', ['dataFetched'=>$hospital_data]);
+        }
     }
+
+    // Edit Privileges View
+    function editPrivileges($id){
+        $hospital_data = Hospital_data::join('others', 'others.primary_id', '=', 'hospital_datas.primary_id')->findOrFail($id);
+        return view("admin.accountType.editPrivilege", ['dataFetched'=>$hospital_data]);
+    }
+
+    // Edit Privileges Save
+    function editPrivilegesSave($id){
+        $hospital_data = Hospital_data::join('others', 'others.primary_id', '=', 'hospital_datas.primary_id')->findOrFail($id);
+
+        $otherData = Other::findOrFail($hospital_data->other_id);
+        //Update Privileges
+        $otherData->createPatient = request('cPatient');
+        $otherData->viewPatient = request('vPatient');
+        $otherData->editPatient = request('ePatient');
+        $otherData->deletePatient = request('dPatient');
+        $otherData->createRoomBed = request('cRoomBed');
+        $otherData->viewRoomBed = request('vRoomBed');
+        $otherData->editRoomBed = request('eRoomBed');
+        $otherData->deleteRoomBed = request('dRoomBed');
+        $otherData->viewDocTime = request('vDocTime');
+        $otherData->editDocTime = request('eDocTime');
+        $otherData->createAppointment = request('cAppointment');
+        $otherData->viewAppointment = request('vAppointment');
+        $otherData->deleteAppointment = request('dAppointment');
+        $otherData->save();
+
+        return redirect("/admin/account-type/edit-privilege/".$hospital_data->primary_id)->with('msg', 'Privileges Updated Successfully...!');
+    }
+
+    // View Roles
+    function manageOtherRoles(){
+        $rolesData = Other_role::all();
+        $rowsReturn = count($rolesData);
+        if($rowsReturn == 0){
+            return view('admin.accountType.manageOtherRole', ['dataFetched'=>$rolesData,'msg'=>'No Data Found']);
+        }else{
+            return view('admin.accountType.manageOtherRole', ['dataFetched'=>$rolesData]);
+        }
+    }
+
+    // Add Role
+    function addNewRole(Request $req){
+        $req->validate([
+            'roleName' => 'required|max:150'
+        ]);
+
+        $roleName = $req->roleName;
+        $data = Other_role::where('roleName', '=', $roleName)->first();
+        if ($data === null) {
+            // user doesn't exist
+            $otherRole = new Other_role;
+            $otherRole->roleName = $roleName;
+            $otherRole->save();
+            return redirect('/admin/account-type/manage-other-role/')->with("msg", "Role Added Successfully...!");
+        }
+        else{
+            return redirect('/admin/account-type/manage-other-role/')->with("msg", "Role Already Present...!");
+        }
+    }
+
+    // Delete Role
+    function deleteRole($id){
+        $deleteRole = Other_role::where("role_id", $id)->delete();
+        if($deleteRole){
+            return redirect("/admin/account-type/manage-other-role/")->with("msg","Role Deleted Successfully...!");
+        }else{
+            return redirect("/admin/account-type/manage-other-role/")->with("msg","Role Deletion Failed...!");
+        }
+    }
+
+    // Edit Role Name
+    function editRole($id, Request $req){
+        $req->validate([
+            'new_roleName' => 'required|max:150'
+        ]);
+
+        $new_roleName = $req->new_roleName;
+        $data = Other_role::where('roleName', '=', $new_roleName)->first();
+        if ($data === null){    // new data
+            $oldData = Other_role::findOrFail($id);
+            $oldData->roleName = $new_roleName;
+            $oldData->save();
+            return redirect("/admin/account-type/manage-other-role/")->with("msg","Role Updated Successfully...!");
+        }
+        else{
+            return redirect("/admin/account-type/manage-other-role/")->with("msg","Role Already Present or Same Naming...!");
+        }
+    }
+
+// Admin / accountType Other Staff Privileges ENDS --------------------------------------
 
     function admittedPatient(){
         return view('admin.patientDetail.admittedPatient');

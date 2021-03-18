@@ -92,6 +92,14 @@ Route::delete('/admin/medicine/delete-medicine/{id}','AdminController@delMedicin
 Route::get('/admin/medicine/edit-medicine/{id}','AdminController@editMedicine');   //edit view Medicines
 Route::put('/admin/medicine/edit-medicine/{id}','AdminController@editMedicineSave');   //save edited Medicines
 
+// admin Account Other Privileges
+Route::get('/admin/account-type/edit-privilege/{id}','AdminController@editPrivileges');   //edit privileges view
+Route::post('/admin/account-type/edit-privilege/{id}','AdminController@editPrivilegesSave');   //edit privileges save on btn click
+Route::get('/admin/account-type/manage-other-role','AdminController@manageOtherRoles'); // manage roles
+Route::post('/admin/account-type/manage-other-role/addRole','AdminController@addNewRole');   //add role on btn click
+Route::post('/admin/account-type/manage-other-role/editRole/{id}','AdminController@editRole');   //edit role on btn click
+Route::delete('/admin/account-type/manage-other-role/deleteRole/{id}','AdminController@deleteRole');    //delete role
+
 //======================================================
 //                 Admin Module ENDS
 //=======================================================
@@ -237,7 +245,10 @@ Route::get('/labtechnician','LabTechnicianController@index');   //dashboard
 //======================================================
 //                 Other Module START
 //=======================================================
-
+Route::get('/other','OtherController@index');   //dashboard
+Route::get('/other/editOtherProfile/{id}','OtherController@editProfile');   //profile view
+Route::post('/other/editOtherProfile/{id}','OtherController@editProfileSave');   //edit profile save btn click
+Route::post('/other/editOtherProfile/editPassword/{id}','OtherController@editProfilePassword');   //edit profile password modal save on btn click
 
 //======================================================
 //                 Other Module ENDS

@@ -282,7 +282,7 @@
                     <form id="ok_edit_bed" action="#" method="POST">
                     @csrf
                         <div class="modal-body">
-                            <table class="table table-hover">
+                            <table class="table table-hover table-borderless">
                                 <thead>
                                     <tr>
                                         <td colspan="2">
@@ -326,7 +326,7 @@
                     <form id="ok_edit_room" action="#" method="POST">
                     @csrf
                         <div class="modal-body">
-                            <table class="table table-hover">
+                            <table class="table table-hover table-borderless">
                                 <thead>
                                     <tr>
                                         <td colspan="2">
@@ -366,7 +366,7 @@
                     <form action="/admin/room-management/add-new-room" method="POST">
                     @csrf
                         <div class="modal-body">
-                            <table class="table table-hover">
+                            <table class="table table-hover table-borderless">
                                 <thead>
                                     <div class="row">
                                         <div class="col-lg-12">
@@ -402,7 +402,7 @@
                     <form action="/admin/room-management/add-new-bed" method="POST">
                     @csrf
                         <div class="modal-body">
-                            <table class="table table-hover">
+                            <table class="table table-hover table-borderless">
                                 <thead>
                                     <div class="row">
                                         <div class="col-lg-12">

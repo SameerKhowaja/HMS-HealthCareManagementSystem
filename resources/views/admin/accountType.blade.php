@@ -71,7 +71,7 @@
                     <svg xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" aria-hidden="true" focusable="false" width="1em" height="1em" fill="#0052E9" style="-ms-transform: rotate(360deg); -webkit-transform: rotate(360deg); transform: rotate(360deg);" preserveAspectRatio="xMidYMid meet" viewBox="0 0 16 16">
                         <path d="M6.5 2a.5.5 0 0 0 0 1h3a.5.5 0 0 0 0-1h-3zM11 8a3 3 0 1 1-6 0 3 3 0 0 1 6 0z"/>
                         <path d="M4.5 0A2.5 2.5 0 0 0 2 2.5V14a2 2 0 0 0 2 2h8a2 2 0 0 0 2-2V2.5A2.5 2.5 0 0 0 11.5 0h-7zM3 2.5A1.5 1.5 0 0 1 4.5 1h7A1.5 1.5 0 0 1 13 2.5v10.795a4.2 4.2 0 0 0-.776-.492C11.392 12.387 10.063 12 8 12s-3.392.387-4.224.803a4.2 4.2 0 0 0-.776.492V2.5z"/>
-                    </svg> Account Types
+                    </svg> Other Privileges
                 </li>
             </a>
         </ul>
@@ -79,6 +79,262 @@
 
 @section('content')
     <div>
-        <h1>Patient Management<h1>
+        <div style='margin-top:2%; margin-bottom:2%;'>
+            <div style="display: flex; justify-content: space-between; align-items: center;">
+                <h3 class="text-large text-grey">Admin / Other Privileges</h3>
+                <a href="/admin/account-type/manage-other-role/" class="btn btn-primary btn-lg active" role="button" aria-pressed="true"><i class="fa fa-cog"> </i>  Manage Other Roles</a>
+            </div>
+            <br>
+
+            <!-- Table -->
+            <div class="table-responsive" style='box-shadow: 5px 3px 5px 3px #1b99d8; background-color: white; padding: 2%; border-radius: 10px; font-size: 13px;'>
+                <h1 class="text-center display-5">Manage Other Staff Privileges</h1>
+                <div class="row">
+                    <div class="col-lg-12">
+                        <div class="input-group">
+                            <span class="input-group-addon form-control form-control-lg col-sm-1"><i class="fa fa-filter fa-lg"></i></span>
+                            <input type="text" name="searchTable" id="searchData" class="form-control form-control-lg col-sm-11" placeholder="Search Table Records" style="border:1px solid lightblue; color:black;">
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Patient table Start -->
+                <div class="table-responsive-sm">
+                    <table id="RecordTable" class="table table-hover">
+                        @if(session()->has('msg'))
+                        <div class="row">
+                            <div class="col-sm-12">
+                                <div class="alert alert-warning alert-dismissible fade show text-center" role="alert">
+                                    <strong>{{ session()->get('msg') }}</strong>
+                                    <button type="button" class="close" data-dismiss="alert" aria-label="Close">
+                                        <span aria-hidden="true">&times;</span>
+                                    </button>
+                                </div>
+                            </div>
+                        </div>
+                        @endif
+
+                        <thead>
+                            <tr>
+                                <th scope="col" style="text-align:center">Image</th>
+                                <th scope="col" style="text-align:center">Full Name</th>
+                                <th scope="col" style="text-align:center">CNIC #</th>
+                                <th scope="col" style="text-align:center">Email ID</th>
+                                <th scope="col" style="text-align:center">Phone #</th>
+                                <th scope="col" style="text-align:center">Action</th>
+                            </tr>
+                        </thead>
+
+                        <tbody id="myTable">
+                        @if($dataFetched != 'none')
+                            <!-- Complete Data Fetched -->
+                            <div class="AllData" id="{{$dataFetched}}"></div>
+
+                            @foreach($dataFetched as $data)
+                            <tr>
+                                <td style="text-align:center">
+                                    @if($data->image == '')
+                                        <img class="profile" src="{{asset('resources/images/profile.png')}}" alt="profile">
+                                    @else
+                                        <img class="profile" src='{{"data:image/*;base64,".$data->image}}' alt="profile">
+                                    @endif
+                                </td>
+
+                                <td style="text-align:center">{{$data->fname.' '.$data->lname}}</td>
+                                <td style="text-align:center">{{$data->cnic}}</td>
+                                <td style="text-align:center">{{$data->email_id}}</td>
+                                <td style="text-align:center">{{$data->phone_number}}</td>
+
+                                <td style="text-align:center">
+                                    <div class="btn-group" role="group">
+                                        <!-- View - Edit-->
+                                        <a id='{{$data->primary_id}}' style='font-size:13px;' class="btn btn-info btn-lg viewUser" role="button" aria-pressed="true" data-toggle="modal" data-target="#viewUser_modal"><i class="fa fa-database fa-lg" aria-hidden="true"></i> View Privileges</a>
+                                        <a class="btn btn-warning btn-lg" style='font-size: 13px;' href="/admin/account-type/edit-privilege/{{$data->primary_id}}"><i class="fa fa-pencil-square-o fa-lg" aria-hidden="true"></i> Update Privileges</a>
+                                    </div>
+                                </td>
+                            </tr>
+                            @endforeach
+                        @endif
+                        </tbody>
+                    </table>
+
+                    <!-- Alert if Zero Result Retrieved -->
+                    @if($msg??''!='')
+                    <div class="row">
+                        <div class="col-sm-12">
+                            <h1 class="display-3 text-center">{{$msg}}</h1>
+                        </div>
+                    </div>
+                    @endif
+
+                </div>
+            </div>
+            <!-- Table end -->
+        </div>
+
+        <!-- View Modal -->
+        <div class="modal fade" id="viewUser_modal">
+            <div class="modal-dialog modal-dialog-centered">
+                <div class="modal-content">
+                    <div class="modal-body">
+                        <!-- Photo and Name -->
+                        <div class="row">
+                            <div class="col-lg-12">
+                                <img id="image" class="img-fluid rounded img-thumbnail mx-auto d-block rounded-circle" src="{{asset('resources/images/profile.png')}}" alt="profile" width="140" height="140">
+                            </div>
+                            <div class="col-lg-12">
+                                <h1 id="fullName" class="media-heading display-5 text-center">Joe Sixpack</h1>
+                            </div>
+                            <div class="col-lg-12">
+                                <h4 id="emailID" class="media-heading display-5 text-center">alikhan@gmail.com</h4>
+                                <h4 id="phone_no" class="media-heading display-5 text-center">92333XXXXXXX</h4>
+                            </div>
+                            <div class="col-lg-12">
+                                <h4 class="text-center"><span id="typeName" class="badge badge-pill badge-dark">Other Staff</span></h4>
+                            </div>
+                        </div>
+                        <hr>
+                        <!-- Main Data -->
+                        <div class="row text-center">
+                            <table class="table table-hover">
+                                <div class="row" style="border:2px dotted lightblue;">
+                                    <div class="col-lg-12">
+                                        <h3 class="text-center">Patient Privileges</h3>
+                                    </div>
+                                    <div class="col-lg-3">
+                                        <h4 class="display-6"><strong>Create : </strong> <span id="cPatient" class="display-6">No</span></h4>
+                                    </div>
+                                    <div class="col-lg-3">
+                                        <h4 class="display-6"><strong>View : </strong> <span id="vPatient" class="display-6">No</span></h4>
+                                    </div>
+                                    <div class="col-lg-3">
+                                        <h4 class="display-6"><strong>Edit : </strong> <span id="ePatient" class="display-6">No</span></h4>
+                                    </div>
+                                    <div class="col-lg-3">
+                                        <h4 class="display-6"><strong>Delete : </strong> <span id="dPatient" class="display-6">No</span></h4>
+                                    </div>
+                                </div>
+
+                                <div class="row" style="border:2px dotted lightblue;">
+                                    <div class="col-lg-12">
+                                        <h3 class="text-center">Patient Appointments Privileges</h3>
+                                    </div>
+                                    <div class="col-lg-4">
+                                        <h4 class="display-6"><strong>Create : </strong> <span id="cPatientAppointment" class="display-6">No</span></h4>
+                                    </div>
+                                    <div class="col-lg-4">
+                                        <h4 class="display-6"><strong>View : </strong> <span id="vPatientAppointment" class="display-6">No</span></h4>
+                                    </div>
+                                    <div class="col-lg-4">
+                                        <h4 class="display-6"><strong>Delete : </strong> <span id="dPatientAppointment" class="display-6">No</span></h4>
+                                    </div>
+                                </div>
+
+                                <div class="row" style="border:2px dotted lightblue;">
+                                    <div class="col-lg-12">
+                                        <h3 class="text-center">Doctor Timings Privileges</h3>
+                                    </div>
+                                    <div class="col-lg-6">
+                                        <h4 class="display-6"><strong>View : </strong> <span id="vDocTime" class="display-6">No</span></h4>
+                                    </div>
+                                    <div class="col-lg-6">
+                                        <h4 class="display-6"><strong>Edit : </strong> <span id="eDocTime" class="display-6">No</span></h4>
+                                    </div>
+                                </div>
+
+                                <div class="row" style="border:2px dotted lightblue;">
+                                    <div class="col-lg-12">
+                                        <h3 class="text-center">Room/Bed Privileges</h3>
+                                    </div>
+                                    <div class="col-lg-3">
+                                        <h4 class="display-6"><strong>Create : </strong> <span id="cRoomBed" class="display-6">No</span></h4>
+                                    </div>
+                                    <div class="col-lg-3">
+                                        <h4 class="display-6"><strong>View : </strong> <span id="vRoomBed" class="display-6">No</span></h4>
+                                    </div>
+                                    <div class="col-lg-3">
+                                        <h4 class="display-6"><strong>Edit : </strong> <span id="eRoomBed" class="display-6">No</span></h4>
+                                    </div>
+                                    <div class="col-lg-3">
+                                        <h4 class="display-6"><strong>Delete : </strong> <span id="dRoomBed" class="display-6">No</span></h4>
+                                    </div>
+                                </div>
+                            </table>
+                            <div class="col-lg-12">
+                                <button type="button" class="btn btn-primary btn-lg btn-block" data-dismiss="modal" style="font-size:15px;">Close</button>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <!-- View Modal Ends-->
+
     </div>
+
+    <script>
+        $(document).ready(function(){
+            $("#searchData").on("keyup", function() {
+                var value = $(this).val().toLowerCase();
+                $("#myTable tr").filter(function() {
+                $(this).toggle($(this).text().toLowerCase().indexOf(value) > -1)
+                });
+            });
+        });
+    </script>
+
+    <script>
+        function Yes_or_No(rights){
+            if(rights == 0){
+                return "No";
+            }
+            else{
+                return "Yes";
+            }
+        }
+
+        var user_id;
+        var allData;
+        $(document).ready(function(){
+            $(".viewUser").click(function(){
+                user_id = $(this).attr('id');   // current id
+                allData = $('.AllData').attr('id'); // all records
+                var obj = JSON.parse(allData);
+
+                for(var i=0;i<obj.length;i++){
+                    if(user_id == obj[i].primary_id){
+                        // alert(obj[i].fname);
+                        $("#fullName").html(obj[i].fname+' '+obj[i].lname);
+                        $("#emailID").html(obj[i].email_id);
+                        $("#phone_no").html(obj[i].phone_number);
+
+                        if(obj[i].image != null){
+                            $('#image').attr("src", 'data:image/*;base64,'+obj[i].image);
+                        }
+                        else{
+                            $('#image').attr('src', 'https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcRCU4AoQASk65ZwYPHbNqQvYp5pwbhS-tOLbg&usqp=CAU');
+                        }
+
+                        $("#cPatient").html(Yes_or_No(obj[i].createPatient));
+                        $("#vPatient").html(Yes_or_No(obj[i].viewPatient));
+                        $("#ePatient").html(Yes_or_No(obj[i].editPatient));
+                        $("#dPatient").html(Yes_or_No(obj[i].deletePatient));
+
+                        $("#cPatientAppointment").html(Yes_or_No(obj[i].createAppointment));
+                        $("#vPatientAppointment").html(Yes_or_No(obj[i].viewAppointment));
+                        $("#dPatientAppointment").html(Yes_or_No(obj[i].deleteAppointment));
+
+                        $("#vDocTime").html(Yes_or_No(obj[i].viewDocTime));
+                        $("#eDocTime").html(Yes_or_No(obj[i].editDocTime));
+
+                        $("#cRoomBed").html(Yes_or_No(obj[i].createRoomBed));
+                        $("#vRoomBed").html(Yes_or_No(obj[i].viewRoomBed));
+                        $("#eRoomBed").html(Yes_or_No(obj[i].editRoomBed));
+                        $("#dRoomBed").html(Yes_or_No(obj[i].deleteRoomBed));
+                    }
+                }
+            });
+        });
+    </script>
+
 @endsection

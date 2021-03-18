@@ -172,6 +172,31 @@
                                 </div>
                             </div>
                         </div>
+                        
+                        <!-- Doctor Specilaist -->
+                        <div class="row" id="doctorCheck">
+                            <div class="col-sm-12">
+                                <div class="form-group">
+                                    <strong>Doctor Specialist</strong>
+                                    <input type="text" name="specialist" class="form-control form-control-lg" placeholder="Doctor Specialist">
+                                </div>
+                            </div>
+                        </div>
+
+                        <!-- Other Roles -->
+                        <div class="row" id="otherRolesCheck">
+                            <div class="col-sm-12">
+                                <div class="form-group">
+                                    <strong>Other Staff Role*</strong>
+                                    <select class="form-control form-control-lg" name="roleType" id="roleType">
+                                        @foreach($rolesList as $role)
+                                            <option value="{{$role->role_id}}">{{$role->roleName}}</option>
+                                        @endforeach
+                                    </select>
+                                </div>
+                            </div>
+                        </div>
+
                         <!-- row4 -->
                         <div class="row">
                             <div class="col-sm-4">
@@ -258,7 +283,7 @@
 
         </div>
 
-		<!-- Old Pass -->
+		<!-- New - Old Pass -->
         <script>
             $(".revealold").on('click',function() {
                 var $pwd = $(".pwd1");
@@ -271,10 +296,7 @@
                     $icon.attr('class', 'fa fa-eye');
                 }
             });
-        </script>
 
-        <!-- New Pass -->
-        <script>
             $(".revealnew").on('click',function() {
                 var $pwd = $(".pwd2");
                 var $icon = $("#fa_new");
@@ -286,6 +308,45 @@
                     $icon.attr('class', 'fa fa-eye');
                 }
             });
+        </script>
+
+        <!-- Select box on select -->
+        <script>
+            $(document).ready(function(){
+                var optVal= $("#accountType option:selected").html();
+                if(optVal == "Doctor"){
+                    $("#doctorCheck").show();
+                }
+                else{
+                    $("#doctorCheck").hide();
+                }
+
+                if(optVal == "Other"){
+                    $("#otherRolesCheck").show();
+                }
+                else{
+                    $("#otherRolesCheck").hide();
+                }
+
+                $('#accountType').change(function() {
+                    var optVal= $("#accountType option:selected").html();
+
+                    if(optVal == "Doctor"){
+                        $("#doctorCheck").show();
+                    }
+                    else{
+                        $("#doctorCheck").hide();
+                    }
+                    
+                    if(optVal == "Other"){
+                        $("#otherRolesCheck").show();
+                    }
+                    else{
+                        $("#otherRolesCheck").hide();
+                    }
+                });
+            });
+
         </script>
 
 @endsection
