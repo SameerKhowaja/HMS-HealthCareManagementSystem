@@ -15,6 +15,12 @@ use App\Doctor_availability;
 use App\Patient;
 use App\Past_event;
 use App\Appointment_history;
+use App\Lab_test_name;
+use App\Lab_test_parameter;
+use App\Lab_test_report;
+use App\Lab_report_params;
+use App\Lab_technician;
+use App\LabTestRequest;
 
 class ReceptionistController extends Controller
 {
@@ -1148,6 +1154,95 @@ class ReceptionistController extends Controller
         return redirect("/receptionist/patient-appointment")->with('msg','Appointment Booked Successfully!');
 
     }
+
+    function patientLabTest(){
+        $getType = Type::all();
+        $patientID = 0;
+        foreach($getType as $type){
+            if($type->type_name == 'patient' || $type->type_name == 'Patient'){
+                $patientID = $type->type_id;
+            }
+        }
+        if($patientID == 0){
+            return view("page404", ['msg'=>"Error", 'msg_long'=>' Doctor Type Not Exist...!']);
+        }
+        // Complete Data of Hospital Table join with patient Table
+        $hospital_data = Hospital_data::join('patients', 'patients.primary_id', '=', 'hospital_datas.primary_id')->get(['hospital_datas.*', 'patients.patient_id']);
+        $rowsReturn = count($hospital_data);
+        if($rowsReturn == 0){
+            return view('receptionist.patientDetail.patientLabTest.TestRequest', ['dataFetched'=>$hospital_data, 'msg'=>'No Records Found']);
+        }else{
+            return view('receptionist.patientDetail.patientLabTest.TestRequest', ['dataFetched'=>$hospital_data]);
+        }
+
+
+    }
+
+
+    function patientTestRequest($id){
+        $userData = Hospital_data::findOrFail($id);
+
+        $testTypes = Lab_test_name::pluck('test_type');
+        $testTypes = $testTypes->unique();
+        $msg = "";
+
+        $tests = Lab_test_name::all();
+        $params = Lab_test_parameter::all();
+
+        $labTests = [];
+        if($tests->count() > 0){
+        foreach($tests as $data){
+            $tmp = [];
+            foreach($params as $p){
+                if($data->test_id == $p->test_id){
+                    array_push($tmp,$p);
+                }
+            }
+            array_push($labTests,["test"=>$data,"params"=>$tmp]);
+        }
+
+    }else{
+        $msg = "No Lab Test Found";
+    }
+
+    return view('receptionist.patientDetail.patientLabTest.selectLabTest', ['labTests'=>$labTests,'testTypes'=>$testTypes,'msg'=>$msg,'userData'=>$userData]);
+   }
+
+
+
+   function testRequestSave(Request $req){
+    date_default_timezone_set('Asia/Karachi');
+    $req->validate([
+        'patient' => 'required|max:20'
+    ]);
+
+    $patient = Patient::where("primary_id",$req->patient)->get();
+    $tests = "";
+    $count=0;
+
+
+    if($req->tests){
+        foreach($req->tests as $test){
+            if($count==0){
+                $tests= $test;
+                $count=1;
+            }else{
+                $tests= $tests.",".$test;
+            }
+            
+        }
+    }
+
+    $testReq = new LabTestRequest;
+    $testReq->patient_id = $patient[0]->patient_id;
+    $testReq->test_names = $tests;
+    $testReq->save();
+
+    return redirect('/receptionist/patient-lab-test')->with('msg',"Request Sent!");
+   }
+
+
+   
 
 
 
