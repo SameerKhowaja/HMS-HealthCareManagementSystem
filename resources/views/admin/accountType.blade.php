@@ -207,16 +207,13 @@
 
                                 <div class="row" style="border:2px dotted lightblue;">
                                     <div class="col-lg-12">
-                                        <h3 class="text-center">Patient Appointments Privileges</h3>
+                                        <h3 class="text-center">Patient Appointments / Lab Tests Privileges</h3>
                                     </div>
-                                    <div class="col-lg-4">
-                                        <h4 class="display-6"><strong>Create : </strong> <span id="cPatientAppointment" class="display-6">No</span></h4>
+                                    <div class="col-lg-6">
+                                        <h4 class="display-6"><strong>View Appointment : </strong> <span id="vPatientAppointment" class="display-6">No</span></h4>
                                     </div>
-                                    <div class="col-lg-4">
-                                        <h4 class="display-6"><strong>View : </strong> <span id="vPatientAppointment" class="display-6">No</span></h4>
-                                    </div>
-                                    <div class="col-lg-4">
-                                        <h4 class="display-6"><strong>Delete : </strong> <span id="dPatientAppointment" class="display-6">No</span></h4>
+                                    <div class="col-lg-6">
+                                        <h4 class="display-6"><strong>View Lab Test : </strong> <span id="vPatientLabTest" class="display-6">No</span></h4>
                                     </div>
                                 </div>
 
@@ -310,9 +307,8 @@
                         $("#ePatient").html(Yes_or_No(obj[i].editPatient));
                         $("#dPatient").html(Yes_or_No(obj[i].deletePatient));
 
-                        $("#cPatientAppointment").html(Yes_or_No(obj[i].createAppointment));
                         $("#vPatientAppointment").html(Yes_or_No(obj[i].viewAppointment));
-                        $("#dPatientAppointment").html(Yes_or_No(obj[i].deleteAppointment));
+                        $("#vPatientLabTest").html(Yes_or_No(obj[i].viewLabTest));
 
                         $("#vDocTime").html(Yes_or_No(obj[i].viewDocTime));
                         $("#eDocTime").html(Yes_or_No(obj[i].editDocTime));

@@ -186,21 +186,10 @@
                                     </div>
                                     <hr>
                                     <!-- Row 2 -->
-                                    <h3 class="display-5 text-center">Patient Appointments Privileges</h3>
+                                    <h3 class="display-5 text-center">Patient Appointments / Lab Tests Privileges</h3>
                                     <div class="row text-center">
-                                        <div class="col-lg-4">
-                                            <h4>Create</h4>
-                                            <div class="form-check form-check-inline">
-                                                <input class="form-check-input" type="radio" name="cAppointment" id="cAppointment1" value="1" {{($dataFetched->createAppointment==1)? "checked" : ""}}>
-                                                <label class="form-check-label" for="inlineRadio1">Yes</label>
-                                            </div>
-                                            <div class="form-check form-check-inline">
-                                                <input class="form-check-input" type="radio" name="cAppointment" id="cAppointment2" value="0" {{($dataFetched->createAppointment==0)? "checked" : ""}}>
-                                                <label class="form-check-label" for="inlineRadio2">No</label>
-                                            </div>
-                                        </div>
-                                        <div class="col-lg-4">
-                                            <h4>View</h4>
+                                        <div class="col-lg-6">
+                                            <h4>View Appointment</h4>
                                             <div class="form-check form-check-inline">
                                                 <input class="form-check-input" type="radio" name="vAppointment" id="vAppointment1" value="1" {{($dataFetched->viewAppointment==1)? "checked" : ""}}>
                                                 <label class="form-check-label" for="inlineRadio1">Yes</label>
@@ -210,14 +199,14 @@
                                                 <label class="form-check-label" for="inlineRadio2">No</label>
                                             </div>
                                         </div>
-                                        <div class="col-lg-4">
-                                            <h4>Delete</h4>
+                                        <div class="col-lg-6">
+                                            <h4>View Lab Test</h4>
                                             <div class="form-check form-check-inline">
-                                                <input class="form-check-input" type="radio" name="dAppointment" id="dAppointment1" value="1" {{($dataFetched->deleteAppointment==1)? "checked" : ""}}>
+                                                <input class="form-check-input" type="radio" name="vLabTest" id="vLabTest1" value="1" {{($dataFetched->viewLabTest==1)? "checked" : ""}}>
                                                 <label class="form-check-label" for="inlineRadio1">Yes</label>
                                             </div>
                                             <div class="form-check form-check-inline">
-                                                <input class="form-check-input" type="radio" name="dAppointment" id="dAppointment2" value="0" {{($dataFetched->deleteAppointment==0)? "checked" : ""}}>
+                                                <input class="form-check-input" type="radio" name="vLabTest" id="vLabTest2" value="0" {{($dataFetched->viewLabTest==0)? "checked" : ""}}>
                                                 <label class="form-check-label" for="inlineRadio2">No</label>
                                             </div>
                                         </div>

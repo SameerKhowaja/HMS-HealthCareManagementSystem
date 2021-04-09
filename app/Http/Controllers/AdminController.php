@@ -1268,9 +1268,8 @@ class AdminController extends Controller
         $otherData->deleteRoomBed = request('dRoomBed');
         $otherData->viewDocTime = request('vDocTime');
         $otherData->editDocTime = request('eDocTime');
-        $otherData->createAppointment = request('cAppointment');
         $otherData->viewAppointment = request('vAppointment');
-        $otherData->deleteAppointment = request('dAppointment');
+        $otherData->viewLabTest = request('vLabTest');
         $otherData->save();
 
         return redirect("/admin/account-type/edit-privilege/".$hospital_data->primary_id)->with('msg', 'Privileges Updated Successfully...!');

@@ -43,8 +43,8 @@ INSERT INTO `other_roles` (`role_id`, `roleName`) VALUES
 (1, 'Receptionist Assistant'),
 (3, 'Lab Teacher');
 
-INSERT INTO `others` (`other_id`, `primary_id`, `role_id`, `createPatient`, `viewPatient`, `editPatient`, `deletePatient`, `createRoomBed`, `viewRoomBed`, `editRoomBed`, `deleteRoomBed`, `viewDocTime`, `editDocTime`, `createAppointment`, `viewAppointment`, `deleteAppointment`) VALUES
-(1, 10, 3, 1, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0);
+INSERT INTO `others` (`other_id`, `primary_id`, `role_id`, `createPatient`, `viewPatient`, `editPatient`, `deletePatient`, `viewDocTime`, `editDocTime`, `viewAppointment`, `viewLabTest`, `createRoomBed`, `viewRoomBed`, `editRoomBed`, `deleteRoomBed`) VALUES
+(1, 10, 3, 1, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0);
 
 
 INSERT INTO `rooms` (`room_id`, `room_number`) VALUES
