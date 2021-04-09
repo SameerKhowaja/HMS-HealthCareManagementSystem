@@ -20,6 +20,7 @@
     <script src="{{asset('external-libraries/js/codejquery-3.5.1.js')}}"></script>
     <!-- charts.js -->
     <script src="{{asset('external-libraries/js/cloudflareChart.min.js')}}"></script>
+    <script src="{{asset('external-libraries/js/jspdf.min.js')}}"></script>
     <title>Lab Technician</title>
 </head>
 

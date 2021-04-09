@@ -222,6 +222,10 @@ Route::delete('/receptionist/patient-appointment','ReceptionistController@delApp
 Route::get('/receptionist/patient-appointment/request','ReceptionistController@appointmentRequest');   //displays patient appointment
 Route::put('/receptionist/patient-appointment/request','ReceptionistController@acceptAppointment');     //save appointment
 
+
+// receptionist patient-lab test routes
+Route::get('/receptionist/patient-lab-test/select-test/{id}','ReceptionistController@patientTestRequest');  // send lab test request to technician
+Route::post('/receptionist/patient-lab-test/request','ReceptionistController@testRequestSave'); // select test view search
 //======================================================
 //                 Receptionist Module ENDS
 //=======================================================
@@ -233,7 +237,23 @@ Route::put('/receptionist/patient-appointment/request','ReceptionistController@a
 //=======================================================
 
 // navbar routes   -----------------------------------------------------
-Route::get('/labtechnician','LabTechnicianController@index');   //dashboard
+Route::get('/labtechnician','labTechnicianController@index');   //dashboard
+Route::get('/labtechnician/editlabTechnicianProfile/{id}','labTechnicianController@editProfile');   //edit profile view
+Route::post('/labtechnician/editlabTechnicianProfile/{id}','labTechnicianController@editProfileSave');  //edit profile save btn click
+Route::post('/labtechnician/editlabTechnicianProfile/editPassword/{id}','labTechnicianController@editProfilePassword');   //edit Doctor profile password modal save on btn click
+Route::get('/labtechnician/lab-test','labTechnicianController@viewLabTest'); //patient lab tests
+Route::get('/labtechnician/perform-test','labTechnicianController@viewPatients'); //patient lab tests
+
+// lab technician  lab-management routes
+Route::post('/labtechnician/lab-test','labTechnicianController@searchTest');    //search-test
+// lab technician  lab-management sample analysis routes
+Route::get('/labtechnician/lab-test/select-test/{id}','labTechnicianController@selectLabTest'); // select test view
+Route::post('/labtechnician/lab-test/select-test/search','labTechnicianController@searchTest_inSelectView'); // select test view search
+Route::post('/labtechnician/lab-test/perform-test/{id}','labTechnicianController@addTestReport'); // create test report view
+Route::post('/labtechnician/lab-test/saveTestReport','labTechnicianController@saveTestReport'); // save test report view
+Route::get('/labtechnician/lab-test/printTestReport/{id}','labTechnicianController@printTestReport'); // print test report view
+
+
 // ---------------------------------------------------------------------
 
 //======================================================

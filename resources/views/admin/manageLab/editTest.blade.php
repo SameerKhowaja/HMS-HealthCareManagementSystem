@@ -118,6 +118,19 @@
                                     </button>
                                 </div>
                                 @endif
+
+                                @if(session()->has('msg'))
+                        <div class="row">
+                            <div class="col-sm-12">
+                                <div class="alert alert-warning alert-dismissible fade show text-center" role="alert">
+                                    <strong>{{ session()->get('msg') }}</strong>
+                                    <button type="button" class="close" data-dismiss="alert" aria-label="Close">
+                                        <span aria-hidden="true">&times;</span>
+                                    </button>
+                                </div>
+                            </div>
+                        </div>
+                        @endif
                             </div>
 
                             @if($msg??'' != '')
@@ -183,16 +196,28 @@
                             <div id="{{'param_row'.$p->param_id}}" class="row oldData">
 
                                 <input type="hidden"  name="{{'params['.$p->param_id.'][param_id]'}}" value="{{$p->param_id}}" >
-                                <div class="col-sm-5">
+                                <div class="col-sm-3">
                                     <div class="form-group">
                                         <strong>Parameter*</strong>
                                         <input type="text" name="{{'params['.$p->param_id.'][param]'}}" value="{{$p->param}}" class="form-control form-control-lg" placeholder="parameter" required>
                                     </div>
                                 </div>
-                                <div class="col-sm-4">
+                                <div class="col-sm-2">
                                     <div class="form-group">
                                         <strong>Unit*</strong>
                                         <input type="text" name="{{'params['.$p->param_id.'][unit]'}}"  value="{{$p->unit}}" class="form-control form-control-lg" placeholder="unit eg: mg" required>
+                                    </div>
+                                </div>
+                                <div class="col-sm-2">
+                                    <div class="form-group">
+                                        <strong>Lower Bound</strong>
+                                        <input type="number" step="0.00001" name="{{'params['.$p->param_id.'][lower_bound]'}}"  value="{{$p->lower_bound}}" class="form-control form-control-lg" placeholder="0.0">
+                                    </div>
+                                </div>
+                                <div class="col-sm-2">
+                                    <div class="form-group">
+                                        <strong>Upper Bound</strong>
+                                        <input type="number" step="0.00001" name="{{'params['.$p->param_id.'][upper_bound]'}}"  value="{{$p->upper_bound}}" class="form-control form-control-lg" placeholder="0.0">
                                     </div>
                                 </div>
                                 <div class="col-sm-3 m-auto text-center">
@@ -251,7 +276,7 @@
                 }
                 flag = true;
 
-                var parameterDetail = '<div id='+"param_row"+param_id_counter+' class="row"><div class="col-sm-5"><div class="form-group"><strong>Parameter*</strong><input type="text" name='+"params["+param_id_counter+"][param]"+' class="form-control form-control-lg" placeholder="parameter" required></div></div><div class="col-sm-4"><div class="form-group"><strong>Unit*</strong><input type="text" name='+"params["+param_id_counter+"][unit]"+' class="form-control form-control-lg" placeholder="unit eg: mg" required></div></div><div class="col-sm-3 m-auto text-center"><div class="form-group"><button id='+"param_del"+param_id_counter+' type="button" class="btn btn-danger btn-md rounded-circle shadow-lg mt-3" onclick="del_parameter(event)"><span class="h2 font-weight-bolder">x</span></button></div></div></div>';
+                var parameterDetail = '<div id='+"param_row"+param_id_counter+' class="row"><div class="col-sm-3"><div class="form-group"><strong>Parameter*</strong><input type="text" name='+"params["+param_id_counter+"][param]"+' class="form-control form-control-lg" placeholder="parameter" required></div></div><div class="col-sm-2"><div class="form-group"><strong>Unit*</strong><input type="text" name='+"params["+param_id_counter+"][unit]"+' class="form-control form-control-lg" placeholder="unit eg: mg" required></div></div><div class="col-sm-2"><div class="form-group"><strong>Min Value</strong><input type="number" step="0.00001" name='+"params["+param_id_counter+"][lower_bound]"+' class="form-control form-control-lg" placeholder="0.0"></div></div><div class="col-sm-2"><div class="form-group"><strong>Max Value</strong><input type="number" step="0.00001" name='+"params["+param_id_counter+"][upper_bound]"+' class="form-control form-control-lg" placeholder="0.0"></div></div><div class="col-sm-3 m-auto text-center"><div class="form-group"><button id='+"param_del"+param_id_counter+' type="button" class="btn btn-danger btn-md rounded-circle shadow-lg mt-3" onclick="del_parameter(event)"><span class="h2 font-weight-bolder">x</span></button></div></div></div>';
                     $("#testParameters").append(parameterDetail);
 
             });

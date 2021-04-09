@@ -5,6 +5,8 @@ namespace App;
 use Illuminate\Database\Eloquent\Model;
 use App\Treatment;
 use App\Hospital_data;
+use App\Lab_test_report;
+use App\LabTestRequest;
 
 class Patient extends Model
 {
@@ -28,6 +30,23 @@ class Patient extends Model
     {
         return $this->belongsTo(Hospital_data::class,'primary_id');
     }
+
+    public function lab_test_report()
+    {
+        return $this->hasMany(Lab_test_report::class,"report_id");
+    }
+
+
+    public function Patient()
+    {
+        return $this->hasMany(Lab_report_params::class,"report_id");
+    }
+
+    public function lab_test_req()
+    {
+        return $this->hasMany(LabTestRequest::class,"patient_id");
+    }
+
 
 
 

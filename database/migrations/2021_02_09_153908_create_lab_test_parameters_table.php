@@ -18,11 +18,14 @@ class CreateLabTestParametersTable extends Migration
             $table->bigIncrements('param_id', 20);
             $table->string("param", 200);
             $table->string("unit", 200)->nullable();
+            // lower and upper bound for normal reading range
+            $table->double('lower_bound', 20, 4)->nullable();
+            $table->double('upper_bound', 20, 4)->nullable();
             $table->bigInteger('test_id')->length(20)->unsigned();
             $table->foreign('test_id')->references('test_id')->on('lab_test_names')->onDelete('cascade');
         });
     }
-
+ 
     /**
      * Reverse the migrations.
      *

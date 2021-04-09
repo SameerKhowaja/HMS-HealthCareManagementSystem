@@ -1001,6 +1001,21 @@ class AdminController extends Controller
         ]);
 
         $testExist = Lab_test_name::where('test_name',$req->test_name)->get();
+        
+        if($req->params){
+        foreach($req->params as $parameter){
+
+            if($parameter['lower_bound']== null && $parameter['upper_bound'] != null){
+                return redirect('/admin/lab-test/addTest')->with('msg','lower and upper bound both should be added');
+            }elseif($parameter['lower_bound']!= null && $parameter['upper_bound'] == null){
+                return redirect('/admin/lab-test/addTest')->with('msg','lower and upper bound both should be added');
+            
+            }elseif( $parameter['lower_bound'] > $parameter['upper_bound'] ){
+                return redirect('/admin/lab-test/addTest')->with('msg','lower should be less than or equal to upper bound');
+            }
+
+        }
+        }
 
         if($testExist->count() == 0){
             $newTest = new Lab_test_name;
@@ -1012,12 +1027,18 @@ class AdminController extends Controller
 
             $addedTest = Lab_test_name::where('test_name',$req->test_name)->get();
 
+            if($req->params){
+
             foreach($req->params as $parameter){
                 $newParam = new Lab_test_parameter;
                 $newParam->param = $parameter['param'];
                 $newParam->unit = $parameter['unit'];
                 $newParam->test_id = $addedTest[0]->test_id;
+                $newParam->lower_bound = $parameter['lower_bound'];
+                $newParam->upper_bound = $parameter['upper_bound'];
                 $newParam->save();
+            }
+
             }
             $msg ="Success !";
 
@@ -1062,6 +1083,18 @@ class AdminController extends Controller
             'methodology' => 'required|max:200',
         ]);
 
+        foreach($req->params as $parameter){
+
+            if($parameter['lower_bound']== null && $parameter['upper_bound'] != null){
+                return redirect('/admin/lab-test/edit-test/'.$test->test_id)->with('msg','lower and upper bound both should be added');
+            }elseif($parameter['lower_bound']!= null && $parameter['upper_bound'] == null){
+                return redirect('/admin/lab-test/edit-test/'.$test->test_id)->with('msg','lower and upper bound both should be added');
+            }elseif( $parameter['lower_bound'] > $parameter['upper_bound'] ){
+                return redirect('/admin/lab-test/edit-test/'.$test->test_id)->with('msg','lower should be less than or equal to upper bound');
+            }
+
+        }
+
         $test->test_name = $req->test_name;
         $test->test_type = $req->test_type;
         $test->test_sample = $req->test_sample;
@@ -1079,6 +1112,8 @@ class AdminController extends Controller
                 $changedParam = Lab_test_parameter::findOrFail($parameter['param_id']);
                 $changedParam->param = $parameter['param'];
                 $changedParam->unit = $parameter['unit'];
+                $changedParam->lower_bound = $parameter['lower_bound'];
+                $changedParam->upper_bound = $parameter['upper_bound'];
                 $changedParam->save();
 
             }else{
