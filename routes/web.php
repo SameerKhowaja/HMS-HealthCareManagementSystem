@@ -273,9 +273,11 @@ Route::post('/other/editOtherProfile/editPassword/{id}','OtherController@editPro
 // Other Navbar Routes
 Route::get('/other/manage-patient','OtherController@managePatient');
 Route::get('/other/doctor-timing','OtherController@doctorTiming');
+Route::get('/other/room-bed-management','OtherController@roomBedManagement');
 // Have not work below
 Route::get('/other/patient-appointment','OtherController@patientAppointment');
-Route::get('/other/room-bed-management','OtherController@roomBedManagement');
+Route::get('/other/patient-labTest','OtherController@patientLabTest');
+
 // ---------------------
 
 // managePatient Routes
@@ -289,7 +291,14 @@ Route::delete('/other/manage-patient/delete-record/{id}','OtherController@delete
 Route::get('/other/doctor-timing/edit-timing/{id}','OtherController@doctorTimingEdit'); //edit doctor timing view
 Route::post('/other/doctor-timing/edit-timing/{id}','OtherController@doctorTimingEditSave'); //edit doctor timing save on btn click
 
-
+// roomBedManagement Routes
+Route::delete('/other/room-bed-management/bed-delete/{id}','OtherController@deleteBed'); //delete bed on admin modal click
+Route::post('/other/room-bed-management/add-new-room','OtherController@addNewRoom');   //add new room on modal btn click
+Route::post('/other/room-bed-management/add-new-bed','OtherController@addNewBed');   //add new bed on modal btn click
+Route::delete('/other/room-bed-management/room-delete/{id}','OtherController@deleteRoom'); //delete room on admin modal click
+Route::post('/other/room-bed-management','OtherController@searchAvailable');    //search Room and Bed According to Availability on click
+Route::post('/other/room-bed-management/room-edit/{id}','OtherController@editRoomNumber');    //edit room number on admin modal click
+Route::post('/other/room-bed-management/bed-edit/{id}','OtherController@editBedNumber');    //edit bed number on admin modal click
 
 //======================================================
 //                 Other Module ENDS
