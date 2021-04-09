@@ -346,4 +346,117 @@ class OtherController extends Controller
 
     }
 
+    // Doctor Timings View
+    public function doctorTiming(){
+        // joining 3 tables
+        $dataFetched = DB::table('doctors')
+            ->join('hospital_datas', 'hospital_datas.primary_id', '=', 'doctors.primary_id')
+            ->join('doctor_availability', 'doctor_availability.doctor_id', '=', 'doctors.doctor_id')
+            ->select('doctors.*', 'hospital_datas.*', 'doctor_availability.*')
+            ->get();
+
+        $primary_ID = session("userID");
+        $userData = Hospital_data::join('others', 'others.primary_id', '=', 'hospital_datas.primary_id')->findOrFail($primary_ID);
+
+        return view("other.doctorTiming", ['userData'=>$userData, 'dataFetched'=>$dataFetched]);
+    }
+
+    //edit doctor timings view
+    function doctorTimingEdit($id){
+        // joining 3 tables where clause
+        $data = DB::table('doctors')
+            ->join('hospital_datas', 'hospital_datas.primary_id', '=', 'doctors.primary_id')
+            ->join('doctor_availability', 'doctor_availability.doctor_id', '=', 'doctors.doctor_id')
+            ->select('doctors.*', 'hospital_datas.*', 'doctor_availability.*')
+            ->where('doctor_available_id', $id)->get();
+
+        $primary_ID = session("userID");
+        $userData = Hospital_data::join('others', 'others.primary_id', '=', 'hospital_datas.primary_id')->findOrFail($primary_ID);
+
+        $dataFetched = $data[0]; // first index fetched
+        return view("other.doctorTiming.editTiming", ['userData'=>$userData, 'dataFetched'=>$dataFetched]);
+    }
+
+    //edit doctor timings on button click
+    function doctorTimingEditSave($id){
+        $doctorTiming = Doctor_availability::findOrFail($id);   // find in availability table
+
+        // days mon-sun
+        $monday_start = request("monday_start");
+        $monday_end = request("monday_end");
+        $tuesday_start = request("tuesday_start");
+        $tuesday_end = request("tuesday_end");
+        $wednesday_start = request("wednesday_start");
+        $wednesday_end = request("wednesday_end");
+        $thursday_start = request("thursday_start");
+        $thursday_end = request("thursday_end");
+        $friday_start = request("friday_start");
+        $friday_end = request("friday_end");
+        $saturday_start = request("saturday_start");
+        $saturday_end = request("saturday_end");
+        $sunday_start = request("sunday_start");
+        $sunday_end = request("sunday_end");
+
+        $doctorTiming->monday_start = $monday_start;
+        $doctorTiming->monday_end = $monday_end;
+        $doctorTiming->tuesday_start = $tuesday_start;
+        $doctorTiming->tuesday_end = $tuesday_end;
+        $doctorTiming->wednesday_start = $wednesday_start;
+        $doctorTiming->wednesday_end = $wednesday_end;
+        $doctorTiming->thursday_start = $thursday_start;
+        $doctorTiming->thursday_end = $thursday_end;
+        $doctorTiming->friday_start = $friday_start;
+        $doctorTiming->friday_end = $friday_end;
+        $doctorTiming->saturday_start = $saturday_start;
+        $doctorTiming->saturday_end = $saturday_end;
+        $doctorTiming->sunday_start = $sunday_start;
+        $doctorTiming->sunday_end = $sunday_end;
+
+        // if one of them null then both should be null
+        if(($monday_start=='' && $monday_end!='') || ($monday_start!='' && $monday_end=='')){
+            $doctorTiming->monday_start = null;
+            $doctorTiming->monday_end = null;
+        }
+        if(($tuesday_start=='' && $tuesday_end!='') || ($tuesday_start!='' && $tuesday_end=='')){
+            $doctorTiming->tuesday_start = null;
+            $doctorTiming->tuesday_end = null;
+        }
+        if(($wednesday_start=='' && $wednesday_end!='') || ($wednesday_start!='' && $wednesday_end=='')){
+            $doctorTiming->wednesday_start = null;
+            $doctorTiming->wednesday_end = null;
+        }
+        if(($thursday_start=='' && $thursday_end!='') || ($thursday_start!='' && $thursday_end=='')){
+            $doctorTiming->thursday_start = null;
+            $doctorTiming->thursday_end = null;
+        }
+        if(($friday_start=='' && $friday_end!='') || ($friday_start!='' && $friday_end=='')){
+            $doctorTiming->friday_start = null;
+            $doctorTiming->friday_end = null;
+        }
+        if(($saturday_start=='' && $saturday_end!='') || ($saturday_start!='' && $saturday_end=='')){
+            $doctorTiming->saturday_start = null;
+            $doctorTiming->saturday_end = null;
+        }
+        if(($sunday_start=='' && $sunday_end!='') || ($sunday_start!='' && $sunday_end=='')){
+            $doctorTiming->sunday_start = null;
+            $doctorTiming->sunday_end = null;
+        }
+
+        // update data
+        $doctorTiming->save();
+
+        // joining 3 tables where clause
+        $data = DB::table('doctors')
+            ->join('hospital_datas', 'hospital_datas.primary_id', '=', 'doctors.primary_id')
+            ->join('doctor_availability', 'doctor_availability.doctor_id', '=', 'doctors.doctor_id')
+            ->select('doctors.*', 'hospital_datas.*', 'doctor_availability.*')
+            ->where('doctor_available_id', $id)->get();
+
+        $primary_ID = session("userID");
+        $userData = Hospital_data::join('others', 'others.primary_id', '=', 'hospital_datas.primary_id')->findOrFail($primary_ID);
+
+        $dataFetched = $data[0]; // first index fetched
+        return view("other.doctorTiming.editTiming", ['userData'=>$userData, 'dataFetched'=>$dataFetched, 'msg'=>'Success!', 'long_msg'=>' Timings Updated...!']);
+    }
+
 }

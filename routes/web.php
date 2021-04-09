@@ -272,9 +272,9 @@ Route::post('/other/editOtherProfile/editPassword/{id}','OtherController@editPro
 
 // Other Navbar Routes
 Route::get('/other/manage-patient','OtherController@managePatient');
+Route::get('/other/doctor-timing','OtherController@doctorTiming');
 // Have not work below
 Route::get('/other/patient-appointment','OtherController@patientAppointment');
-Route::get('/other/doctor-timing','OtherController@doctorTiming');
 Route::get('/other/room-bed-management','OtherController@roomBedManagement');
 // ---------------------
 
@@ -284,6 +284,11 @@ Route::post('/other/manage-patient/edit-record/{id}','OtherController@editPatien
 Route::get('/other/manage-patient/add-record','OtherController@addPatient');
 Route::post('/other/manage-patient/add-record','OtherController@addPatientSave');
 Route::delete('/other/manage-patient/delete-record/{id}','OtherController@deletePatient');
+
+// doctorTiming Routes
+Route::get('/other/doctor-timing/edit-timing/{id}','OtherController@doctorTimingEdit'); //edit doctor timing view
+Route::post('/other/doctor-timing/edit-timing/{id}','OtherController@doctorTimingEditSave'); //edit doctor timing save on btn click
+
 
 
 //======================================================
