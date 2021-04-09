@@ -1233,7 +1233,11 @@ class AdminController extends Controller
     // View accountType Page
     function accountType(){
         // Complete Data of Hospital Table join with Types Table
-        $hospital_data = Hospital_data::join('types', 'types.type_id', '=', 'hospital_datas.type_id')->join('others', 'others.primary_id', '=', 'hospital_datas.primary_id')->where('types.type_name', 'Other')->get(['hospital_datas.primary_id', 'hospital_datas.image', 'hospital_datas.fname', 'hospital_datas.lname', 'hospital_datas.cnic', 'hospital_datas.email_id', 'hospital_datas.phone_number', 'others.*']);
+        $hospital_data = Hospital_data::join('types', 'types.type_id', '=', 'hospital_datas.type_id')
+                        ->join('others', 'others.primary_id', '=', 'hospital_datas.primary_id')
+                        ->join('other_roles', 'other_roles.role_id', '=', 'others.role_id')
+                        ->where('types.type_name', 'Other')
+                        ->get(['hospital_datas.primary_id', 'hospital_datas.image', 'hospital_datas.fname', 'hospital_datas.lname', 'hospital_datas.cnic', 'hospital_datas.email_id', 'hospital_datas.phone_number', 'others.*', 'other_roles.*']);
         $rowsReturn = count($hospital_data);
         if($rowsReturn == 0){
             return view('admin.accountType', ['dataFetched'=>$hospital_data,'msg'=>'No Records Found']);
