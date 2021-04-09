@@ -11,6 +11,50 @@
                     </svg> Profile
                 </li>
             </a>
+
+            @if($userData->createPatient == 1 ||  $userData->viewPatient == 1 || $userData->editPatient == 1 || $userData->deletePatient == 1)
+            <a href="/other/manage-patient">
+                <li class="text-normal">
+                    <svg xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" aria-hidden="true" focusable="false" fill="#0052E9" width="1em" height="1em" style="-ms-transform: rotate(360deg); -webkit-transform: rotate(360deg); transform: rotate(360deg);" preserveAspectRatio="xMidYMid meet" viewBox="0 0 24 24">
+                        <circle cx="18" cy="4" r="2"/>
+                        <path d="M17.836 12.014l-4.345.725l3.29-4.113a1 1 0 0 0-.227-1.457l-6-4a.999.999 0 0 0-1.262.125l-4 4l1.414 1.414l3.42-3.42l2.584 1.723l-2.681 3.352a5.913 5.913 0 0 0-5.5.752l1.451 1.451A3.972 3.972 0 0 1 8 12c2.206 0 4 1.794 4 4c0 .739-.216 1.425-.566 2.02l1.451 1.451A5.961 5.961 0 0 0 14 16c0-.445-.053-.878-.145-1.295L17 14.181V20h2v-7a.998.998 0 0 0-1.164-.986zM8 20c-2.206 0-4-1.794-4-4c0-.739.216-1.425.566-2.02l-1.451-1.451A5.961 5.961 0 0 0 2 16c0 3.309 2.691 6 6 6c1.294 0 2.49-.416 3.471-1.115l-1.451-1.451A3.972 3.972 0 0 1 8 20z"/>
+                    </svg> Manage Patients
+                </li>
+            </a>
+            @endif
+
+            @if($userData->createAppointment == 1 ||  $userData->viewAppointment == 1 || $userData->deleteAppointment == 1)
+            <a href="/other/patient-appointment">
+                <li class="text-normal">
+                    <svg xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" aria-hidden="true" focusable="false" width="1em" height="1em" fill="#0052E9" style="-ms-transform: rotate(360deg); -webkit-transform: rotate(360deg); transform: rotate(360deg);" preserveAspectRatio="xMidYMid meet" viewBox="0 0 16 16">
+                        <path d="M15 14s1 0 1-1-1-4-5-4-5 3-5 4 1 1 1 1h8zm-7.978-1A.261.261 0 0 1 7 12.996c.001-.264.167-1.03.76-1.72C8.312 10.629 9.282 10 11 10c1.717 0 2.687.63 3.24 1.276.593.69.758 1.457.76 1.72l-.008.002a.274.274 0 0 1-.014.002H7.022zM11 7a2 2 0 1 0 0-4 2 2 0 0 0 0 4zm3-2a3 3 0 1 1-6 0 3 3 0 0 1 6 0zM6.936 9.28a5.88 5.88 0 0 0-1.23-.247A7.35 7.35 0 0 0 5 9c-4 0-5 3-5 4 0 .667.333 1 1 1h4.216A2.238 2.238 0 0 1 5 13c0-1.01.377-2.042 1.09-2.904.243-.294.526-.569.846-.816zM4.92 10A5.493 5.493 0 0 0 4 13H1c0-.26.164-1.03.76-1.724.545-.636 1.492-1.256 3.16-1.275zM1.5 5.5a3 3 0 1 1 6 0 3 3 0 0 1-6 0zm3-2a2 2 0 1 0 0 4 2 2 0 0 0 0-4z"/>
+                    </svg> Patient Appointments
+                </li>
+            </a>
+            @endif
+
+            @if($userData->viewDocTime == 1 ||  $userData->editDocTime == 1)
+            <a href="/other/doctor-timing">
+                <li class="text-normal">
+                    <svg xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" aria-hidden="true" focusable="false" width="1em" height="1em" fill="#0052E9" style="-ms-transform: rotate(360deg); -webkit-transform: rotate(360deg); transform: rotate(360deg);" preserveAspectRatio="xMidYMid meet" viewBox="0 0 16 16">
+                        <path d="M8.5 5.5a.5.5 0 0 0-1 0v3.362l-1.429 2.38a.5.5 0 1 0 .858.515l1.5-2.5A.5.5 0 0 0 8.5 9V5.5z"/>
+                        <path d="M6.5 0a.5.5 0 0 0 0 1H7v1.07a7.001 7.001 0 0 0-3.273 12.474l-.602.602a.5.5 0 0 0 .707.708l.746-.746A6.97 6.97 0 0 0 8 16a6.97 6.97 0 0 0 3.422-.892l.746.746a.5.5 0 0 0 .707-.708l-.601-.602A7.001 7.001 0 0 0 9 2.07V1h.5a.5.5 0 0 0 0-1h-3zm1.038 3.018a6.093 6.093 0 0 1 .924 0 6 6 0 1 1-.924 0zM0 3.5c0 .753.333 1.429.86 1.887A8.035 8.035 0 0 1 4.387 1.86 2.5 2.5 0 0 0 0 3.5zM13.5 1c-.753 0-1.429.333-1.887.86a8.035 8.035 0 0 1 3.527 3.527A2.5 2.5 0 0 0 13.5 1z"/>
+                    </svg> Doctor Timings
+                </li>
+            </a>
+            @endif
+
+            @if($userData->createRoomBed == 1 ||  $userData->viewRoomBed == 1 || $userData->editRoomBed == 1 || $userData->deleteRoomBed == 1)
+            <a href="/other/room-bed-management">
+                <li class="text-normal">
+                    <svg xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" aria-hidden="true" focusable="false" width="1em" height="1em" fill="#0052E9" style="-ms-transform: rotate(360deg); -webkit-transform: rotate(360deg); transform: rotate(360deg);" preserveAspectRatio="xMidYMid meet" viewBox="0 0 16 16">
+                        <path d="M3 2a1 1 0 0 1 1-1h8a1 1 0 0 1 1 1v13h1.5a.5.5 0 0 1 0 1h-13a.5.5 0 0 1 0-1H3V2zm1 13h8V2H4v13z"/>
+                        <path d="M9 9a1 1 0 1 0 2 0 1 1 0 0 0-2 0z"/>
+                    </svg> Room-Bed Management
+                </li>
+            </a>
+            @endif
+
         </ul>
 @endsection
 
@@ -41,6 +85,7 @@
                                     </div>
                                     <div class="col-md-12 text-center">
                                         <h1 class="display-5">{{$userData->fname.' '.$userData->lname}}</h1>
+                                        <a id='{{$userData->primary_id}}' style='font-size:13px;' class="btn btn-info btn-lg viewUser" role="button" aria-pressed="true" data-toggle="modal" data-target="#viewPrivilegesUser_modal"><i class="fa fa-database fa-lg" aria-hidden="true"></i> View Privileges</a>
                                     </div>
                                 </div>
                             </div>
@@ -95,5 +140,95 @@
                 </div>
             </section>
         </div>
+
+
+        <!-- View Modal -->
+        <div class="modal fade" id="viewPrivilegesUser_modal">
+            <div class="modal-dialog modal-dialog-centered">
+                <div class="modal-content">
+                    <div class="modal-body">
+                        <!-- Photo and Name -->
+                        <div class="row">
+                            <div class="col-lg-12">
+                                <h1 class="media-heading display-5 text-center">My Privileges</h1>
+                                <h4 class="media-heading display-5 text-center">1-Yes and 0-No</h4>
+                            </div>
+                        </div>
+                        <hr>
+                        <!-- Main Data -->
+                        <div class="row text-center">
+                            <table class="table table-hover">
+                                <div class="row" style="border:2px dotted lightblue;">
+                                    <div class="col-lg-12">
+                                        <h3 class="text-center">Patient Privileges</h3>
+                                    </div>
+                                    <div class="col-lg-3">
+                                        <h4 class="display-6"><strong>Create : </strong> <span id="cPatient" class="display-6">{{$userData->createPatient}}</span></h4>
+                                    </div>
+                                    <div class="col-lg-3">
+                                        <h4 class="display-6"><strong>View : </strong> <span id="vPatient" class="display-6">{{$userData->viewPatient}}</span></h4>
+                                    </div>
+                                    <div class="col-lg-3">
+                                        <h4 class="display-6"><strong>Edit : </strong> <span id="ePatient" class="display-6">{{$userData->editPatient}}</span></h4>
+                                    </div>
+                                    <div class="col-lg-3">
+                                        <h4 class="display-6"><strong>Delete : </strong> <span id="dPatient" class="display-6">{{$userData->deletePatient}}</span></h4>
+                                    </div>
+                                </div>
+
+                                <div class="row" style="border:2px dotted lightblue;">
+                                    <div class="col-lg-12">
+                                        <h3 class="text-center">Patient Appointments Privileges</h3>
+                                    </div>
+                                    <div class="col-lg-4">
+                                        <h4 class="display-6"><strong>Create : </strong> <span id="cPatientAppointment" class="display-6">{{$userData->createAppointment}}</span></h4>
+                                    </div>
+                                    <div class="col-lg-4">
+                                        <h4 class="display-6"><strong>View : </strong> <span id="vPatientAppointment" class="display-6">{{$userData->viewAppointment}}</span></h4>
+                                    </div>
+                                    <div class="col-lg-4">
+                                        <h4 class="display-6"><strong>Delete : </strong> <span id="dPatientAppointment" class="display-6">{{$userData->deleteAppointment}}</span></h4>
+                                    </div>
+                                </div>
+
+                                <div class="row" style="border:2px dotted lightblue;">
+                                    <div class="col-lg-12">
+                                        <h3 class="text-center">Doctor Timings Privileges</h3>
+                                    </div>
+                                    <div class="col-lg-6">
+                                        <h4 class="display-6"><strong>View : </strong> <span id="vDocTime" class="display-6">{{$userData->viewDocTime}}</span></h4>
+                                    </div>
+                                    <div class="col-lg-6">
+                                        <h4 class="display-6"><strong>Edit : </strong> <span id="eDocTime" class="display-6">{{$userData->editDocTime}}</span></h4>
+                                    </div>
+                                </div>
+
+                                <div class="row" style="border:2px dotted lightblue;">
+                                    <div class="col-lg-12">
+                                        <h3 class="text-center">Room/Bed Privileges</h3>
+                                    </div>
+                                    <div class="col-lg-3">
+                                        <h4 class="display-6"><strong>Create : </strong> <span id="cRoomBed" class="display-6">{{$userData->createRoomBed}}</span></h4>
+                                    </div>
+                                    <div class="col-lg-3">
+                                        <h4 class="display-6"><strong>View : </strong> <span id="vRoomBed" class="display-6">{{$userData->viewRoomBed}}</span></h4>
+                                    </div>
+                                    <div class="col-lg-3">
+                                        <h4 class="display-6"><strong>Edit : </strong> <span id="eRoomBed" class="display-6">{{$userData->editRoomBed}}</span></h4>
+                                    </div>
+                                    <div class="col-lg-3">
+                                        <h4 class="display-6"><strong>Delete : </strong> <span id="dRoomBed" class="display-6">{{$userData->deleteRoomBed}}</span></h4>
+                                    </div>
+                                </div>
+                            </table>
+                            <div class="col-lg-12">
+                                <button type="button" class="btn btn-primary btn-lg btn-block" data-dismiss="modal" style="font-size:15px;">Close</button>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <!-- View Modal Ends-->
 
 @endsection

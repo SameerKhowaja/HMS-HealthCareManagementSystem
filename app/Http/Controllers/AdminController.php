@@ -424,7 +424,7 @@ class AdminController extends Controller
 
         $originalTypeName = $dataType_value;    // used in if condition without 's'
         $dataType_value = $dataType_value.'s';  // Table name concat with 's' in end
-        
+
         if($originalTypeName == 'doctor' || $originalTypeName == 'Doctor'){
             DB::table($dataType_value)->insert([
                 'primary_id' => $primaryid,
@@ -1001,7 +1001,7 @@ class AdminController extends Controller
         ]);
 
         $testExist = Lab_test_name::where('test_name',$req->test_name)->get();
-        
+
         if($req->params){
         foreach($req->params as $parameter){
 
@@ -1009,7 +1009,7 @@ class AdminController extends Controller
                 return redirect('/admin/lab-test/addTest')->with('msg','lower and upper bound both should be added');
             }elseif($parameter['lower_bound']!= null && $parameter['upper_bound'] == null){
                 return redirect('/admin/lab-test/addTest')->with('msg','lower and upper bound both should be added');
-            
+
             }elseif( $parameter['lower_bound'] > $parameter['upper_bound'] ){
                 return redirect('/admin/lab-test/addTest')->with('msg','lower should be less than or equal to upper bound');
             }
@@ -1233,7 +1233,7 @@ class AdminController extends Controller
     // View accountType Page
     function accountType(){
         // Complete Data of Hospital Table join with Types Table
-        $hospital_data = Hospital_data::join('types', 'types.type_id', '=', 'hospital_datas.type_id')->join('others', 'others.primary_id', '=', 'hospital_datas.primary_id')->where('types.type_name', 'Other')->get(['hospital_datas.primary_id', 'hospital_datas.image', 'hospital_datas.fname', 'hospital_datas.lname', 'hospital_datas.email_id', 'hospital_datas.phone_number', 'others.*']);
+        $hospital_data = Hospital_data::join('types', 'types.type_id', '=', 'hospital_datas.type_id')->join('others', 'others.primary_id', '=', 'hospital_datas.primary_id')->where('types.type_name', 'Other')->get(['hospital_datas.primary_id', 'hospital_datas.image', 'hospital_datas.fname', 'hospital_datas.lname', 'hospital_datas.cnic', 'hospital_datas.email_id', 'hospital_datas.phone_number', 'others.*']);
         $rowsReturn = count($hospital_data);
         if($rowsReturn == 0){
             return view('admin.accountType', ['dataFetched'=>$hospital_data,'msg'=>'No Records Found']);

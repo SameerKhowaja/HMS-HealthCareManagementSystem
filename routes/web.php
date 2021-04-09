@@ -270,6 +270,22 @@ Route::get('/other/editOtherProfile/{id}','OtherController@editProfile');   //pr
 Route::post('/other/editOtherProfile/{id}','OtherController@editProfileSave');   //edit profile save btn click
 Route::post('/other/editOtherProfile/editPassword/{id}','OtherController@editProfilePassword');   //edit profile password modal save on btn click
 
+// Other Navbar Routes
+Route::get('/other/manage-patient','OtherController@managePatient');
+// Have not work below
+Route::get('/other/patient-appointment','OtherController@patientAppointment');
+Route::get('/other/doctor-timing','OtherController@doctorTiming');
+Route::get('/other/room-bed-management','OtherController@roomBedManagement');
+// ---------------------
+
+// managePatient Routes
+Route::get('/other/manage-patient/edit-record/{id}','OtherController@editPatient');
+Route::post('/other/manage-patient/edit-record/{id}','OtherController@editPatientSave');
+Route::get('/other/manage-patient/add-record','OtherController@addPatient');
+Route::post('/other/manage-patient/add-record','OtherController@addPatientSave');
+Route::delete('/other/manage-patient/delete-record/{id}','OtherController@deletePatient');
+
+
 //======================================================
 //                 Other Module ENDS
 //=======================================================
