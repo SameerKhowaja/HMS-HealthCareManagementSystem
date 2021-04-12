@@ -10,6 +10,8 @@ use App\Lab_test_parameter;
 use App\Lab_test_report;
 use App\Lab_report_params;
 use App\Lab_technician;
+use App\LabTestRequest;
+use Illuminate\Support\Facades\Route;
 use Illuminate\Http\Request;
 
 class LabTechnicianController extends Controller
@@ -212,26 +214,13 @@ class LabTechnicianController extends Controller
         $testTypes = $testTypes->unique();
         $msg = "";
 
-        $tests = Lab_test_name::all();
-        $params = Lab_test_parameter::all();
+        $labTests = Lab_test_name::with(['lab_test_parameters'])->get();
 
-        $labTests = [];
-        if($tests->count() > 0){
-        foreach($tests as $data){
-            $tmp = [];
-            foreach($params as $p){
-                if($data->test_id == $p->test_id){
-                    array_push($tmp,$p);
-                }
-            }
-            array_push($labTests,["test"=>$data,"params"=>$tmp]);
+        if($labTests->count() == 0){
+            $msg = "No Lab Test Found";
         }
 
-    }else{
-        $msg = "No Lab Test Found";
-    }
-
-        return view('labtechnician.selectLabTest',['labTests'=>$labTests,'testTypes'=>$testTypes,'msg'=>$msg,'userData'=>$userData]);
+        return view('labtechnician.selectLabTest',['labTests'=>$labTests,'testTypes'=>$testTypes,'msg'=>$msg,'userData'=>$userData,'testRequest'=>NULL]);
     }
 
     // searchTest view after in select test view
@@ -273,6 +262,10 @@ class LabTechnicianController extends Controller
 
     function addTestReport(Request $req,$id){
 
+        $req->validate([
+            "test_id" => 'required|max:20'
+        ]);
+
         $patientData = Hospital_data::findOrFail($id);
 
         $labTest = Lab_test_name::where('test_id',$req->test_id)->with('lab_test_parameters')->get();
@@ -285,7 +278,12 @@ class LabTechnicianController extends Controller
         }
         // dd($labTest);
 
-        return view('labtechnician.addTestReport',['labTest'=>$labTest,'patientData'=>$patientData]);
+        if($req->test_req_id){
+            $request = LabTestRequest::find($req->test_req_id);
+            return view('labtechnician.addTestReport',['labTest'=>$labTest,'patientData'=>$patientData,'testRequest'=>$request]);
+        }else{
+            return view('labtechnician.addTestReport',['labTest'=>$labTest,'patientData'=>$patientData,'testRequest'=>NULL]);
+        }
 
     }
 
@@ -337,10 +335,30 @@ class LabTechnicianController extends Controller
             $param_val->save();
         }
 
+        if($req->test_req_id){
+            $test_detail = Lab_test_name::find($req->test_id);
+            $testReq = LabTestRequest::find($req->test_req_id);
+            if( $testReq->test_performed==NULL ){
+                $testReq->test_performed = $test_detail->test_name;
+            }else{
+                $testReq->test_performed = $testReq->test_performed.','.$test_detail->test_name;
+            }
+            $testReq->save();
+
+            if( count( explode(",",$testReq->test_names) ) == count( explode(",",$testReq->test_performed) ) ){
+                LabTestRequest::find($req->test_req_id)->delete();
+                return redirect('/labtechnician/test-request');
+            }else{
+                $selfMadeRequest = new Request();
+                $selfMadeRequest->request->add(["test_name" => $test_detail->test_name,"primary_id" => $req->patient_primary_id,'test_req_id'=> $testReq->test_req_id,"msg"=>"Report Created Successfuly"]);
+                $selfMadeRequest->setMethod("POST");
+                return $this->requestedLabTest($selfMadeRequest);
+            }
+
+        }
 
         return redirect('/labtechnician/lab-test/printTestReport/'.$add_report->report_id);
 
-        // return redirect("/labtechnician/lab-test")->with("msg","Report Added SuccessFully...!");
 
 
     }
@@ -357,6 +375,48 @@ class LabTechnicianController extends Controller
         // dd($report);
 
         return view('labtechnician.printTestReport',['report'=>$report]);
+    }
+
+
+    function viewTestRequest(){
+
+        $testRequest = LabTestRequest::with(['patient','patient.hospital_data'])
+        ->orderBy('created_at','desc')
+        ->get();
+        return view('labtechnician.labTestRequest',['testRequest'=>$testRequest]);
+
+    }
+
+
+    function requestedLabTest(Request $req){
+        $req->validate([
+            "test_name" => 'required|max:1000',
+            "primary_id" => 'required|max:20',
+            'test_req_id'=> 'required|max:20'
+        ]);
+
+        $requestedTest;
+
+        $request = LabTestRequest::find($req->test_req_id);
+
+
+        $patient_data = Hospital_data::findOrFail($req->primary_id);
+        // if no test is perform than all the requested tests will be retrieved
+        if($request->test_performed == NULL){
+            $requestedTest = Lab_test_name::whereIn('test_name',explode(',',$request->test_names))
+            ->with(['lab_test_parameters'])
+            ->get();
+
+        }elseif( $request->test_performed != NuLL){
+            // if any test is performed already then it is not retrieved remaining test will be shown
+            $requestedTest = Lab_test_name::whereIn('test_name',explode(',',$request->test_names))
+            ->whereNotIn('test_name',explode(',',$request->test_performed))
+            ->with(['lab_test_parameters'])
+            ->get();
+        }
+        
+        return view('labtechnician.selectLabTest',['labTests'=>$requestedTest ,'testTypes'=>NULL,'userData'=>$patient_data,'testRequest'=>$request]);
+
     }
 
 

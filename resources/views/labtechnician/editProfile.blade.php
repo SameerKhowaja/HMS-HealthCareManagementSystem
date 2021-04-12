@@ -24,7 +24,8 @@
                         <div class="collapse" id="collapseExample">
                             <div class="dropdown-divider"></div>
                             <a class="dropdown-item text-normal" href="/labtechnician/lab-test" >Lab Tests</a>
-                            <a class="dropdown-item text-normal" href="/labtechnician/perform-test">Sample Analysis</a>
+                            <a class="dropdown-item text-normal" href="/labtechnician/perform-test">Lab Analysis</a>
+                            <a class="dropdown-item text-normal" href="/labtechnician/test-request">Test Requests</a>
                         </div>
                     </div>
                 </li>

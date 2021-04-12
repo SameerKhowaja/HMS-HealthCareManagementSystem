@@ -24,7 +24,8 @@
                         <div class="collapse" id="collapseExample">
                             <div class="dropdown-divider"></div>
                             <a class="dropdown-item text-normal" href="/labtechnician/lab-test" >Lab Tests</a>
-                            <a class="dropdown-item text-normal" href="/labtechnician/perform-test">Sample Analysis</a>
+                            <a class="dropdown-item text-normal" href="/labtechnician/perform-test">Lab Analysis</a>
+                            <a class="dropdown-item text-normal" href="/labtechnician/test-request">Test Requests</a>
                         </div>
                     </div>
                 </li>
@@ -144,6 +145,10 @@
                         <input type="hidden" name="patient_primary_id" value="{{$patientData->primary_id}}" >
 
                         <input type="hidden" name="labTechnician_primary_id" value="{{session('userID')}}" >
+
+                        @if($testRequest)
+                        <input type="hidden" name='test_req_id' value="{{$testRequest->test_req_id}}">
+                        @endif
 
                         <!-- Head Row -->
                         @if(count($labTest[0]->lab_test_parameters))

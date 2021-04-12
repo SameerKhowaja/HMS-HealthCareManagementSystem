@@ -243,16 +243,21 @@ Route::post('/labtechnician/editlabTechnicianProfile/{id}','labTechnicianControl
 Route::post('/labtechnician/editlabTechnicianProfile/editPassword/{id}','labTechnicianController@editProfilePassword');   //edit Doctor profile password modal save on btn click
 Route::get('/labtechnician/lab-test','labTechnicianController@viewLabTest'); //patient lab tests
 Route::get('/labtechnician/perform-test','labTechnicianController@viewPatients'); //patient lab tests
+Route::get('/labtechnician/test-request','labTechnicianController@viewTestRequest'); //patient lab tests
+
 
 // lab technician  lab-management routes
 Route::post('/labtechnician/lab-test','labTechnicianController@searchTest');    //search-test
-// lab technician  lab-management sample analysis routes
+// lab technician  lab-management Lab analysis routes
 Route::get('/labtechnician/lab-test/select-test/{id}','labTechnicianController@selectLabTest'); // select test view
 Route::post('/labtechnician/lab-test/select-test/search','labTechnicianController@searchTest_inSelectView'); // select test view search
 Route::post('/labtechnician/lab-test/perform-test/{id}','labTechnicianController@addTestReport'); // create test report view
 Route::post('/labtechnician/lab-test/saveTestReport','labTechnicianController@saveTestReport'); // save test report view
 Route::get('/labtechnician/lab-test/printTestReport/{id}','labTechnicianController@printTestReport'); // print test report view
 
+
+// lab technician  lab-management lab test request routes
+Route::post('/labtechnician/test-request/perform-test','labTechnicianController@requestedLabTest'); // this will show all the lab tests requested for a particular patient 
 
 // ---------------------------------------------------------------------
 
