@@ -114,11 +114,13 @@ Route::delete('/admin/account-type/manage-other-role/deleteRole/{id}','AdminCont
 // navbar routes   -----------------------------------------------------
 Route::get('/patient','PatientController@index');   //dashboard
 Route::get('/patient/doctor-appointment','PatientController@doctorAppointment');   //view-doctor
+
+
 // changed by ali
 Route::get('/patient/current-appointment/{id}','PatientController@currentAppointment');   //request-appointment
 Route::delete('/patient/current-appointment','PatientController@delAppointment');   // delete confirmed appointment
 Route::get('/patient/appointments-detail/{id}','PatientController@appointmentsDetail');   //appointments-detail
-Route::get('/patient/lab-test','PatientController@labTest');   //lab-test
+Route::get('/patient/lab-test/{id}','PatientController@labTest');   //lab-test
 Route::get('/patient/admissions-detail','PatientController@admissionsDetail');   //admissions-detail
 Route::get('/patient/contact-us','PatientController@contactUs');   //contact-us  NOT SET
 // ---------------------------------------------------------------------
@@ -130,6 +132,11 @@ Route::post('/patient/editPatientProfile/editPassword/{id}','PatientController@e
 // ali changed ------
 Route::post('/patient/doctor-appointment','PatientController@requestAppointment');   //schedule appointment request
 Route::get('/patient/medical-history/{id}','PatientController@medicalHistory');
+
+
+// lab test route
+Route::get("/patient/lab-test/printTestReport/{id}",'PatientController@printTestReport'); // print test report view
+
 
 //======================================================
 //                 Patient Module ENDS
@@ -163,7 +170,8 @@ Route::get('/doctor/patients-history','DoctorController@viewPatients');   //view
 Route::get('/doctor/patients/treatment/{id}','DoctorController@patientTreatment');   //Interface of Add  Patient Treatment
 Route::post('/doctor/patients/treatment/{id}','DoctorController@patientTreatmentSave');
 Route::get('/doctor/patients/medical-history/{id}','DoctorController@patientMedicalHistory');  // This will show patient's complete medical record
-
+Route::get('/doctor/patients/lab-history/{id}','DoctorController@patientLabHistory');  // This will show patient's complete medical record
+Route::get("/doctor/patient/lab-test/printTestReport/{id}",'DoctorController@printTestReport'); // print test report view
 //======================================================
 //                 Doctor Module ENDS
 //=======================================================
@@ -258,7 +266,8 @@ Route::get('/labtechnician/lab-test/printTestReport/{id}','labTechnicianControll
 
 // lab technician  lab-management lab test request routes
 Route::post('/labtechnician/test-request/perform-test','labTechnicianController@requestedLabTest'); // this will show all the lab tests requested for a particular patient 
-
+// this route will redirect back to remaining tests of a particular patient
+Route::post('/labtechnician/test-request/back','labTechnicianController@backToRemainingTest');
 // ---------------------------------------------------------------------
 
 //======================================================

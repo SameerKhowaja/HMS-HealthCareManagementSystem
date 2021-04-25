@@ -311,7 +311,7 @@ class LabTechnicianController extends Controller
         $technician_id = Lab_technician::where('primary_id',$req->labTechnician_primary_id)->get();
         
         if( $technician_id->count() == 0){
-            return redirect()->back()->with("msg","Lab Technician does ot exist!");
+            return redirect()->back()->with("msg","Lab Technician does not exist!");
         }
         
         $technician_id = $technician_id[0]->technician_id;
@@ -347,20 +347,20 @@ class LabTechnicianController extends Controller
 
             if( count( explode(",",$testReq->test_names) ) == count( explode(",",$testReq->test_performed) ) ){
                 LabTestRequest::find($req->test_req_id)->delete();
-                return redirect('/labtechnician/test-request');
+                // return redirect('/labtechnician/test-request');
             }else{
-                $selfMadeRequest = new Request();
-                $selfMadeRequest->request->add(["test_name" => $test_detail->test_name,"primary_id" => $req->patient_primary_id,'test_req_id'=> $testReq->test_req_id,"msg"=>"Report Created Successfuly"]);
-                $selfMadeRequest->setMethod("POST");
-                return $this->requestedLabTest($selfMadeRequest);
+
+                return redirect('/labtechnician/lab-test/printTestReport/'.$add_report->report_id)
+                ->with("patient_primary_id",$req->patient_primary_id)
+                ->with('test_req_id',$testReq->test_req_id)
+                ->with("test_name",$test_detail->test_name)
+                ->with("msg","Report Created Successfuly");
+
             }
 
         }
 
         return redirect('/labtechnician/lab-test/printTestReport/'.$add_report->report_id);
-
-
-
     }
 
 
@@ -375,6 +375,22 @@ class LabTechnicianController extends Controller
         // dd($report);
 
         return view('labtechnician.printTestReport',['report'=>$report]);
+    }
+
+
+    function backToRemainingTest(Request $req){
+        $req->validate([
+            "test_name" => 'required|max:1000',
+            "patient_primary_id" => 'required|max:20',
+            'test_req_id'=> 'required|max:20'
+        ]);
+
+        $selfMadeRequest = new Request();
+        $selfMadeRequest->request->add(["test_name" => $req->test_name,"primary_id" => $req->patient_primary_id,'test_req_id'=> $req->test_req_id,"msg"=>"Report Created Successfuly"]);
+        $selfMadeRequest->setMethod("POST");
+        return $this->requestedLabTest($selfMadeRequest);
+
+
     }
 
 

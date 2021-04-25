@@ -380,6 +380,39 @@ class PatientController extends Controller
     }
 
 
+    // view complete lab report history of logged in patient
+    function labTest($id){
+
+        $patient= Patient::where('patients.primary_id',$id)
+        ->join("hospital_datas","hospital_datas.primary_id","=","patients.primary_id")->get();
+
+
+        $reports = Lab_test_report::where('patient_id',$patient[0]->patient_id)
+        ->with(['lab_technician','lab_technician.hospital_data',
+        'patient','patient.hospital_data','lab_report_params',
+        'lab_report_params.lab_test_parameter','lab_test_name'])
+        ->orderBy('created_at', "desc")
+        ->get();
+
+        return view('patient.viewTestReportHistory',["patient"=>$patient,'reports'=>$reports]);
+
+    }
+
+    function printTestReport($id){
+
+        $report = Lab_test_report::where('report_id',$id)
+        ->with(['lab_technician','lab_technician.hospital_data',
+        'patient','patient.hospital_data','lab_report_params',
+        'lab_report_params.lab_test_parameter','lab_test_name'])
+        ->get();
+
+        // dd($report);
+
+        return view('patient.printTestReport',['report'=>$report]);
+    }
+
+
+
 
 
 

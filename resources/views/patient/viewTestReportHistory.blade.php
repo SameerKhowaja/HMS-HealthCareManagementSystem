@@ -37,7 +37,7 @@
             </a>
 
             <a href="/patient/lab-test/{{session('userID')}}">
-                <li class="text-normal">
+                <li class="active text-normal">
                     <svg xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" aria-hidden="true" focusable="false" width="1em" height="1em" fill="#0052E9" style="-ms-transform: rotate(360deg); -webkit-transform: rotate(360deg); transform: rotate(360deg);" preserveAspectRatio="xMidYMid meet" viewBox="0 0 16 16">
                         <path fill-rule="evenodd" d="M14.777 5.751l-7-4.667c-0.168-0.112-0.387-0.112-0.555 0l-7 4.667c-0.139 0.093-0.223 0.249-0.223 0.416v4.667c0 0.167 0.084 0.323 0.223 0.416l7 4.667c0.084 0.056 0.181 0.084 0.277 0.084s0.193-0.028 0.277-0.084l7-4.667c0.139-0.093 0.223-0.249 0.223-0.416v-4.667c0-0.167-0.084-0.323-0.223-0.416zM7.5 10.232l-2.599-1.732 2.599-1.732 2.599 1.732-2.599 1.732zM8 5.899v-3.465l5.599 3.732-2.599 1.732-3-2zM7 5.899l-3 2-2.599-1.732 5.599-3.732v3.465zM3.099 8.5l-2.099 1.399v-2.798l2.099 1.399zM4 9.101l3 2v3.465l-5.599-3.732 2.599-1.732zM8 11.101l3-2 2.599 1.732-5.599 3.732v-3.465zM11.901 8.5l2.099-1.399v2.798l-2.099-1.399z"/>
                     </svg> Lab Tests
@@ -45,7 +45,7 @@
             </a>
 
             <a href="/patient/medical-history/{{session('userID')}}">
-                <li class="active text-normal">
+                <li class="text-normal">
                 <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-file-text" viewBox="0 0 16 16">
                     <path d="M5 4a.5.5 0 0 0 0 1h6a.5.5 0 0 0 0-1H5zm-.5 2.5A.5.5 0 0 1 5 6h6a.5.5 0 0 1 0 1H5a.5.5 0 0 1-.5-.5zM5 8a.5.5 0 0 0 0 1h6a.5.5 0 0 0 0-1H5zm0 2a.5.5 0 0 0 0 1h3a.5.5 0 0 0 0-1H5z"/>
                     <path d="M2 2a2 2 0 0 1 2-2h8a2 2 0 0 1 2 2v12a2 2 0 0 1-2 2H4a2 2 0 0 1-2-2V2zm10-1H4a1 1 0 0 0-1 1v12a1 1 0 0 0 1 1h8a1 1 0 0 0 1-1V2a1 1 0 0 0-1-1z"/>
@@ -81,7 +81,7 @@
 <div class="container-fluid">
     <div style="display: flex; justify-content: space-between; align-items: center; height:10rem;" >
         <div style="display:inline;">
-            <h2>Patient / Medical-History</h2>
+            <h2>Patient / Lab Test History</h2>
         </div>
         <div style="display:flex;" >
             <a class="btn btn-primary btn-lg active" role="button" aria-pressed="true" data-toggle="modal" data-target="#viewPatient_modal"><i class="fa fa-database fa-lg" aria-hidden="true"></i> Patient Detail</a>
@@ -105,10 +105,10 @@
       <div id="tracking-pre"></div>
          <div id="tracking">
             <div class="text-center tracking-status-intransit bg-primary col-sm-12">
-               <h3 class="tracking-status text-large">Medical History</h3>
+               <h3 class="tracking-status text-large">Lab Test History</h3>
             </div>
-            @if($medical_history->count())
-            @foreach($medical_history as $hist)
+            @if($reports->count())
+            @foreach($reports as $hist)
             <div class="tracking-list">
                <div class="tracking-item">
                   <div class="tracking-icon status-intransit">
@@ -119,31 +119,31 @@
                   <div class="tracking-date text-large">{{date('d/M/y',strtotime($hist->created_at))}} <span>{{date('h:i:s A',strtotime($hist->created_at)) }}</span></div>
                   <div class="tracking-content">
                       <div class="text-large">
-                          Medical Condition : <span class="text-grey"> {{$hist->medical_condition}}</span>
-                      </div>
-                      <div class="text-large" style="word-wrap: break-word;">Medicines Given :
-                      @foreach($hist->prescription as $medicines)
-                            <span class="text-grey">{{$medicines->medicine->medicine}},</span>
-                      @endforeach
+                        Lab Test Name : <span class="text-grey">{{$hist->lab_test_name->test_name}}</span>
                       </div>
                       <div class="text-large">
-                          Treatment Result Or Comments :
-                          @if($hist->comment == "")
-                          <span class="text-grey">None</span>
-                          @else
-                          <span class="text-grey">{{$hist->comment}}</span>
-                          @endif
+                        Test Type : <span class="text-grey">{{$hist->lab_test_name->test_type}}</span>
                       </div>
                       <div class="text-large">
-                          Treating Doctor :
-                          <span class="text-grey" >{{$hist->doctor->hospital_data->fname." ".$hist->doctor->hospital_data->lname."( ".$hist->doctor->specialist." )"}}</span>
+                        Test Sample : <span class="text-grey">{{$hist->lab_test_name->test_sample}}</span>
                       </div>
+                      
+                      <div class="text-large">
+                          Lab technician (Performed By) :
+                          <span class="text-grey" >{{$hist->lab_technician->hospital_data->fname." ".$hist->lab_technician->hospital_data->lname}}</span>
+                      </div>
+
+                      <div class="text-large">
+                        <a href="/patient/lab-test/printTestReport/{{$hist->report_id}}" class="btn btn-primary btn-lg" ><i class="fa fa-file fa-lg" ></i> Report</a>
+                      </div>
+
+
                    </div>
 
             </div>
             @endforeach
             @else
-            <h2 class="text-grey text-center">No Medical History</h2>
+            <h2 class="text-grey text-center">No Lab Test History</h2>
             @endif
          </div>
       </div>
