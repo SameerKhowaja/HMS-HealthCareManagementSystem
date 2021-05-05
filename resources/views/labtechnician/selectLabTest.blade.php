@@ -24,19 +24,13 @@
                         <div class="collapse" id="collapseExample">
                             <div class="dropdown-divider"></div>
                             <a class="dropdown-item text-normal" href="/labtechnician/lab-test" >Lab Tests</a>
-                            <a class="dropdown-item text-normal" href="/labtechnician/perform-test">Sample Analysis</a>
+                            <a class="dropdown-item text-normal" href="/labtechnician/perform-test">Lab Analysis</a>
+                            <a class="dropdown-item text-normal" href="/labtechnician/test-request">Test Requests</a>
                         </div>
                     </div>
                 </li>
             </span>
 
-            <a href="/labtechnician/lab_report" >
-                <li class="text-normal">
-                <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="#0052E9" class="bi bi-calendar" viewBox="0 0 16 16">
-                    <path d="M3.5 0a.5.5 0 0 1 .5.5V1h8V.5a.5.5 0 0 1 1 0V1h1a2 2 0 0 1 2 2v11a2 2 0 0 1-2 2H2a2 2 0 0 1-2-2V3a2 2 0 0 1 2-2h1V.5a.5.5 0 0 1 .5-.5zM1 4v10a1 1 0 0 0 1 1h12a1 1 0 0 0 1-1V4H1z"/>
-                </svg> Lab Reports
-                </li>
-            </a>
 
         </ul>
 @endsection
@@ -60,6 +54,7 @@
                                 <input type="text" name="searchTable" id="searchData" class="form-control form-control-lg col-sm-11" placeholder="Search Table Records" style="border:1px solid lightblue; color:black;">
                             </div>
                     </div>
+                    @if($testTypes)
                     <div class="col-lg-6">
                     <form action="/labtechnician/lab-test/select-test/search" method="POST">
                         @csrf
@@ -75,6 +70,7 @@
                             </div>
                         </form>
                     </div>
+                    @endif
                 </div>
 
                 <!-- Lab Test table Start -->
@@ -97,20 +93,23 @@
 
                             @foreach($labTests as $data)
                             <tr>
-                                <td style="text-align:center">{{$data["test"]->test_name}}</td>
-                                <td style="text-align:center">{{$data["test"]->test_type}}</td>
-                                <td style="text-align:center">{{$data['test']->test_sample}}</td>
-                                <td style="text-align:center">{{$data['test']->methodology}}</td>
+                                <td style="text-align:center">{{$data->test_name}}</td>
+                                <td style="text-align:center">{{$data->test_type}}</td>
+                                <td style="text-align:center">{{$data->test_sample}}</td>
+                                <td style="text-align:center">{{$data->methodology}}</td>
 
                                 <td style="text-align:center">
                                     <div class="btn-group" role="group">
                                         <!-- View - Edit - Delete -->
-                                        <a id='{{$data["test"]->test_id}}' style='font-size:13px;' class="btn btn-info btn-lg viewUser" role="button" aria-pressed="true" data-toggle="modal" data-target="#viewUser_modal"><i class="fa fa-database fa-lg" aria-hidden="true"></i></a>
-                                        <!-- <a class="btn btn-warning btn-lg" style='font-size: 13px;' href="/labtechnician/lab-test/edit-test/{{$data['test']->test_id}}"><i class="fa fa-pencil-square-o fa-lg" aria-hidden="true"></i></a>
-                                        <a id='{{$data["test"]->test_id}}' style='font-size:13px;' class="btn btn-danger btn-lg deleteUser" role="button" aria-pressed="true" data-toggle="modal" data-target="#deleteUser_modal"><i class="fa fa-trash fa-lg" aria-hidden="true"></i></a> -->
+                                        <a id='{{$data->test_id}}' style='font-size:13px;' class="btn btn-info btn-lg viewUser" role="button" aria-pressed="true" data-toggle="modal" data-target="#viewUser_modal"><i class="fa fa-database fa-lg" aria-hidden="true"></i></a>
+                                        <!-- <a class="btn btn-warning btn-lg" style='font-size: 13px;' href="/labtechnician/lab-test/edit-test/{{$data->test_id}}"><i class="fa fa-pencil-square-o fa-lg" aria-hidden="true"></i></a>
+                                        <a id='{{$data->test_id}}' style='font-size:13px;' class="btn btn-danger btn-lg deleteUser" role="button" aria-pressed="true" data-toggle="modal" data-target="#deleteUser_modal"><i class="fa fa-trash fa-lg" aria-hidden="true"></i></a> -->
                                         <form id="{{'report'.$userData->primary_id}}" action="/labtechnician/lab-test/perform-test/{{$userData->primary_id}}" method="POST" >
-                                        @csrf
-                                            <input type="hidden" name='test_id' value="{{$data['test']->test_id}}">
+                                            @csrf
+                                            <input type="hidden" name='test_id' value="{{$data->test_id}}">
+                                            @if($testRequest)
+                                            <input type="hidden" name='test_req_id' value="{{$testRequest->test_req_id}}">
+                                            @endif
                                             <input type="submit"  class="btn btn-primary btn-lg" name="Add Test Report" value="Add Test Report">
                                         </form>
                                     </div>
@@ -247,24 +246,20 @@
                 var test_params = '<tr><th><h5 class="display-6"><strong>Name</strong></h5></th><th><h5 class="display-6"><strong>Unit</strong></h5></td></tr>';
 
 
-
-
-
-
                 for(var i=0;i<obj.length;i++){
-                    if(testId == obj[i].test.test_id){
+                    if(testId == obj[i].test_id){
                         // alert(obj[i].fname);
-                        $("#testName").html(obj[i].test.test_name);
-                        $("#testType").html(obj[i].test.test_type);
-                        $("#testSample").html(obj[i].test.test_sample);
-                        $("#methodology").html(obj[i].test.methodology);
+                        $("#testName").html(obj[i].test_name);
+                        $("#testType").html(obj[i].test_type);
+                        $("#testSample").html(obj[i].test_sample);
+                        $("#methodology").html(obj[i].methodology);
 
-                        if(obj[i].params.length > 0){
+                        if(obj[i].lab_test_parameters.length > 0){
 
 
-                        for(var j=0;j<obj[i].params.length;j++){
+                        for(var j=0;j<obj[i].lab_test_parameters.length;j++){
 
-                            test_params +='<tr><td><h5 id="param"'+obj[i].params[j].param_id+'class="display-6"><strong>'+obj[i].params[j].param+'</strong></h5></td><td><h5 id="unit"'+obj[i].params[j].param_id+'class="display-6">'+obj[i].params[j].unit+'</h5></td></tr>';
+                            test_params +='<tr><td><h5 id="param"'+obj[i].lab_test_parameters[j].param_id+'class="display-6"><strong>'+obj[i].lab_test_parameters[j].param+'</strong></h5></td><td><h5 id="unit"'+obj[i].lab_test_parameters[j].param_id+'class="display-6">'+obj[i].lab_test_parameters[j].unit+'</h5></td></tr>';
 
 
                         }

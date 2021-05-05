@@ -72,18 +72,32 @@ INSERT INTO `contact_table` (`contact_id`, `fullname`, `email_id`, `message`, `c
 (2, 'Sameer', 'sameerkhowaja@gmail.com', 'Nice Software', '2021-02-03 20:28:24');
 
 INSERT INTO `lab_test_names` (`test_id`, `test_name`, `test_type`, `test_sample`, `methodology`) VALUES
+(1, 'LIVER KIDNEY MICROSOML AB', 'BIOCHEMISTRY', 'SERUM OR 3-5 CC CLOTTED BLOOD', 'ELISA'),
+(2, 'DELTA DRUGS', 'BIOCHEMISTRY', 'Blood', 'multiplied immunoassay technique (EMIT)'),
 (8, '17 KETOSTEROIDS', 'BIOCHEMISTRY', 'Urine2', 'COLOROMETRIC'),
 (9, 'complete blood count-cbc', 'Blood Bank', 'blood', 'Manual');
 
-INSERT INTO `lab_test_parameters` (`param_id`, `param`, `unit`, `test_id`) VALUES
-(6, 'Ketophasgen', 'dl', 8),
-(7, 'hemoglobin', 'ml', 8),
-(8, 'KETOSTEROID', 'mg/dl', 8),
-(9, 'Red blood cell (RBC)', 'count', 9),
-(10, 'hemoglobin', 'g/dl', 9),
-(11, 'Hematocrit', 'volume%', 9),
-(12, 'White blood cell', 'count', 9),
-(13, 'platelet', 'count', 9);
+
+INSERT INTO `lab_test_parameters` (`param_id`, `param`, `unit`,`lower_bound`,`upper_bound`, `test_id`) VALUES
+(1, 'Urea(Serum)', 'mg/dl',10,50, 1),
+(2, 'BUN(blood urea nitrogen)', 'mg/dl', 8,22,1),
+(3, 'creatinine', 'mg/dl',0.72,1.25, 1),
+(4, 'Sodium', 'mmol/L',136,145, 1),
+(5, 'Potassium', 'mmol/l',3.5,5.1, 1),
+(14, 'Uric Acid', 'mg/dl',3.5,7.1,1),
+(6, 'Ketophasgen', 'dl',1,100, 8),
+(7, 'hemoglobin', 'ml', 0.5,6.8,8),
+(8, 'KETOSTEROID', 'mg/dl',1.1,2.5, 8),
+(9, 'Red blood cell (RBC)', 'count',1000,3000, 9),
+(10, 'hemoglobin', 'g/dl',50,155, 9),
+(11, 'Hematocrit', 'volume%',23,47,9),
+(12, 'White blood cell', 'count',700,1000, 9),
+(13, 'platelet', 'count',500,1100, 9),
+(15, 'Amphetamine', 'ng/ml',250,NULL, 2),
+(16, 'MDMA', 'ng/ml',250,NULL, 2),
+(17, 'COCAINE', 'ng/ml',100,NULL, 2),
+(18, 'Marijuana', 'ng/ml',15,NULL, 2),
+(19, '6-Acetylmorphine', 'ng/ml',10,NULL, 2);
 
 INSERT INTO `medicines` (`medicine_id`, `medicine`, `medicine_type`, `drug_use`) 
 VALUES(1, 'folic  acid', 'table', 'treat or prevent folate deficiency anaemia'),

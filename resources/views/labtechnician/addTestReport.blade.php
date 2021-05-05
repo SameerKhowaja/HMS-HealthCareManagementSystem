@@ -24,19 +24,13 @@
                         <div class="collapse" id="collapseExample">
                             <div class="dropdown-divider"></div>
                             <a class="dropdown-item text-normal" href="/labtechnician/lab-test" >Lab Tests</a>
-                            <a class="dropdown-item text-normal" href="/labtechnician/perform-test">Sample Analysis</a>
+                            <a class="dropdown-item text-normal" href="/labtechnician/perform-test">Lab Analysis</a>
+                            <a class="dropdown-item text-normal" href="/labtechnician/test-request">Test Requests</a>
                         </div>
                     </div>
                 </li>
             </span>
 
-            <a href="/labtechnician/lab_report" >
-                <li class="text-normal">
-                <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="#0052E9" class="bi bi-calendar" viewBox="0 0 16 16">
-                    <path d="M3.5 0a.5.5 0 0 1 .5.5V1h8V.5a.5.5 0 0 1 1 0V1h1a2 2 0 0 1 2 2v11a2 2 0 0 1-2 2H2a2 2 0 0 1-2-2V3a2 2 0 0 1 2-2h1V.5a.5.5 0 0 1 .5-.5zM1 4v10a1 1 0 0 0 1 1h12a1 1 0 0 0 1-1V4H1z"/>
-                </svg> Lab Reports
-                </li>
-            </a>
 
         </ul>
 @endsection
@@ -144,6 +138,10 @@
                         <input type="hidden" name="patient_primary_id" value="{{$patientData->primary_id}}" >
 
                         <input type="hidden" name="labTechnician_primary_id" value="{{session('userID')}}" >
+
+                        @if($testRequest)
+                        <input type="hidden" name='test_req_id' value="{{$testRequest->test_req_id}}">
+                        @endif
 
                         <!-- Head Row -->
                         @if(count($labTest[0]->lab_test_parameters))

@@ -13,6 +13,10 @@ use App\Past_event;
 use App\Medicine;
 use App\Type;
 use App\Doctor_availability;
+use App\Lab_technician;
+use App\Lab_test_name;
+use App\Lab_test_report;
+use App\Lab_test;
 
 use Illuminate\Http\Request;
 
@@ -222,6 +226,39 @@ class DoctorController extends Controller
 
         return view("doctor.patients.viewMedicalHistory",["patient"=>$patient_data,"medical_history"=>$medical_history]);
     }
+    
+    // lab test history of a particular patient
+    function patientLabHistory($id){
+        $patient_data = Patient::where("patients.primary_id",$id)
+        ->join("hospital_datas","hospital_datas.primary_id","=","patients.primary_id")->get();
+
+
+        $reports = Lab_test_report::where('patient_id',$patient_data[0]->patient_id)
+        ->with(['lab_technician','lab_technician.hospital_data',
+        'patient','patient.hospital_data','lab_report_params',
+        'lab_report_params.lab_test_parameter','lab_test_name'])
+        ->orderBy('created_at', "desc")
+        ->get();
+
+
+        // dd($patient_data);
+
+        return view("doctor.patients.viewTestReportHistory",["patient"=>$patient_data,"reports"=>$reports]);
+    }
+
+    function printTestReport($id){
+
+        $report = Lab_test_report::where('report_id',$id)
+        ->with(['lab_technician','lab_technician.hospital_data',
+        'patient','patient.hospital_data','lab_report_params',
+        'lab_report_params.lab_test_parameter','lab_test_name'])
+        ->get();
+
+        // dd($report);
+
+        return view('doctor.patients.printTestReport',['report'=>$report]);
+    }
+
 
     // All Patient Appointments View
     function patientAllAppointmentView(){

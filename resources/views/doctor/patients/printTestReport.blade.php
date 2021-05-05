@@ -1,9 +1,9 @@
-@extends('layout.labtechnicianLayout')
+@extends('layout.doctorLayout')
 
 @section('navSection')
     <!-- Brand Image is in adminLayout -->
         <ul class="navLists">
-            <a href="/labtechnician">
+            <a href="/doctor">
                 <li class="text-normal">
                     <svg xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" aria-hidden="true" focusable="false" width="1em" height="1em" fill="#0052E9" style="-ms-transform: rotate(360deg); -webkit-transform: rotate(360deg); transform: rotate(360deg);" preserveAspectRatio="xMidYMid meet" viewBox="0 0 16 16">
                         <path fill-rule="evenodd" d="M2 13.5V7h1v6.5a.5.5 0 0 0 .5.5h9a.5.5 0 0 0 .5-.5V7h1v6.5a1.5 1.5 0 0 1-1.5 1.5h-9A1.5 1.5 0 0 1 2 13.5zm11-11V6l-2-2V2.5a.5.5 0 0 1 .5-.5h1a.5.5 0 0 1 .5.5z"/>
@@ -13,23 +13,30 @@
             </a>
 
             <span aria-controls="collapseExample" data-target="#collapseExample" data-toggle="collapse" aria-haspopup="true" aria-expanded="false">
-                <li class="text-normal active">
-                    <div >
-                    <svg xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" aria-hidden="true" focusable="false" width="1em" height="1em" fill="#0052E9" style="-ms-transform: rotate(360deg); -webkit-transform: rotate(360deg); transform: rotate(360deg);" preserveAspectRatio="xMidYMid meet" viewBox="0 0 16 16">
-                        <g>
-                            <path fill-rule="evenodd" d="M14.777 5.751l-7-4.667c-0.168-0.112-0.387-0.112-0.555 0l-7 4.667c-0.139 0.093-0.223 0.249-0.223 0.416v4.667c0 0.167 0.084 0.323 0.223 0.416l7 4.667c0.084 0.056 0.181 0.084 0.277 0.084s0.193-0.028 0.277-0.084l7-4.667c0.139-0.093 0.223-0.249 0.223-0.416v-4.667c0-0.167-0.084-0.323-0.223-0.416zM7.5 10.232l-2.599-1.732 2.599-1.732 2.599 1.732-2.599 1.732zM8 5.899v-3.465l5.599 3.732-2.599 1.732-3-2zM7 5.899l-3 2-2.599-1.732 5.599-3.732v3.465zM3.099 8.5l-2.099 1.399v-2.798l2.099 1.399zM4 9.101l3 2v3.465l-5.599-3.732 2.599-1.732zM8 11.101l3-2 2.599 1.732-5.599 3.732v-3.465zM11.901 8.5l2.099-1.399v2.798l-2.099-1.399z"/>
-                        </g>
-                    </svg>Lab Management
+                <li>
+                    <div class="text-normal">
+                    <svg xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" aria-hidden="true" focusable="false" fill="#0052E9" width="1em" height="1em" style="-ms-transform: rotate(360deg); -webkit-transform: rotate(360deg); transform: rotate(360deg);" preserveAspectRatio="xMidYMid meet" viewBox="0 0 24 24">
+                        <circle cx="18" cy="4" r="2"/>
+                        <path d="M17.836 12.014l-4.345.725l3.29-4.113a1 1 0 0 0-.227-1.457l-6-4a.999.999 0 0 0-1.262.125l-4 4l1.414 1.414l3.42-3.42l2.584 1.723l-2.681 3.352a5.913 5.913 0 0 0-5.5.752l1.451 1.451A3.972 3.972 0 0 1 8 12c2.206 0 4 1.794 4 4c0 .739-.216 1.425-.566 2.02l1.451 1.451A5.961 5.961 0 0 0 14 16c0-.445-.053-.878-.145-1.295L17 14.181V20h2v-7a.998.998 0 0 0-1.164-.986zM8 20c-2.206 0-4-1.794-4-4c0-.739.216-1.425.566-2.02l-1.451-1.451A5.961 5.961 0 0 0 2 16c0 3.309 2.691 6 6 6c1.294 0 2.49-.416 3.471-1.115l-1.451-1.451A3.972 3.972 0 0 1 8 20z"/>
+                    </svg>Appointments
 
                         <div class="collapse" id="collapseExample">
                             <div class="dropdown-divider"></div>
-                            <a class="dropdown-item text-normal" href="/labtechnician/lab-test" >Lab Tests</a>
-                            <a class="dropdown-item text-normal" href="/labtechnician/perform-test">Lab Analysis</a>
-                            <a class="dropdown-item text-normal" href="/labtechnician/test-request">Test Requests</a>
+                            <a class="dropdown-item text-normal" href="/doctor/patient-current-appointment" > Today's Appointments</a>
+                            <a class="dropdown-item text-normal" href="/doctor/patient-future-appointment"> Future Appointments</a>
+                            <a class="dropdown-item text-normal" href="/doctor/patient-past-appointment"> Past Appointments</a>
                         </div>
                     </div>
                 </li>
             </span>
+
+            <a href="/doctor/patients-history" >
+                <li class="text-normal active">
+                <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="#0052E9" class="bi bi-calendar" viewBox="0 0 16 16">
+                    <path d="M3.5 0a.5.5 0 0 1 .5.5V1h8V.5a.5.5 0 0 1 1 0V1h1a2 2 0 0 1 2 2v11a2 2 0 0 1-2 2H2a2 2 0 0 1-2-2V3a2 2 0 0 1 2-2h1V.5a.5.5 0 0 1 .5-.5zM1 4v10a1 1 0 0 0 1 1h12a1 1 0 0 0 1-1V4H1z"/>
+                </svg> Patients History
+                </li>
+            </a>
 
         </ul>
 @endsection
@@ -39,25 +46,8 @@
         <div>
             <div style='margin-top: 2%; margin-bottom: 3%; '>
                 <div style="display: flex; justify-content: space-between; align-items: center;">
-                    <h3 class="text-large text-grey col-sm-6">Lab Technician / Patient / Print Test Report</h3>
-                        <div style="display:grid; grid-template-columns:1fr 1fr">
-                            <button id='reportPrint' class="btn btn-info btn-lg active" role="button" aria-pressed="true"><i class="fa fa-print"> </i> Print</button>
-                            @if( ! session()->has('test_req_id') )
-                            <form method="get" action="/labtechnician/test-request">
-                                @csrf
-                                <input id='Back' type="submit" name="Back" value="Back" class="btn btn-primary btn-lg" role="button" aria-pressed="true" />
-                            </form>
-                            @else
-                            <form method="post" action="/labtechnician/test-request/back">
-                                @csrf
-                                <input type="hidden" name='test_req_id' value="{{session()->get('test_req_id')}}" >
-                                <input type="hidden" name="patient_primary_id" value="{{session()->get('patient_primary_id')}}" >
-                                <input type="hidden" name="test_name" value="{{session()->get('test_name')}}" >
-                                <input id='Back' type="submit" name="Back" value="Back" class="btn btn-primary btn-lg" role="button" aria-pressed="true" />
-                            </form>
-                            @endif
-                            
-                        </div>
+                    <h3 class="text-large text-grey col-sm-6">Doctor / Patient / Print Test Report</h3>
+                        <button id='reportPrint' class="btn btn-info btn-lg active" role="button" aria-pressed="true"><i class="fa fa-print"> </i> Print</button>
                     </div>
                 </div>
                 <br>
