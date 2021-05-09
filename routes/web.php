@@ -132,7 +132,7 @@ Route::post('/patient/editPatientProfile/editPassword/{id}','PatientController@e
 // ali changed ------
 Route::post('/patient/doctor-appointment','PatientController@requestAppointment');   //schedule appointment request
 Route::get('/patient/medical-history/{id}','PatientController@medicalHistory');
-
+Route::post('/patient/survey/{id}','PatientController@saveSurvey');
 
 // lab test route
 Route::get("/patient/lab-test/printTestReport/{id}",'PatientController@printTestReport'); // print test report view
@@ -170,6 +170,8 @@ Route::get('/doctor/patients-history','DoctorController@viewPatients');   //view
 Route::get('/doctor/patients/treatment/{id}','DoctorController@patientTreatment');   //Interface of Add  Patient Treatment
 Route::post('/doctor/patients/treatment/{id}','DoctorController@patientTreatmentSave');
 Route::get('/doctor/patients/medical-history/{id}','DoctorController@patientMedicalHistory');  // This will show patient's complete medical record
+Route::get('/doctor/patient-research-data','DoctorController@viewResearch');
+Route::post('/doctor/perform-research','DoctorController@performResearch');
 Route::get('/doctor/patients/lab-history/{id}','DoctorController@patientLabHistory');  // This will show patient's complete medical record
 Route::get("/doctor/patient/lab-test/printTestReport/{id}",'DoctorController@printTestReport'); // print test report view
 //======================================================

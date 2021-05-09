@@ -93,7 +93,7 @@
 
                                 <td style="text-align:center">{{$data->patient->hospital_data->cnic}}</td>
 
-                                <td style="text-align:center">{{$data->test_names}}</td>
+                                <td style="text-align:center">{{ implode(',',$data->test_names) }}</td>
 
                                 <td style="text-align:center">{{$data->created_at}}</td>
 
@@ -102,7 +102,6 @@
                                     <div class="btn-group " role="group">
                                         <form action="/labtechnician/test-request/perform-test" method="post">
                                             @csrf
-                                            <input type="hidden" name="test_name" value="{{$data->test_names}}" >
                                             <input type="hidden" name="primary_id" value="{{$data->patient->hospital_data->primary_id}}" >
                                             <input type="hidden" name="test_req_id" value="{{$data->test_req_id}}" >
                                             <input type="submit" name="submit" value="Perform Test" id="{{$data->test_req_id}}" class="btn btn-primary btn-lg  fa-lg" role="button" aria-pressed="true">

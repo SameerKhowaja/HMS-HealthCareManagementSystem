@@ -100,31 +100,31 @@
                             @foreach($dataFetched as $data)
                             <tr>
                                 <td style="text-align:center">
-                                    @if($data->image == '')
+                                    @if($data->patient->hospital_data->image == '')
                                         <img class="profile" src="{{asset('resources/images/profile.png')}}" alt="profile">
                                     @else
-                                        <img class="profile" src='{{"data:image/*;base64,".$data->image}}' alt="profile">
+                                        <img class="profile" src='{{"data:image/*;base64,".$data->patient->hospital_data->image}}' alt="profile">
                                     @endif
                                 </td>
 
-                                <td style="text-align:center">{{$data->fname.' '.$data->lname}}</td>
-                                <td style="text-align:center">{{$data->cnic}}</td>
-                                <td style="text-align:center">{{$data->email_id}}</td>
-                                <td style="text-align:center">{{$data->phone_number}}</td>
-                                <td style="text-align:center">{{$data->gender}}</td>
+                                <td style="text-align:center">{{$data->patient->hospital_data->fname.' '.$data->lname}}</td>
+                                <td style="text-align:center">{{$data->patient->hospital_data->cnic}}</td>
+                                <td style="text-align:center">{{$data->patient->hospital_data->email_id}}</td>
+                                <td style="text-align:center">{{$data->patient->hospital_data->phone_number}}</td>
+                                <td style="text-align:center">{{$data->patient->hospital_data->gender}}</td>
 
                                 <td style="text-align:center">
                                     <div class="btn-group" role="group">
                                         <!-- Add Treatment -->
-                                        <a class="btn btn-info btn-lg" style='font-size: 11px;' href="/doctor/patients/medical-history/{{$data->primary_id}}">
+                                        <a class="btn btn-info btn-lg" style='font-size: 11px;' href="/doctor/patients/medical-history/{{$data->patient->hospital_data->primary_id}}">
                                         <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-file-text" viewBox="0 0 16 16">
                                             <path d="M5 4a.5.5 0 0 0 0 1h6a.5.5 0 0 0 0-1H5zm-.5 2.5A.5.5 0 0 1 5 6h6a.5.5 0 0 1 0 1H5a.5.5 0 0 1-.5-.5zM5 8a.5.5 0 0 0 0 1h6a.5.5 0 0 0 0-1H5zm0 2a.5.5 0 0 0 0 1h3a.5.5 0 0 0 0-1H5z"/>
                                             <path d="M2 2a2 2 0 0 1 2-2h8a2 2 0 0 1 2 2v12a2 2 0 0 1-2 2H4a2 2 0 0 1-2-2V2zm10-1H4a1 1 0 0 0-1 1v12a1 1 0 0 0 1 1h8a1 1 0 0 0 1-1V2a1 1 0 0 0-1-1z"/>
                                         </svg>
                                         Medical History</a>
-                                        <a class="btn bg-secondary text-white btn-lg" style='font-size: 11px;' href="/doctor/patients/lab-history/{{$data->primary_id}}">
+                                        <a class="btn bg-secondary text-white btn-lg" style='font-size: 11px;' href="/doctor/patients/lab-history/{{$data->patient->hospital_data->primary_id}}">
                                         <i class="fa fa-file"></i> Lab History</a>
-                                        <a class="btn btn-primary btn-lg" style='font-size: 11px;' href="/doctor/patients/treatment/{{$data->primary_id}}">Treatment</a>
+                                        <a class="btn btn-primary btn-lg" style='font-size: 11px;' href="/doctor/patients/treatment/{{$data->patient->hospital_data->primary_id}}">Treatment</a>
                                     </div>
                                 </td>
                             </tr>

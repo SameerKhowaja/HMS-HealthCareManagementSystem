@@ -1221,21 +1221,21 @@ class ReceptionistController extends Controller
     $count=0;
 
 
-    if($req->tests){
-        foreach($req->tests as $test){
-            if($count==0){
-                $tests= $test;
-                $count=1;
-            }else{
-                $tests= $tests.",".$test;
-            }
+    // if($req->tests){
+    //     foreach($req->tests as $test){
+    //         if($count==0){
+    //             $tests= $test;
+    //             $count=1;
+    //         }else{
+    //             $tests= $tests.",".$test;
+    //         }
             
-        }
-    }
+    //     }
+    // }
 
     $testReq = new LabTestRequest;
     $testReq->patient_id = $patient[0]->patient_id;
-    $testReq->test_names = $tests;
+    $testReq->test_names = $req->tests;
     $testReq->save();
 
     return redirect('/receptionist/patient-lab-test')->with('msg',"Request Sent!");

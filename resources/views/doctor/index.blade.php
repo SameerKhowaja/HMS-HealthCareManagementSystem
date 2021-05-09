@@ -173,7 +173,7 @@
                             <!-- Cart -->
                             <div class="chart col-lg-6">
                                 <h1 class="text-center">Appointments</h1>
-                                <canvas id="userGrowth" data-users = "{{json_encode($patientCount_wrt_days)}}"  ></canvas>
+                                <canvas id="appointment" data-appointments = "{{json_encode($appointments_wrt_days)}}"  ></canvas>
                             </div>
                         </div>
                     </div>

@@ -118,25 +118,43 @@
                   </div>
                   <div class="tracking-date text-large">{{date('d/M/y',strtotime($hist->created_at))}} <span>{{date('h:i:s A',strtotime($hist->created_at)) }}</span></div>
                   <div class="tracking-content">
-                      <div class="text-large">
-                          Medical Condition : <span class="text-grey"> {{$hist->medical_condition}}</span>
-                      </div>
-                      <div class="text-large" style="word-wrap: break-word;">Medicines Given :
-                      @foreach($hist->prescription as $medicines)
-                            <span class="text-grey">{{$medicines->medicine->medicine}},</span>
-                      @endforeach
-                      </div>
-                      <div class="text-large">
-                          Treatment Result Or Comments :
-                          @if($hist->comment == "")
-                          <span class="text-grey">None</span>
-                          @else
-                          <span class="text-grey">{{$hist->comment}}</span>
-                          @endif
-                      </div>
-                      <div class="text-large">
-                          Treating Doctor :
-                          <span class="text-grey" >{{$hist->doctor->hospital_data->fname." ".$hist->doctor->hospital_data->lname."( ".$hist->doctor->specialist." )"}}</span>
+                      <div style="display:grid;grid-template-columns:2fr 1fr;">
+                          <div>
+                      
+                          <div class="text-large">
+                                Medical Condition : <span class="text-grey"> {{$hist->medical_condition}}</span>
+                          </div>
+                          <div class="text-large" style="word-wrap: break-word;">Medicines Given :
+                          @foreach($hist->prescription as $medicines)
+                                <span class="text-grey">{{$medicines->medicine->medicine}},</span>
+                          @endforeach
+                          </div>
+                          <div class="text-large">
+                                Treatment Result Or Comments :
+                                @if($hist->comment == "")
+                                <span class="text-grey">None</span>
+                                @else
+                                <span class="text-grey">{{$hist->comment}}</span>
+                                @endif
+                           </div>
+                           <div class="text-large">
+                                Treating Doctor :
+                                <span class="text-grey" >{{$hist->doctor->hospital_data->fname." ".$hist->doctor->hospital_data->lname."( ".$hist->doctor->specialist." )"}}</span>
+                           </div>
+                           </div>
+                           <!-- survey whether the treatment was successful or not -->
+                           @if( is_null($hist->cured ) )
+                           <div>
+                                <a id="{{'s'.$hist->treatment_id }}" class="btn btn-info btn-lg survey_link" role="button" aria-pressed="true" data-toggle="modal" data-target="#survey_modal" data-treatmentID="{{$hist->treatment_id}}" >
+                                <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-file-text" viewBox="0 0 16 16">
+                                        <path d="M5 4a.5.5 0 0 0 0 1h6a.5.5 0 0 0 0-1H5zm-.5 2.5A.5.5 0 0 1 5 6h6a.5.5 0 0 1 0 1H5a.5.5 0 0 1-.5-.5zM5 8a.5.5 0 0 0 0 1h6a.5.5 0 0 0 0-1H5zm0 2a.5.5 0 0 0 0 1h3a.5.5 0 0 0 0-1H5z"/>
+                                        <path d="M2 2a2 2 0 0 1 2-2h8a2 2 0 0 1 2 2v12a2 2 0 0 1-2 2H4a2 2 0 0 1-2-2V2zm10-1H4a1 1 0 0 0-1 1v12a1 1 0 0 0 1 1h8a1 1 0 0 0 1-1V2a1 1 0 0 0-1-1z"/>
+                                </svg>
+                                Survey
+                                </a>
+                           </div>
+                           @endif
+
                       </div>
                    </div>
 
@@ -225,5 +243,81 @@
             </div>
         </div>
         <!-- View Modal Ends-->
+
+        <!-- survey Modal Start -->
+        
+        <div class="modal fade" id="survey_modal">
+            <div class="modal-dialog modal-dialog-centered">
+                <div class="modal-content">
+                    <div class="modal-body">
+                        <!-- Photo and Name -->
+                        <div class="row">
+                            <div class="col-lg-12">
+                                <h1 class="media-heading display-5 text-center">Medical Survey</h1>
+                            </div>
+                            <hr>
+                        </div>
+                        <form action="/patient/survey/{{session('userID')}}" method="POST">
+                        @csrf
+                        <div class="form-group" style="display:grid;grid-template-rows:1fr 1fr;">
+                             <h4 class="text-bold display-5">Date Of Birth:</h4>
+                             <div>
+                                <input type="date" name='dob' placeholder="date of birth" class="form-control form-control-lg" required>
+                            </div>
+                        </div>
+                        <br>
+                        <input type="hidden" name="primary_id" value="{{session('userID')}}">
+                        <input type="hidden" id="survey_treatment_id" name="treatment_id" value="">
+
+                        <div class="form-group">
+                            <h4 class="text-bold display-5" >Disease:</h4>
+                            <div class="form-check form-check-inline">
+                                <input class="form-check-input" type="radio" name="cured" id="treatment1" value="1" checked>
+                                <label class="form-check-label text-bold display-5" for="inlineRadio1">Cured</label>
+                            </div>
+                            <div class="form-check form-check-inline">
+                                <input class="form-check-input" type="radio" name="cured" id="treatment2" value="0" >
+                                <label class="form-check-label text-bold display-6" for="inlineRadio1">Not Cured</label>
+                            </div>
+                        </div>
+                        <br>
+                        <div class="form-group">
+                            <h4 class="text-bold display-5" >Blood Group:</h4>
+                            <select class="form-select form-select-lg" name="blood_group" id="blood_group" style="height:30px; width:100%; padding:4px;">
+                                    <option value="A+">A+</option>
+                                    <option value="A-">A-</option>
+                                    <option value="B+">B+</option>
+                                    <option value="B+">B+</option>
+                                    <option value="O+">O+</option>
+                                    <option value="O-">O-</option>
+                                    <option value="AB+">AB+</option>
+                                    <option value="AB-">AB-</option>
+                            </select>
+                        </div>
+                        <div class="form-group text-center">
+                           <input type="submit" name="Submit" value="Submit" class="btn btn-primary btn-lg" >
+                        </div>
+
+                        </form>
+
+
+                    </div>    
+                </div>         
+            </div>
+        </div>
+
+        <!-- survey Modal ends -->
 </div>
+<script>
+
+$(".survey_link").click(function(event){
+let treatment_id = event.currentTarget.id.substring(1, event.currentTarget.id.length);
+
+$("#survey_treatment_id").val(treatment_id);
+
+});
+
+</script>
+
+
 @endsection
