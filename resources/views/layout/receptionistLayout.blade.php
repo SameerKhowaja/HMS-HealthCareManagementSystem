@@ -18,18 +18,17 @@
     <link rel="stylesheet" href="{{asset('resources/css/doctorTime.css')}}">
 
     <link rel="stylesheet" href="{{asset('external-libraries/css/jquery-ui.min.css')}}">
-    <link rel="stylesheet" href="{{asset('external-libraries/css/bootstrap-select.min.css')}}">
     <link rel="stylesheet" href="{{asset('external-libraries/css/jquery-ui.structure.min.css')}}">
     <link rel="stylesheet" href="{{asset('external-libraries/css/jquery-ui.theme.min.css')}}">
     <link rel="stylesheet" href="{{asset('resources/sass/css/datepicker_style.css')}}">
     <script src="{{asset('external-libraries/js/ajax-jquery.min.js')}}"></script>
     <script src="{{asset('external-libraries/js/codejquery-3.5.1.js')}}"></script>
-    <script src="{{asset('external-libraries/js/codejquery-3.5.1.js')}}"></script>
     
-    
+    <script src="{{asset('external-libraries/js/jquery-ui.min.js')}}"></script>
 
     
     <!-- charts.js -->
+    <script src="{{asset('external-libraries/js/cloudflareChart.min.js')}}"></script>
     <title>Receptionist</title>
 </head>
 
@@ -88,10 +87,17 @@
     <script src="{{asset('external-libraries/js/codejquery-3.5.1.slim.min.js')}}"></script>
     <script src="{{asset('external-libraries/js/jsdelivrpopper.min.js')}}"></script>
     <script src="{{asset('external-libraries/js/jsdelivrbootstrap.min.js')}}"></script>
-    <script src="{{asset('external-libraries/js/bootstrap-select.min.js')}}"></script>
 
     <script src="{{asset('resources/js/app.js')}}"></script>
     <!-- <script src="./assets/js/app.js"></script> -->
+    <script src="{{asset('resources/js/Charts/progressCharts.js')}}"></script>
+    <!-- <script src="./assets/js/Charts/progressCharts.js"></script> -->
+    <script src="{{asset('resources/js/Charts/usersGrowth.js')}}"></script>
+    <!-- <script src="./assets/js/Charts/usersGrowth.js"></script> -->
+    <script src="{{asset('resources/js/Charts/tutorsGrowth.js')}}"></script>
+    <!-- <script src="./assets/js/Charts/tutorsGrowth.js"></script> -->
+    <script src="{{asset('external-libraries/js/bootstrap-select.min.js')}}"></script>
+    <link rel="stylesheet" href="{{asset('external-libraries/css/bootstrap-select.min.css')}}">
 </body>
 
 </html>

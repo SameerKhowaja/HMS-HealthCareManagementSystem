@@ -339,13 +339,15 @@ class LabTechnicianController extends Controller
             $test_detail = Lab_test_name::find($req->test_id);
             $testReq = LabTestRequest::find($req->test_req_id);
             if( $testReq->test_performed==NULL ){
-                $testReq->test_performed = $test_detail->test_name;
+                $testReq->test_performed = [ $test_detail->test_name ];
             }else{
-                $testReq->test_performed = $testReq->test_performed.','.$test_detail->test_name;
+                $tmp = $testReq->test_performed;
+                array_push($tmp,$test_detail->test_name);
+                $testReq->test_performed = $tmp;
             }
             $testReq->save();
 
-            if( count( explode(",",$testReq->test_names) ) == count( explode(",",$testReq->test_performed) ) ){
+            if( count( $testReq->test_names ) == count( $testReq->test_performed) ){
                 LabTestRequest::find($req->test_req_id)->delete();
                 // return redirect('/labtechnician/test-request');
             }else{
@@ -380,13 +382,14 @@ class LabTechnicianController extends Controller
 
     function backToRemainingTest(Request $req){
         $req->validate([
-            "test_name" => 'required|max:1000',
             "patient_primary_id" => 'required|max:20',
             'test_req_id'=> 'required|max:20'
         ]);
 
+        $testReq = LabTestRequest::find($req->test_req_id);
+
         $selfMadeRequest = new Request();
-        $selfMadeRequest->request->add(["test_name" => $req->test_name,"primary_id" => $req->patient_primary_id,'test_req_id'=> $req->test_req_id,"msg"=>"Report Created Successfuly"]);
+        $selfMadeRequest->request->add(["test_name" => $testReq->test_names,"primary_id" => $req->patient_primary_id,'test_req_id'=> $req->test_req_id,"msg"=>"Report Created Successfuly"]);
         $selfMadeRequest->setMethod("POST");
         return $this->requestedLabTest($selfMadeRequest);
 
@@ -399,6 +402,8 @@ class LabTechnicianController extends Controller
         $testRequest = LabTestRequest::with(['patient','patient.hospital_data'])
         ->orderBy('created_at','desc')
         ->get();
+
+
         return view('labtechnician.labTestRequest',['testRequest'=>$testRequest]);
 
     }
@@ -406,7 +411,6 @@ class LabTechnicianController extends Controller
 
     function requestedLabTest(Request $req){
         $req->validate([
-            "test_name" => 'required|max:1000',
             "primary_id" => 'required|max:20',
             'test_req_id'=> 'required|max:20'
         ]);
@@ -419,14 +423,14 @@ class LabTechnicianController extends Controller
         $patient_data = Hospital_data::findOrFail($req->primary_id);
         // if no test is perform than all the requested tests will be retrieved
         if($request->test_performed == NULL){
-            $requestedTest = Lab_test_name::whereIn('test_name',explode(',',$request->test_names))
+            $requestedTest = Lab_test_name::whereIn('test_name',$request->test_names)
             ->with(['lab_test_parameters'])
             ->get();
 
         }elseif( $request->test_performed != NuLL){
             // if any test is performed already then it is not retrieved remaining test will be shown
-            $requestedTest = Lab_test_name::whereIn('test_name',explode(',',$request->test_names))
-            ->whereNotIn('test_name',explode(',',$request->test_performed))
+            $requestedTest = Lab_test_name::whereIn('test_name',$request->test_names)
+            ->whereNotIn('test_name',$request->test_performed)
             ->with(['lab_test_parameters'])
             ->get();
         }

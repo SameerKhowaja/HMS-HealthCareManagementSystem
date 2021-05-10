@@ -89,12 +89,11 @@
 
     <script src="{{asset('resources/js/app.js')}}"></script>
     <!-- <script src="./assets/js/app.js"></script> -->
-    <script src="{{asset('resources/js/Charts/progressCharts.js')}}"></script>
-    <!-- <script src="./assets/js/Charts/progressCharts.js"></script> -->
-    <script src="{{asset('resources/js/Charts/usersGrowth.js')}}"></script>
-    <!-- <script src="./assets/js/Charts/usersGrowth.js"></script> -->
-    <script src="{{asset('resources/js/Charts/tutorsGrowth.js')}}"></script>
+    <script src="{{asset('resources/js/Charts/appointmentChart.js')}}"></script>
+    <script src="{{asset('resources/js/Charts/researchChart.js')}}"></script>
     <!-- <script src="./assets/js/Charts/tutorsGrowth.js"></script> -->
+    <script src="{{asset('external-libraries/js/bootstrap-select.min.js')}}"></script>
+    <link rel="stylesheet" href="{{asset('external-libraries/css/bootstrap-select.min.css')}}">
 </body>
 
 </html>

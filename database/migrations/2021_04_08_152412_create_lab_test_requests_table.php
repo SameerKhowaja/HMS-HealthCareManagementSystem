@@ -16,8 +16,10 @@ class CreateLabTestRequestsTable extends Migration
         Schema::create('lab_test_requests', function (Blueprint $table) {
             $table->bigIncrements("test_req_id", 20);
             $table->unsignedBigInteger('patient_id');
-            $table->string('test_names',1000);
-            $table->string('test_performed',1000)->nullable();
+            // $table->string('test_names',1000);
+            $table->json('test_names');
+            $table->json('test_performed')->nullable();
+            // $table->string('test_performed',1000)->nullable();
             $table->foreign('patient_id')->references('patient_id')->on('patients')->onDelete('cascade');
             $table->timestamps();
         });

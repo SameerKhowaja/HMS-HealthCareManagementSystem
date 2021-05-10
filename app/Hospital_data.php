@@ -11,6 +11,7 @@ class Hospital_data extends Model
 {
     // Set primary key for easy access
     protected $primaryKey = 'primary_id';
+    protected $perPage = 20;
 
     public function doctor()
     {

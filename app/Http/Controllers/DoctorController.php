@@ -23,6 +23,8 @@ use Illuminate\Http\Request;
 class DoctorController extends Controller
 {
     function index(){
+        date_default_timezone_set('Asia/Karachi');
+
         $primary_ID = session("userID");
         $userData = Hospital_data::findOrFail($primary_ID);
         $userDataSpecialist = Doctor::where('primary_id', '=', $primary_ID)->firstOrFail();
@@ -30,8 +32,17 @@ class DoctorController extends Controller
         $doctorAvailibility = Doctor_availability::where('doctor_id', '=', $doctor_id)->firstOrFail();
 
         $patientCount_wrt_days = ['Mon'=>0,'Tue'=>0,'Wed'=>0,'Thu'=>0,'Fri'=>0,'Sat'=>0,'Sun'=>0];
+        $appoinments_wrt_days = ['monday'=>0,'tuesday'=>0,'wednesday'=>0,'thursday'=>0,'friday'=>0,'saturday'=>0,'sunday'=>0];
+        
+        $fut_appointment = Appointment_request::where("doctor_id", $doctor_id)
+        ->where("appointment_date",'>',date('Y-m-d'))->get('day');
 
-        return view('doctor.index', ['userData'=>$userData, "userDataSpecialist"=>$userDataSpecialist, "doctorAvailibility"=>$doctorAvailibility, 'patientCount_wrt_days'=>$patientCount_wrt_days]);
+        foreach($fut_appointment as $app){
+            $appoinments_wrt_days[ $app->day ] +=1;
+        }
+
+    
+        return view('doctor.index', ['userData'=>$userData, "userDataSpecialist"=>$userDataSpecialist, "doctorAvailibility"=>$doctorAvailibility, 'patientCount_wrt_days'=>$patientCount_wrt_days,'appointments_wrt_days'=>$appoinments_wrt_days]);
     }
 
 
@@ -139,13 +150,33 @@ class DoctorController extends Controller
     }
 
     // viewing Patients of hospital with treatment link
-    function viewPatients(){
+    // function viewPatients(){
 
-        $PatientType = Type::where("type_name","Patient")->get();
-        // Complete Data of Hospital Table join with Types Table
-        $hospital_data = Hospital_data::join('types', 'types.type_id', '=', 'hospital_datas.type_id')
-        ->where("hospital_datas.type_id",$PatientType[0]->type_id)
-        ->get(['hospital_datas.*', 'types.type_name']);
+    //     $PatientType = Type::where("type_name","Patient")->get();
+    //     // Complete Data of Hospital Table join with Types Table
+    //     $hospital_data = Hospital_data::join('types', 'types.type_id', '=', 'hospital_datas.type_id')
+    //     ->where("hospital_datas.type_id",$PatientType[0]->type_id)
+    //     ->get(['hospital_datas.*', 'types.type_name']);
+
+    //     $rowsReturn = count($hospital_data);
+
+    //     if($rowsReturn == 0){
+    //         return view('doctor.patients.viewPatients', ['dataFetched'=>$hospital_data, 'msg'=>'No Records Found']);
+    //     }else{
+    //         return view('doctor.patients.viewPatients', ['dataFetched'=>$hospital_data]);
+    //     }
+    // }
+
+
+    function viewPatients(){
+        $doctor_PrimaryID = session()->get('userID');
+
+        $doctor_data = Doctor::where("primary_id",$doctor_PrimaryID)->get();
+
+        $hospital_data = Treatment::where("doctor_id",$doctor_data[0]->doctor_id)
+        ->with(["patient","patient.hospital_data"])
+        ->get();
+
 
         $rowsReturn = count($hospital_data);
 
@@ -444,6 +475,146 @@ class DoctorController extends Controller
 
         return view("doctor.appointment.todayAppointment.viewMedicalHistory",["patient"=>$patient_data,"medical_history"=>$medical_history]);
     }
+
+    function viewResearch(){
+        
+        $meds = Medicine::all();
+        
+        return view("doctor.research.performResearch",['meds'=>$meds]);
+    }
+
+    function performResearch(Request $req){
+        $req->validate([
+            'disease' => 'required|max:400'
+        ]);
+        
+        $meds = Medicine::all();
+        
+
+        if($req->var2 == 'age'){
+            $data = [   'type'=>'age',
+                        'disease'=>$req->disease,
+                        'cured'=>["0-10"=>0,"11-20"=>0,"21-30"=>0,"31-40"=>0,"41-50"=>0,"51-60"=>0,"61-70"=>0,"71-80"=>0,"81-90"=>0  ],
+                        'not_cured'=>["0-10"=>0,"11-20"=>0,"21-30"=>0,"31-40"=>0,"41-50"=>0,"51-60"=>0,"61-70"=>0,"71-80"=>0,"81-90"=>0  ]
+            ]; 
+            $research_data = Treatment::where("medical_condition",'like',"%".$req->disease."%")
+            ->with(["patient","patient.hospital_data"])
+            ->get();
+
+
+            foreach($research_data as $d){
+                $cured_or_not_cured='not_cured';
+                if(! is_null($d->cured) ){
+                    $age = floor(abs(strtotime(date('Y-m-d')) - strtotime($d->patient->hospital_data->dob))/(365*60*60*24));
+
+                    if( $d->cured == 1){
+                        $cured_or_not_cured='cured';
+                    }
+
+                    if( $age >= 0 && $age <= 10 ){
+                        $data[ $cured_or_not_cured ]['0-10'] +=1;
+                    }else if( $age >= 11 && $age <= 20 ){
+                        $data[ $cured_or_not_cured ]['11-20'] +=1;
+                    }else if( $age >= 21 && $age <= 30 ){
+                        $data[ $cured_or_not_cured ]['21-30'] +=1;
+                    }else if( $age >= 31 && $age <= 40 ){
+                        $data[ $cured_or_not_cured ]['31-40'] +=1;
+                    }else if( $age >= 41 && $age <= 50 ){
+                        $data[ $cured_or_not_cured ]['41-50'] +=1;
+                    }else if( $age >= 51 && $age <= 60 ){
+                        $data[ $cured_or_not_cured ]['51-60'] +=1;
+                    }else if( $age >= 61 && $age <= 70 ){
+                        $data[ $cured_or_not_cured ]['61-70'] +=1;
+                    }else if( $age >= 71 && $age <= 80 ){
+                        $data[ $cured_or_not_cured ]['71-80'] +=1;
+                    }else if( $age >= 81 && $age <= 90 ){
+                        $data[ $cured_or_not_cured ]['81-90'] +=1;
+                    }
+
+                }
+            }
+        }else if($req->var2 == 'medicine'){
+            
+            $data = [   'type'=>'medicine',
+                        'disease'=>$req->disease,
+                        'meds'=>$req->meds,
+                        'cured'=>[],
+                        'not_cured'=>[]
+                    ];
+            
+            if( ! $req->meds ){
+                return redirect()->back()->with("msg","Please Select Atleast One Medicine");
+            }
+            
+
+            $research_data = Treatment::where("medical_condition",'like',"%".$req->disease."%")
+            ->with(["patient","patient.hospital_data","prescription","prescription.medicine"])
+            ->get();
+
+            foreach($research_data as $d){
+                $cured_or_not_cured='not_cured';
+                if(! is_null($d->cured) ){
+                    
+
+                    if( $d->cured == 1){
+                        $cured_or_not_cured='cured';
+                    }
+
+
+                    foreach( $d->prescription as $p  ){
+        
+                        if( in_array( $p->medicine->medicine,$req->meds ) ){
+
+                            if( array_key_exists ( $p->medicine->medicine, $data[ $cured_or_not_cured ] )  ){
+                                $data[ $cured_or_not_cured ][$p->medicine->medicine] +=1;
+                            
+                            }else{
+                                $data[ $cured_or_not_cured ][$p->medicine->medicine] =1;
+                            }
+
+                        }
+                    }
+                    
+                }
+            }
+            // dd($data);
+
+            //}
+        }else if($req->var2 == 'gender'){
+            $data = [   'type'=>'gender',
+                        'disease'=>$req->disease,
+                        'cured'=>["male"=>0,"female"=>0],
+                        'not_cured'=>["male"=>0,"female"=>0]
+                    ]; 
+            $research_data = Treatment::where("medical_condition",'like',"%".$req->disease."%")
+            ->with(["patient","patient.hospital_data"])
+            ->get();
+
+            
+            foreach($research_data as $d){
+                $cured_or_not_cured='not_cured';
+                if(! is_null($d->cured) ){
+                    
+
+                    if( $d->cured == 1){
+                        $cured_or_not_cured='cured';
+                    }
+
+                    if( strtolower( $d->patient->hospital_data->gender ) == 'male' ){
+                        $data[ $cured_or_not_cured ]['male'] +=1;
+                    }else{
+                        $data[ $cured_or_not_cured ]['female'] +=1;
+                    }
+                    
+                }
+            }
+            // dd($data);
+
+        }
+        return view("doctor.research.performResearch",['meds'=>$meds,'data'=>$data]);
+
+    }
+
 
 
 

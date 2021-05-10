@@ -412,6 +412,34 @@ class PatientController extends Controller
     }
 
 
+    function saveSurvey(Request $req,$id){
+        $req->validate([
+            'dob' => 'required|max:100',
+            'treatment_id' => 'required|max:20',
+            'primary_id' => 'required|max:20',
+            'cured'=>'required|max:1'
+        ]);
+
+
+        $patient= Hospital_data::findOrFail( $req->primary_id );
+        $patient->dob = $req->dob;
+        $patient->save();
+
+
+        $patient_data = Patient::where("patients.primary_id",$req->primary_id)
+        ->join("hospital_datas","hospital_datas.primary_id","=","patients.primary_id")->get();
+
+
+        Treatment::where("patient_id",$patient_data[0]->patient_id)
+        ->where('treatment_id',$req->treatment_id)
+        ->update(['cured'=>$req->cured]);
+
+        return redirect('/patient/medical-history/'.$req->primary_id)->with("msg","Survey Recorded Successfully");
+
+
+    }
+
+
 
 
 
