@@ -44,7 +44,7 @@
 @section('content')
         <div>
             <section id="overview">
-                <div style='margin-top: 1%; margin-bottom: 2%;'>
+                <div style='margin-top: 1%;'>
                     <div style="display: flex; justify-content: space-between; align-items: center;">
                         <h3 class="text-large text-grey">Doctor's / Research</h3>
                     </div>
@@ -52,7 +52,7 @@
             </section>
 
             <!-- Table Info -->
-            <div class="table-responsive" style='box-shadow: 5px 3px 5px 3px #1b99d8; margin-top:1%; background-color: white; padding: 2%; border-radius: 10px; font-size: 13px;'>
+            <div class="table-responsive" style='box-shadow: 5px 3px 5px 3px #1b99d8; background-color: white; padding: 2%; border-radius: 10px; font-size: 13px;'>
                         <!-- Head Row -->
                         <div class="row" style="margin:auto;">
                             <div class="col-sm-12" style="text-align:center;">
@@ -101,7 +101,7 @@
                                 </div>
                                 <br>
 
-                                
+
 
                                 <div id="select_meds" class="form-group">
                                     <h4 class="text-bold display-5" >Drug:</h4>
@@ -171,8 +171,8 @@ $('.var2').click(function (event){
 })
 
 </script>
-    
 
-                   
-    
+
+
+
 @endsection

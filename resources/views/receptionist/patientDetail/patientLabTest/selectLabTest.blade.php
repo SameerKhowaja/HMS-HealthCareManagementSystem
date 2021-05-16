@@ -39,7 +39,6 @@
                         <div class="collapse" id="collapseExample2">
                             <div class="dropdown-divider"></div>
                             <a class="dropdown-item text-normal active" href="/receptionist/patient-view" > Patient View</a>
-                            <a class="dropdown-item text-normal" href="/receptionist/patient-admission"> Patient Admitted</a>
                             <a class="dropdown-item text-normal" href="/receptionist/patient-appointment"> Patient Appointments</a>
                             <a class="dropdown-item text-normal" href="/receptionist/patient-lab-test"> Patient Lab Tests</a>
                         </div>
@@ -96,7 +95,7 @@
                 <div class="row" style="overflow:visible;">
                     <div class="col-sm-12 mx-auto text-center">
                         <label class="mb-3 lead text-large text-grey">Select Lab Test : </label>
-                     
+
                         <select  name="tests[]" multiple data-style=" bg-primary text-bold text-white text-large rounded-pill px-4 py-3 shadow-sm" class="selectpicker">
                             @foreach($labTests as $data)
                             <option class="text-large text-bold " value='{{$data["test"]->test_name}}' >{{$data["test"]->test_name}}</option>
@@ -112,15 +111,15 @@
                         <input type="submit" name="submit" value="Send Request"" class="btn btn-primary btn-lg  fa-lg" role="button" aria-pressed="true">
                     </div>
                 </div>
-                
 
 
-            </form> 
+
+            </form>
 
         </div>
 
-    
-    
+
+
 
 
 
@@ -134,6 +133,6 @@
                 $('.selectpicker').selectpicker();
             });
     </script>
-    
+
 @endsection
 

@@ -39,7 +39,6 @@
                         <div class="collapse" id="collapseExample2">
                             <div class="dropdown-divider"></div>
                             <a class="dropdown-item text-normal active" href="/receptionist/patient-view" > Patient View</a>
-                            <a class="dropdown-item text-normal" href="/receptionist/patient-admission"> Patient Admitted</a>
                             <a class="dropdown-item text-normal" href="/receptionist/patient-appointment"> Patient Appointments</a>
                             <a class="dropdown-item text-normal" href="/receptionist/patient-lab-test"> Patient Lab Tests</a>
                         </div>
@@ -132,7 +131,7 @@
                                         <!-- View - Edit - Delete -->
                                         <a id='{{$data->primary_id}}' style='font-size:13px;' class="btn btn-info btn-lg viewUser" role="button" aria-pressed="true" data-toggle="modal" data-target="#viewUser_modal"><i class="fa fa-database fa-lg" aria-hidden="true"></i></a>
                                         <a class="btn btn-primary btn-lg" style='font-size: 13px;' href="/receptionist/patient-lab-test/select-test/{{$data->primary_id}}">Select Lab Test</a>
-                                        
+
                                     </div>
                                 </td>
                             </tr>
@@ -238,6 +237,6 @@
         });
     </script>
 
-    
+
 
 @endsection
