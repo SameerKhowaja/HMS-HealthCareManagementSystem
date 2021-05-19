@@ -169,6 +169,7 @@ Route::get('/doctor/patient-current-appointment/medical-history/{id}','DoctorCon
 Route::get('/doctor/patients-history','DoctorController@viewPatients');   //view Patients
 Route::get('/doctor/patients/treatment/{id}','DoctorController@patientTreatment');   //Interface of Add  Patient Treatment
 Route::post('/doctor/patients/treatment/{id}','DoctorController@patientTreatmentSave');
+Route::get('/doctor/patients/printPrescription/{id}','DoctorController@printPrescription'); // print test report view
 Route::get('/doctor/patients/medical-history/{id}','DoctorController@patientMedicalHistory');  // This will show patient's complete medical record
 Route::get('/doctor/patient-research-data','DoctorController@viewResearch');
 Route::post('/doctor/perform-research','DoctorController@performResearch');

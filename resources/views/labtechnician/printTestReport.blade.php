@@ -119,7 +119,7 @@
                                     <p class="display-6"><strong>Gender : </strong>{{$report[0]->patient->hospital_data->gender}}</p>
                                     @endif
                                     @if($report[0]->patient->hospital_data->dob)
-                                    <p class="display-6"><strong>Age : </strong>{{ intVal( (new DateTime(date('m-d-Y')) )->diff((new DateTime($report[0]->patient->hospital_data->dob)))->format('%a')/365) }}</p>
+                                    <p class="display-6"><strong>Age : </strong>{{ intVal( (new DateTime(date('Y-m-d')) )->diff((new DateTime($report[0]->patient->hospital_data->dob)))->format('%a')/365) }}</p>
                                     @endif
                                 </div>
                             </div>
