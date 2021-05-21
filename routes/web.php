@@ -268,7 +268,7 @@ Route::get('/labtechnician/lab-test/printTestReport/{id}','labTechnicianControll
 
 
 // lab technician  lab-management lab test request routes
-Route::post('/labtechnician/test-request/perform-test','labTechnicianController@requestedLabTest'); // this will show all the lab tests requested for a particular patient 
+Route::post('/labtechnician/test-request/perform-test','labTechnicianController@requestedLabTest'); // this will show all the lab tests requested for a particular patient
 // this route will redirect back to remaining tests of a particular patient
 Route::post('/labtechnician/test-request/back','labTechnicianController@backToRemainingTest');
 // ---------------------------------------------------------------------
