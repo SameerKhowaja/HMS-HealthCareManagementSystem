@@ -42,26 +42,23 @@
 @endsection
 
 @section('content')
-        
         <div>
             <div style='margin-top: 2%; margin-bottom: 3%; '>
                 <div style="display: flex; justify-content: space-between; align-items: center;">
-                    <h3 class="text-large text-grey col-sm-6">Doctor / Patient / Print Test Report</h3>
-                        <button id='reportPrint' class="btn btn-info btn-lg active" role="button" aria-pressed="true"><i class="fa fa-print"> </i> Print</button>
-                    </div>
+                    <h3 class="text-large text-grey">Doctor / Patient / Print Medcial Prescription</h3>
+                    <button id='prescriptionPrint' class="btn btn-info btn-lg active" role="button" aria-pressed="true"><i class="fa fa-print"> </i> Print</button>
                 </div>
-                <br>
 
                 <!-- Table -->
-                <div id='reportPortion' style='height:auto; box-shadow: 5px 3px 5px 3px #1b99d8; background-color: white; padding: 2%; border-radius: 10px; font-size: 13px;'>
+                <div id='prescriptionPortion' style='height:auto; box-shadow: 5px 3px 5px 3px #1b99d8; background-color: white; padding: 2%; border-radius: 10px; font-size: 13px;'>
 
                         <!-- Head Row -->
                         <div class="row" style="margin:auto;diplay:grid;grid-template-columns:1fr 1fr;">
                             <div class="col-sm-4" style="text-align:center;">
-                                <img class="img-fluid img-thumbnail mx-auto d-block rounded-circle" src="{{asset('resources/images/test_tube.png')}}" alt="test_tube" width="100" height="100" style="margin-bottom:5px;">
+                                <img class="img-fluid img-thumbnail mx-auto d-block rounded-circle" src="{{asset('resources/images/pill.svg')}}" alt="test_tube" width="100" height="100" style="margin-bottom:5px;">
                             </div>
                             <div class="col-sm-8" style="text-align:center;">
-                                <h1 class="display-4 text-left">Lab Test Report</h1>
+                                <h1 class="display-4 text-left">Medical Prescription</h1>
                             </div>
                         </div>
                         <hr>
@@ -99,105 +96,80 @@
 
 
                         <div class="row" style="margin:auto;display:grid;grid-template-columns:1fr 1fr;font-family:Sans-serif ">
+                        
+                        <div class="col-sm-6" style="text-align:left;">
+                                <div class="form-group">
+                                    <p class="display-6"><strong>Doctor : </strong>{{$prescription[0]->doctor->hospital_data->fname." ".$prescription[0]->doctor->hospital_data->lname}}</p>
+                                    <p class="display-6"><strong>Specialization : </strong>{{$prescription[0]->doctor->specialist}}</p>
+                                </div>
+                            </div>
                             <div class="col-sm-6" style="text-align:left;">
                                 <div class="form-group">
-                                    <p class="display-6"><strong>Patient : </strong> {{$report[0]->patient->hospital_data->fname." ".$report[0]->patient->hospital_data->lname}}</p>
-                                    @if($report[0]->patient->hospital_data->phone_number)
-                                    <p class="display-6"><strong>Phone : </strong>{{$report[0]->patient->hospital_data->phone_number}}</p>
+                                    <p class="display-6"><strong>Patient : </strong> {{$prescription[0]->patient->hospital_data->fname." ".$prescription[0]->patient->hospital_data->lname}}</p>
+                                    @if($prescription[0]->patient->hospital_data->phone_number)
+                                    <p class="display-6"><strong>Phone : </strong>{{$prescription[0]->patient->hospital_data->phone_number}}</p>
                                     @endif
-                                    @if($report[0]->patient->hospital_data->gender)
-                                    <p class="display-6"><strong>Gender : </strong>{{$report[0]->patient->hospital_data->gender}}</p>
+                                    @if($prescription[0]->patient->hospital_data->gender)
+                                    <p class="display-6"><strong>Gender : </strong>{{$prescription[0]->patient->hospital_data->gender}}</p>
                                     @endif
-                                    @if($report[0]->patient->hospital_data->dob)
-                                    <p class="display-6"><strong>Age : </strong>{{ intVal( (new DateTime(date('Y-m-d')) )->diff((new DateTime($report[0]->patient->hospital_data->dob)))->format('%a')/365) }}</p>
+                                    @if($prescription[0]->patient->hospital_data->dob)
+                                    <p class="display-6"><strong>Age : </strong>{{ intVal( (new DateTime(date('Y-m-d')) )->diff((new DateTime($prescription[0]->patient->hospital_data->dob)))->format('%a')/365) }}</p>
                                     @endif
                                 </div>
                             </div>
 
-                            <div class="col-sm-6" style="text-align:left;">
-                                <div class="form-group">
-                                    <p class="display-6"><strong>Technician : </strong>{{$report[0]->lab_technician->hospital_data->fname." ".$report[0]->lab_technician->hospital_data->lname}}</p>
-                                    <p class="display-6"><strong>Created At : </strong>{{$report[0]->created_at}}</p>
-                                </div>
-                            </div>
                         </div>
                         <hr>
                         <!-- row2 -->
                         <div class="row" style="display:grid;grid-template-columns:1fr 1fr;font-family:Sans-serif">
                             <div class="col-sm-6">
                                 <div class="form-group">
-                                    <p><strong>Test Name: </strong>{{$report[0]->lab_test_name->test_name}}</p>
-                                    <p><strong>Test Section: </strong>{{$report[0]->lab_test_name->test_type}}</p>
+                                    <p><strong>Medical Condition: </strong>{{$prescription[0]->medical_condition}}</p>
+                                </div>
+
+                            </div>
+                            <div class="col-sm-6">
+                                <div class="form-group">
+                                    <p><strong>Prescribed On Date: </strong>{{$prescription[0]->created_at}}</p>
                                 </div>
                             </div>
 
-                            <div class="col-sm-6">
-                                <div class="form-group">
-                                    <p><strong>Test Sample: </strong>{{$report[0]->lab_test_name->test_sample}}</p>
-                                    <p><strong>Methodology : </strong>{{$report[0]->lab_test_name->methodology}}</p>
-                                </div>
-                            </div>
                         </div>
                         <hr>
 
                         <!-- Head Row -->
-                        @if(count($report[0]->lab_report_params))
+                        @if(count($prescription[0]->prescription))
                         <div class="row" style="margin:auto;font-family:Sans-serif">
                             <div class="col-sm-12" style="text-align:center;">
                                 <div class="form-group">
-                                    <h1 class="display-6">Lab Test Readings</h1>
+                                    <h1 class="display-6">Medicines</h1>
                                 </div>
                             </div>
                         </div>
                         <hr>
-                        <div class="row" style="margin-bottom:3%;display:grid;grid-template-columns:1fr 1fr 1fr 1fr;font-family:Sans-serif">
-                            <div class="col-sm-3" style="text-align:center;">
-                                <strong>Test Parameter</strong>
-                            </div>
-                            <div class="col-sm-3" style="text-align:center;">
-                                <strong>Reading</strong>
-                            </div>
-                            <div class="col-sm-3" style="text-align:center;">
-                                <strong>Normal Range</strong>
-                            </div>
-                            <div class="col-sm-3" style="text-align:center;">
-                                <strong>Unit</strong>
-                            </div>
-                        </div>
-
-                        @foreach($report[0]->lab_report_params as $parameter)
-                        <div class="row" style="margin-bottom:2%;display:grid;grid-template-columns:1fr 1fr 1fr 1fr;font-family:Sans-serif" >
-                            <div class="col-sm-3" style="text-align:center;">{{$parameter->lab_test_parameter->param}}</div>
-                            <div class="col-sm-3" style="text-align:center;">{{$parameter->param_value}}</div>
-                            <div class="col-sm-3" style="text-align:center;">{{'('.$parameter->lab_test_parameter->lower_bound.'-'.$parameter->lab_test_parameter->upper_bound.')'}}</div>
-                            <div class="col-sm-3" style="text-align:center;">{{$parameter->lab_test_parameter->unit}}</div>
-                        </div>
+                        
+                        <div class="row" style="margin-bottom:2%;display:grid;grid-template-columns:repeat(3,1fr);font-family:Sans-serif" >
+                        @foreach($prescription[0]->prescription as $pres)
+                            <div class="col-sm-3" style="text-align:center;">{{$pres->medicine->medicine."(".$pres->medicine->medicine_type.")"}}</div>
                         @endforeach
+                        </div>
 
                         
                         @endif
                         <br>
                         
-                        <div class="row" style="font-family:Sans-serif;">
-                            <div class="col-sm-12">
-                                <strong>Result:</strong>
-                                <br>
-                                <p style="margin-left:10%;margin-right:10%;">{{$report[0]->result}}</p>
-                            </div>
-                        </div>
-                        <br>
-
-                        @if( $report[0]->comment)
+                        @if( $prescription[0]->comment)
                         <div class="row" style="font-family:Sans-serif">
                             <div class="col-sm-12">
                                 <strong>Comment:</strong>
                                 <br>
-                                <p style="margin-left:10%;margin-right:10%;">{{$report[0]->comment}}</p>
+                                <p style="margin-left:10%;margin-right:10%;">{{$prescription[0]->comment}}</p>
                             </div>
                         </div>
                         @endif
                         <!-- row4 -->
                 </div>
+            </div>
             </div>
 
         </div>
@@ -205,18 +177,18 @@
         <script type="text/javascript">
 
         
-        $("#reportPrint").on("click", function () {
-            var report = $("#reportPortion").html();
-            var reportprintWindow = window.open('', '', 'height=800,width=800');
-            reportprintWindow.document.write('<html><head><title>Lab Test Report</title>');
-            reportprintWindow.document.write('</head><body >');
-            reportprintWindow.document.write(report);
-            reportprintWindow.document.write('</body></html>');
-            reportprintWindow.document.close();
-            reportprintWindow.print();
+        $("#prescriptionPrint").on("click", function () {
+            var prescription = $("#prescriptionPortion").html();
+            var prescriptionprintWindow = window.open('', '', 'height=800,width=800');
+            prescriptionprintWindow.document.write('<html><head><title>Lab Test Report</title>');
+            prescriptionprintWindow.document.write('</head><body >');
+            prescriptionprintWindow.document.write(prescription);
+            prescriptionprintWindow.document.write('</body></html>');
+            prescriptionprintWindow.document.close();
+            prescriptionprintWindow.print();
         });
 
     </script>
+       
 @endsection
-
 

@@ -175,7 +175,8 @@ class DoctorController extends Controller
 
         $hospital_data = Treatment::where("doctor_id",$doctor_data[0]->doctor_id)
         ->with(["patient","patient.hospital_data"])
-        ->get();
+        ->get()
+        ->unique('patient_id');
 
 
         $rowsReturn = count($hospital_data);
@@ -235,6 +236,11 @@ class DoctorController extends Controller
                 return redirect()->back()->with("msg","Medicine Prescription Could Not be Added! ");
             }
         }
+
+        return redirect('/doctor/patients/printPrescription/'.$treatment->treatment_id)
+                ->with('treatment_id',$treatment->treatment_id)
+                ->with("msg","Prescription Added Successfully!");
+
 
         return redirect()->back()->with("msg","Prescription Added Successfully! ");
 
@@ -453,7 +459,13 @@ class DoctorController extends Controller
             }
         }
 
-        return redirect()->back()->with("msg","Prescription Added Successfully! ");
+
+        return redirect('/doctor/patients/printPrescription/'.$treatment->treatment_id)
+                ->with('treatment_id',$treatment->treatment_id)
+                ->with("msg","Prescription Added Successfully!");
+
+
+        return redirect()->back()->with("msg","Prescription Added Successfully!");
 
     }
 
@@ -613,6 +625,17 @@ class DoctorController extends Controller
         }
         return view("doctor.research.performResearch",['meds'=>$meds,'data'=>$data]);
 
+    }
+
+    function printPrescription($id){
+
+        $prescription = Treatment::where('treatment_id',$id)
+        ->with(['doctor','patient','patient.hospital_data','doctor.hospital_data',"prescription","prescription.medicine"])
+        ->get();
+
+        // dd($prescription);
+
+        return view('doctor.patients.printPrescription',['prescription'=>$prescription]);
     }
 
 
