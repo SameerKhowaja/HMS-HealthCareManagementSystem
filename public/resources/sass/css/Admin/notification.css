@@ -1,0 +1,124 @@
+/* users section */
+.functionButtonsWrapper{
+  padding: 2rem 0;
+}
+.functionButtonsWrapper h2{
+  flex-basis: 30%;
+}
+.functionButtonsWrapper > div{
+  justify-content: flex-end;
+  flex-grow: 1;
+}
+.functionButtonsWrapper > div form{
+  flex-grow: unset;
+  flex-basis: 40%;
+}
+.functionButtonsWrapper .action-btn{
+  margin: 0;
+  padding: 1rem 2rem;
+}
+.viewAll-btn svg{
+  font-size: 1.2rem;
+}
+/* #notification .heading, 
+#notification .row{
+  width: 100%;
+  display: grid;
+  grid-template-columns: 100px 250px 260px 120px 100px;
+  align-items: center;
+  padding: 2rem 3rem;
+} */
+/* #notification .row .usernameCell{
+  display: inline-flex;
+  align-items: center;
+  margin: 0 2.5rem;
+}
+#notification .row .usernameCell img{
+  margin-right: 1rem;
+}
+.row .statusCell{
+  padding: .5rem;
+  border-radius: 2.4rem;
+  text-align: center;
+  margin: 0;
+  color: #fdfdfd;
+} */
+.send-notification input,
+.send-notification textarea{
+  border: 1px solid #D1E1FE;
+  border-radius: 4rem;
+  outline: none;
+  background-color: inherit;
+  padding: 1rem 1.5rem;
+  width: 100%;
+  transition: all .2s ease;
+}
+.send-notification input ~ label{
+  color: #bdbdbd;
+  padding-left: 1.5rem;
+  transition: all .2s ease;
+}
+.send-notification input::placeholder,
+.send-notification textarea::placeholder{
+  color: #bdbdbd;
+  font-size: 1.2rem;
+  line-height: 1.4rem;
+}
+.send-notification textarea{
+  border-radius: 2.4rem;
+}
+.send-notification input:focus,
+.send-notification input:active,
+.send-notification textarea:focus,
+.send-notification textarea:active{
+  border-color: var(--primary);
+}
+.send-notification input:focus ~ label,
+.send-notification input:active ~ label{
+  color: var(--primary) !important;
+}
+.selected{
+  border-color: var(--primary);
+  background-color: #f3f6fa;
+}
+div.hidden{
+  display: none !important;
+  margin-right: 0;
+}
+@media screen and (max-width: 1180px){
+ .functionButtonsWrapper{
+   flex-direction: column;
+   align-items: flex-start;
+   padding: 2rem 0 0;
+ } 
+ .functionButtonsWrapper > div{
+   width: 100%;
+   justify-content: flex-start;
+ }
+ .functionButtonsWrapper > div form{
+   margin-top: 1rem;
+ }
+}
+@media screen and (max-width: 950px){
+  .functionButtonsWrapper > div{
+    flex-direction: column-reverse;
+    align-items: flex-start;
+  }
+  .functionButtonsWrapper > div form{
+    margin-bottom: 1.5rem;
+    width: 80%;
+  }
+}
+@media screen and (max-width: 770px){
+  .functionButtonsWrapper > div{
+    width: 100% !important;
+  }
+}
+@media screen and (max-width: 500px){
+  .functionButtonsWrapper > div div{
+    width: 100%;
+  }
+  .functionButtonsWrapper > div form{
+    width: 100%;
+  }
+}

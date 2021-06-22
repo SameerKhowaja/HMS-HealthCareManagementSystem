@@ -1,0 +1,118 @@
+/* side Navigation styles */
+
+.sideNav {
+    position: fixed;
+    top: 0;
+    left: 0;
+    z-index: 999;
+    min-width: 300px;
+    transition: .5s ease;
+    padding: 2rem 0;
+    display: inline-flex;
+    height: 100vh;
+    flex-direction: column;
+}
+
+
+/* ali added*/
+
+@media(max-width:1000px) {
+    .sideNav {
+        overflow-y: scroll;
+    }
+}
+
+@media(max-height:640px) {
+    .sideNav {
+        overflow-y: scroll;
+    }
+}
+
+
+/* --- */
+
+.sideNav .brand,
+.sideNav .navLists li,
+.sideNav .logoutBtn {
+    padding-left: 7rem;
+}
+
+.sideNav,
+.topNav {
+    background-color: #fff;
+}
+
+.brand {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    padding: 0 2rem 2rem 0;
+}
+
+.brand .hamburger {
+    font-size: 2.5rem;
+}
+
+ul.navLists {
+    margin: 1.7rem 0;
+    display: inline-flex;
+    flex-direction: column;
+}
+
+ul.navLists a {
+    text-decoration: none;
+    color: inherit;
+}
+
+ul.navLists a:focus {
+    outline: none;
+    border: none;
+}
+
+ul.navLists li,
+.logoutBtn {
+    padding: 1.5rem;
+    margin-bottom: .2rem;
+    color: var(--dark);
+    transition: .1s ease;
+    cursor: pointer;
+    display: inline-flex;
+    align-items: flex-end;
+    width: 100%;
+}
+
+.dropdown {
+    color: blue;
+}
+
+ul.navLists li svg,
+.logoutBtn svg {
+    font-size: 1.5rem;
+    margin: 0 2.5rem;
+}
+
+ul.navLists li.active,
+ul.navLists li:hover,
+ul.navLists li:focus,
+ul.navLists a:focus li {
+    color: #fdfdfd;
+    background-color: var(--primary);
+    border-top-right-radius: 4rem;
+    border-bottom-right-radius: 4rem;
+}
+
+ul.navLists li.active svg,
+ul.navLists li:hover svg,
+ul.navLists li:focus svg,
+ul.navLists a:focus li svg {
+    fill: #fff;
+}
+
+.logoutBtn {
+    margin-top: 8rem;
+    opacity: .5;
+}
+
+.logoutBtn:hover {
+    opacity: 1;
+}
